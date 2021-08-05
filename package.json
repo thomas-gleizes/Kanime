@@ -1,0 +1,23 @@
+{
+  "name": "k-anime",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "all-yarn": "concurrently --kill-others \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "all-npm": "concurrently --kill-others \"cd client && yarn dev -p 3000\" \"cd server && yarn dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomas-gleizes/K-Anime.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomas-gleizes/K-Anime/issues"
+  },
+  "homepage": "https://github.com/thomas-gleizes/K-Anime#readme",
+  "dependencies": {
+    "concurrently": "^6.0.2"
+  }
+}
