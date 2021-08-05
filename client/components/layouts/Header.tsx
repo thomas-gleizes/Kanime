@@ -108,8 +108,8 @@ const Header = () => {
   };
 
   return (
-    <header className="pb-16">
-      <nav className="z-90 fixed top-0 w-full bg-primary shadow-md">
+    <header className="z-90 fixed top-0 w-full bg-primary shadow-md">
+      <nav className="">
         <div className="relative">
           <div className="hidden md:flex justify-between w-full h-14 px-5">
             <div className="text-center m-auto">

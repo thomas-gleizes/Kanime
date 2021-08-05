@@ -38,6 +38,9 @@ const Saga: React.FC<Props> = ({ error, saga, animes }) => {
       <div>
         <h2>{saga.libelle}</h2>
       </div>
+      <div>
+
+      </div>
     </Layout>
   );
 };
