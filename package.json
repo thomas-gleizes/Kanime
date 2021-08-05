@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "all-yarn": "concurrently --kill-others \"cd client && npm run dev\" \"cd server && npm run dev\"",
-    "all-npm": "concurrently --kill-others \"cd client && yarn dev -p 3000\" \"cd server && yarn dev\""
+    "all-npm": "concurrently --kill-others \"cd client && yarn dev\" \"cd server && yarn dev\""
   },
   "repository": {
     "type": "git",
