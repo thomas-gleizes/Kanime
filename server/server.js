@@ -15,11 +15,7 @@ const errorsRoutes = require("./routes/errors");
 const app = express();
 dotenv.config();
 
-if (process.env.ENV === "dev") {
-  app.use(cors());
-} else {
-  app.use(cors({ origin: process.env.CLIENT_URL }));
-}
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: "999mb" })); // TODO decrease limit and compresse payload
