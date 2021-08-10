@@ -26,16 +26,16 @@ export const getServerSideProps = async ({ query }) => {
 
 const ExploreSagas: React.FC<Props> = ({ sagas, error }) => {
   return (
-    <Layout className="px-6 mt-10">
+    <Layout className="px-6">
       <Head>
         <title>Sagas | {process.env.NEXT_PUBLIC_SITE_NAME}</title>
       </Head>
-      <div className="w-full">
+      <div className="w-full mt-20">
         <h2 className="text-2xl text-center">Les sagas</h2>
       </div>
-      <div className="flex flex-wrap py-2">
+      <div className="flex flex-wrap py-2 w-11/12 mx-auto">
         {sagas?.map((saga, index) => (
-          <div key={index} className="w-full mx-auto max-w-200">
+          <div key={index} className="w-full mx-auto px-1 max-w-200">
             <div className="my-3 bg-primary shadow hover:shadow-lg cursor-pointer transform hover:scale-110 transition border rounded-b rounded-lg">
               <Link href={`/saga/${saga.slug}`}>
                 <a>

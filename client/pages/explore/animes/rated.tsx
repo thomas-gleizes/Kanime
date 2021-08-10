@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { AnimeApi } from "../../../api";
 import { useFetch, useToggle } from "../../../helpers/hooks";
 import Button from "../../../components/common/Form/Button";
-import SlideAnime from "../../../components/common/SlideAnime";
+import Anime from "../../../components/common/Anime";
 import Layout from "../../../components/layouts/Layout";
 
 const limit = 24;
@@ -46,7 +46,7 @@ const Rated: React.FC = () => {
             {animes?.length
               ? animes.map((anime) => (
                   <div key={anime.id} className="my-2">
-                    <SlideAnime
+                    <Anime
                       anime={anime}
                       rank={anime.ratingRank}
                       width={180}

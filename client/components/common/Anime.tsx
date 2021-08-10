@@ -9,11 +9,11 @@ import AnimeProps from "../../helpers/interfaces/anime";
 interface Props {
   anime: AnimeProps;
   rank?: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 }
 
-const SlideAnime: React.FC<Props> = ({ anime, rank, width, height }) => {
+const Anime: React.FC<Props> = ({ anime, rank, width, height }) => {
   const router = useRouter();
   const [hover, setHover] = useState(false);
 
@@ -48,9 +48,9 @@ const SlideAnime: React.FC<Props> = ({ anime, rank, width, height }) => {
   );
 };
 
-SlideAnime.defaultProps = {
+Anime.defaultProps = {
   width: 160,
   height: 230,
 };
 
-export default SlideAnime;
+export default Anime;

@@ -1,14 +1,11 @@
 import React, { FC, HTMLAttributes } from "react";
 
-import Footer from "./Footer";
-
 const Layout: FC<HTMLAttributes<HTMLElement>> = (props) => {
   return (
     <>
-      <main style={{ marginTop: "56px" }}>
+      <main style={{ paddingTop: "56px", minHeight: "100vh" }}>
         <div {...props} />
       </main>
-      <Footer />
     </>
   );
 };

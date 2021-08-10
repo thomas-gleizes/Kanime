@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Slider from "react-slick";
 
-import SlideAnime from "./SlideAnime";
+import Anime from "./Anime";
 import AnimeProps from "../../helpers/interfaces/anime";
 
 interface Props {
@@ -68,7 +68,7 @@ const SliderAnime: React.FC<Props> = ({ title, link, animes, ranking }) => {
         <Slider {...settings}>
           {animes?.map((anime, index) => (
             <div key={index} className="my-3">
-              <SlideAnime
+              <Anime
                 key={index}
                 rank={anime[ranking]?.rank}
                 anime={anime}

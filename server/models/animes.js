@@ -39,6 +39,10 @@ const animeSchema = mongoose.Schema(
     episode_count: { type: Number },
     episode_length: { type: Number },
     status: { type: String },
+    link: {
+      self: String,
+      saga: String,
+    },
     created_at: { type: Date, default: new Date() },
     update_at: { type: Date, default: new Date() },
   },

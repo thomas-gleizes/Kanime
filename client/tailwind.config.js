@@ -63,6 +63,16 @@ module.exports = {
       100: 100,
       auto: "auto",
     },
+    minWidth: {
+      ...buildList(40, "px", 50),
+      full: "100%",
+      unset: "unset",
+    },
+    minHeight: {
+      ...buildList(40, "px", 50),
+      full: "100%",
+      unset: "unset",
+    },
     maxWidth: {
       ...buildList(40, "px", 50),
       full: "100%",

@@ -7,10 +7,11 @@ import "slick-carousel/slick/slick-theme.css";
 
 import "../styles/globals.css";
 
+import { ContextProps } from "../helpers/interfaces/global";
 import UserContextProvider from "../context/user";
 import LoaderContextProvider from "../context/loader";
 import Header from "../components/layouts/Header";
-import { ContextProps } from "../helpers/interfaces/global";
+import Footer from "../components/layouts/Footer";
 
 const AllContextProvider: React.FC<ContextProps> = ({ children }) => {
   return (
@@ -34,6 +35,7 @@ const MyApp: React.FC<AppProps> = ({ Component, pageProps }) => {
         <>
           <Header />
           <Component {...pageProps} />
+          <Footer />
         </>
       </AllContextProvider>
     </>
