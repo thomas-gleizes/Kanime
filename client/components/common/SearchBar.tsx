@@ -63,9 +63,7 @@ const SearchBar = () => {
               >
                 <img src={anime.poster?.tiny} className="h-24" alt="poster" />
                 <div className="w-full flex">
-                  <div className="w-2/3 mx-auto text-sm">
-                    {anime.canonicalTitle}
-                  </div>
+                  <div className="w-2/3 mx-auto text-sm">{anime.canonicalTitle}</div>
                   <div>
                     <span className="w-1/3 bg-gray-400 px-4 py-1 font-bold text-sm text-white rounded-lg shadow">
                       {anime.type}

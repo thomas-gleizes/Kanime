@@ -11,16 +11,12 @@ const Image: React.FC<Props> = ({ className, onClick, alt, ...props }) => {
   const [open, toggle] = useToggle();
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "auto";
   }, []);
 
   const { width, height } = useMemo(() => {
-    if (element)
-      return { width: element.offsetWidth, height: element.offsetHeight };
+    if (element) return { width: element.offsetWidth, height: element.offsetHeight };
     return { width: 0, height: 0 };
   }, [element]);
 
@@ -39,10 +35,7 @@ const Image: React.FC<Props> = ({ className, onClick, alt, ...props }) => {
           className="fixed z-100 top-0 left-0 h-screen w-full bg-black bg-opacity-50"
         >
           <div className="absolute top-10 right-10">
-            <FaTimes
-              size={50}
-              className="text-red-400 hover:text-red-500 cursor-pointer"
-            />
+            <FaTimes size={50} className="text-red-400 hover:text-red-500 cursor-pointer" />
           </div>
           <div className="h-screen w-full text-center">
             <span className="inline-block h-full align-middle" />

@@ -6,12 +6,4 @@ import useLogin from "./useLogin";
 import useCallBackRef from "./useCallBackRef";
 import useLog from "./useLog";
 
-export {
-  useFetch,
-  useToggle,
-  useContextFactory,
-  useSearch,
-  useLogin,
-  useCallBackRef,
-  useLog,
-};
+export { useFetch, useToggle, useContextFactory, useSearch, useLogin, useCallBackRef, useLog };

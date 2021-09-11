@@ -25,12 +25,9 @@ const LoaderBar = () => {
   const completeLoader = useCallback(() => {
     clearInterval(loop);
     setPercent(100);
-    setTimeout(() => {
-      setInProgress(false);
-    }, 500);
-    setTimeout(() => {
-      setPercent(0);
-    }, 2000);
+
+    setTimeout(() => setInProgress(false), 500);
+    setTimeout(() => setPercent(0), 2000);
   }, []);
 
   useEffect(() => {
@@ -40,22 +37,15 @@ const LoaderBar = () => {
       initLoader();
     }
 
-    if (!loading && inProgress) {
-      completeLoader();
-    }
+    if (!loading && inProgress) completeLoader();
   }, [loading]);
 
   return (
-    <div
-      className="-z-10 absolute left-0 w-full bg-transparent"
-      style={{ height: "0.184rem" }}
-    >
+    <div className="-z-10 absolute left-0 w-full bg-transparent" style={{ height: "0.184rem" }}>
       <div
         className={classnames(
           "h-full transition ease-in-out bg-secondary",
-          percent === 100
-            ? "opacity-0 duration-1500"
-            : "opacity-100 duration-75"
+          percent === 100 ? "opacity-0 duration-1500" : "opacity-100 duration-75"
         )}
         style={{ width: `${percent}%` }}
       />

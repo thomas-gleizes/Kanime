@@ -13,9 +13,7 @@ const Rated: React.FC = () => {
   const [offset, setOffset] = useState<number>(0);
   const [toggle, handleToggle] = useToggle(false);
 
-  const [{ animes }] = useFetch(AnimeApi.mostRated, { limit, offset }, [
-    toggle,
-  ]);
+  const [{ animes }] = useFetch(AnimeApi.mostRated, { limit, offset }, [toggle]);
 
   useEffect(() => {
     setOffset(animes?.length || 0);
@@ -26,9 +24,7 @@ const Rated: React.FC = () => {
       <div className="w-full">
         <div>
           <div className="bg-test">
-            <h1 className="text-2xl w-52 mx-auto my-2 font-semibold">
-              Les meilleurs notes
-            </h1>
+            <h1 className="text-2xl w-52 mx-auto my-2 font-semibold">Les meilleurs notes</h1>
           </div>
           <div className="group flex transition my-2 mx-5 shadow border-2 border-gray-300 rounded-md focus-within:border-blue-400 focus-within:shadow-lg">
             <i className="ml-4 opacity-50 group-hover:opacity-100 transition duration-200 h-auto my-auto">
@@ -46,12 +42,7 @@ const Rated: React.FC = () => {
             {animes?.length
               ? animes.map((anime) => (
                   <div key={anime.id} className="my-2">
-                    <Anime
-                      anime={anime}
-                      rank={anime.ratingRank}
-                      width={180}
-                      height={250}
-                    />
+                    <Anime anime={anime} rank={anime.ratingRank} width={180} height={250} />
                   </div>
                 ))
               : null}

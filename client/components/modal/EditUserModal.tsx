@@ -56,11 +56,7 @@ const EditUserModal = ({ modalOpen, handleClose }) => {
       close={handleClose}
       className="mx-auto my-auto max-w-1000 rounded-md max-w-20 w-full mt-28 bg-white"
     >
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        innerRef={formRef}
-      >
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} innerRef={formRef}>
         {({ values, handleSubmit }) => (
           <form onSubmit={handleSubmit}>
             <div
@@ -107,15 +103,10 @@ const EditUserModal = ({ modalOpen, handleClose }) => {
             </div>
             <ModalBody>
               <FormGroup>
-                <FormikField
-                  name="city"
-                  type="text"
-                  label="Ville"
-                  list="city-list"
-                />
+                <FormikField name="city" type="text" label="Ville" list="city-list" />
                 <datalist id="city-list">
                   <option value="Montpellier">Montpellier</option>
-                  <option value="Fabrègues"> Fabrègues </option>
+                  <option value="Fabrègues"> Fabrègues</option>
                 </datalist>
 
                 <FormikField name="birthday" type="date" label="Anniversaire" />
@@ -135,9 +126,7 @@ const EditUserModal = ({ modalOpen, handleClose }) => {
             <ModalFooter className="flex justify-between p-1">
               <Button
                 type="button"
-                onClick={() =>
-                  router.push(`${users.index}/${user?.username}/settings`)
-                }
+                onClick={() => router.push(`${users.index}/${user?.username}/settings`)}
               >
                 Settings
               </Button>

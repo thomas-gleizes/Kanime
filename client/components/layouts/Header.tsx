@@ -9,14 +9,7 @@ import SearchBar from "../common/SearchBar";
 import LoaderBar from "../common/LoaderBar";
 import LoginModal from "../modal/LoginModal";
 import RegisterModal from "../modal/RegisterModal";
-import {
-  admin,
-  explore,
-  feedback,
-  forum,
-  users,
-  img,
-} from "../../ressources/routes";
+import { admin, explore, feedback, forum, users, img } from "../../ressources/routes";
 
 const Header = () => {
   const DropDownItem = ({ href, children }) => (
@@ -60,9 +53,7 @@ const Header = () => {
 
     const src = useMemo(
       () =>
-        user.media.avatar
-          ? process.env.NEXT_PUBLIC_API + user.media.avatar
-          : img.default.avatar,
+        user.media.avatar ? process.env.NEXT_PUBLIC_API + user.media.avatar : img.default.avatar,
       [user.media?.avatar]
     );
 
@@ -80,16 +71,10 @@ const Header = () => {
         </div>
         <DropDown innerRef={imgRef}>
           <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-            <DropDownItem href={`${users.index}/${user?.username}`}>
-              Mon profile
-            </DropDownItem>
-            <DropDownItem href={`${users.index}/${user?.username}`}>
-              Settings
-            </DropDownItem>
+            <DropDownItem href={`${users.index}/${user?.username}`}>Mon profile</DropDownItem>
+            <DropDownItem href={`${users.index}/${user?.username}`}>Settings</DropDownItem>
             <div onClick={logOut}>
-              <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-                Déconnexion
-              </span>
+              <span className="block w-full py-1.5 px-2 hover:bg-gray-100">Déconnexion</span>
             </div>
           </div>
         </DropDown>
@@ -145,16 +130,10 @@ const Header = () => {
               <SearchBar />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <span
-                    onClick={() => setLoginOpen(true)}
-                    className="mx-3 cursor-pointer"
-                  >
+                  <span onClick={() => setLoginOpen(true)} className="mx-3 cursor-pointer">
                     Connexion
                   </span>
-                  <span
-                    onClick={() => setRegisterOpen(true)}
-                    className="mx-3 cursor-pointer"
-                  >
+                  <span onClick={() => setRegisterOpen(true)} className="mx-3 cursor-pointer">
                     Inscription
                   </span>
                 </div>
@@ -184,10 +163,7 @@ const Header = () => {
                     setExtend(!extend);
                   }}
                 >
-                  <FaBars
-                    className="text-white hover:text-gray-200 cursor-pointer"
-                    size={32}
-                  />
+                  <FaBars className="text-white hover:text-gray-200 cursor-pointer" size={32} />
                 </i>
               </div>
             </div>

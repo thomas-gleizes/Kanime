@@ -11,9 +11,7 @@ const Home: React.FC = () => {
     router.push("/explore/animes");
   }, []);
 
-  return (
-    <Layout className="text-center text-xl mt-5">Coming soon .. ..</Layout>
-  );
+  return <Layout className="text-center text-xl mt-5">Coming soon .. ..</Layout>;
 };
 
 export default Home;

@@ -34,10 +34,10 @@ const Anime: React.FC<Props> = ({ anime, rank, width, height }) => {
           </div>
         ) : null}
         <div
-          className={classnames(
-            "absolute bottom-1 w-full px-1 transition duration-150",
-            { "opacity-0": !hover, "opacity-100": hover }
-          )}
+          className={classnames("absolute bottom-1 w-full px-1 transition duration-150", {
+            "opacity-0": !hover,
+            "opacity-100": hover,
+          })}
         >
           <div className="text-sm bg-primary text-center w-full px-2 py-1 text-white rounded-md truncate opacity-90">
             {anime.canonicalTitle}

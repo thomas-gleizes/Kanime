@@ -135,10 +135,7 @@ const User: React.FC<Props> = ({ user, error }) => {
                     Follow
                   </button>
                   <i className="my-auto">
-                    <FaEllipsisH
-                      size={18}
-                      className="ml-3 mr-1 hover:text-lg"
-                    />
+                    <FaEllipsisH size={18} className="ml-3 mr-1 hover:text-lg" />
                   </i>
                 </div>
               ) : (
@@ -163,9 +160,7 @@ const User: React.FC<Props> = ({ user, error }) => {
         <UserList />
       </div>
 
-      {isLogin ? (
-        <EditUserModal modalOpen={editModal} handleClose={handleCloseModal} />
-      ) : null}
+      {isLogin ? <EditUserModal modalOpen={editModal} handleClose={handleCloseModal} /> : null}
     </Layout>
   );
 };

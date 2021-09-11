@@ -44,8 +44,7 @@ const FormikSelect: React.FC<SelectProps> = ({
           className={classnames(
             "absolute mx-2 text-md rounded-full px-1 top-2 text-gray-500 bg-white group-hover:text-primary transform transition duration-200 left-3 cursor-text",
             {
-              "-translate-y-6 -translate-x-2 text-gray-800":
-                focus || field.value,
+              "-translate-y-6 -translate-x-2 text-gray-800": focus || field.value,
             }
           )}
         >

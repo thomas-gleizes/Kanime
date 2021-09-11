@@ -39,9 +39,7 @@ const Anime = () => {
             <div className="mx-1 py-3 divide-opacity-10 divide-y-2">
               <div className="flex py-1">
                 <h2 className="text-3xl">{anime?.canonicalTitle}</h2>
-                <span className="text-md mt-2 ml-2 text-opacity-70">
-                  ({anime?.season.full})
-                </span>
+                <span className="text-md mt-2 ml-2 text-opacity-70">({anime?.season.full})</span>
               </div>
               <div className="flex w-full py-2 justify-between">
                 <div className="flex text-sm">
@@ -54,8 +52,7 @@ const Anime = () => {
                 </div>
                 <div className="flex text-sm">
                   <span>
-                    Rank {anime?.popularity.rank} (
-                    {anime?.popularity.user_count})
+                    Rank {anime?.popularity.rank} ({anime?.popularity.user_count})
                   </span>
                   <i className="mx-1">
                     <FaHeart size={18} className="text-red-700" />

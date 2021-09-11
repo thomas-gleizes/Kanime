@@ -12,12 +12,7 @@ const KitsuButton: React.FC<Props> = ({ slug }) => {
       className="bg-kitsu w-full py-1 rounded"
     >
       <span className="flex justify-center text-white">
-        <Image
-          src="/icon/kitsu-icon.png"
-          width={22}
-          alt="kitsu icon"
-          className="mr-2"
-        />
+        <Image src="/icon/kitsu-icon.png" width={22} alt="kitsu icon" className="mr-2" />
         Voir sur Kitsu
       </span>
     </button>

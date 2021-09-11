@@ -19,9 +19,7 @@ const AdminAnime = ({ anime, onDelete }) => {
             />
           </div>
           <div className="w-3/4">
-            <div className="w-full text-lg mb-1">
-              Titre : {anime.canonicalTitle}
-            </div>
+            <div className="w-full text-lg mb-1">Titre : {anime.canonicalTitle}</div>
             <div className="flex w-full">
               <ul className="w-1/2">
                 <li>Type : {anime.showType}</li>
@@ -37,7 +35,7 @@ const AdminAnime = ({ anime, onDelete }) => {
                 <li>Saison : {anime.season}</li>
                 <li>Début : {moment(anime.startDate).format("ll")}</li>
                 <li>Fin : {moment(anime.endDate).format("ll")}</li>
-                <li>Studio : </li>
+                <li>Studio :</li>
               </ul>
             </div>
           </div>

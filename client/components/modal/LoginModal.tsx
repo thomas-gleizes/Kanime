@@ -7,12 +7,7 @@ import { UserApi } from "../../api";
 import { useUserContextAction } from "../../context/user";
 import addToast, { TOAST_ERROR } from "../../helpers/toastr";
 import { FormGroup, FormikField } from "../common/Form";
-import Modal, {
-  ModalTitle,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "../layouts/Modal";
+import Modal, { ModalTitle, ModalBody, ModalFooter, ModalHeader } from "../layouts/Modal";
 
 const LoginModal = ({ openModal, handleClose }) => {
   const formRef = useRef(null);
@@ -73,12 +68,7 @@ const LoginModal = ({ openModal, handleClose }) => {
                 />
               </FormGroup>
               <FormGroup>
-                <FormikField
-                  name="password"
-                  type="password"
-                  label="Mot de passe"
-                  required={true}
-                />
+                <FormikField name="password" type="password" label="Mot de passe" required={true} />
               </FormGroup>
             </form>
           )}

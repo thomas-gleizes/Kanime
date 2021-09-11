@@ -9,11 +9,7 @@ import AdminAnime from "../../components/common/AdminAnime";
 import { AnimeApi, CategoryApi } from "../../api";
 import addToast, { TOAST_ERROR } from "../../helpers/toastr";
 import { Input, Label } from "../../components/common/Form";
-import Card, {
-  CardBody,
-  CardFooter,
-  CardHeader,
-} from "../../components/layouts/Card";
+import Card, { CardBody, CardFooter, CardHeader } from "../../components/layouts/Card";
 import { useUserContext } from "../../context/user";
 
 const animatedComponents = makeAnimated();
@@ -167,11 +163,7 @@ const Admin = () => {
               {currents.length ? (
                 <div className="flex w-full justify-between flex-wrap">
                   {currents.map((anime) => (
-                    <AdminAnime
-                      key={anime.id}
-                      anime={anime}
-                      onDelete={handleDelete}
-                    />
+                    <AdminAnime key={anime.id} anime={anime} onDelete={handleDelete} />
                   ))}
                 </div>
               ) : (

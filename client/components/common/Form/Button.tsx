@@ -2,23 +2,12 @@ import React from "react";
 import classnames from "classnames";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?:
-    | string
-    | "gray"
-    | "red"
-    | "yellow"
-    | "green"
-    | "blue"
-    | "indigo"
-    | "purple"
-    | "pink";
+  color?: string | "gray" | "red" | "yellow" | "green" | "blue" | "indigo" | "purple" | "pink";
 }
 
 const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
   const customColor =
-    color !== "primary"
-      ? `bg-${color}-500 hover:bg-${color}-600 ring-${color}-600`
-      : "";
+    color !== "primary" ? `bg-${color}-500 hover:bg-${color}-600 ring-${color}-600` : "";
 
   return (
     <button

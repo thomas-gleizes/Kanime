@@ -8,13 +8,7 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
 }
 
-const FormikField: React.FC<FieldProps> = ({
-  type,
-  name,
-  label,
-  required,
-  ...rest
-}) => {
+const FormikField: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) => {
   const input = useRef<HTMLInputElement>();
   const [focus, setFocus] = useState<boolean>(false);
 

@@ -27,11 +27,7 @@ const LoaderContextProvider: React.FC<ContextProps> = ({ children }) => {
     return () => clearInterval(loop);
   }, []);
 
-  return (
-    <LoaderContext.Provider value={{ loading }}>
-      {children}
-    </LoaderContext.Provider>
-  );
+  return <LoaderContext.Provider value={{ loading }}>{children}</LoaderContext.Provider>;
 };
 
 export default LoaderContextProvider;

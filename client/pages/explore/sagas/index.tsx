@@ -48,9 +48,7 @@ const ExploreSagas: React.FC<Props> = ({ sagas, error }) => {
                       className="mx-auto"
                     />
                   </div>
-                  <h3 className="text-center text-white font-bold py-1">
-                    {saga.libelle}
-                  </h3>
+                  <h3 className="text-center text-white font-bold py-1">{saga.libelle}</h3>
                 </a>
               </Link>
             </div>

@@ -10,12 +10,7 @@ import { img } from "../../ressources/routes";
 const UserPopup = () => {
   return (
     <div className="px-1 cursor-pointer my-2.5 text-white rounded-full">
-      <img
-        src={img.default.avatar}
-        className="rotate-180 rounded-full"
-        alt="avatar"
-        width={50}
-      />
+      <img src={img.default.avatar} className="rotate-180 rounded-full" alt="avatar" width={50} />
     </div>
   );
 };
@@ -27,13 +22,7 @@ const Tchat = () => {
   const [max, setMax] = useState(1000);
   const [notifications, setNotifications] = useState(0);
 
-  const [{ rooms }, isLoading] = useFetch(
-    UserApi.getRooms,
-    null,
-    [isLogin],
-    null,
-    isLogin
-  );
+  const [{ rooms }, isLoading] = useFetch(UserApi.getRooms, null, [isLogin], null, isLogin);
 
   useEffect(() => {
     setNotifications(Math.floor(Math.random() * 15));

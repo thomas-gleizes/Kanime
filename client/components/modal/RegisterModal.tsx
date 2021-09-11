@@ -7,12 +7,7 @@ import { UserApi } from "../../api";
 import { useUserContextAction } from "../../context/user";
 import addToast, { TOAST_ERROR } from "../../helpers/toastr";
 import { FormGroup, FormikField } from "../common/Form";
-import Modal, {
-  ModalTitle,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "../layouts/Modal";
+import Modal, { ModalTitle, ModalBody, ModalFooter, ModalHeader } from "../layouts/Modal";
 
 const RegisterModal = ({ openModal, handleClose }) => {
   const formRef = useRef(null);
@@ -27,9 +22,7 @@ const RegisterModal = ({ openModal, handleClose }) => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required("Veuillez indiquez un nom d'utilisateur"),
-    email: Yup.string()
-      .email("Adresse email incorrect")
-      .required("Veuillez indiquer un email"),
+    email: Yup.string().email("Adresse email incorrect").required("Veuillez indiquer un email"),
     password: Yup.string()
       .required("Veuillez indiquer votre mot de passe")
       .min(8, "Votre mot de passe doit contenir au moins 8 caractères"),
@@ -86,20 +79,10 @@ const RegisterModal = ({ openModal, handleClose }) => {
                 />
               </FormGroup>
               <FormGroup>
-                <FormikField
-                  name="email"
-                  type="email"
-                  label="Email"
-                  required={true}
-                />
+                <FormikField name="email" type="email" label="Email" required={true} />
               </FormGroup>
               <FormGroup>
-                <FormikField
-                  name="password"
-                  type="password"
-                  label="Mot de passe"
-                  required={true}
-                />
+                <FormikField name="password" type="password" label="Mot de passe" required={true} />
                 <FormikField
                   name="confirmPassword"
                   type="password"
