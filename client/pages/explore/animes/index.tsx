@@ -53,7 +53,7 @@ const ExploreAnimes: React.FC<Props> = ({ rated, popular, season }) => {
       <Head>
         <title> Explore | {process.env.NEXT_PUBLIC_SITE_NAME} </title>
       </Head>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-4 max-w-1200 mx-auto">
         <div className="col-span-3">
           <SliderAnime
             title="Les meilleurs notes"
@@ -73,7 +73,7 @@ const ExploreAnimes: React.FC<Props> = ({ rated, popular, season }) => {
             link={explore.animes.currentSeason}
           />
         </div>
-        <div className="side h-screen px-5">
+        <div className="px-5 min-h-500 min-w-350">
           <div className="h-full border bg-gray-50 shadow rounded" />
         </div>
       </div>

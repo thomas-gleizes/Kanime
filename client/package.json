@@ -23,6 +23,7 @@
     "react-select": "^4.3.0",
     "react-slick": "^0.28.1",
     "react-spinners": "^0.10.6",
+    "simplebar-react": "^2.3.5",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "^2.2.7",
     "toastr": "^2.1.4",

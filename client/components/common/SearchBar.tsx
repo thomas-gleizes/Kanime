@@ -1,5 +1,6 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import SimpleBar from "simplebar-react";
 import { FaSearch, FaSpinner } from "react-icons/fa";
 
 import { AnimeApi } from "../../api";
@@ -54,26 +55,28 @@ const SearchBar = () => {
         />
       </div>
       {animes?.length && open ? (
-        <div className="absolute top-8 w-full my-1 rounded-sm shadow max-h-400 overflow-y-auto">
-          {animes.map((anime) => (
-            <Link key={anime._id} href={`${animesRoutes.index}/${anime.slug}`}>
-              <div
-                onClick={handleClick}
-                className="border-b p-1 text-md cursor-pointer flex justify-between bg-gray-50 bg-opacity-90 hover:bg-opacity-100"
-              >
-                <img src={anime.poster?.tiny} className="h-24" alt="poster" />
-                <div className="w-full flex">
-                  <div className="w-2/3 mx-auto text-sm">{anime.canonicalTitle}</div>
-                  <div>
-                    <span className="w-1/3 bg-gray-400 px-4 py-1 font-bold text-sm text-white rounded-lg shadow">
-                      {anime.type}
-                    </span>
+        <div className="absolute top-8 w-full my-1 rounded-sm shadow">
+          <SimpleBar style={{ maxHeight: "400px" }}>
+            {animes.map((anime, index) => (
+              <Link key={index} href={`${animesRoutes.index}/${anime.slug}`}>
+                <div
+                  onClick={handleClick}
+                  className="border-t p-1 text-md cursor-pointer flex justify-between bg-gray-50 hover:bg-gray-100"
+                >
+                  <img src={anime.poster?.tiny} className="h-24" alt="poster" />
+                  <div className="w-full flex">
+                    <div className="w-2/3 mx-auto text-sm">{anime.canonicalTitle}</div>
+                    <div>
+                      <span className="w-1/3 bg-gray-400 px-4 py-1 font-bold text-sm text-white rounded-lg shadow">
+                        {anime.type}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-          <div className="w-full bg-gray-50">
+              </Link>
+            ))}
+          </SimpleBar>
+          <div className="w-full border-t border-gray-300 bg-gray-100 rounded-b">
             <div className="text-center py-2.5">
               <button className="bg-red-600 rounded-md mx-auto text-white px-5 py-0.5">
                 Voir plus

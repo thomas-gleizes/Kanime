@@ -16,26 +16,12 @@ const settings = {
   dots: false,
   arrows: false,
   infinite: true,
-  slidesToShow: 7,
-  slidesToScroll: 7,
+  slidesToShow: 5,
+  slidesToScroll: 5,
   autoplay: true,
   autoplaySpeed: 5000,
   speed: 500,
   responsive: [
-    {
-      breakpoint: 1600,
-      settings: {
-        slidesToShow: 6,
-        slidesToScroll: 6,
-      },
-    },
-    {
-      breakpoint: 1350,
-      settings: {
-        slidesToShow: 5,
-        slidesToScroll: 5,
-      },
-    },
     {
       breakpoint: 1200,
       settings: {
@@ -63,7 +49,7 @@ const settings = {
 const SliderAnime: React.FC<Props> = ({ title, link, animes, ranking }) => {
   return (
     <div className="bg-gradient-to-b from-gray-50 to-gray-100 border shadow rounded p-2 mb-5">
-      <h2 className="text-center mb-3"> {title} </h2>
+      <h2 className="text-center mb-3 text-lg italic text-primary font-bold">{title}</h2>
       <div>
         <Slider {...settings}>
           {animes?.map((anime, index) => (
