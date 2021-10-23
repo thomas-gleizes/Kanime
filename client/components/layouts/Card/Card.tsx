@@ -1,11 +1,8 @@
 import React, { HTMLAttributes } from "react";
+import classnames from "classnames";
 
-const Card: React.FC<HTMLAttributes<HTMLElement>> = ({ children, className, ...rest }) => {
-  return (
-    <div className={`bg-white shadow-lg border-lg${className}`} {...rest}>
-      {children}
-    </div>
-  );
+const Card: React.FC<HTMLAttributes<HTMLElement>> = ({ className, ...rest }) => {
+  return <div className={classnames("card", className)} {...rest} />;
 };
 
 export default Card;
