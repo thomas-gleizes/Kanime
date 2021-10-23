@@ -52,9 +52,9 @@ const Rated: React.FC = () => {
           <Button onClick={handleToggle}> Afficher plus </Button>
         </div>
       </div>
-      <div className="relative max-h-full md:max-w-350 w-full md:mt-24 px-2 py-4">
-        <div className="sticky top-20 bg-red-300">
-          <div className="text-center h-96" />
+      <div className="relative max-h-full md:max-w-350 w-full px-2">
+        <div className="sticky top-20 border">
+          <div className="text-center max-h-600 min-h-600" />
         </div>
       </div>
     </Layout>
