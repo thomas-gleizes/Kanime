@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "all-yarn": "concurrently --kill-others \"cd client && npm run dev\" \"cd server && npm run dev\"",
-    "all-npm": "concurrently --kill-others \"cd client && yarn dev\" \"cd server && yarn dev\""
+    "all-yarn": "concurrently --kill-others \"cd client && yarn dev\" \"cd server && yarn dev\"",
+    "all-npm": "concurrently --kill-others \"cd client && npm run dev\" \"cd server && npm run dev\""
   },
   "repository": {
     "type": "git",
