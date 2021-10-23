@@ -107,17 +107,37 @@ input, button, select, option {
 }
 
 .card {
-    @apply shadow-lg border-lg;
+    @apply shadow-lg border border-gray-600
 }
 
 .card-body {
-    @apply p-2.5;
+    @apply p-2.5
 }
 
 .card-header {
-    @apply bg-gray-100 shadow rounded-t-lg w-full p-2;
+    @apply bg-gray-100 shadow rounded-t-lg w-full p-2
 }
 
 .card-footer {
-    @apply bg-gray-200 rounded-b-lg w-full p-2;
+    @apply bg-gray-200 rounded-b-lg w-full p-2
+}
+
+.modal {
+    @apply fixed backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4
+}
+
+.modal-body {
+    @apply p-2
+}
+
+.modal-header {
+    @apply bg-gray-50 shadow w-full p-2
+}
+
+.modal-footer {
+    @apply bg-gray-100 w-full p-2
+}
+
+.modal-title {
+    @apply text-xl ml-2 mt-1
 }

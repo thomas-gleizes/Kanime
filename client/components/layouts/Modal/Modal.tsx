@@ -25,11 +25,7 @@ const Modal: FC<ModalProps> = ({ isOpen, close, ...rest }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      ref={background}
-      onClick={handleClose}
-      className="fixed backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4"
-    >
+    <div ref={background} onClick={handleClose} className="modal">
       <div {...rest} />
     </div>
   );
