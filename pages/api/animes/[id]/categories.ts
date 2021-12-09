@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-import { DefaultErrorData, DefaultResponseData, Category } from "../../../../types";
+import { Category, DefaultErrorData, DefaultResponseData } from "../../../../types";
 import router from "../../../../lib/router";
 import CategoriesResources from "../../../../resources/CategoriesResources";
 
@@ -17,14 +17,13 @@ router.get = async (
 ) => {
   const { id } = req.query;
 
-  const categories: any[] = await prisma.category.findMany({
-    where: {
-      animes: { every: { anime_id: +id } },
-    },
-    include: {
-      animes: { where: { anime_id: +id } },
-    },
-  });
+  const categories: any[] = CategoriesResources.many(
+    await prisma.category.findMany({
+      where: {
+        animes: { some: { anime_id: +id } },
+      },
+    })
+  );
 
   res.send({ success: true, categories, params: req.query });
 };
