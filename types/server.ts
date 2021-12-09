@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-export interface CustomResponseData {
+export interface DefaultResponseData {
   success?: boolean;
   params?: any;
 }
 
-export interface CustomErrorData {
+export interface DefaultErrorData {
   error: string;
 }
 

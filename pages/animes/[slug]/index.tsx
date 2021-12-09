@@ -4,10 +4,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { FaHeart, FaPlus, FaStar } from "react-icons/fa";
 
-import { Anime, CustomResponseData } from "../../../types";
+import { Anime, DefaultResponseData } from "../../../types";
 import appAxios from "../../../lib/appAxios";
 
-interface Props extends CustomResponseData {
+interface Props extends DefaultResponseData {
   anime: Anime;
 }
 

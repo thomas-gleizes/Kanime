@@ -38,37 +38,40 @@ model Anime {
 }
 
 model Category {
-  id          Int       @id @default(autoincrement())
-  libelle     String
-  created_at  DateTime  @default(now()) @db.Timestamp(0)
-  animes      AnimeCategory[]
+  id                Int             @id @default(autoincrement())
+  name              String
+  slug              String          @unique
+  description       String?         @db.Text
+  total_media_count Int             @default(0) @db.SmallInt
+  created_at        DateTime        @default(now()) @db.Timestamp(0)
+  updated_at        DateTime        @default(now()) @db.Timestamp(0)
+  animes            AnimeCategory[]
 
   @@map("categories")
 }
 
 model AnimeCategory {
-  anime_id     Int
-  category_id  Int
-  created_at   DateTime  @default(now()) @db.Timestamp(0)
-  anime        Anime     @relation(fields: [anime_id], references: [id])
-  category     Category  @relation(fields: [category_id], references: [id])
+  anime_id    Int
+  category_id Int
+  created_at  DateTime @default(now()) @db.Timestamp(0)
+  anime       Anime    @relation(fields: [anime_id], references: [id])
+  category    Category @relation(fields: [category_id], references: [id])
 
   @@id([anime_id, category_id])
   @@map("animes_categories")
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  email      String      @unique
+  id         Int          @id @default(autoincrement())
+  email      String       @unique
   password   String
-  login      String
-  created_at DateTime    @default(now()) @db.Timestamp(0)
-  updated_at DateTime    @default(now()) @db.Timestamp(0)
+  login      String       @unique
+  created_at DateTime     @default(now()) @db.Timestamp(0)
+  updated_at DateTime     @default(now()) @db.Timestamp(0)
   animes     AnimeUser[]
   follow     UserFollow[] @relation("follow")
   followers  UserFollow[] @relation("followers")
 
-  @@index([login], map: "users_login_index")
   @@map("users")
 }
 

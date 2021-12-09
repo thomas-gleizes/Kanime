@@ -27,6 +27,14 @@ export interface Episode {
   count: number;
 }
 
+export declare type Category = {
+  id: number;
+  slug: string;
+  name: string;
+  description?: string;
+  totalMediaCount: number;
+};
+
 export declare type Anime = {
   id: number;
   kitsu_id: string;

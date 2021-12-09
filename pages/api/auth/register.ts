@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-import { CustomErrorData, CustomResponseData, User } from "../../../types";
+import { DefaultErrorData, DefaultResponseData, User } from "../../../types";
 import router from "../../../lib/router";
 import Security from "../../../lib/security";
 import usersResources from "../../../resources/UsersResources";
 
-interface Data extends CustomResponseData {
+interface Data extends DefaultResponseData {
   user: User;
 }
 
-interface Error extends CustomErrorData {
+interface Error extends DefaultErrorData {
   key?: string;
 }
 

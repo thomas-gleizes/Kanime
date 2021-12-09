@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-import { Anime, DefaultErrorData, DefaultResponseData } from "../../../../types";
-import animesResources from "../../../../resources/AnimesResources";
+import { DefaultErrorData, DefaultResponseData, Category } from "../../../../types";
 import router from "../../../../lib/router";
+import CategoriesResources from "../../../../resources/CategoriesResources";
 
 interface Data extends DefaultResponseData {
-  anime: Anime;
+  categories: Category[];
 }
 
 const prisma = new PrismaClient();
@@ -17,13 +17,16 @@ router.get = async (
 ) => {
   const { id } = req.query;
 
-  const anime: Anime = animesResources.one(
-    await prisma.anime.findUnique({
-      where: { id: +id },
-    })
-  );
+  const categories: any[] = await prisma.category.findMany({
+    where: {
+      animes: { every: { anime_id: +id } },
+    },
+    include: {
+      animes: { where: { anime_id: +id } },
+    },
+  });
 
-  res.send({ success: true, anime, params: req.query });
+  res.send({ success: true, categories, params: req.query });
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

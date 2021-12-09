@@ -1,14 +1,15 @@
-import { Anime, Images, Titles } from "./animes";
+import { Anime, Category, Images, Titles } from "./animes";
 import { User } from "./users";
-import { CustomErrorData, CustomResponseData, Resources, Router } from "./server";
+import { DefaultErrorData, DefaultResponseData, Resources, Router } from "./server";
 
 export type {
   Anime,
+  Category,
   Images,
   Titles,
   User,
-  CustomErrorData,
-  CustomResponseData,
+  DefaultErrorData,
+  DefaultResponseData,
   Router,
   Resources,
 };

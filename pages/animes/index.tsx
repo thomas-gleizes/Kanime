@@ -1,11 +1,11 @@
 import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 
-import { Anime, CustomResponseData } from "../../types";
+import { Anime, DefaultResponseData } from "../../types";
 import appAxios from "../../lib/appAxios";
 import AnimeCard from "../../components/common/AnimeCard";
 
-interface Props extends CustomResponseData {
+interface Props extends DefaultResponseData {
   animes: Array<Anime>;
 }
 

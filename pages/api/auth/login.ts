@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-import { CustomErrorData, CustomResponseData, User } from "../../../types";
+import { DefaultErrorData, DefaultResponseData, User } from "../../../types";
 import router from "../../../lib/router";
 import Security from "../../../lib/security";
 import usersResources from "../../../resources/UsersResources";
 
-interface Data extends CustomResponseData {
+interface Data extends DefaultResponseData {
   user: User;
 }
 
@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 
 router.post = async (
   req: NextApiRequest,
-  res: NextApiResponse<Data | CustomErrorData>
+  res: NextApiResponse<Data | DefaultErrorData>
 ) => {
   const {
     body: { email, password },
