@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import { DefaultErrorData, DefaultResponseData } from "../../../../types";
 import router from "../../../../lib/router";
 import kitsuApi from "../../../../lib/kitsuApi";
+import KitsuApi from "../../../../lib/kitsuApi";
 
 const prisma = new PrismaClient();
 
@@ -11,11 +12,30 @@ router.get = async (
   req: NextApiRequest,
   res: NextApiResponse<any | DefaultErrorData>
 ) => {
-  const latestCategories = await prisma.category.count();
+  let categories: Array<any> = [];
+  let count = 0;
+  let next: string;
 
-  const path: string = "categories?page%5Blimit%5D=10&page%5Boffset%5D=0";
+  const {
+    data: { data, links, meta },
+  } = await KitsuApi.get("categories");
 
-  res.send({ success: true, count: latestCategories });
+  next = links.next;
+
+  do {
+    data.forEach(({ id, attributes }) => {
+      count++;
+
+      categories.push({
+        id: id,
+        name: attributes.title,
+        attributes: attributes.slug,
+        description: attributes,
+      });
+    });
+  } while (count <= meta.count);
+
+  res.send({ success: true, categories, links });
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
