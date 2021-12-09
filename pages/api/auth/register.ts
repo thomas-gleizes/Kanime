@@ -45,7 +45,7 @@ router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) =>
 
   newUser.token = Security.sign(newUser);
 
-  res.send({ success: true, user: newUser });
+  res.status(201).send({ success: true, user: newUser });
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
