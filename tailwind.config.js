@@ -54,6 +54,9 @@ module.exports = {
         screen: '100vh',
         unset: 'unset',
       },
+      zIndex: {
+        ...buildList(10, '', 10),
+      },
     },
   },
   variants: {
