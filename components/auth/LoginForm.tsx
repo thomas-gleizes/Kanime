@@ -1,21 +1,21 @@
-import React from "react";
-import { Formik, Form, FormikHelpers } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Form, Formik, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 
-import Field from "../common/field";
+import Field from '../common/field';
 
 const loginSchema = Yup.object({
   email: Yup.string()
-    .email("Veuillez saisir un email valide")
-    .required("Veuillez saisir un email"),
-  password: Yup.string().required("Veuillez saisir un mot de passe"),
+    .email('Veuillez saisir un email valide')
+    .required('Veuillez saisir un email'),
+  password: Yup.string().required('Veuillez saisir un mot de passe'),
 });
 
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
 const initialValues: loginType = {
-  email: "",
-  password: "",
+  email: '',
+  password: '',
 };
 
 const LoginForm: React.FunctionComponent = () => {

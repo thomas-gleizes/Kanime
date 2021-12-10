@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from 'react';
 
 const useScrollPercent = (): number => {
   const [percent, setPercent] = useState<number>(0);
@@ -12,9 +12,9 @@ const useScrollPercent = (): number => {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
+    document.addEventListener('scroll', handleScroll);
 
-    return () => document.removeEventListener("scroll", handleScroll);
+    return () => document.removeEventListener('scroll', handleScroll);
   }, []);
 
   return percent;

@@ -43,7 +43,7 @@ export declare type Anime = {
   titles: Titles;
   synopsis: string;
   description: string;
-  season: "Winter" | "Springs" | "Summer" | "Fall" | string;
+  season: 'Winter' | 'Springs' | 'Summer' | 'Fall' | string;
   season_year: string;
   rating: Rating;
   popularity: Popularity;
@@ -52,6 +52,6 @@ export declare type Anime = {
   poster: Images;
   cover: Images;
   episode: Episode;
-  type: "TV" | "Movie" | "OAV" | "ONA" | "OVA" | "special" | "music" | string;
-  status: "finished" | "current" | "unreleased" | "tba" | "upcoming";
+  type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
+  status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
 };

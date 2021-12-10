@@ -1,5 +1,5 @@
-import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 class Security {
   private static SECRET_TOKEN: string = process.env.NODE_SECRET_TOKEN;
@@ -15,7 +15,7 @@ class Security {
   }
 
   static sign(payload: any): string {
-    return jwt.sign(payload, this.SECRET_TOKEN, { expiresIn: "1d" });
+    return jwt.sign(payload, this.SECRET_TOKEN, { expiresIn: '1d' });
   }
 }
 

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from 'react';
 
 const useCallBackRef = <T>(): [state: T | null, ref: any] => {
   const [state, setState] = useState<T | null>(null);

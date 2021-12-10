@@ -9,7 +9,7 @@
 DROP INDEX `users_login_index` ON `users`;
 
 -- CreateIndex
-CREATE UNIQUE INDEX `categories_slug_key` ON `categories`(`slug`);
+CREATE UNIQUE INDEX `categories_slug_key` ON `categories` (`slug`);
 
 -- CreateIndex
-CREATE UNIQUE INDEX `users_login_key` ON `users`(`login`);
+CREATE UNIQUE INDEX `users_login_key` ON `users` (`login`);

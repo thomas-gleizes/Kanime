@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
-import { DefaultErrorData, DefaultResponseData, User } from "../../../types";
-import router from "../../../lib/router";
-import Security from "../../../lib/security";
-import usersResources from "../../../resources/UsersResources";
+import { DefaultErrorData, DefaultResponseData, User } from '../../../types';
+import router from '../../../lib/router';
+import Security from '../../../lib/security';
+import usersResources from '../../../resources/UsersResources';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -27,7 +27,7 @@ router.post = async (
   );
 
   if (!user || !(await Security.compare(password, hash))) {
-    res.status(401).send({ error: "email/password wrong" });
+    res.status(401).send({ error: 'email/password wrong' });
     return;
   }
 

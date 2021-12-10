@@ -1,32 +1,32 @@
-import React from "react";
-import { Form, Formik, FormikHelpers } from "formik";
-import * as Yup from "yup";
+import React from 'react';
+import { Form, Formik, FormikHelpers } from 'formik';
+import * as Yup from 'yup';
 
-import Field from "../common/field";
-import appAxios from "../../lib/appAxios";
+import Field from '../common/field';
+import appAxios from '../../lib/appAxios';
 
 const validationSchema = Yup.object({
   login: Yup.string()
-    .min(3, "Votre pseudo doit contenir au moins 3 caractère")
-    .required("Veuillez saisir un pseudo"),
+    .min(3, 'Votre pseudo doit contenir au moins 3 caractère')
+    .required('Veuillez saisir un pseudo'),
   email: Yup.string()
-    .email("Votre email est invalide")
-    .required("Veuillez saisir un email"),
+    .email('Votre email est invalide')
+    .required('Veuillez saisir un email'),
   password: Yup.string()
-    .min(6, "Votre mot de passe doit contenir au minimum 6 caractère")
-    .required("Veuillez saisir un mot de passe"),
+    .min(6, 'Votre mot de passe doit contenir au minimum 6 caractère')
+    .required('Veuillez saisir un mot de passe'),
   confirmPassword: Yup.string()
-    .required("Veuillez confirmer votre mot de passe")
-    .oneOf([Yup.ref("password")], "Les mot de passe correspondent pas"),
+    .required('Veuillez confirmer votre mot de passe')
+    .oneOf([Yup.ref('password')], 'Les mot de passe correspondent pas'),
 });
 
 type registerForm = Yup.TypeOf<typeof validationSchema>;
 
 const initialValues: registerForm = {
-  login: "Kalat",
-  email: "kalat@kanime.fr",
-  password: "azerty",
-  confirmPassword: "azerty",
+  login: 'Kalat',
+  email: 'kalat@kanime.fr',
+  password: 'azerty',
+  confirmPassword: 'azerty',
 };
 
 const RegisterForm: React.FunctionComponent = () => {
@@ -35,7 +35,7 @@ const RegisterForm: React.FunctionComponent = () => {
     formik: FormikHelpers<registerForm>
   ) => {
     try {
-      const response = await appAxios.post("auth/register", values);
+      const response = await appAxios.post('auth/register', values);
     } catch (e) {}
   };
 

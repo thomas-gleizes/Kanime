@@ -1,29 +1,29 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<any>) {
   const routes = {
-    "/": {
+    '/': {
       GET: {
-        desc: "display all routes",
+        desc: 'display all routes',
       },
     },
-    "/animes": {
-      "/": {
+    '/animes': {
+      '/': {
         GET: {
-          desc: "Show all animes",
+          desc: 'Show all animes',
           query: {
-            limit: "number : size of result { max: 200 }",
-            skip: "number : index of start",
+            limit: 'number : size of result { max: 200 }',
+            skip: 'number : index of start',
           },
         },
-        ":id": {
-          "/": {
+        ':id': {
+          '/': {
             GET: {
-              desc: "Show anime with id",
+              desc: 'Show anime with id',
             },
           },
-          "/sagas": {
-            desc: "Show animes on the same saga with id",
+          '/sagas': {
+            desc: 'Show animes on the same saga with id',
           },
         },
       },

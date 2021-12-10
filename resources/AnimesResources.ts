@@ -1,7 +1,7 @@
-import { Anime as AnimeModel } from "@prisma/client";
-import Moment from "moment";
+import { Anime as AnimeModel } from '@prisma/client';
+import Moment from 'moment';
 
-import { Anime, Resources } from "../types";
+import { Anime, Resources } from '../types';
 
 class AnimesResources implements Resources<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
@@ -39,8 +39,8 @@ class AnimesResources implements Resources<AnimeModel, Anime> {
         length: episode_length,
         count: episode_count,
       },
-      date_begin: Moment(date_begin).format("YYYY-MM-DD HH:mm:ss"),
-      date_end: Moment(date_begin).format("YYYY-MM-DD HH:mm:ss"),
+      date_begin: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
+      date_end: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
       ...rest,
     };
   }

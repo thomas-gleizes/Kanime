@@ -1,6 +1,6 @@
-import React, { useMemo, useRef, useState } from "react";
-import { useField } from "formik";
-import classnames from "classnames";
+import React, { useMemo, useRef, useState } from 'react';
+import { useField } from 'formik';
+import classnames from 'classnames';
 
 interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -15,7 +15,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
   const [{ onBlur, ...field }, meta] = useField(name);
 
   const error = useMemo<string>(
-    () => (meta.touched && !!meta.error ? meta.error : ""),
+    () => (meta.touched && !!meta.error ? meta.error : ''),
     [meta.error, meta.touched]
   );
 
@@ -29,15 +29,15 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
       <div
         onClick={handleClick}
         className={classnames(
-          "relative group rounded-md p-0.5 border-4 border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200",
-          { "border-red-400": error }
+          'relative group rounded-md p-0.5 border-4 border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200',
+          { 'border-red-400': error }
         )}
       >
         <label
           onClick={handleClick}
           className={classnames(
-            "absolute px-1 mx-2 text-md top-2.5 bg-white group-hover:text-blue-700 transform transition duration-200 left-3 text-opacity-40 cursor-text",
-            { "-translate-y-6 -translate-x-2": focus || field.value }
+            'absolute px-1 mx-2 text-md top-2.5 bg-white group-hover:text-blue-700 transform transition duration-200 left-3 text-opacity-40 cursor-text',
+            { '-translate-y-6 -translate-x-2': focus || field.value }
           )}
         >
           {label}
@@ -57,11 +57,11 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
         />
       </div>
       <div
-        className={classnames("text-danger text-right px-2 text-xs", {
+        className={classnames('text-danger text-right px-2 text-xs', {
           invisible: !error,
         })}
       >
-        {error || "none"}
+        {error || 'none'}
       </div>
     </div>
   );

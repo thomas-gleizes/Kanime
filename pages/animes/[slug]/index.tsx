@@ -1,11 +1,11 @@
-import { GetServerSideProps, NextPage } from "next";
-import React from "react";
-import Head from "next/head";
-import Image from "next/image";
-import { FaHeart, FaPlus, FaStar } from "react-icons/fa";
+import { GetServerSideProps, NextPage } from 'next';
+import React from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
+import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 
-import { Anime, DefaultResponseData } from "../../../types";
-import appAxios from "../../../lib/appAxios";
+import { Anime, DefaultResponseData } from '../../../types';
+import appAxios from '../../../lib/appAxios';
 
 interface Props extends DefaultResponseData {
   anime: Anime;
@@ -33,12 +33,12 @@ const Index: NextPage<Props> = ({ anime }) => {
           className="absolute top-0 bottom-0 -z-10 w-full h-full bg-gradient-to-b from-red-800 bg-cover bg-center"
           style={{
             backgroundImage: `url('${anime.cover.small}')`,
-            height: "330px",
+            height: '330px',
           }}
         />
         <div
           className="flex z-30 w-full mx-auto px-10 lg:px-2"
-          style={{ maxWidth: "1200px", paddingTop: "240px" }}
+          style={{ maxWidth: '1200px', paddingTop: '240px' }}
         >
           <div className="mx-1 w-full">
             <div className="h-20 w-full border" />

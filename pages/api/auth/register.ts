@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
-import { DefaultErrorData, DefaultResponseData, User } from "../../../types";
-import router from "../../../lib/router";
-import Security from "../../../lib/security";
-import usersResources from "../../../resources/UsersResources";
+import { DefaultErrorData, DefaultResponseData, User } from '../../../types';
+import router from '../../../lib/router';
+import Security from '../../../lib/security';
+import usersResources from '../../../resources/UsersResources';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -26,10 +26,10 @@ router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) =>
   });
 
   if (users.length) {
-    let key = "login";
-    if (users[0].email === userData.email) key = "email";
+    let key = 'login';
+    if (users[0].email === userData.email) key = 'email';
 
-    res.status(400).send({ error: "", key });
+    res.status(400).send({ error: '', key });
     throw new Error();
   }
 

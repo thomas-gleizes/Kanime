@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import { PrismaClient } from "@prisma/client";
+import type { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
-import { Anime, DefaultErrorData, DefaultResponseData } from "../../../../types";
-import animesResources from "../../../../resources/AnimesResources";
-import router from "../../../../lib/router";
+import { Anime, DefaultErrorData, DefaultResponseData } from '../../../../types';
+import animesResources from '../../../../resources/AnimesResources';
+import router from '../../../../lib/router';
 
 interface Data extends DefaultResponseData {
   anime: Anime;

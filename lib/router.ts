@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest, NextApiResponse } from 'next';
 
 declare type route = (
   req: NextApiRequest,
@@ -39,25 +39,25 @@ class Router {
   public async handler(req, res): Promise<void> {
     const { method } = req;
     try {
-      if (method === "GET" && typeof this._get !== "undefined") {
+      if (method === 'GET' && typeof this._get !== 'undefined') {
         await this._get(req, res);
-      } else if (method === "POST" && typeof this._post !== "undefined") {
+      } else if (method === 'POST' && typeof this._post !== 'undefined') {
         await this._post(req, res);
-      } else if (method === "PUT" && typeof this._put !== "undefined") {
+      } else if (method === 'PUT' && typeof this._put !== 'undefined') {
         await this._put(req, res);
-      } else if (method === "PATCH" && typeof this._patch !== "undefined") {
+      } else if (method === 'PATCH' && typeof this._patch !== 'undefined') {
         await this._patch(req, res);
-      } else if (method === "DELETE" && typeof this._delete !== "undefined") {
+      } else if (method === 'DELETE' && typeof this._delete !== 'undefined') {
         await this._delete(req, res);
       } else {
-        res.status(404).json({ error: "No matching routes" });
+        res.status(404).json({ error: 'No matching routes' });
       }
     } catch (e) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error("Error :", e);
+      if (process.env.NODE_ENV !== 'production') {
+        console.error('Error :', e);
         res.status(500).send(e.message);
       } else {
-        res.status(500).send("Internal error");
+        res.status(500).send('Internal error');
       }
     }
   }
