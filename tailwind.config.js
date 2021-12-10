@@ -57,7 +57,16 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['checked', 'disabled', 'group-focus'],
+      backgroundOpacity: ['group-focus'],
+      borderWidth: ['group-focus'],
+      opacity: ['group-focus'],
+      borderColor: ['checked', 'disabled'],
+      boxShadow: ['active'],
+      rotate: ['group-focus'],
+      inset: ['hover', 'focus', 'group-focus'],
+    },
   },
   plugins: [],
 };
