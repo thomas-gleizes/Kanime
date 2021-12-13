@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { PrismaClient } from '@prisma/client';
 
 declare type route = (
   req: NextApiRequest,
@@ -38,6 +39,7 @@ class Router {
 
   public async handler(req, res): Promise<void> {
     const { method } = req;
+
     try {
       if (method === 'GET' && typeof this._get !== 'undefined') {
         await this._get(req, res);

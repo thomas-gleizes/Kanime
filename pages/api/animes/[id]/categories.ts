@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 import { Category, DefaultErrorData, DefaultResponseData } from '../../../../types';
 import router from '../../../../lib/router';
-import CategoriesResources from '../../../../resources/CategoriesResources';
+import CategoriesResources from '../../../../lib/resources/CategoriesResources';
 
 interface Data extends DefaultResponseData {
   categories: Category[];

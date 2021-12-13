@@ -1,5 +1,5 @@
 import { User as UserModel } from '@prisma/client';
-import { Resources, User } from '../types';
+import { Resources, User } from '../../types';
 
 class UsersResources implements Resources<UserModel, [user: User, password: string]> {
   public one(resource: UserModel): [user: User, password: string] {

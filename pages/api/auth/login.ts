@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 import { DefaultErrorData, DefaultResponseData, User } from '../../../types';
 import router from '../../../lib/router';
 import Security from '../../../lib/security';
-import usersResources from '../../../resources/UsersResources';
+import usersResources from '../../../lib/resources/UsersResources';
 
 interface Data extends DefaultResponseData {
   user: User;
