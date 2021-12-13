@@ -1,11 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
+import { useToggle } from '../../hooks';
 
 interface Props extends React.HTMLAttributes<HTMLHeadingElement> {}
 
 const Header: React.FunctionComponent<Props> = (props) => {
+  const [_, toggle] = useToggle();
+
   return (
-    <header {...props}>
+    <header {...props} onClick={toggle}>
       <div className="bg-blue-500 h-50 shadow-xl px-8">
         <div className="flex justify-between h-full w-full my-auto">
           <div className="my-auto">

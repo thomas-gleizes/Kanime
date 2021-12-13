@@ -1,6 +1,4 @@
-import useToggle from './useToggle';
-import useScrollPercent from './useScrollPercent';
-import useCallBackRef from './useCallbackRef';
-import useContextFactory from './useContextFactory';
-
-export { useToggle, useScrollPercent, useCallBackRef, useContextFactory };
+export { default as useToggle } from './useToggle';
+export { default as useScrollPercent } from './useScrollPercent';
+export { default as useCallbackRef } from './useCallbackRef';
+export { default as useContextFactory } from './useContextFactory';
