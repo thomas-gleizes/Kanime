@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Anime } from '../../types';
+import { Anime } from '@types';
 
 const AnimeCard: React.FunctionComponent<Anime> = ({ slug, poster, canonicalTitle }) => {
   return (

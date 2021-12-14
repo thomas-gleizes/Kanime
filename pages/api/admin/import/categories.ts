@@ -1,19 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
-import { DefaultErrorData } from '../../../../types';
-import connexion from '../../../../lib/connexion';
-import router from '../../../../lib/router';
-import KitsuApi from '../../../../lib/api/kitsuApi';
-
-const prisma = new PrismaClient();
+import { DefaultErrorData } from '@types';
+import connexion from '@lib/connexion';
+import router from '@lib/router';
+import KitsuApi from '@lib/api/kitsuApi';
 
 router.get = async (
   req: NextApiRequest,
   res: NextApiResponse<any | DefaultErrorData>
 ) => {
   let categories: Array<any> = [];
-  let count: number = await prisma.category.count();
+  let count: number = await connexion.category.count();
   let limit: number = 0;
 
   do {

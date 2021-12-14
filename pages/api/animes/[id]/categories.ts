@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Category, DefaultErrorData, DefaultResponseData } from '../../../../types';
-import connexion from '../../../../lib/connexion';
-import router from '../../../../lib/router';
-import CategoriesResources from '../../../../lib/resources/CategoriesResources';
+import { Category, DefaultErrorData, DefaultResponseData } from '@types';
+import connexion from '@lib/connexion';
+import router from '@lib/router';
+import CategoriesResources from '@lib/resources/CategoriesResources';
 
 interface Data extends DefaultResponseData {
   categories: Category[];

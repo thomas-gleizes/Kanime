@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
-import { useToggle } from '../../hooks';
+
+import { useToggle } from '@hooks';
 
 interface Props extends React.HTMLAttributes<HTMLHeadingElement> {}
 

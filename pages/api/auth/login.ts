@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultErrorData, DefaultResponseData, User } from '../../../types';
-import connexion from '../../../lib/connexion';
-import router from '../../../lib/router';
-import Security from '../../../lib/security';
-import usersResources from '../../../lib/resources/UsersResources';
+import { DefaultErrorData, DefaultResponseData, User } from '@types';
+import connexion from '@lib/connexion';
+import router from '@lib/router';
+import Security from '@lib/security';
+import usersResources from '@lib/resources/UsersResources';
 
 interface Data extends DefaultResponseData {
   user: User;

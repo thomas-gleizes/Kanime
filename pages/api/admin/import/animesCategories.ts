@@ -1,18 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Category, PrismaClient } from '@prisma/client';
+import { Category } from '@prisma/client';
 
-import { DefaultErrorData } from '../../../../types';
-import connexion from '../../../../lib/connexion';
-import router from '../../../../lib/router';
-import kitsuApi from '../../../../lib/api/kitsuApi';
-
-const prisma = new PrismaClient();
+import { DefaultErrorData } from '@types';
+import connexion from '@lib/connexion';
+import router from '@lib/router';
+import kitsuApi from '@lib/api/kitsuApi';
 
 router.get = async (
   req: NextApiRequest,
   res: NextApiResponse<any | DefaultErrorData>
 ) => {
-  const categories: Category[] = await prisma.category.findMany({});
+  const categories: Category[] = await connexion.category.findMany({});
   const array: { category_id; anime_id }[] = [];
 
   for (const category of categories) {
