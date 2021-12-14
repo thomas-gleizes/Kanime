@@ -2,8 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { PrismaClient } from '@prisma/client';
 
 import { DefaultErrorData } from '../../../../types';
+import connexion from '../../../../lib/connexion';
 import router from '../../../../lib/router';
-import KitsuApi from '../../../../lib/kitsuApi';
+import KitsuApi from '../../../../lib/api/kitsuApi';
 
 const prisma = new PrismaClient();
 
@@ -35,7 +36,7 @@ router.get = async (
     });
   } while (count < limit);
 
-  await prisma.category.createMany({ data: categories });
+  await connexion.category.createMany({ data: categories });
 
   res.send({ success: true, categories });
 };

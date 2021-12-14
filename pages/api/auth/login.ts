@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
 import { DefaultErrorData, DefaultResponseData, User } from '../../../types';
+import connexion from '../../../lib/connexion';
 import router from '../../../lib/router';
 import Security from '../../../lib/security';
 import usersResources from '../../../lib/resources/UsersResources';
@@ -9,8 +9,6 @@ import usersResources from '../../../lib/resources/UsersResources';
 interface Data extends DefaultResponseData {
   user: User;
 }
-
-const prisma = new PrismaClient();
 
 router.post = async (
   req: NextApiRequest,
@@ -21,7 +19,7 @@ router.post = async (
   } = req;
 
   const [user, hash]: [User, string] = usersResources.one(
-    await prisma.user.findUnique({
+    await connexion.user.findUnique({
       where: { email },
     })
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { Anime, DefaultResponseData } from '../../types';
-import appAxios from '../../lib/appAxios';
+import appAxios from '../../lib/api/appAxios';
 import AnimeCard from '../../components/common/AnimeCard';
 
 interface Props extends DefaultResponseData {

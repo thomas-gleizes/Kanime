@@ -1,15 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
 import { Anime, DefaultErrorData, DefaultResponseData } from '../../../../types';
+import connexion from '../../../../lib/connexion';
 import animesResources from '../../../../lib/resources/AnimesResources';
 import router from '../../../../lib/router';
 
 interface Data extends DefaultResponseData {
   animes: Array<Anime>;
 }
-
-const prisma = new PrismaClient();
 
 router.get = async (
   req: NextApiRequest,
@@ -18,7 +16,7 @@ router.get = async (
   const { limit, skip, query } = req.query;
 
   const animes: Array<Anime> = animesResources.many(
-    await prisma.anime.findMany({
+    await connexion.anime.findMany({
       where: {
         canonical_title: {
           contains: `${query}`,

@@ -2,8 +2,9 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Category, PrismaClient } from '@prisma/client';
 
 import { DefaultErrorData } from '../../../../types';
+import connexion from '../../../../lib/connexion';
 import router from '../../../../lib/router';
-import kitsuApi from '../../../../lib/kitsuApi';
+import kitsuApi from '../../../../lib/api/kitsuApi';
 
 const prisma = new PrismaClient();
 

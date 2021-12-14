@@ -102,13 +102,13 @@ model UserFollow {
 }
 
 model Log {
-  id         Int          @id @default(autoincrement())
-  route String
-  method Method
-  query String? @db.Text
-  body String? @db.Text
-  auth_token String? @db.VarChar(255)
-  created_at DateTime        @default(now()) @db.Timestamp(0)
+  id         Int      @id @default(autoincrement())
+  route      String
+  method     Method
+  query      String?  @db.Text
+  body       String?  @db.Text
+  auth_token String?  @db.VarChar(255)
+  created_at DateTime @default(now()) @db.Timestamp(0)
 
   @@map("logs")
 }
@@ -147,9 +147,9 @@ enum AnimeUserStatus {
 }
 
 enum Method {
-    GET
-    POST
-    PUT
-    PATCH
-    DELETE
+  GET
+  POST
+  PUT
+  PATCH
+  DELETE
 }
