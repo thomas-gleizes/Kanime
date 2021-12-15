@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { PrismaClient } from '@prisma/client';
 
 declare type route = (
   req: NextApiRequest,

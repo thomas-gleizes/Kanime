@@ -1,7 +1,7 @@
 import { Anime as AnimeModel } from '@prisma/client';
 import Moment from 'moment';
 
-import { Anime, Resources } from '../../types';
+import { Anime, Resources } from '@types';
 
 class AnimesResources implements Resources<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {

@@ -17,6 +17,14 @@ class Security {
   static sign(payload: any): string {
     return jwt.sign(payload, this.SECRET_TOKEN, { expiresIn: '1d' });
   }
+
+  static verifyToken(token): boolean {
+    return !!jwt.verify(token, this.SECRET_TOKEN);
+  }
+
+  static getTokenPayload(token): any {
+    return jwt.verify(token, this.SECRET_TOKEN);
+  }
 }
 
 export default Security;

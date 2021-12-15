@@ -1,5 +1,6 @@
 import { Category as CategoryModel } from '@prisma/client';
-import { Category, Resources } from '../../types';
+
+import { Category, Resources } from '@types';
 
 class CategoriesResources implements Resources<CategoryModel, Category> {
   one(resource: CategoryModel): Category {

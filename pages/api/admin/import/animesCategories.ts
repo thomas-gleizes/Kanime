@@ -1,15 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Category } from '@prisma/client';
 
-import { DefaultErrorData } from '@types';
 import connexion from '@lib/connexion';
 import router from '@lib/router';
 import kitsuApi from '@lib/api/kitsuApi';
 
-router.get = async (
-  req: NextApiRequest,
-  res: NextApiResponse<any | DefaultErrorData>
-) => {
+router.get = async (req: NextApiRequest, res: NextApiResponse) => {
   const categories: Category[] = await connexion.category.findMany({});
   const array: { category_id; anime_id }[] = [];
 
@@ -21,7 +17,7 @@ router.get = async (
       const {
         data: { data: animes, meta },
       } = await kitsuApi.get(
-        `categories/${category.id}/anime?page[limit]=10&offset=${count}`
+        `categories/${category.id}/anime?page[limit]=10&page[offset]=${count}`
       );
       limit = meta.count;
 
