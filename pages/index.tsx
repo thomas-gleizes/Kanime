@@ -1,9 +1,19 @@
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
+import Moment from 'moment';
 
-const Home: NextPage = () => {
+interface Props {
+  time: string;
+}
+
+export const getStaticProps: GetStaticProps<Props> = () => {
+  return { props: { time: Moment().format('DD/MM/YYYY HH:mm:ss') }, revalidate: 60 };
+};
+
+const Home: NextPage<Props> = ({ time }) => {
   return (
     <div className="flex flex-col-2 items-center justify-center min-h-screen py-2">
       <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+        <div className="text-center">{time}</div>
         <h1 className="text-6xl font-bold first-letter:text-[#db8000]">
           Welcome to{' '}
           <a className="text-blue-600" href="https://nextjs.org">
