@@ -1,12 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-export interface DefaultResponseData {
+export interface DefaultResponseData<T = any> {
   success?: boolean;
   params?: any;
+  data?: T;
 }
 
-export interface DefaultErrorData {
+export interface DefaultErrorData<T = any> {
   error: string;
+  data?: T;
 }
 
 export interface Router {

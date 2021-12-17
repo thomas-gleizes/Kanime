@@ -19,7 +19,9 @@
       "@lib/*": ["lib/*"],
       "@components/*": ["components/*"],
       "@types": ["types"],
-      "@hooks": ["hooks"]
+      "@hooks": ["hooks"],
+      "@resources": ["lib/resources"],
+      "@errors": ["lib/errors"],
     }
   },
   "include": [

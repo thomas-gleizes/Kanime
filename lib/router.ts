@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { ApiError } from '@errors';
 
 declare type route = (
   req: NextApiRequest,
@@ -54,7 +55,9 @@ class Router {
         res.status(404).json({ error: 'No matching routes' });
       }
     } catch (e) {
-      if (process.env.NODE_ENV !== 'production') {
+      if (e instanceof ApiError) {
+        res.send({});
+      } else if (process.env.NODE_ENV !== 'production') {
         console.error('Error :', e);
         res.status(500).send(e.message);
       } else {
