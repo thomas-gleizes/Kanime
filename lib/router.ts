@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { ApiError } from '@errors';
+import connexion from '@lib/connexion';
 
 declare type route = (
   req: NextApiRequest,
@@ -39,6 +40,16 @@ class Router {
 
   public async handler(req, res): Promise<void> {
     const { method } = req;
+
+    await connexion.log.create({
+      data: {
+        route: req.url,
+        method: method,
+        query: JSON.stringify(req.query),
+        body: JSON.stringify(req.body),
+        auth_token: '',
+      },
+    });
 
     try {
       if (method === 'GET' && typeof this._get !== 'undefined') {
