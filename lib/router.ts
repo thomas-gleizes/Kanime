@@ -67,7 +67,7 @@ class Router {
       }
     } catch (e) {
       if (e instanceof ApiError) {
-        res.send({});
+        res.status(e.code).send({ error: e.message });
       } else if (process.env.NODE_ENV !== 'production') {
         console.error('Error :', e);
         res.status(500).send(e.message);

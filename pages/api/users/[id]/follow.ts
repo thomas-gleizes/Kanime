@@ -40,7 +40,7 @@ router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) =>
 
     res.status(201).send({ success: true });
   } catch (e) {
-    throw new ApiError('you already follow this user !');
+    throw new ApiError(400, 'you already follow this user !');
   }
 };
 

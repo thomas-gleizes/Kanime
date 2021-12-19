@@ -6,6 +6,14 @@ class ApiError {
     this._message = message;
     this._code = code;
   }
+
+  public get message(): string {
+    return this._message;
+  }
+
+  public get code(): string {
+    return this._code;
+  }
 }
 
 export default ApiError;
