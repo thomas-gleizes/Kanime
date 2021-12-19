@@ -1,7 +1,11 @@
-import type { NextFetchEvent, NextRequest } from 'next/server';
+import jwt from 'jsonwebtoken';
 
-export async function middleware(req: NextRequest, ev: NextFetchEvent) {
+export async function middleware(req) {
   const token = req.headers.get('authorization')?.replace('Bearer ', '');
 
-  console.log('Token', token);
+  try {
+    const payload = jwt.verify(token, process.env.SECRET_TOKEN);
+  } catch (e) {
+    new Response('Access denied');
+  }
 }
