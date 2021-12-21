@@ -2,17 +2,14 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Anime, DefaultErrorData, DefaultResponseData } from '@types';
 import connexion from '@lib/connexion';
-import router from '@lib/router';
+import router from '@lib/router/router';
 import animesResources from '@lib/resources/AnimesResources';
 
 interface Data extends DefaultResponseData {
   anime: Anime;
 }
 
-router.get = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data | DefaultErrorData>
-) => {
+router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
   const { slug } = req.query;
 
   try {
@@ -26,7 +23,7 @@ router.get = async (
   } catch (e) {
     res.status(400).send({ error: e.message });
   }
-};
+});
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   router.handler(req, res);

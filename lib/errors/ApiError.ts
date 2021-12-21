@@ -1,6 +1,6 @@
 class ApiError {
   private _message: string;
-  private _code: '404' | '400' | '500' | string;
+  private _code: 404 | 400 | 500 | 401 | number;
 
   constructor(code, message) {
     this._message = message;
@@ -11,7 +11,7 @@ class ApiError {
     return this._message;
   }
 
-  public get code(): string {
+  public get code(): number {
     return this._code;
   }
 }

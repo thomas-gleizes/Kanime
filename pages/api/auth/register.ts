@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultErrorData, DefaultResponseData, User } from '@types';
 import connexion from '@lib/connexion';
-import router from '@lib/router';
+import router from '@lib/router/router';
 import Security from '@lib/security';
 import usersResources from '@lib/resources/UsersResources';
 
@@ -14,7 +14,7 @@ interface Error extends DefaultErrorData {
   key?: string;
 }
 
-router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
   const { body: userData } = req;
 
   const users: Array<any> = await connexion.user.findMany({
@@ -44,7 +44,7 @@ router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) =>
   newUser.token = Security.sign(newUser);
 
   res.status(201).send({ success: true, user: newUser });
-};
+});
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   router.handler(req, res);

@@ -1,10 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
-import { DefaultErrorData, DefaultResponseData } from '@types';
-import router from '@lib/router';
+import { DefaultErrorData, DefaultResponseData, ApiRequest, ApiResponse } from '@types';
+import router from '@lib/router/router';
 import connexion from '@lib/connexion';
 import UsersResources from '@lib/resources/UsersResources';
 import ApiError from '@lib/errors/ApiError';
+import Security from '@lib/security';
 
 interface Data extends DefaultResponseData {}
 
@@ -12,7 +11,18 @@ interface Error extends DefaultErrorData {
   message: string;
 }
 
-router.get = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+const verify = (req: ApiRequest, res: ApiResponse) => {
+  try {
+    const token = req.headers.authorization.replace('Bearer ', '');
+    const { user } = Security.getTokenPayload(token);
+
+    req.session = user;
+  } catch (e) {
+    throw new ApiError(401, 'Access denied');
+  }
+};
+
+router.get(async (req: ApiRequest, res: ApiResponse<Data | Error>) => {
   const { id } = req.query;
 
   const users = UsersResources.many(
@@ -24,17 +34,16 @@ router.get = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => 
   ).map(([user]) => user);
 
   res.send({ success: true, data: users });
-};
+});
 
-router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
-  const { id } = req.query;
-  const user = { id: 1 }; // TODO ICI
+router.post(verify, async (req: ApiRequest, res: ApiResponse<Data | Error>) => {
+  const { query, session } = req;
 
   try {
     await connexion.userFollow.create({
       data: {
-        follower_id: +user.id,
-        follow_id: +id,
+        follower_id: +session.id,
+        follow_id: +query.id,
       },
     });
 
@@ -42,26 +51,27 @@ router.post = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) =>
   } catch (e) {
     throw new ApiError(400, 'you already follow this user !');
   }
-};
+});
 
-router.delete = async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
-  const { id } = req.query;
-  const user = { id: 1 }; // TODO ICI COMME LA HAUT
+router.delete(verify, async (req: ApiRequest, res: ApiResponse<Data | Error>) => {
+  const { query, session } = req;
 
   try {
-    const test = await connexion.userFollow.delete({
+    const test = await connexion.userFollow.deleteMany({
       where: {
-        follower_id: +user.id,
-        follow_id: +id,
+        AND: {
+          follower_id: +session.id,
+          follow_id: +query.id,
+        },
       },
     });
 
-    res.status(200).send({ success: true });
+    res.status(200).send({ success: true, data: test });
   } catch (e) {
-    res.status(400).send({ data: undefined, message: "you didn't follow this user" });
+    throw new ApiError(400, "you can't unfollow this user");
   }
-};
+});
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default function handler(req: ApiRequest, res: ApiResponse) {
   router.handler(req, res);
 }

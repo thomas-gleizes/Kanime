@@ -68,6 +68,8 @@ model User {
   login           String       @unique
   avatar_path     String?
   background_path String?
+  follow_count    Int          @default(0) @db.UnsignedSmallInt
+  follower_count  Int          @default(0) @db.UnsignedSmallInt
   is_admin        Boolean      @default(false)
   created_at      DateTime     @default(now()) @db.Timestamp(0)
   updated_at      DateTime     @default(now()) @db.Timestamp(0)
