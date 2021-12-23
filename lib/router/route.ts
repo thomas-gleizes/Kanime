@@ -1,4 +1,5 @@
-import { ApiRequest, ApiResponse, Method, Middleware } from '../../types/server';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { Method, Middleware } from '@types';
 
 class Route {
   private method: Method;
@@ -9,7 +10,7 @@ class Route {
     this.middleware = middleware;
   }
 
-  public call(req: ApiRequest, res: ApiResponse): Promise<void> | void {
+  public call(req: NextApiRequest, res: NextApiResponse): Promise<void> | void {
     return this.middleware(req, res);
   }
 }

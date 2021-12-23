@@ -1,19 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { ApiRequest, ApiResponse, DefaultErrorData } from '@types';
+import { DefaultErrorData } from '@types';
 import { verifyAdmin, withSessionApi } from '@lib/session';
 import connexion from '@lib/connexion';
 import router from '@lib/router/router';
 import KitsuApi from '@lib/api/kitsuApi';
 
-router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<any | DefaultErrorData>) => {
+router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   let categories: Array<any> = [];
   let count: number = await connexion.category.count();
   let limit: number = 0;
 
   do {
     const {
-      data: { data, meta }
+      data: { data, meta },
     } = await KitsuApi.get(`categories?page[limit]=10&page[offset]=${count}`);
 
     limit = meta.count;
@@ -26,7 +26,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<any | D
       categories.push({
         name: attributes.title,
         slug: attributes.slug,
-        description: attributes.description
+        description: attributes.description,
       });
     });
   } while (count < limit);
@@ -36,6 +36,6 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<any | D
   res.send({ success: true, categories });
 });
 
-export default withSessionApi((req: ApiRequest, res: ApiResponse) => {
+export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
 });

@@ -1,4 +1,6 @@
-import { ApiRequest, ApiResponse, Middleware } from '../../types/server';
+import { NextApiRequest, NextApiResponse } from 'next';
+
+import { Middleware } from '@types';
 import { ApiError } from '@errors';
 import Route from '@lib/router/route';
 
@@ -55,7 +57,7 @@ class Router {
     this.delete(...middlewares);
   }
 
-  public async handler(req: ApiRequest, res: ApiResponse): Promise<void> {
+  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const { method } = req;
 
     try {

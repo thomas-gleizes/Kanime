@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Category } from '@prisma/client';
 
-import { ApiRequest, ApiResponse } from '@types';
 import { verifyAdmin, withSessionApi } from '@lib/session';
 import connexion from '@lib/connexion';
 import router from '@lib/router/router';
@@ -19,7 +18,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
 
     do {
       const {
-        data: { data: animes, meta }
+        data: { data: animes, meta },
       } = await kitsuApi.get(
         `categories/${category.id}/anime?page[limit]=10&page[offset]=${count}`
       );
@@ -33,6 +32,6 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   res.send({ success: true, categories });
 });
 
-export default withSessionApi((req: ApiRequest, res: ApiResponse) => {
+export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
 });
