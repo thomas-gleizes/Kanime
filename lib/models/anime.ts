@@ -4,8 +4,8 @@ import connexion from '@lib/connexion';
 const { anime: animes } = connexion;
 
 declare type params = {
-  limit: number;
-  skip: number;
+  limit?: number;
+  skip?: number;
 }
 
 export const findById = (id: number): Promise<Anime> =>

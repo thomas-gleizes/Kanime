@@ -14,7 +14,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
   const { limit, skip } = req.query;
 
   const animes: Array<Anime> = AnimesResources.many(
-    await AnimeModel.findMany(+limit, +skip)
+    await AnimeModel.getMany({ limit: +limit, skip: +skip })
   );
 
   res.send({ success: true, animes, length: animes.length, params: req.query });
