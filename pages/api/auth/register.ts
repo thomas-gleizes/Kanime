@@ -5,6 +5,7 @@ import connexion from '@lib/connexion';
 import router from '@lib/router/router';
 import Security from '@lib/security';
 import usersResources from '@lib/resources/UsersResources';
+import { withSessionApi } from '@lib/session';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -19,8 +20,8 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
 
   const users: Array<any> = await connexion.user.findMany({
     where: {
-      OR: [{ email: userData.email }, { login: userData.login }],
-    },
+      OR: [{ email: userData.email }, { login: userData.login }]
+    }
   });
 
   if (users.length) {
@@ -36,8 +37,8 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
       data: {
         login: userData.login,
         email: userData.email,
-        password: await Security.hash(userData.password),
-      },
+        password: await Security.hash(userData.password)
+      }
     })
   );
 
@@ -46,6 +47,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
   res.status(201).send({ success: true, user: newUser });
 });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
-}
+});

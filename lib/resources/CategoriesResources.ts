@@ -9,7 +9,7 @@ class CategoriesResources implements Resources<CategoryModel, Category> {
       slug: resource.slug,
       name: resource.name,
       description: resource.description,
-      totalMediaCount: resource.total_media_count,
+      totalMediaCount: resource.total_media_count
     };
   }
 

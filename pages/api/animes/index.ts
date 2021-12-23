@@ -16,7 +16,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
   const animes: Array<Anime> = animesResources.many(
     await connexion.anime.findMany({
       take: +limit || 10,
-      skip: +skip || 0,
+      skip: +skip || 0
     })
   );
 

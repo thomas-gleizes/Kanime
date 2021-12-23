@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse, Method, Middleware } from '../../types/server';
+import { ApiRequest, ApiResponse, Middleware } from '../../types/server';
 import { ApiError } from '@errors';
 import Route from '@lib/router/route';
 
@@ -55,21 +55,6 @@ class Router {
     this.delete(...middlewares);
   }
 
-  private getRoutes(method: string): Route[] {
-    switch (method) {
-      case 'GET':
-        return this._get;
-      case 'POST':
-        return this._post;
-      case 'PATCH':
-        return this._patch;
-      case 'PUT':
-        return this._put;
-      case 'DELETE':
-        return this._delete;
-    }
-  }
-
   public async handler(req: ApiRequest, res: ApiResponse): Promise<void> {
     const { method } = req;
 
@@ -87,6 +72,21 @@ class Router {
       } else {
         res.status(500).send('Internal error');
       }
+    }
+  }
+
+  private getRoutes(method: string): Route[] {
+    switch (method) {
+      case 'GET':
+        return this._get;
+      case 'POST':
+        return this._post;
+      case 'PATCH':
+        return this._patch;
+      case 'PUT':
+        return this._put;
+      case 'DELETE':
+        return this._delete;
     }
   }
 }

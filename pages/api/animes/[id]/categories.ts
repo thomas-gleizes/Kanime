@@ -15,8 +15,8 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
   const categories: any[] = CategoriesResources.many(
     await connexion.category.findMany({
       where: {
-        animes: { some: { anime_id: +id } },
-      },
+        animes: { some: { anime_id: +id } }
+      }
     })
   );
 

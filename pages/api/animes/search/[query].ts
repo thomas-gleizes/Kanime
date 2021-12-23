@@ -16,11 +16,11 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
     await connexion.anime.findMany({
       where: {
         canonical_title: {
-          contains: `${query}`,
-        },
+          contains: `${query}`
+        }
       },
       take: +limit || 100,
-      skip: +skip || 0,
+      skip: +skip || 0
     })
   );
 

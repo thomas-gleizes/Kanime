@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { withIronSessionApiRoute } from 'iron-session/next';
 
 import router from '@lib/router/router';
-import { sessionOptions } from '@lib/session';
+import { withSessionApi } from '@lib/session';
 
 router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   req.session.destroy();
@@ -10,6 +9,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse) => {
   res.send({ success: true });
 });
 
-export default withIronSessionApiRoute((req: NextApiRequest, res: NextApiResponse) => {
+export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
-}, sessionOptions);
+});

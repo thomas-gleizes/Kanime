@@ -4,8 +4,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
   const routes = {
     '/': {
       GET: {
-        desc: 'display all routes',
-      },
+        desc: 'display all routes'
+      }
     },
     '/animes': {
       '/': {
@@ -13,21 +13,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
           desc: 'Show all animes',
           query: {
             limit: 'number : size of result { max: 200 }',
-            skip: 'number : index of start',
-          },
+            skip: 'number : index of start'
+          }
         },
         ':id': {
           '/': {
             GET: {
-              desc: 'Show anime with id',
-            },
+              desc: 'Show anime with id'
+            }
           },
           '/sagas': {
-            desc: 'Show animes on the same saga with id',
-          },
-        },
-      },
-    },
+            desc: 'Show animes on the same saga with id'
+          }
+        }
+      }
+    }
   };
 
   res.status(200).send({ success: true, routes });

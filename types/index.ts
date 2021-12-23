@@ -4,6 +4,6 @@ export type {
   DefaultErrorData,
   DefaultResponseData,
   Resources,
-  ApiRequest,
-  ApiResponse,
+  Middleware,
+  Method
 } from './server';

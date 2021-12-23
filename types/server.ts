@@ -11,11 +11,6 @@ export interface DefaultErrorData<T = any> {
   data?: T;
 }
 
-export interface ApiRequest<S = any> extends NextApiRequest {
-  session?: S;
-}
-export interface ApiResponse<T = any> extends NextApiResponse<T> {}
-
 export interface Resources<E = any, S = any> {
   one: (resource: E) => S;
   many: (resources: Array<E>) => Array<S>;
@@ -23,4 +18,4 @@ export interface Resources<E = any, S = any> {
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export type Middleware = (req: ApiRequest, res: ApiResponse) => Promise<void> | void;
+export type Middleware = (req: NextApiRequest, res: NextApiResponse) => Promise<void> | void;

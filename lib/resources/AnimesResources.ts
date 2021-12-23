@@ -29,19 +29,19 @@ class AnimesResources implements Resources<AnimeModel, Anime> {
       poster: JSON.parse(poster),
       rating: {
         average: rating_average,
-        rank: rating_rank,
+        rank: rating_rank
       },
       popularity: {
         count: popularity_count,
-        rank: popularity_rank,
+        rank: popularity_rank
       },
       episode: {
         length: episode_length,
-        count: episode_count,
+        count: episode_count
       },
       date_begin: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
       date_end: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
-      ...rest,
+      ...rest
     };
   }
 

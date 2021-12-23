@@ -14,7 +14,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
 
   const anime: Anime = animesResources.one(
     await connexion.anime.findUnique({
-      where: { id: +id },
+      where: { id: +id }
     })
   );
 

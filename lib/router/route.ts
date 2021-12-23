@@ -1,5 +1,4 @@
 import { ApiRequest, ApiResponse, Method, Middleware } from '../../types/server';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 class Route {
   private method: Method;

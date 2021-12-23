@@ -1,19 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import {
-  ApiRequest,
-  ApiResponse,
-  DefaultErrorData,
-  DefaultResponseData,
-  User,
-} from '@types';
+import { DefaultErrorData, DefaultResponseData, User } from '@types';
 import connexion from '@lib/connexion';
 import router from '@lib/router/router';
 import Security from '@lib/security';
+import { withSessionApi } from '@lib/session';
 import usersResources from '@lib/resources/UsersResources';
 import { ApiError } from '@errors';
-import { withIronSessionApiRoute } from 'iron-session/next';
-import { sessionOptions } from '@lib/session';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -22,12 +15,12 @@ interface Data extends DefaultResponseData {
 router.post(
   async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
     const {
-      body: { email, password },
+      body: { email, password }
     } = req;
 
     const [user, hash]: [User, string] = usersResources.one(
       await connexion.user.findUnique({
-        where: { email },
+        where: { email }
       })
     );
 
@@ -44,6 +37,6 @@ router.post(
   }
 );
 
-export default withIronSessionApiRoute((req: ApiRequest, res: ApiResponse) => {
+export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
-}, sessionOptions);
+});

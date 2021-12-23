@@ -2,7 +2,11 @@
   "compilerOptions": {
     "baseUrl": ".",
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,12 +20,24 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@lib/*": ["lib/*"],
-      "@components/*": ["components/*"],
-      "@types": ["types"],
-      "@hooks": ["hooks"],
-      "@resources": ["lib/resources"],
-      "@errors": ["lib/errors"],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@types": [
+        "types"
+      ],
+      "@hooks": [
+        "hooks"
+      ],
+      "@resources": [
+        "lib/resources"
+      ],
+      "@errors": [
+        "lib/errors"
+      ]
     }
   },
   "include": [
