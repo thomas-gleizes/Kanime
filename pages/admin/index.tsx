@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 
 import { User } from '@types';
 import { withSessionSsr } from '@lib/session';
-import Content from '@components/layouts/Content';
+import Content from '@layouts/Content';
 
 interface Props {
   user?: User;

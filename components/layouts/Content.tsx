@@ -4,7 +4,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Content: React.FunctionComponent = ({ children }) => {
+const Content: React.FunctionComponent<Props> = ({ children }) => {
   return <div className='px-2 py-4'>
     {children}
   </div>;

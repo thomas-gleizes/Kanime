@@ -5,7 +5,9 @@ import Image from 'next/image';
 import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 
 import { Anime, DefaultResponseData } from '@types';
-import appAxios from '@lib/api/appAxios';
+import { AnimeModel } from '@models';
+import { AnimesResources } from '@resources';
+
 
 interface Props extends DefaultResponseData {
   anime: Anime;
@@ -13,9 +15,11 @@ interface Props extends DefaultResponseData {
 
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   const { slug } = context.params;
-  const { data } = await appAxios.get<Props>(`animes/slug/${slug}`);
 
-  return { props: data };
+  const anime = AnimesResources.one(await AnimeModel.findBySlug(slug as string));
+
+
+  return { props: { anime } };
 };
 
 const Index: NextPage<Props> = ({ anime }) => {

@@ -1,6 +1,7 @@
 import { User as UserModel } from '@prisma/client';
 
 import { Resources, User } from '@types';
+import Moment from 'moment';
 
 class UsersResources implements Resources<UserModel, [user: User, password: string]> {
   public one(resource: UserModel): [user: User, password: string] {
@@ -24,8 +25,8 @@ class UsersResources implements Resources<UserModel, [user: User, password: stri
         backgroundPath: background_path,
         followCount: follow_count,
         followerCount: follower_count,
-        createdAt: created_at,
-        updatedAt: updated_at
+        createdAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss'),
+        updatedAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss')
       };
 
       return [user, password];

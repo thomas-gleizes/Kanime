@@ -1,23 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Category, DefaultErrorData, DefaultResponseData } from '@types';
-import connexion from '@lib/connexion';
-import router from '@lib/router/router';
-import CategoriesResources from '@lib/resources/CategoriesResources';
+import { Category, DefaultResponseData } from '@types';
+import router from '@lib/routing/router';
+import { CategoryModel } from '@models';
+import { CategoriesResources } from '@resources';
 
 interface Data extends DefaultResponseData {
   categories: Category[];
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
+router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const categories: any[] = CategoriesResources.many(
-    await connexion.category.findMany({
-      where: {
-        animes: { some: { anime_id: +id } }
-      }
-    })
+    await CategoryModel.findByAnimeId(+id)
   );
 
   res.send({ success: true, categories, params: req.query });

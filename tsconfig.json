@@ -20,11 +20,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "paths": {
-      "@lib/*": [
-        "lib/*"
-      ],
       "@components/*": [
         "components/*"
+      ],
+      "@layouts/*": [
+        "components/layouts/*"
       ],
       "@types": [
         "types"
@@ -32,11 +32,17 @@
       "@hooks": [
         "hooks"
       ],
+      "@lib/*": [
+        "lib/*"
+      ],
       "@resources": [
         "lib/resources"
       ],
       "@errors": [
         "lib/errors"
+      ],
+      "@models": [
+        "lib/models"
       ]
     }
   },

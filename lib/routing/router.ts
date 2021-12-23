@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Middleware } from '@types';
 import { ApiError } from '@errors';
-import Route from '@lib/router/route';
+import Route from './route';
 
 class Router {
   private readonly _get: Route[];

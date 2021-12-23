@@ -1,50 +1,35 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultErrorData, DefaultResponseData } from '@types';
+import { DefaultResponseData, User } from '@types';
 import { verifyUser, withSessionApi } from '@lib/session';
-import router from '@lib/router/router';
-import connexion from '@lib/connexion';
-import UsersResources from '@lib/resources/UsersResources';
-import ApiError from '@lib/errors/ApiError';
+import router from '@lib/routing/router';
+import { UserFollowModel, UserModel } from '@models';
+import { UsersResources } from '@resources';
+import { ApiError } from '@errors';
 
-interface Data extends DefaultResponseData {}
 
-interface Error extends DefaultErrorData {
-  message: string;
+interface Data extends DefaultResponseData {
+  users: User[];
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
-  const user = await connexion.user.findUnique({
-    where: { id: +id },
-  });
-
+  const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(404, 'user not found');
 
   const users = UsersResources.many(
-    await connexion.user.findMany({
-      where: {
-        followers: { some: { follower_id: +id } },
-      },
-    })
+    await UserModel.findFollows(+id)
   ).map(([user]) => user);
 
-  res.send({ success: true, data: users });
+  res.send({ success: true, users });
 });
 
-router.post(
-  verifyUser,
-  async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+router.post(verifyUser, async (req: NextApiRequest, res: NextApiResponse<DefaultResponseData>) => {
     const { query, session } = req;
 
     try {
-      await connexion.userFollow.create({
-        data: {
-          follower_id: +session.user.id,
-          follow_id: +query.id,
-        },
-      });
+      await UserFollowModel.createFollow(+session.user.id, +query.id);
 
       res.status(201).send({ success: true });
     } catch (e) {
@@ -53,24 +38,15 @@ router.post(
   }
 );
 
-router.delete(
-  verifyUser,
-  async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+router.delete(verifyUser, async (req: NextApiRequest, res: NextApiResponse<DefaultResponseData>) => {
     const { query, session } = req;
 
     try {
-      const test = await connexion.userFollow.deleteMany({
-        where: {
-          AND: {
-            follower_id: +session.user.id,
-            follow_id: +query.id,
-          },
-        },
-      });
+      const result = await UserFollowModel.deleteFollow(+session.user.id, +query.id);
 
-      res.status(200).send({ success: true, data: test });
+      res.status(200).send({ success: true, data: result });
     } catch (e) {
-      throw new ApiError(400, "you can't unfollow this user");
+      throw new ApiError(400, 'you can\'t unfollow this user');
     }
   }
 );

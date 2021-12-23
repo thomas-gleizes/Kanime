@@ -1,0 +1,21 @@
+import connexion from '@lib/connexion';
+
+const { userFollow } = connexion;
+
+export const createFollow = (followerId: number, followId: number): Promise<void> =>
+  userFollow.create({
+    data: {
+      follower_id: followerId,
+      follow_id: followId
+    }
+  });
+
+export const deleteFollow = (followerId: number, followId: number): Promise<{ count: number }> =>
+  userFollow.deleteMany({
+    where: {
+      AND: {
+        follower_id: followerId,
+        follow_id: followId
+      }
+    }
+  });

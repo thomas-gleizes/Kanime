@@ -54,7 +54,7 @@ model AnimeCategory {
   anime_id    Int
   category_id Int
   created_at  DateTime @default(now()) @db.Timestamp(0)
-  anime       Anime    @relation(fields: [anime_id], references: [id])
+  animes       Anime    @relation(fields: [anime_id], references: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
   @@id([anime_id, category_id])
@@ -86,7 +86,7 @@ model AnimeUser {
   status     AnimeUserStatus @default(Wanted)
   created_at DateTime        @default(now()) @db.Timestamp(0)
   updated_at DateTime        @default(now()) @db.Timestamp(0)
-  anime      Anime           @relation(fields: [anime_id], references: [id])
+  animes      Anime           @relation(fields: [anime_id], references: [id])
   user       User            @relation(fields: [user_id], references: [id])
 
   @@id([anime_id, user_id])

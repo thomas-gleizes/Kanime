@@ -1,27 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Anime, DefaultErrorData, DefaultResponseData } from '@types';
-import connexion from '@lib/connexion';
-import router from '@lib/router/router';
-import animesResources from '@lib/resources/AnimesResources';
+import { Anime, DefaultResponseData } from '@types';
+import router from '@lib/routing/router';
+import { AnimeModel } from '@models';
+import { AnimesResources } from '@resources';
 
 interface Data extends DefaultResponseData {
   animes: Array<Anime>;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
+router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { limit, skip, query } = req.query;
 
-  const animes: Array<Anime> = animesResources.many(
-    await connexion.anime.findMany({
-      where: {
-        canonical_title: {
-          contains: `${query}`
-        }
-      },
-      take: +limit || 100,
-      skip: +skip || 0
-    })
+  const animes: Array<Anime> = AnimesResources.many(
+    await AnimeModel.search(query as string, { limit: +limit, skip: +skip })
   );
 
   res.send({ success: true, animes, params: req.query });

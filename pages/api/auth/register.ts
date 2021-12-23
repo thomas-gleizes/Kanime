@@ -1,38 +1,32 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultErrorData, DefaultResponseData, User } from '@types';
+import { DefaultResponseData, User } from '@types';
 import connexion from '@lib/connexion';
-import router from '@lib/router/router';
+import router from '@lib/routing/router';
 import Security from '@lib/security';
-import usersResources from '@lib/resources/UsersResources';
+import { UserModel } from '@models';
+import { UsersResources } from '@resources';
 import { withSessionApi } from '@lib/session';
+import { ApiError } from '@errors';
+
 
 interface Data extends DefaultResponseData {
   user: User;
 }
 
-interface Error extends DefaultErrorData {
-  key?: string;
-}
-
-router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
+router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body: userData } = req;
 
-  const users: Array<any> = await connexion.user.findMany({
-    where: {
-      OR: [{ email: userData.email }, { login: userData.login }]
-    }
-  });
+  const users = await UserModel.findByEmailOrLogin(userData.email, userData.login);
 
   if (users.length) {
     let key = 'login';
     if (users[0].email === userData.email) key = 'email';
 
-    res.status(400).send({ error: '', key });
-    throw new Error();
+    throw new ApiError(400, `${key} already exist`);
   }
 
-  const [newUser, password]: [User, string] = usersResources.one(
+  const [user] = UsersResources.one(
     await connexion.user.create({
       data: {
         login: userData.login,
@@ -42,9 +36,12 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
     })
   );
 
-  newUser.token = Security.sign(newUser);
+  req.session.user = user;
+  await req.session.save();
 
-  res.status(201).send({ success: true, user: newUser });
+  user.token = Security.sign(user);
+
+  res.status(201).send({ success: true, user: user });
 });
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {

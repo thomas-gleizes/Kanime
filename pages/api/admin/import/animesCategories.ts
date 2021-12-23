@@ -3,7 +3,7 @@ import { Category } from '@prisma/client';
 
 import { verifyAdmin, withSessionApi } from '@lib/session';
 import connexion from '@lib/connexion';
-import router from '@lib/router/router';
+import router from '@lib/routing/router';
 import kitsuApi from '@lib/api/kitsuApi';
 
 router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
@@ -18,7 +18,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
 
     do {
       const {
-        data: { data: animes, meta },
+        data: { data: animes, meta }
       } = await kitsuApi.get(
         `categories/${category.id}/anime?page[limit]=10&page[offset]=${count}`
       );

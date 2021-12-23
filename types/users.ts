@@ -8,6 +8,6 @@ export declare type User = {
   backgroundPath: string;
   followCount: number;
   followerCount: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
 };

@@ -1,27 +1,25 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultErrorData, DefaultResponseData, User } from '@types';
-import connexion from '@lib/connexion';
-import router from '@lib/router/router';
-import Security from '@lib/security';
+import router from '@lib/routing/router';
 import { withSessionApi } from '@lib/session';
-import usersResources from '@lib/resources/UsersResources';
+import { UserModel } from '@models';
+import { UsersResources } from '@resources';
 import { ApiError } from '@errors';
+import Security from '@lib/security';
 
 interface Data extends DefaultResponseData {
   user: User;
 }
 
 router.post(
-  async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
+  async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const {
       body: { email, password }
     } = req;
 
-    const [user, hash]: [User, string] = usersResources.one(
-      await connexion.user.findUnique({
-        where: { email }
-      })
+    const [user, hash]: [User, string] = UsersResources.one(
+      await UserModel.findByEmail(email)
     );
 
     if (!user || !(await Security.compare(password, hash))) {

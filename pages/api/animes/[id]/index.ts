@@ -1,22 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Anime, DefaultErrorData, DefaultResponseData } from '@types';
-import connexion from '@lib/connexion';
-import animesResources from '@lib/resources/AnimesResources';
-import router from '@lib/router/router';
+import { Anime, DefaultResponseData } from '@types';
+import router from '@lib/routing/router';
+import { AnimeModel } from '@models';
+import { AnimesResources } from '@resources';
+import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
   anime: Anime;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
+router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
-  const anime: Anime = animesResources.one(
-    await connexion.anime.findUnique({
-      where: { id: +id }
-    })
+  const anime: Anime = AnimesResources.one(
+    await AnimeModel.findById(+id)
   );
+
+  if (!anime) throw new ApiError(404, 'anime not found');
+
 
   res.send({ success: true, anime, params: req.query });
 });

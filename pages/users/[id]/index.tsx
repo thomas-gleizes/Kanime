@@ -1,44 +1,59 @@
-import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
+import Error from 'next/error';
+import React from 'react';
+
 
 import { User } from '@types';
 import { withSessionSsr } from '@lib/session';
-import Content from '@components/layouts/Content';
-import appAxios from '@lib/api/appAxios';
-import { ApiError } from '@errors';
+import { UserModel } from '@models';
+import { UsersResources } from '@resources';
+import Content from '@layouts/Content';
 
 interface Props {
-  user: User;
-  isCurrent: boolean;
-  error?: ApiError;
+  user?: User;
+  isCurrent?: boolean;
+  error?: any;
 }
 
 export const getServerSideProps: GetServerSideProps = withSessionSsr(
   async ({ query, req }) => {
     const { id } = query;
     const { user: sessionUser } = req.session;
-    let props: Props;
 
-    try {
-      const { data } = await appAxios.get(`users/${id}`);
+    const [user] = UsersResources.one(await UserModel.findById(+id));
 
-      props = {
-        user: data.user,
-        isCurrent: data.user?.id === sessionUser.id,
+    if (user) {
+      return {
+        props: {
+          user,
+          isCurrent: user.id === sessionUser?.id
+        }
       };
-    } catch (e) {}
+    } else {
+      return {
+        props: {
+          error: {
+            code: 404,
+            message: 'user not found'
+          }
+        }
+      };
+    }
 
-    return {
-      props,
-    };
   }
 );
 
-export const Home: NextPage<Props | Error> = ({ user, isCurrent, error }) => {
+export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
+  if (error)
+    return <Error statusCode={error.code} title={error.message} />;
+
   return (
     <Content>
-      <div>{JSON.stringify(user)}</div>
-      <div>{isCurrent ? 'current' : 'none'}</div>
+      <div className='h-screen'>
+        <div>{JSON.stringify(user)}</div>
+        <div>
+          {isCurrent ? 'current' : 'none'}</div>
+      </div>
     </Content>
   );
 };

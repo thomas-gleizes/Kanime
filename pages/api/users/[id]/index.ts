@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
 import { verifyUser, withSessionApi } from '@lib/session';
-import router from '@lib/router/router';
-import connexion from '@lib/connexion';
+import router from '@lib/routing/router';
+import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { ApiError } from '@errors';
 
@@ -15,9 +15,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const [user] = UsersResources.one(
-    await connexion.user.findUnique({
-      where: { id: +id },
-    })
+    await UserModel.findById(+id)
   );
 
   if (!user) throw new ApiError(404, 'user not found');

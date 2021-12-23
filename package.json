@@ -6,13 +6,15 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
-    "migrate": "npx prisma migrate dev"
+    "migrate": "npx prisma migrate dev",
+    "studio": "npx prisma studio"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
     "@prisma/client": "^3.6.0",
     "axios": "^0.24.0",
     "bcrypt": "^5.0.1",
+    "classnames": "^2.3.1",
     "formik": "^2.2.9",
     "iron-session": "^6.0.4",
     "jsonwebtoken": "^8.5.1",
