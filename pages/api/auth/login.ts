@@ -1,11 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultErrorData, DefaultResponseData, User } from '@types';
+import {
+  ApiRequest,
+  ApiResponse,
+  DefaultErrorData,
+  DefaultResponseData,
+  User,
+} from '@types';
 import connexion from '@lib/connexion';
 import router from '@lib/router/router';
 import Security from '@lib/security';
 import usersResources from '@lib/resources/UsersResources';
 import { ApiError } from '@errors';
+import { withIronSessionApiRoute } from 'iron-session/next';
+import { sessionOptions } from '@lib/session';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -29,10 +37,13 @@ router.post(
 
     user.token = Security.sign(user);
 
+    req.session.user = user;
+    await req.session.save();
+
     res.send({ success: true, user });
   }
 );
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
+export default withIronSessionApiRoute((req: ApiRequest, res: ApiResponse) => {
   router.handler(req, res);
-}
+}, sessionOptions);

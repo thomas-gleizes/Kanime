@@ -1,14 +1,29 @@
 import React from 'react';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
+import { withIronSessionSsr } from 'iron-session/next';
 
-export const getServerSideProps: GetServerSideProps = (context) => {
-  return { props: { name: 'kalat' } };
-};
+import { sessionOptions } from '@lib/session';
+import { User } from '@types';
 
-const Admin = ({ name }) => {
+interface Props {
+  user: User;
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = withIronSessionSsr(
+  async ({ req, res }) => {
+    const user: User = req.session.user;
+
+    return {
+      props: { user },
+    };
+  },
+  sessionOptions
+);
+
+const Admin: NextPage<Props> = ({ user }) => {
   return (
     <>
-      <h1>{name}: You are an admin</h1>
+      <h1>{user.login}: You are an admin</h1>
     </>
   );
 };

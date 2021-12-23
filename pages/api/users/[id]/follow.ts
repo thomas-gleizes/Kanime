@@ -1,9 +1,13 @@
+import { withIronSessionApiRoute } from 'iron-session/next';
+
 import { DefaultErrorData, DefaultResponseData, ApiRequest, ApiResponse } from '@types';
 import router from '@lib/router/router';
 import connexion from '@lib/connexion';
 import UsersResources from '@lib/resources/UsersResources';
 import ApiError from '@lib/errors/ApiError';
 import Security from '@lib/security';
+import { sessionOptions } from '@lib/session';
+import { NextApiRequest } from 'next';
 
 interface Data extends DefaultResponseData {}
 
@@ -11,15 +15,8 @@ interface Error extends DefaultErrorData {
   message: string;
 }
 
-const verify = (req: ApiRequest, res: ApiResponse) => {
-  try {
-    const token = req.headers.authorization.replace('Bearer ', '');
-    const { user } = Security.getTokenPayload(token);
-
-    req.session = user;
-  } catch (e) {
-    throw new ApiError(401, 'Access denied');
-  }
+const verify = (req: NextApiRequest, res: ApiResponse) => {
+  console.log('Req', req.session);
 };
 
 router.get(async (req: ApiRequest, res: ApiResponse<Data | Error>) => {
@@ -72,6 +69,6 @@ router.delete(verify, async (req: ApiRequest, res: ApiResponse<Data | Error>) =>
   }
 });
 
-export default function handler(req: ApiRequest, res: ApiResponse) {
+export default withIronSessionApiRoute((req: ApiRequest, res: ApiResponse) => {
   router.handler(req, res);
-}
+}, sessionOptions);

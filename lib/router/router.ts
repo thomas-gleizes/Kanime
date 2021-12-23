@@ -47,6 +47,14 @@ class Router {
     }
   }
 
+  public all(...middlewares: Middleware[]) {
+    this.get(...middlewares);
+    this.post(...middlewares);
+    this.put(...middlewares);
+    this.patch(...middlewares);
+    this.delete(...middlewares);
+  }
+
   private getRoutes(method: string): Route[] {
     switch (method) {
       case 'GET':

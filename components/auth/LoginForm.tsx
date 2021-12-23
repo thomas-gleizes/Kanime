@@ -3,6 +3,7 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
 import Field from '../common/field';
+import appAxios from '@lib/api/appAxios';
 
 const loginSchema = Yup.object({
   email: Yup.string()
@@ -14,12 +15,16 @@ const loginSchema = Yup.object({
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
 const initialValues: loginType = {
-  email: '',
-  password: '',
+  email: 'kalat@kanime.fr',
+  password: 'azerty',
 };
 
 const LoginForm: React.FunctionComponent = () => {
-  const handleSubmit = (values: loginType, formik: FormikHelpers<loginType>) => {};
+  const handleSubmit = async (values: loginType, formik: FormikHelpers<loginType>) => {
+    const response = await appAxios.post('auth/login', values);
+
+    console.log('Response', response);
+  };
 
   return (
     <div className="bg-gray-50 border px-10 py-10 shadow-xl rounded">
