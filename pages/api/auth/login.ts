@@ -5,6 +5,7 @@ import connexion from '@lib/connexion';
 import router from '@lib/router/router';
 import Security from '@lib/security';
 import usersResources from '@lib/resources/UsersResources';
+import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -23,8 +24,7 @@ router.post(
     );
 
     if (!user || !(await Security.compare(password, hash))) {
-      res.status(401).send({ error: 'email/password wrong' });
-      return;
+      throw new ApiError(401, 'email/password wrong');
     }
 
     user.token = Security.sign(user);

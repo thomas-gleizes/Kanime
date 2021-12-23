@@ -10,8 +10,8 @@ class Route {
     this.middleware = middleware;
   }
 
-  public call(req: ApiRequest, res: ApiResponse) {
-    this.middleware(req, res);
+  public call(req: ApiRequest, res: ApiResponse): Promise<void> | void {
+    return this.middleware(req, res);
   }
 }
 
