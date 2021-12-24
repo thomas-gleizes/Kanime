@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import connexion from '@lib/connexion';
 import router from '@lib/routing/router';
 import Security from '@lib/security';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { withSessionApi } from '@lib/session';
 import { ApiError } from '@errors';
+import { defaultUsersMedia } from '@lib/routing/routes';
 
 
 interface Data extends DefaultResponseData {
@@ -27,12 +27,12 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   }
 
   const [user] = UsersResources.one(
-    await connexion.user.create({
-      data: {
-        login: userData.login,
-        email: userData.email,
-        password: await Security.hash(userData.password)
-      }
+    await UserModel.create({
+      login: userData.login,
+      email: userData.email,
+      password: await Security.hash(userData.password),
+      background_path: defaultUsersMedia.background,
+      avatar_path: defaultUsersMedia.avatar
     })
   );
 

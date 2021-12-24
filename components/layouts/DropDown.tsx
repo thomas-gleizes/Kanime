@@ -13,7 +13,7 @@ const DropDown: React.FC<Props> = ({ innerRef, children }) => {
     if (innerRef) {
       innerRef.current.onclick = () => setOpen(!open);
     }
-  }, [innerRef]);
+  }, [innerRef, open]);
 
   useEffect(() => {
     document.body.addEventListener('click', handleClick, true);
