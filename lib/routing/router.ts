@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { Middleware } from '@types';
+import { Method, Middleware } from '@types';
 import { ApiError } from '@errors';
 import Route from './route';
 
@@ -19,34 +19,32 @@ class Router {
     this._delete = [];
   }
 
-  public get(...middlewares: Middleware[]) {
+  private add(method: Method, ...middlewares: Middleware[]): void {
+    const key = `_${method.toLowerCase()}`;
+
     for (const middleware of middlewares) {
-      this._get.push(new Route('GET', middleware));
+      this[key].push(new Route(method, middleware));
     }
   }
 
-  public post(...middlewares: Middleware[]) {
-    for (const middleware of middlewares) {
-      this._post.push(new Route('POST', middleware));
-    }
+  public get(...middlewares: Middleware[]): void {
+    this.add('GET', ...middlewares);
   }
 
-  public put(...middlewares: Middleware[]) {
-    for (const middleware of middlewares) {
-      this._put.push(new Route('PUT', middleware));
-    }
+  public post(...middlewares: Middleware[]): void {
+    this.add('POST', ...middlewares);
   }
 
-  public patch(...middlewares: Middleware[]) {
-    for (const middleware of middlewares) {
-      this._patch.push(new Route('PATCH', middleware));
-    }
+  public put(...middlewares: Middleware[]): void {
+    this.add('PUT', ...middlewares);
   }
 
-  public delete(...middlewares: Middleware[]) {
-    for (const middleware of middlewares) {
-      this._delete.push(new Route('DELETE', middleware));
-    }
+  public patch(...middlewares: Middleware[]): void {
+    this.add('PATCH', ...middlewares);
+  }
+
+  public delete(...middlewares: Middleware[]): void {
+    this.add('DELETE', ...middlewares);
   }
 
   public all(...middlewares: Middleware[]) {
