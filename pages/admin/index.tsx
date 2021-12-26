@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { User } from '@types';
-import { withSessionSsr } from '@lib/session';
+import { withSessionSsr } from '@services/session';
 import Content from '@layouts/Content';
 
 interface Props {
@@ -17,12 +17,12 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
       return {
         redirect: {
           permanent: false,
-          destination: '/'
-        }
+          destination: '/',
+        },
       };
     } else {
       return {
-        props: { user: user }
+        props: { user: user },
       };
     }
   }

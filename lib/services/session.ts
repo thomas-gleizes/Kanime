@@ -4,15 +4,15 @@ import type { IronSessionOptions } from 'iron-session';
 
 import { User } from '@types';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import ApiError from './errors/ApiError';
+import ApiError from '../errors/ApiError';
 
 const sessionOptions: IronSessionOptions = {
   password: process.env.NODE_SECRET_TOKEN as string,
   cookieName: 'iron-session/examples/next.js',
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
-    secure: process.env.NODE_ENV === 'production'
-  }
+    secure: process.env.NODE_ENV === 'production',
+  },
 };
 
 export const withSessionSsr = (handler) => withIronSessionSsr(handler, sessionOptions);

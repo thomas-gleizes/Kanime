@@ -13,9 +13,7 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { slug } = req.query;
 
-  const anime: Anime = AnimesResources.one(
-    await AnimeModel.findBySlug(slug as string)
-  );
+  const anime: Anime = AnimesResources.one(await AnimeModel.findBySlug(slug as string));
 
   if (!anime) throw new ApiError(404, 'anime not found');
 

@@ -5,5 +5,5 @@ export type {
   DefaultResponseData,
   Resources,
   Middleware,
-  Method
+  Method,
 } from './server';

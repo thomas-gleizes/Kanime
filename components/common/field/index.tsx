@@ -25,7 +25,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
   };
 
   return (
-    <div className='w-full px-2 my-1.5'>
+    <div className="w-full px-2 my-1.5">
       <div
         onClick={handleClick}
         className={classnames(
@@ -41,7 +41,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
           )}
         >
           {label}
-          {required ? <em className='text-red-600'>*</em> : null}
+          {required ? <em className="text-red-600">*</em> : null}
         </label>
         <input
           ref={input}
@@ -50,7 +50,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
             setFocus(false);
             onBlur(event);
           }}
-          className='w-full bg-white text-lg px-4 py-1.5'
+          className="w-full bg-white text-lg px-4 py-1.5"
           type={type}
           {...field}
           {...rest}
@@ -58,7 +58,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
       </div>
       <div
         className={classnames('text-danger text-right px-2 text-xs', {
-          invisible: !error
+          invisible: !error,
         })}
       >
         {error || 'none'}

@@ -2,13 +2,12 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
 import router from '@lib/routing/router';
-import Security from '@lib/security';
+import Security from '@services/security';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
-import { withSessionApi } from '@lib/session';
+import { withSessionApi } from '@services/session';
 import { ApiError } from '@errors';
 import { defaultUsersMedia } from '@lib/routing/routes';
-
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -32,7 +31,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       email: userData.email,
       password: await Security.hash(userData.password),
       background_path: defaultUsersMedia.background,
-      avatar_path: defaultUsersMedia.avatar
+      avatar_path: defaultUsersMedia.avatar,
     })
   );
 

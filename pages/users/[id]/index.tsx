@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React from 'react';
 
 import { User } from '@types';
-import { withSessionSsr } from '@lib/session';
+import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { defaultUsersMedia } from '@lib/routing/routes';
@@ -29,28 +29,24 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
       return {
         props: {
           user,
-          isCurrent: user.id === sessionUser?.id
-        }
+          isCurrent: user.id === sessionUser?.id,
+        },
       };
     } else {
       return {
         props: {
           error: {
             code: 404,
-            message: 'user not found'
-          }
-        }
+            message: 'user not found',
+          },
+        },
       };
     }
-
   }
 );
 
 export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
-  if (error)
-    return <Error statusCode={error.code} title={error.message} />;
-
-  console.log('IsCurrent', isCurrent);
+  if (error) return <Error statusCode={error.code} title={error.message} />;
 
   return (
     <div>
@@ -59,32 +55,30 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
           {user.login} | {process.env.NEXT_PUBLIC_APP_NAME}
         </title>
       </Head>
-      <div className='w-full'>
+      <div className="w-full">
         <div
-          className='bg-bottom bg-no-repeat bg-cover bg-clip-padding bg-primary'
+          className="bg-bottom bg-no-repeat bg-cover bg-clip-padding bg-primary"
           style={{ backgroundImage: `url('${defaultUsersMedia.background}')` }}
         >
-          <div className='flex pt-32 px-20 pb-10 select-none'>
+          <div className="flex pt-32 px-20 pb-10 select-none">
             <Image
-              className='rounded-full border-2 border-white'
+              className="rounded-full border-2 border-white"
               src={defaultUsersMedia.avatar}
               width={100}
               height={100}
-              alt='big avatar'
+              alt="big avatar"
             />
-            <div className='mt-3 ml-2 select-none'>
-              <h2 className='text-2xl'> {user.login} </h2>
+            <div className="mt-3 ml-2 select-none">
+              <h2 className="text-2xl"> {user.login} </h2>
               {isCurrent ? (
-                <button
-                  className='px-6 py-1.5 rounded-md cursor-pointer text-white bg-secondary hover:bg-primary'
-                >
+                <button className="px-6 py-1.5 rounded-md cursor-pointer text-white bg-secondary hover:bg-primary">
                   Modifier
                 </button>
               ) : null}
             </div>
           </div>
         </div>
-        <div className='text-center mt-5'> Coming soon...</div>
+        <div className="text-center mt-5"> Coming soon...</div>
       </div>
     </div>
   );

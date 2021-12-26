@@ -26,7 +26,7 @@ class UsersResources implements Resources<UserModel, [user: User, password: stri
         followCount: follow_count,
         followerCount: follower_count,
         createdAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss'),
-        updatedAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss')
+        updatedAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss'),
       };
 
       return [user, password];

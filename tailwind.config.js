@@ -24,40 +24,40 @@ module.exports = {
       colors: {
         success: '#1abc9c',
         danger: '#e74c3c',
-        warning: '#fcbf00'
+        warning: '#fcbf00',
       },
       spacing: {
         ...buildList(50, 'px', 50),
-        screen: '100vh'
+        screen: '100vh',
       },
       minWidth: {
         ...buildList(40, 'px', 50),
         full: '100%',
         screen: '100vw',
-        unset: 'unset'
+        unset: 'unset',
       },
       maxWidth: {
         ...buildList(40, 'px', 50),
         full: '100%',
         screen: '100vw',
-        unset: 'unset'
+        unset: 'unset',
       },
       minHeight: {
         ...buildList(40, 'px', 50),
         full: '100%',
         screen: '100vh',
-        unset: 'unset'
+        unset: 'unset',
       },
       maxHeight: {
         ...buildList(40, 'px', 50),
         full: '100%',
         screen: '100vh',
-        unset: 'unset'
+        unset: 'unset',
       },
       zIndex: {
-        ...buildList(10, '', 10)
-      }
-    }
+        ...buildList(10, '', 10),
+      },
+    },
   },
   variants: {
     extend: {
@@ -68,8 +68,8 @@ module.exports = {
       borderColor: ['checked', 'disabled'],
       boxShadow: ['active'],
       rotate: ['group-focus'],
-      inset: ['hover', 'focus', 'group-focus']
-    }
+      inset: ['hover', 'focus', 'group-focus'],
+    },
   },
-  plugins: []
+  plugins: [],
 };

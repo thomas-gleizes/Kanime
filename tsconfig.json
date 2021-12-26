@@ -32,8 +32,14 @@
       "@hooks": [
         "hooks"
       ],
+      "@context/*": [
+        "context/*"
+      ],
       "@lib/*": [
         "lib/*"
+      ],
+      "@services/*": [
+        "lib/services/*"
       ],
       "@resources": [
         "lib/resources"

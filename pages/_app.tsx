@@ -1,14 +1,24 @@
 import type { AppProps } from 'next/app';
+import React from 'react';
 
 import '../styles/globals.css';
 
 import Layout from '@components/layouts';
+import UserContextProvider from '@context/user';
+
+const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  return <UserContextProvider>{children}</UserContextProvider>;
+};
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <AllContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </AllContextProvider>
   );
 };
 

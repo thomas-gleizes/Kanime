@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { verifyAdmin, withSessionApi } from '@lib/session';
-import connexion from '@lib/connexion';
+import { verifyAdmin, withSessionApi } from '@lib/services/session';
+import connexion from '@services/connexion';
 import router from '@lib/routing/router';
 import KitsuApi from '@lib/api/kitsuApi';
 
@@ -11,7 +11,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
 
   do {
     const {
-      data: { data, meta }
+      data: { data, meta },
     } = await KitsuApi.get(`categories?page[limit]=10&page[offset]=${count}`);
 
     limit = meta.count;
@@ -24,7 +24,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
       categories.push({
         name: attributes.title,
         slug: attributes.slug,
-        description: attributes.description
+        description: attributes.description,
       });
     });
   } while (count < limit);

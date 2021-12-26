@@ -15,19 +15,21 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =
 
   const animes = AnimesResources.many(
     await AnimeModel.getMany({
-      limit: +limit, skip: +skip
-    }));
+      limit: +limit,
+      skip: +skip,
+    })
+  );
 
   return {
-    props: { animes }
+    props: { animes },
   };
 };
 
 const ExploreAnimes: NextPage<Props> = ({ animes }) => {
   return (
-    <div className='grid grid-cols-4 max-w-1100 mx-auto my-10'>
+    <div className="grid grid-cols-4 max-w-1100 mx-auto my-10">
       {animes.map((anime: Anime, index: number) => (
-        <div key={index} className='my-3 mx-auto'>
+        <div key={index} className="my-3 mx-auto">
           <AnimeCard {...anime} />
         </div>
       ))}

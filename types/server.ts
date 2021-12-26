@@ -18,4 +18,7 @@ export interface Resources<E = any, S = any> {
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export type Middleware = (req: NextApiRequest, res: NextApiResponse) => Promise<void> | void;
+export type Middleware = (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => Promise<void> | void;

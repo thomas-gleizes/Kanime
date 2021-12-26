@@ -11,7 +11,7 @@ const Layout: React.FunctionComponent<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className='py-14'>{children}</main>
+      <main className="py-14">{children}</main>
       <Footer />
     </>
   );
