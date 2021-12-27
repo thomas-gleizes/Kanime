@@ -1,13 +1,14 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 
 import { Anime, DefaultResponseData } from '@types';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
-import KitsuButton from '@components/common/KitsuButton';
+import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
+import KitsuButton from '@components/common/KitsuButton';
 
 interface Props extends DefaultResponseData {
   anime: Anime;
@@ -21,26 +22,34 @@ export const getServerSideProps: GetServerSideProps<Props> = async (context) => 
   return { props: { anime } };
 };
 
-const Index: NextPage<Props> = ({ anime }) => {
+const AnimePage: NextPage<Props> = ({ anime }) => {
+  const {
+    headerTransparentState: [headerTransparent, setHeaderTransparent],
+    scrollPercent,
+  } = useLayoutContext();
+
+  useEffect(() => {
+    const boolean: boolean = scrollPercent < 10;
+    if (headerTransparent !== boolean) setHeaderTransparent(boolean);
+  }, [scrollPercent]);
+
+  useEffect(() => {
+    return () => setHeaderTransparent(false);
+  }, []);
+
   if (!anime) return null;
 
   return (
-    <div>
+    <div className="h-[1500px]">
       <Title>{anime.canonicalTitle}</Title>
-      <div className="relative mb-20">
+      <div className="relative">
         <div
-          className="absolute top-0 bottom-0 -z-10 w-full h-full bg-gradient-to-b from-red-800 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('${anime.cover.small}')`,
-            height: '330px',
-          }}
+          className="absolute top-[-56px] bottom-0 -z-10 w-full h-[570px] bg-gradient-to-b from-red-800 bg-cover bg-top"
+          style={{ backgroundImage: `url('${anime.cover.small}')` }}
         />
-        <div
-          className="flex z-30 w-full mx-auto px-10 lg:px-2"
-          style={{ maxWidth: '1200px', paddingTop: '240px' }}
-        >
-          <div className="mx-1 w-full">
-            <div className="h-20 w-full border" />
+        <div className="flex z-30 w-full mx-auto px-10 lg:px-2 pt-[250px] max-w-[1500px]">
+          <div className="mx-1 w-full mt-[175px]">
+            <div className="h-20 w-full border rounded" />
             <div className="mx-1 py-3 divide-opacity-10 divide-y-2">
               <div className="flex py-1">
                 <h2 className="text-3xl">{anime.canonicalTitle}</h2>
@@ -72,10 +81,10 @@ const Index: NextPage<Props> = ({ anime }) => {
             </div>
           </div>
           <div className="mx-4">
-            <div className="border border-black">
+            <div>
               <Image
-                width={280}
-                height={390}
+                width={380}
+                height={500}
                 className="rounded-sm shadow-lg mb-3"
                 src={anime.poster.small}
                 alt="poster"
@@ -85,7 +94,7 @@ const Index: NextPage<Props> = ({ anime }) => {
             <div>
               <div className="mx-auto">
                 <div className="my-1">
-                  <button className="w-full text-white rounded bg-gradient-to-tl from-red-500 to-yellow-500 py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition">
+                  <button className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition">
                     <span className="flex justify-center font-bold">
                       Ajouter
                       <i className="ml-2 my-auto">
@@ -94,7 +103,7 @@ const Index: NextPage<Props> = ({ anime }) => {
                     </span>
                   </button>
                 </div>
-                <div className="my-1">
+                <div className="my-2">
                   <KitsuButton slug={anime.slug} />
                 </div>
               </div>
@@ -106,4 +115,4 @@ const Index: NextPage<Props> = ({ anime }) => {
   );
 };
 
-export default Index;
+export default AnimePage;

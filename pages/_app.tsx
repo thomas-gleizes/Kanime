@@ -3,13 +3,18 @@ import React from 'react';
 
 import '../styles/globals.css';
 
-import UserContextProvider from '@context/user';
 import Layout from '@components/layouts';
+import LayoutContextProvider from '@context/layout';
+import UserContextProvider from '@context/user';
 
 const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  return <UserContextProvider>{children}</UserContextProvider>;
+  return (
+    <LayoutContextProvider>
+      <UserContextProvider>{children}</UserContextProvider>
+    </LayoutContextProvider>
+  );
 };
 
 const App = ({ Component, pageProps }: AppProps) => {

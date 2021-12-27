@@ -9,7 +9,7 @@ const KitsuButton: React.FC<Props> = ({ slug }) => {
   return (
     <button
       onClick={() => window?.open(`https://kitsu.io/anime/${slug}`)}
-      className="bg-kitsu w-full py-1.5 rounded flex justify-center"
+      className="bg-kitsu w-full py-1.5 rounded flex justify-center hover:shadow-2xl hover:scale-105 transform transition"
     >
       <Image src="/icons/kitsu.png" width={25} height={25} alt="kitsu icon" />
       <span className="mx-3 text-white">Voir sur Kitsu</span>

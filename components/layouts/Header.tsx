@@ -1,85 +1,94 @@
 import React, { useRef, useState } from 'react';
-import { FaBars, FaCaretDown } from 'react-icons/fa';
+import Image from 'next/image';
 import Link from 'next/link';
+import { FaBars, FaCaretDown } from 'react-icons/fa';
 import classnames from 'classnames';
 
 import { useUserContext } from '@context/user';
+import { useLayoutContext } from '@context/layout';
 import { routes } from '@lib/constants';
 import DropDown from '@components/layouts/DropDown';
 import SearchBar from '@components/common/SearchBar';
 
-const Header: React.FunctionComponent = () => {
-  const { user, isLogin, logOut } = useUserContext();
+const DropDownItem = ({ href, children }) => (
+  <Link href={href}>
+    <a className="block w-full py-1.5 px-2 hover:bg-gray-100">{children}</a>
+  </Link>
+);
 
-  const DropDownItem = ({ href, children }) => (
-    <Link href={href}>
-      <a className="block w-full py-1.5 px-2 hover:bg-gray-100">{children}</a>
-    </Link>
+const DropDownExplore = () => {
+  const button = useRef<HTMLButtonElement>();
+
+  return (
+    <div>
+      <div>
+        <button ref={button} type="button" className="text-white flex group">
+          Explore
+          <i className="my-auto h-full ml-0.5">
+            <FaCaretDown
+              size={12}
+              className="transform transition rotate-90 group-focus:rotate-0"
+            />
+          </i>
+        </button>
+      </div>
+      <DropDown innerRef={button}>
+        <div className="absolute py-1 top-5 -left-2 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
+          <DropDownItem href={routes.animes}>Animes</DropDownItem>
+          <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
+          <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
+        </div>
+      </DropDown>
+    </div>
   );
+};
 
-  const DropDownExplore = () => {
-    const button = useRef<HTMLButtonElement>();
+const DropDownUser = () => {
+  const { user, logOut } = useUserContext();
+  const imgRef = useRef<HTMLImageElement>();
 
-    return (
-      <div>
-        <div>
-          <button ref={button} type="button" className="text-white flex group">
-            Explore
-            <i className="my-auto h-full ml-0.5">
-              <FaCaretDown
-                size={12}
-                className="transform transition rotate-90 group-focus:rotate-0"
-              />
-            </i>
-          </button>
-        </div>
-        <DropDown innerRef={button}>
-          <div className="absolute py-1 top-5 -left-2 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-            <DropDownItem href={routes.animes}>Animes</DropDownItem>
-            <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
-            <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
-          </div>
-        </DropDown>
+  return (
+    <div>
+      <div className="cursor-pointer" ref={imgRef}>
+        <Image
+          className="rounded-full"
+          src={user.avatarPath}
+          width={35}
+          height={35}
+          alt="avatar"
+        />
       </div>
-    );
-  };
-
-  const DropDownUser = () => {
-    const imgRef = useRef<HTMLImageElement>();
-
-    return (
-      <div>
-        <div className="cursor-pointer">
-          <img
-            ref={imgRef}
-            className="rounded-full"
-            src={user.avatarPath}
-            width={35}
-            height={35}
-            alt="avatar"
-          />
-        </div>
-        <DropDown innerRef={imgRef}>
-          <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-            <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
-            <DropDownItem href={`${routes.users}/${user.id}/settings`}>
-              Settings
-            </DropDownItem>
-            <div onClick={logOut}>
-              <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-                Déconnexion
-              </span>
-            </div>
+      <DropDown innerRef={imgRef}>
+        <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
+          <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
+          <DropDownItem href={`${routes.users}/${user.id}/settings`}>
+            Settings
+          </DropDownItem>
+          <div onClick={logOut}>
+            <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
+              Déconnexion
+            </span>
           </div>
-        </DropDown>
-      </div>
-    );
-  };
+        </div>
+      </DropDown>
+    </div>
+  );
+};
+
+const Header: React.FunctionComponent = () => {
+  const { user, isLogin } = useUserContext();
+  const {
+    headerTransparentState: [headerTransparent],
+  } = useLayoutContext();
 
   const [extend, setExtend] = useState<boolean>(false);
 
   return (
-    <header className="z-90 fixed top-0 w-full bg-primary shadow-md">
+    <header
+      className={`z-90 fixed top-0 w-full shadow-lg transition-all duration-500 ${
+        headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary'
+      }`}
+    >
       <nav className="">
         <div className="relative">
           <div className="hidden md:flex justify-between w-full h-14 px-5">
@@ -120,7 +129,7 @@ const Header: React.FunctionComponent = () => {
                     <a className="mx-3 cursor-pointer">Connexion</a>
                   </Link>
                   <Link href={routes.authentification}>
-                    <span className="mx-3 cursor-pointer">Inscription</span>
+                    <a className="mx-3 cursor-pointer">Inscription</a>
                   </Link>
                 </div>
               ) : (
