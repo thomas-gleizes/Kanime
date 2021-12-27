@@ -4,7 +4,9 @@ import Link from 'next/link';
 import classnames from 'classnames';
 
 import { useUserContext } from '@context/user';
+import { routes } from '@lib/constants';
 import DropDown from '@components/layouts/DropDown';
+import SearchBar from '@components/common/SearchBar';
 
 const Header: React.FunctionComponent = () => {
   const { user, isLogin, logOut } = useUserContext();
@@ -33,9 +35,9 @@ const Header: React.FunctionComponent = () => {
         </div>
         <DropDown innerRef={button}>
           <div className="absolute py-1 top-5 -left-2 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-            <DropDownItem href="/animes">Animes</DropDownItem>
-            <DropDownItem href="/mangas">Mangas</DropDownItem>
-            <DropDownItem href="sagas">Sagas</DropDownItem>
+            <DropDownItem href={routes.animes}>Animes</DropDownItem>
+            <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
+            <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
           </div>
         </DropDown>
       </div>
@@ -59,8 +61,10 @@ const Header: React.FunctionComponent = () => {
         </div>
         <DropDown innerRef={imgRef}>
           <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-            <DropDownItem href={`users/userID`}>Mon profile</DropDownItem>
-            <DropDownItem href={`users/userID/settings`}>Settings</DropDownItem>
+            <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
+            <DropDownItem href={`${routes.users}/${user.id}/settings`}>
+              Settings
+            </DropDownItem>
             <div onClick={logOut}>
               <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
                 Déconnexion
@@ -80,7 +84,7 @@ const Header: React.FunctionComponent = () => {
         <div className="relative">
           <div className="hidden md:flex justify-between w-full h-14 px-5">
             <div className="text-center m-auto">
-              <Link href="/">
+              <Link href={routes.home}>
                 <a className="cursor-pointer font-bold text-3xl text-white">
                   {process.env.NEXT_PUBLIC_APP_NAME}
                 </a>
@@ -91,31 +95,31 @@ const Header: React.FunctionComponent = () => {
                 <DropDownExplore />
               </span>
               <span className="mx-3">
-                <Link href="/forum">
+                <Link href={routes.forum}>
                   <a className="text-white"> Discussion </a>
                 </Link>
               </span>
               <span className="mx-3">
-                <Link href="/feedback">
+                <Link href={routes.feedback}>
                   <a className="text-white"> Feedback </a>
                 </Link>
               </span>
-              {isLogin && user?.isAdmin ? (
+              {isLogin && user.isAdmin ? (
                 <span className="mx-3">
-                  <Link href="/admin">
+                  <Link href={routes.admin}>
                     <a className="text-white"> Admin </a>
                   </Link>
                 </span>
               ) : null}
             </div>
             <div className="flex justify-between w-2/5 px-3 my-auto">
-              {/*<SearchBar />*/}
+              <SearchBar />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <Link href="/auth">
+                  <Link href={routes.authentification}>
                     <a className="mx-3 cursor-pointer">Connexion</a>
                   </Link>
-                  <Link href="/auth">
+                  <Link href={routes.authentification}>
                     <span className="mx-3 cursor-pointer">Inscription</span>
                   </Link>
                 </div>
@@ -133,7 +137,7 @@ const Header: React.FunctionComponent = () => {
           >
             <div className="h-14 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
-                <Link href="/">
+                <Link href={routes.home}>
                   <a className="cursor-pointer font-bold text-3xl text-white">
                     {process.env.NEXT_PUBLIC_SITE_NAME}
                   </a>

@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
 import connexion from '@services/connexion';
-import { defaultUsersMedia } from '@lib/routing/routes';
+import { defaultUsersMedia } from '@lib/constants';
 
 const { user } = connexion;
 
@@ -15,8 +15,8 @@ export const create = (data: any): Promise<User> =>
       login: data.login,
       email: data.email,
       password: data.password,
-      avatar_path: defaultUsersMedia.avatar,
-      background_path: defaultUsersMedia.background,
+      avatar_path: data.avatar_path,
+      background_path: data.background_path,
     },
   });
 

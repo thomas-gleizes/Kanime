@@ -3,6 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 
 import { User } from '@types';
 import { withSessionSsr } from '@services/session';
+import { routes } from '@lib/constants';
 import Content from '@layouts/Content';
 
 interface Props {
@@ -17,7 +18,7 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
       return {
         redirect: {
           permanent: false,
-          destination: '/',
+          destination: routes.home,
         },
       };
     } else {

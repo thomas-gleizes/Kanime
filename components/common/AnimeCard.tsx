@@ -7,7 +7,7 @@ import { Anime } from '@types';
 const AnimeCard: React.FunctionComponent<Anime> = ({ slug, poster, canonicalTitle }) => {
   return (
     <div className="w-full mx-auto px-2" style={{ width: 250, height: 340 }}>
-      <div className="my-3 bg-gradient-to-br from-blue-800 to-blue-600 shadow hover:shadow-lg cursor-pointer transform hover:scale-110 transition border rounded-b rounded-lg">
+      <div className="my-3 bg-primary shadow hover:shadow-lg cursor-pointer transform hover:scale-110 transition border rounded-b rounded-lg">
         <Link href={`/animes/${slug}`}>
           <a>
             <div className="flex justify-center">

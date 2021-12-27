@@ -8,7 +8,6 @@ import { User } from '@types';
 import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
-import { defaultUsersMedia } from '@lib/routing/routes';
 
 interface Props {
   user?: User;
@@ -20,8 +19,6 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
   async ({ query, req }) => {
     const { id } = query;
     const { user: sessionUser } = req.session;
-
-    console.log('SessionUser', sessionUser);
 
     const [user] = UsersResources.one(await UserModel.findById(+id));
 
@@ -57,13 +54,13 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
       </Head>
       <div className="w-full">
         <div
-          className="bg-bottom bg-no-repeat bg-cover bg-clip-padding bg-primary"
-          style={{ backgroundImage: `url('${defaultUsersMedia.background}')` }}
+          className="bg-center bg-no-repeat bg-cover bg-clip-padding bg-primary"
+          style={{ backgroundImage: `url('${user.backgroundPath}')` }}
         >
           <div className="flex pt-32 px-20 pb-10 select-none">
             <Image
               className="rounded-full border-2 border-white"
-              src={defaultUsersMedia.avatar}
+              src={user.avatarPath}
               width={100}
               height={100}
               alt="big avatar"

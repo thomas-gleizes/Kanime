@@ -1,12 +1,13 @@
 import { GetServerSideProps, NextPage } from 'next';
-import React from 'react';
-import Head from 'next/head';
 import Image from 'next/image';
+import React from 'react';
 import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 
 import { Anime, DefaultResponseData } from '@types';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
+import KitsuButton from '@components/common/KitsuButton';
+import Title from '@layouts/Title';
 
 interface Props extends DefaultResponseData {
   anime: Anime;
@@ -25,11 +26,7 @@ const Index: NextPage<Props> = ({ anime }) => {
 
   return (
     <div>
-      <Head>
-        <title>
-          {anime.canonicalTitle} | {process.env.NEXT_PUBLIC_SITE_NAME}
-        </title>
-      </Head>
+      <Title>{anime.canonicalTitle}</Title>
       <div className="relative mb-20">
         <div
           className="absolute top-0 bottom-0 -z-10 w-full h-full bg-gradient-to-b from-red-800 bg-cover bg-center"
@@ -97,9 +94,9 @@ const Index: NextPage<Props> = ({ anime }) => {
                     </span>
                   </button>
                 </div>
-                {/*<div className="my-1">*/}
-                {/*  <KitsuButton slug={anime?.slug} />*/}
-                {/*</div>*/}
+                <div className="my-1">
+                  <KitsuButton slug={anime.slug} />
+                </div>
               </div>
             </div>
           </div>

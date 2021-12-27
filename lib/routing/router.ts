@@ -58,8 +58,10 @@ class Router {
   public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const { method } = req;
 
+    const routes = this['_' + method.toLowerCase()];
+
     try {
-      for (const route of this.getRoutes(method)) {
+      for (const route of routes) {
         await route.call(req, res);
       }
     } catch (e) {
@@ -72,21 +74,6 @@ class Router {
       } else {
         res.status(500).send('Internal error');
       }
-    }
-  }
-
-  private getRoutes(method: string): Route[] {
-    switch (method) {
-      case 'GET':
-        return this._get;
-      case 'POST':
-        return this._post;
-      case 'PATCH':
-        return this._patch;
-      case 'PUT':
-        return this._put;
-      case 'DELETE':
-        return this._delete;
     }
   }
 }

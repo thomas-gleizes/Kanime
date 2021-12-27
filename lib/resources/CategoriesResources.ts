@@ -4,6 +4,8 @@ import { Category, Resources } from '@types';
 
 class CategoriesResources implements Resources<CategoryModel, Category> {
   one(resource: CategoryModel): Category {
+    if (!resource) return null;
+
     return {
       id: +resource.id,
       slug: resource.slug,

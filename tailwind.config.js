@@ -22,6 +22,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        kitsu: {
+          DEFAULT: '#402F3F',
+        },
         success: '#1abc9c',
         danger: '#e74c3c',
         warning: '#fcbf00',

@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import { User } from '@types';
 import { useContextFactory } from '@hooks';
 import LocalStorage from '@services/localStorage';
@@ -26,8 +26,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   const logIn = useCallback((user: User): void => {
     LocalStorage.saveUser(user);
-    setIsLogin(true);
     setUser(user);
+    setIsLogin(true);
   }, []);
 
   const logOut = useCallback(async (): Promise<void> => {

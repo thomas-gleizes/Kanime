@@ -5,6 +5,8 @@ import { Anime, Resources } from '@types';
 
 class AnimesResources implements Resources<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
+    if (!resource) return null;
+
     const {
       canonical_title,
       titles,

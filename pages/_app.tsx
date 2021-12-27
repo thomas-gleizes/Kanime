@@ -3,8 +3,8 @@ import React from 'react';
 
 import '../styles/globals.css';
 
-import Layout from '@components/layouts';
 import UserContextProvider from '@context/user';
+import Layout from '@components/layouts';
 
 const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
@@ -14,11 +14,13 @@ const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }>
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <AllContextProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </AllContextProvider>
+    <>
+      <AllContextProvider>
+        <Layout title="">
+          <Component {...pageProps} />
+        </Layout>
+      </AllContextProvider>
+    </>
   );
 };
 
