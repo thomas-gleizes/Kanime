@@ -8,6 +8,7 @@ import { User } from '@types';
 import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
+import EditUserModal from '@components/modal/EditUserModal';
 
 interface Props {
   user?: User;
@@ -67,11 +68,7 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
             />
             <div className="mt-3 ml-2 select-none">
               <h2 className="text-2xl"> {user.login} </h2>
-              {isCurrent ? (
-                <button className="px-6 py-1.5 rounded-md cursor-pointer text-white bg-secondary hover:bg-primary">
-                  Modifier
-                </button>
-              ) : null}
+              {isCurrent ? <EditUserModal /> : null}
             </div>
           </div>
         </div>
