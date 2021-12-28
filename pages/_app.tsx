@@ -21,7 +21,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <AllContextProvider>
-        <Layout title="">
+        <Layout>
           <Component {...pageProps} />
         </Layout>
       </AllContextProvider>

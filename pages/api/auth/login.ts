@@ -17,6 +17,8 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     body: { email, password },
   } = req;
 
+  if (req.session) await req.session.destroy();
+
   const [user, hash]: [User, string] = UsersResources.one(
     await UserModel.findByEmail(email)
   );

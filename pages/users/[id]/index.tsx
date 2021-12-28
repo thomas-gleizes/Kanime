@@ -1,6 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Error from 'next/error';
-import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
 
@@ -9,6 +8,7 @@ import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import EditUserModal from '@components/modal/EditUserModal';
+import Title from '@layouts/Title';
 
 interface Props {
   user?: User;
@@ -48,11 +48,7 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
 
   return (
     <div>
-      <Head>
-        <title>
-          {user.login} | {process.env.NEXT_PUBLIC_APP_NAME}
-        </title>
-      </Head>
+      <Title>{user.login}</Title>
       <div className="w-full">
         <div
           className="bg-center bg-no-repeat bg-cover bg-clip-padding bg-primary"
@@ -68,7 +64,7 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
             />
             <div className="mt-3 ml-2 select-none">
               <h2 className="text-2xl"> {user.login} </h2>
-              {isCurrent ? <EditUserModal /> : null}
+              {process.browser && isCurrent ? <EditUserModal /> : null}
             </div>
           </div>
         </div>

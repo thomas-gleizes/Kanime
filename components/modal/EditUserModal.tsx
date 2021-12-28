@@ -9,6 +9,8 @@ const EditUserModal: React.FunctionComponent = () => {
 
   const [isOpen, toggleModal] = useToggle(false);
 
+  if (!user) return null;
+
   return (
     <>
       <button
@@ -22,7 +24,7 @@ const EditUserModal: React.FunctionComponent = () => {
         close={toggleModal}
         className="mx-auto my-auto max-w-1000 rounded-md max-w-20 w-full mt-28 bg-white"
       >
-        <ModalBody>{user?.login}</ModalBody>
+        <ModalBody>{user.login}</ModalBody>
       </Modal>
     </>
   );

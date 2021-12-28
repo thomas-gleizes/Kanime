@@ -1,18 +1,19 @@
 import React from 'react';
+import Head from 'next/head';
 
 import Header from './Header';
 import Footer from './Footer';
-import Title from '@layouts/Title';
 
 interface Props {
   children: React.ReactNode;
-  title: string;
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children, title }) => {
+const Layout: React.FunctionComponent<Props> = ({ children }) => {
   return (
     <>
-      <Title>{title}</Title>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+      </Head>
       <Header />
       <main className="py-14">{children}</main>
       <Footer />
