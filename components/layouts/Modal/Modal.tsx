@@ -1,16 +1,16 @@
-import React, { FC, HTMLAttributes, MouseEventHandler, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
-  close: () => void;
+  toggle: () => void;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, close, ...rest }) => {
+const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest }) => {
   const background = useRef<HTMLDivElement>();
 
-  const handleClose: MouseEventHandler = ({ target }) => {
+  const handleClose: React.MouseEventHandler = ({ target }) => {
     if (background.current === target) {
-      close && close();
+      toggle && toggle();
     }
   };
 

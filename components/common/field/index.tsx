@@ -68,3 +68,4 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
 };
 
 export default Field;
+export { default as File } from './File';

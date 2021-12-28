@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 import Error from 'next/error';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { User } from '@types';
 import { withSessionSsr } from '@services/session';
@@ -9,6 +9,7 @@ import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import EditUserModal from '@components/modal/EditUserModal';
 import Title from '@layouts/Title';
+import { useLayoutContext } from '@context/layout';
 
 interface Props {
   user?: User;
@@ -43,7 +44,21 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
   }
 );
 
-export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
+export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
+  const {
+    headerTransparentState: [headerTransparent, setHeaderTransparent],
+    scrollPercent,
+  } = useLayoutContext();
+
+  useEffect(() => {
+    const boolean: boolean = scrollPercent < 10;
+    if (headerTransparent !== boolean) setHeaderTransparent(boolean);
+  }, [scrollPercent]);
+
+  useEffect(() => {
+    return () => setHeaderTransparent(false);
+  }, []);
+
   if (error) return <Error statusCode={error.code} title={error.message} />;
 
   return (
@@ -51,10 +66,10 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
       <Title>{user.login}</Title>
       <div className="w-full">
         <div
-          className="bg-center bg-no-repeat bg-cover bg-clip-padding bg-primary"
+          className="relative bg-center mt-[-56px] h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
           style={{ backgroundImage: `url('${user.backgroundPath}')` }}
         >
-          <div className="flex pt-32 px-20 pb-10 select-none">
+          <div className="absolute bottom-[10%] left-[10%] flex select-none">
             <Image
               className="rounded-full border-2 border-white"
               src={user.avatarPath}
@@ -63,15 +78,17 @@ export const Home: NextPage<Props> = ({ user, isCurrent, error }) => {
               alt="big avatar"
             />
             <div className="mt-3 ml-2 select-none">
-              <h2 className="text-2xl"> {user.login} </h2>
-              {process.browser && isCurrent ? <EditUserModal /> : null}
+              <h2 className="text-2xl font-medium"> {user.login} </h2>
+              <span className="my-1">
+                {process.browser && isCurrent ? <EditUserModal /> : null}
+              </span>
             </div>
           </div>
         </div>
-        <div className="text-center mt-5"> Coming soon...</div>
       </div>
+      <div className="text-center mt-5 h-screen"> Coming soon...</div>
     </div>
   );
 };
 
-export default Home;
+export default UserPage;

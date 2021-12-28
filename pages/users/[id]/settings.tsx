@@ -18,7 +18,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(({ req, que
   return { props: {} };
 });
 
-const Settings: NextPage = () => {
+const SettingsPage: NextPage = () => {
   return (
     <Content>
       <h1 className="text-center text-3xl">Settings</h1>
@@ -26,4 +26,4 @@ const Settings: NextPage = () => {
   );
 };
 
-export default Settings;
+export default SettingsPage;
