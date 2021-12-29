@@ -23,7 +23,7 @@ p, span, h1, h2, h3, h4, h5, h6, p > *, h1 > *, h2 > *, h3 > *, h4 > *, h5 > *, 
     user-select: text;
 }
 
-input, button, select, option {
+input, button, select, option, textarea {
     outline: unset !important;
 }
 
@@ -124,10 +124,6 @@ input, button, select, option {
 
 .modal {
     @apply fixed backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4
-}
-
-.modal-body {
-    @apply p-2
 }
 
 .modal-header {

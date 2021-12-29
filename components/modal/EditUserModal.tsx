@@ -3,8 +3,9 @@ import { Formik } from 'formik';
 
 import { useUserContext } from '@context/user';
 import { useToggle } from '@hooks';
-import Modal from '@layouts/Modal';
-import Field from '@components/common/field';
+import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
+import Field, { TextArea } from '@components/common/field';
+import Button from '@components/common/Button';
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user } = useUserContext();
@@ -12,6 +13,19 @@ const EditUserModal: React.FunctionComponent = () => {
   const [isOpen, toggleModal] = useToggle();
 
   if (!user) return null;
+
+  const initialValues = {
+    city: user.city,
+    birthday: user.birthday,
+    bio: user.bio,
+    avatarPath: user.avatarPath,
+    backgroundPath: user.backgroundPath,
+    gender: user.gender,
+  };
+
+  const handleSubmit = (values) => {
+    console.log('Values', values);
+  };
 
   return (
     <>
@@ -27,17 +41,37 @@ const EditUserModal: React.FunctionComponent = () => {
         className="mx-auto my-auto max-w-1000 rounded-md max-w-20 w-full mt-28 bg-white"
       >
         <div>
-          <Formik initialValues={{}} onSubmit={console.log}>
-            <>
-              <div
-                onClick={() => {}}
-                className="relative w-full h-400 rounded-t-md bg-center bg-no-repeat bg-cover bg-clip-content flex"
-                style={{ background: `url('${user.backgroundPath}')` }}
-              />
-              <div>
-                <Field name="test" />
-              </div>
-            </>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {() => (
+              <>
+                <div
+                  onClick={() => {}}
+                  className="relative w-full h-400 rounded-t-md bg-center bg-no-repeat bg-auto bg-center bg-clip-content flex"
+                  style={{ background: `url('${user.backgroundPath}')` }}
+                />
+
+                <ModalBody className="p-8">
+                  <div className="flex">
+                    <Field type="text" name="city" label="Ville" />
+                  </div>
+                  <div className="flex">
+                    <Field type="date" name="birthday" label="Date de naissance" />
+                    <Field name="gender" label="Genre" />
+                  </div>
+                  <div>
+                    <TextArea type="textarea" name="bio" label="Bio" />
+                  </div>
+                </ModalBody>
+                <ModalFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">
+                  <Button color="secondary" onClick={toggleModal}>
+                    Annuler
+                  </Button>
+                  <Button color="primary" type="submit">
+                    Enregistrer
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
           </Formik>
         </div>
       </Modal>

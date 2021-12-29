@@ -8,8 +8,8 @@ interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
 }
 
-const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) => {
-  const input = useRef<HTMLInputElement>();
+const TextArea: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) => {
+  const input = useRef<HTMLTextAreaElement>();
   const [focus, setFocus] = useState<boolean>(false);
 
   const [{ onBlur, ...field }, meta] = useField(name);
@@ -29,7 +29,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
       <div
         onClick={handleClick}
         className={classnames(
-          'relative group rounded-md p-0.5 border-[3px] border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200',
+          'relative group rounded-md bg-red-200 border-[3px] border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200',
           { 'border-red-400': error }
         )}
       >
@@ -43,21 +43,18 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
           {label}
           {required ? <em className="text-red-600">*</em> : null}
         </label>
-        <input
+        <textarea
           ref={input}
+          className="w-full h-auto p-3"
           onFocus={() => setFocus(true)}
           onBlur={(event) => {
             setFocus(false);
             onBlur(event);
           }}
-          className="w-full bg-white text-lg px-5 py-1.5"
-          type={type}
-          {...field}
-          {...rest}
         />
       </div>
       <div
-        className={classnames('text-danger text-right px-2 text-xs', {
+        className={classnames('text-d anger text-right px-2 text-xs', {
           invisible: !error,
         })}
       >
@@ -67,6 +64,4 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
   );
 };
 
-export default Field;
-export { default as File } from './File';
-export { default as TextArea } from './Textarea';
+export default TextArea;
