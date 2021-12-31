@@ -40,14 +40,14 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
   if (!anime) return null;
 
   return (
-    <div className="h-[1500px]">
+    <div className="h-1900">
       <Title>{anime.canonicalTitle}</Title>
       <div className="relative">
         <div
           className="absolute top-[-56px] bottom-0 -z-10 w-full h-[570px] bg-gradient-to-b from-red-800 bg-cover bg-top"
           style={{ backgroundImage: `url('${anime.cover.small}')` }}
         />
-        <div className="flex z-30 w-full mx-auto px-10 lg:px-2 pt-[250px] max-w-[1500px]">
+        <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[250px] max-w-[1200px]">
           <div className="mx-1 w-full mt-[175px]">
             <div className="h-20 w-full border rounded" />
             <div className="mx-1 py-3 divide-opacity-10 divide-y-2">
@@ -80,17 +80,15 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
               </div>
             </div>
           </div>
-          <div className="mx-4">
-            <div>
-              <Image
-                width={380}
-                height={500}
-                className="rounded-sm shadow-lg mb-3"
-                src={anime.poster.small}
-                alt="poster"
-                onClick={() => window?.open(`https://kitsu.io/anime/${anime.slug}`)}
-              />
-            </div>
+          <div className="sticky top-[250px] mx-4">
+            <Image
+              width={320}
+              className="rounded-sm shadow-lg"
+              height={440}
+              src={anime.poster.small}
+              alt="poster"
+              onClick={() => window?.open(`https://kitsu.io/anime/${anime.slug}`)}
+            />
             <div>
               <div className="mx-auto">
                 <div className="my-1">
