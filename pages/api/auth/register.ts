@@ -7,7 +7,6 @@ import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { withSessionApi } from '@services/session';
 import { ApiError } from '@errors';
-import { defaultUsersMedia } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -30,8 +29,6 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       login: userData.login,
       email: userData.email,
       password: await Security.hash(userData.password),
-      background_path: defaultUsersMedia.background,
-      avatar_path: defaultUsersMedia.avatar,
     })
   );
 

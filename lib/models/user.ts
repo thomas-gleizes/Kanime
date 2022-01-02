@@ -1,5 +1,6 @@
 import { User } from '@prisma/client';
 import connexion from '@services/connexion';
+import { defaultUsersMedia } from '@lib/constants';
 
 const { user } = connexion;
 
@@ -8,14 +9,18 @@ export const findById = (id: number): Promise<User> =>
     where: { id: id },
   });
 
-export const create = (data: any): Promise<User> =>
+export const create = (data: {
+  login: string;
+  email: string;
+  password: string;
+}): Promise<User> =>
   user.create({
     data: {
       login: data.login,
       email: data.email,
       password: data.password,
-      avatar_path: data.avatar_path,
-      background_path: data.background_path,
+      avatar_path: defaultUsersMedia.avatar,
+      background_path: defaultUsersMedia.background,
     },
   });
 
