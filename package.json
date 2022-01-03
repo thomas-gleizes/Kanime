@@ -1,5 +1,5 @@
 {
-  "name": "next-template",
+  "name": "Kanime",
   "private": true,
   "scripts": {
     "dev": "next dev",
