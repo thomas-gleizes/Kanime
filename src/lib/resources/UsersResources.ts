@@ -19,7 +19,9 @@ class UsersResources implements Resources<UserModel, [user: User, password: stri
       } = resource;
 
       const user: User = {
-        ...rest,
+        email: rest.email,
+        id: rest.id,
+        login: rest.login,
         isAdmin: is_admin,
         avatarPath: avatar_path,
         backgroundPath: background_path,

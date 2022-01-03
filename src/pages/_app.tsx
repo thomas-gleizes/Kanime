@@ -1,9 +1,9 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
 
-import '../styles/globals.css';
+import '../src/styles/globals.css';
 
-import Layout from '@components/layouts';
+import Layout from '../src/components/layouts';
 import LayoutContextProvider from '@context/layout';
 import UserContextProvider from '@context/user';
 

@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { Anime, DefaultResponseData } from '@types';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
-import AnimeCard from '@components/common/AnimeCard';
+import AnimeCard from '../../src/components/common/AnimeCard';
 import { useScrollPercent } from '@hooks';
 import appAxios from '@lib/api/appAxios';
 import Content from '@layouts/Content';

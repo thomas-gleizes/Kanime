@@ -8,7 +8,7 @@ import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
 import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
-import KitsuButton from '@components/common/KitsuButton';
+import KitsuButton from '../../../src/components/common/KitsuButton';
 
 interface Props extends DefaultResponseData {
   anime: Anime;

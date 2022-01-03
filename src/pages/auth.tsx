@@ -1,8 +1,8 @@
 import { NextPage } from 'next';
 import React from 'react';
 
-import LoginForm from '@components/auth/LoginForm';
-import RegisterForm from '@components/auth/RegisterForm';
+import LoginForm from '../src/components/auth/LoginForm';
+import RegisterForm from '../src/components/auth/RegisterForm';
 import Content from '@layouts/Content';
 import Title from '@layouts/Title';
 

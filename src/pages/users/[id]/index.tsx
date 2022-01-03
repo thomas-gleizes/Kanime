@@ -7,7 +7,7 @@ import { User } from '@types';
 import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
-import EditUserModal from '@components/modal/EditUserModal';
+import EditUserModal from '../../../src/components/modal/EditUserModal';
 import Title from '@layouts/Title';
 import { useLayoutContext } from '@context/layout';
 
