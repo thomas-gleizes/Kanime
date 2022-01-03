@@ -21,37 +21,37 @@
     "jsx": "preserve",
     "paths": {
       "@components/*": [
-        "components/*"
+        "src/components/*"
       ],
       "@layouts/*": [
-        "components/layouts/*"
+        "src/components/layouts/*"
       ],
       "@types": [
         "types"
       ],
       "@hooks": [
-        "hooks"
+        "src/hooks"
       ],
       "@context/*": [
-        "context/*"
+        "src/context/*"
       ],
       "@lib/*": [
-        "lib/*"
+        "src/lib/*"
       ],
       "@services/*": [
-        "lib/services/*"
+        "src/lib/services/*"
       ],
       "@resources": [
-        "lib/resources"
+        "src/lib/resources"
       ],
       "@errors": [
-        "lib/errors"
+        "src/lib/errors"
       ],
       "@models": [
-        "lib/models"
+        "src/lib/models"
       ],
       "@helpers/*": [
-        "lib/helpers/*"
+        "src/lib/helpers/*"
       ]
     }
   },

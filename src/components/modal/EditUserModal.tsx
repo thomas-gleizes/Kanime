@@ -1,11 +1,11 @@
 import React from 'react';
 import { Formik } from 'formik';
 
-import { useUserContext } from '@context/user';
-import { useToggle } from '@hooks';
-import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
-import Field, { TextArea } from '@components/common/field';
-import Button from '@components/common/Button';
+import { useUserContext } from '../../context/user';
+import { useToggle } from '../../hooks';
+import Modal, { ModalBody, ModalFooter } from '../layouts/Modal';
+import Field, { TextArea } from '../common/field';
+import Button from '../common/Button';
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user } = useUserContext();

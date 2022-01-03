@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Transition } from '@headlessui/react';
 
 import { Anime } from '@types';
-import { routes } from '@lib/constants';
+import { routes } from '../../lib/constants';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
 const AnimeCard: React.FunctionComponent<Anime> = (props) => {

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import router from '@lib/routing/router';
+import router from '../../../lib/routing/router';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';

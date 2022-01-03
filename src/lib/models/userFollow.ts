@@ -1,4 +1,4 @@
-import connexion from '@services/connexion';
+import connexion from '../services/connexion';
 
 const { userFollow } = connexion;
 

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { useContextFactory, useScrollPercent } from '@hooks';
+import { useContextFactory, useScrollPercent } from '../hooks';
 
 export declare type LayoutContext = {
   headerTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];

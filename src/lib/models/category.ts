@@ -1,5 +1,5 @@
 import { Category } from '@prisma/client';
-import connexion from '@services/connexion';
+import connexion from '../services/connexion';
 
 const { category } = connexion;
 

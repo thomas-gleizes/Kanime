@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import appAxios from '@lib/api/appAxios';
+import appAxios from '../../lib/api/appAxios';
 import Field from '../common/field';
 
 const validationSchema = Yup.object({

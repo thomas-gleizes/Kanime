@@ -1,6 +1,6 @@
 import { User } from '@prisma/client';
-import connexion from '@services/connexion';
-import { defaultUsersMedia } from '@lib/constants';
+import connexion from '../services/connexion';
+import { defaultUsersMedia } from '../constants';
 
 const { user } = connexion;
 

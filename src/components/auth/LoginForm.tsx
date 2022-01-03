@@ -4,8 +4,8 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
 import Field from '../common/field';
-import appAxios from '@lib/api/appAxios';
-import { useUserContext } from '@context/user';
+import appAxios from '../../lib/api/appAxios';
+import { useUserContext } from '../../context/user';
 
 const loginSchema = Yup.object({
   email: Yup.string()

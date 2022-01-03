@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Anime, DefaultResponseData } from '@types';
-import router from '@lib/routing/router';
+import router from '../../../../lib/routing/router';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
 import { ApiError } from '@errors';

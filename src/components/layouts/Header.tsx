@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { FaBars, FaCaretDown } from 'react-icons/fa';
 import classnames from 'classnames';
 
-import { useUserContext } from '@context/user';
-import { useLayoutContext } from '@context/layout';
-import { routes } from '@lib/constants';
-import DropDown from '@components/layouts/DropDown';
-import SearchBar from '@components/common/SearchBar';
+import { useUserContext } from '../../context/user';
+import { useLayoutContext } from '../../context/layout';
+import { routes } from '../../lib/constants';
+import DropDown from './DropDown';
+import SearchBar from '../common/SearchBar';
 
 const DropDownItem = ({ href, children }) => (
   <Link href={href}>

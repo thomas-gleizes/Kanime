@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { verifyAdmin, withSessionApi } from '@lib/services/session';
+import { verifyAdmin, withSessionApi } from '@services/session';
 import connexion from '@services/connexion';
-import router from '@lib/routing/router';
-import KitsuApi from '@lib/api/kitsuApi';
+import router from '../../../../lib/routing/router';
+import KitsuApi from '../../../../lib/api/kitsuApi';
 
 router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   let categories: Array<any> = [];

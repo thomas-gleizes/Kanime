@@ -1,5 +1,5 @@
 import { Anime } from '@prisma/client';
-import connexion from '@services/connexion';
+import connexion from '../services/connexion';
 
 const { anime: animes } = connexion;
 

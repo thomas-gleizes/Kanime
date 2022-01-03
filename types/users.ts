@@ -7,7 +7,6 @@ export declare type User = {
   bio?: string;
   birthday?: string;
   city?: string;
-  country_id: string;
   isAdmin: boolean;
   avatarPath: string;
   backgroundPath: string;
