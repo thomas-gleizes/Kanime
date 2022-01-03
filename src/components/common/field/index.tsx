@@ -50,7 +50,7 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
             setFocus(false);
             onBlur(event);
           }}
-          className="w-full bg-white text-lg px-5 py-1.5"
+          className="w-full bg-white text-lg px-5 py-2"
           type={type}
           {...field}
           {...rest}
@@ -70,3 +70,4 @@ const Field: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) =
 export default Field;
 export { default as File } from './File';
 export { default as TextArea } from './Textarea';
+export { default as Select } from './Select';

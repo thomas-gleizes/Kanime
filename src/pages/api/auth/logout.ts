@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import router from '../../../lib/routing/router';
+import router from '@lib/routing/router';
 import { withSessionApi } from '@services/session';
 
 router.all(async (req: NextApiRequest, res: NextApiResponse) => {

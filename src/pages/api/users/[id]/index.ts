@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import { verifyUser, withSessionApi } from '@services/session';
 import router from '../../../../lib/routing/router';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
@@ -21,10 +20,6 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, user });
 });
 
-router.post(verifyUser, (req: NextApiRequest, res: NextApiResponse) => {
-  res.status(201).send({ success: true, user: undefined });
-});
-
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
+export default (req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
-});
+};

@@ -2,17 +2,16 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useField } from 'formik';
 import classnames from 'classnames';
 
-interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface FieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
   name: string;
   required?: boolean;
 }
 
-const TextArea: React.FC<FieldProps> = ({ type, name, label, required, ...rest }) => {
+const TextArea: React.FC<FieldProps> = ({ name, label, required, ...rest }) => {
   const input = useRef<HTMLTextAreaElement>();
-  const [focus, setFocus] = useState<boolean>(false);
 
-  const [{ onBlur, ...field }, meta] = useField(name);
+  const [field, meta] = useField(name);
 
   const error = useMemo<string>(
     () => (meta.touched && !!meta.error ? meta.error : ''),
@@ -25,36 +24,19 @@ const TextArea: React.FC<FieldProps> = ({ type, name, label, required, ...rest }
   };
 
   return (
-    <div className="w-full px-2 my-1.5">
+    <div onClick={handleClick} className="w-full relative px-2 my-1.5">
+      <label className="absolute mx-2 font-medium text-md rounded-full px-2 -top-3 text-gray-600 bg-white group-hover:text-primary transform transition duration-200 left-3 cursor-text">
+        {label}
+        {required ? <em className="text-red-600">*</em> : null}
+      </label>
+      <textarea
+        ref={input}
+        className="border border-[3px] w-full p-3 rounded-md min-h-150 border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200"
+        {...field}
+        {...rest}
+      />
       <div
-        onClick={handleClick}
-        className={classnames(
-          'relative group rounded-md bg-red-200 border-[3px] border-gray-300 hover:border-blue-500 focus-within:border-blue-500 bg-white w-full transition duration-200',
-          { 'border-red-400': error }
-        )}
-      >
-        <label
-          onClick={handleClick}
-          className={classnames(
-            'absolute px-1 mx-2 text-md top-2.5 bg-white group-hover:text-blue-700 transform transition duration-200 left-3 text-opacity-40 cursor-text',
-            { '-translate-y-6 -translate-x-2': focus || field.value }
-          )}
-        >
-          {label}
-          {required ? <em className="text-red-600">*</em> : null}
-        </label>
-        <textarea
-          ref={input}
-          className="w-full h-auto p-3"
-          onFocus={() => setFocus(true)}
-          onBlur={(event) => {
-            setFocus(false);
-            onBlur(event);
-          }}
-        />
-      </div>
-      <div
-        className={classnames('text-d anger text-right px-2 text-xs', {
+        className={classnames('text-danger text-right px-2 text-xs', {
           invisible: !error,
         })}
       >
@@ -62,6 +44,10 @@ const TextArea: React.FC<FieldProps> = ({ type, name, label, required, ...rest }
       </div>
     </div>
   );
+};
+
+TextArea.defaultProps = {
+  maxLength: 500,
 };
 
 export default TextArea;

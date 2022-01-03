@@ -4,12 +4,12 @@ import Image from 'next/image';
 import React, { useEffect } from 'react';
 
 import { User } from '@types';
-import { withSessionSsr } from '@services/session';
 import { UserModel } from '@models';
+import { withSessionSsr } from '@services/session';
+import { useLayoutContext } from '@context/layout';
 import { UsersResources } from '@resources';
 import EditUserModal from '../../../components/modal/EditUserModal';
 import Title from '@layouts/Title';
-import { useLayoutContext } from '../../../context/layout';
 
 interface Props {
   user?: User;

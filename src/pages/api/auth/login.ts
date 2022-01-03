@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import router from '../../../lib/routing/router';
+import router from '@lib/routing/router';
+import Security from '@services/security';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { ApiError } from '@errors';
-import Security from '@services/security';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -24,7 +24,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   );
 
   if (!user || !(await Security.compare(password, hash))) {
-    throw new ApiError(401, 'email/password wrong');
+    throw new ApiError(400, 'email/password wrong');
   }
 
   user.token = Security.sign(user);
