@@ -1,26 +1,16 @@
 import React from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
+import { useRouter } from 'next/router';
+
 import * as Yup from 'yup';
 
 import appAxios from '../../lib/api/appAxios';
 import Field from '../common/field';
+import { useUserContext } from '@context/user';
+import { routes } from '@lib/constants';
+import { registerSchema } from '@validations/users';
 
-const validationSchema = Yup.object({
-  login: Yup.string()
-    .min(3, 'Votre pseudo doit contenir au moins 3 caractère')
-    .required('Veuillez saisir un pseudo'),
-  email: Yup.string()
-    .email('Votre email est invalide')
-    .required('Veuillez saisir un email'),
-  password: Yup.string()
-    .min(6, 'Votre mot de passe doit contenir au minimum 6 caractère')
-    .required('Veuillez saisir un mot de passe'),
-  confirmPassword: Yup.string()
-    .required('Veuillez confirmer votre mot de passe')
-    .oneOf([Yup.ref('password')], 'Les mot de passe correspondent pas'),
-});
-
-type registerForm = Yup.TypeOf<typeof validationSchema>;
+type registerForm = Yup.TypeOf<typeof registerSchema>;
 
 const initialValues: registerForm = {
   login: 'Kalat',
@@ -30,13 +20,22 @@ const initialValues: registerForm = {
 };
 
 const RegisterForm: React.FunctionComponent = () => {
+  const { signIn } = useUserContext();
+
+  const router = useRouter();
+
   const handleSubmit = async (
     values: registerForm,
     formik: FormikHelpers<registerForm>
   ) => {
     try {
-      const response = await appAxios.post('auth/register', values);
-    } catch (e) {}
+      const response = await appAxios.post('auth/login', values);
+      signIn(response.data.user);
+
+      await router.push(`${routes.users}/${response.data.user.id}`);
+    } catch (e) {
+      console.log('E', e);
+    }
   };
 
   return (
@@ -44,7 +43,7 @@ const RegisterForm: React.FunctionComponent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        validationSchema={validationSchema}
+        validationSchema={registerSchema}
       >
         <Form>
           <div>

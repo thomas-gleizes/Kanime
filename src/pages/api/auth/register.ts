@@ -6,7 +6,8 @@ import Security from '@services/security';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { withSessionApi } from '@services/session';
-import { ApiError } from '@errors';
+import { ApiError, SchemaError } from '@errors';
+import { registerSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -14,6 +15,9 @@ interface Data extends DefaultResponseData {
 
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body: userData } = req;
+
+  const error = await registerSchema.validate(userData).catch((error) => error);
+  if (error) throw new SchemaError(400, error);
 
   const users = await UserModel.findByEmailOrLogin(userData.email, userData.login);
 

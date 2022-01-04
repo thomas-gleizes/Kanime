@@ -1,4 +1,4 @@
-import type { User, Gender } from '@prisma/client';
+import type { Gender, User } from '@prisma/client';
 import connexion from '../services/connexion';
 import { defaultUsersMedia } from '../constants';
 
@@ -27,16 +27,16 @@ export const create = (data: {
 export const update = (
   id: number,
   data: {
-    country_id: number | null;
-    city: string | null;
-    birthday: string | null;
-    gender: Gender;
-    bio: string | null;
-    avatarPath: string | null;
-    backgroundPath: string | null;
+    country_id?: number | null;
+    city?: string | null;
+    birthday?: Date | null;
+    gender?: Gender;
+    bio?: string | null;
+    avatarPath?: string | null;
+    backgroundPath?: string | null;
   }
-): Promise<User> => {
-  return user.update({
+): Promise<User> =>
+  user.update({
     where: { id },
     data: {
       country_id: data.country_id,
@@ -48,7 +48,6 @@ export const update = (
       background_path: data.backgroundPath || defaultUsersMedia.background,
     },
   });
-};
 
 export const findByEmail = (email: string): Promise<User> =>
   user.findUnique({

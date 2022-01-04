@@ -6,24 +6,26 @@ import Security from '@services/security';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
-import { ApiError } from '@errors';
+import { ApiError, SchemaError } from '@errors';
+import { registerSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;
 }
 
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const {
-    body: { email, password },
-  } = req;
+  const { body } = req;
+
+  const error = await registerSchema.validate(body).catch((error) => error);
+  if (error) throw new SchemaError(400, error);
 
   if (req.session) await req.session.destroy();
 
   const [user, hash]: [User, string] = UsersResources.one(
-    await UserModel.findByEmail(email)
+    await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !(await Security.compare(password, hash))) {
+  if (!user || !(await Security.compare(body.password, hash))) {
     throw new ApiError(400, 'email/password wrong');
   }
 

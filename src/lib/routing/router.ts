@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Method, Middleware } from '@types';
-import { ApiError } from '@errors';
+import { ApiError, SchemaError } from '@errors';
 import Route from './route';
 
 class Router {
@@ -67,6 +67,8 @@ class Router {
     } catch (e) {
       if (e instanceof ApiError) {
         res.status(e.code).send({ error: e.message });
+      } else if (e instanceof SchemaError) {
+        res.status(e.code).send({ error: e.message, keys: e.data });
       } else if (process.env.NODE_ENV !== 'production') {
         console.error('Error :', e);
 

@@ -1,20 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Form, Formik } from 'formik';
-import { Country } from '@prisma/client';
+import { Country, Gender } from '@prisma/client';
 
 import appAxios from '@lib/api/appAxios';
 import { useUserContext } from '@context/user';
 import { useFetch, useToggle } from '@hooks';
 import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
-import Field, { Select, TextArea } from '@components/common/field';
+import Field, { File, Select, TextArea } from '@components/common/field';
 import Button from '@components/common/Button';
 
 const fetchCountry = () => appAxios.get<Country[]>('common/countries');
 
-const GENDER = ['Secret', 'Male', 'Female'];
-
 const EditUserModal: React.FunctionComponent = () => {
   const { user } = useUserContext();
+
+  const backgroundRef = useRef();
+  const avatarRef = useRef();
 
   const [isOpen, toggleModal] = useToggle();
 
@@ -26,8 +27,8 @@ const EditUserModal: React.FunctionComponent = () => {
     city: user.city,
     birthday: user.birthday,
     bio: user.bio,
-    avatarPath: user.avatarPath,
-    backgroundPath: user.backgroundPath,
+    avatar: user.avatarPath,
+    background: user.backgroundPath,
     gender: user.gender,
   };
 
@@ -76,7 +77,7 @@ const EditUserModal: React.FunctionComponent = () => {
                 <div className="flex">
                   <Field type="date" name="birthday" label="Date de naissance" />
                   <Select name="gender" label="Genre">
-                    {GENDER.map((gender, index) => (
+                    {Object.values(Gender).map((gender, index) => (
                       <option key={index} value={gender}>
                         {gender}
                       </option>
@@ -85,6 +86,10 @@ const EditUserModal: React.FunctionComponent = () => {
                 </div>
                 <div>
                   <TextArea name="bio" label="Bio" />
+                </div>
+                <div>
+                  <div></div>
+                  <File innerRef={avatarRef} name="avatar" />
                 </div>
               </ModalBody>
               <ModalFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">

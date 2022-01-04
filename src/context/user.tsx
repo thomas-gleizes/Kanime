@@ -7,8 +7,8 @@ import appAxios from '../lib/api/appAxios';
 export declare type UserContext = {
   isLogin: boolean;
   user: User;
-  logIn: (user: User) => void;
-  logOut: () => Promise<void>;
+  signIn: (user: User) => void;
+  signOut: () => Promise<void>;
 };
 
 interface Props {
@@ -24,13 +24,13 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   const [user, setUser] = useState<User>(LocalStorage.fetchUser());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
-  const logIn = useCallback((user: User): void => {
+  const signIn = useCallback((user: User): void => {
     LocalStorage.saveUser(user);
     setUser(user);
     setIsLogin(true);
   }, []);
 
-  const logOut = useCallback(async (): Promise<void> => {
+  const signOut = useCallback(async (): Promise<void> => {
     await appAxios.get('auth/logout');
     LocalStorage.removeUser();
     setIsLogin(false);
@@ -38,7 +38,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, isLogin, logIn, logOut }}>
+    <UserContext.Provider value={{ user, isLogin, signIn, signOut }}>
       {children}
     </UserContext.Provider>
   );

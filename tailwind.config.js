@@ -29,6 +29,24 @@ module.exports = {
         unset: 'unset',
         full: '100%',
       },
+      minWidth: {
+        ...generateKeys(40, 'px', 50),
+        full: '100%',
+        screen: '100vw',
+        unset: 'unset',
+      },
+      maxWidth: {
+        ...generateKeys(40, 'px', 50),
+        full: '100%',
+        screen: '100vw',
+        unset: 'unset',
+      },
+      minHeight: {
+        ...generateKeys(50, 'px', 50),
+        full: '100%',
+        screen: '100vw',
+        unset: 'unset',
+      },
       zIndex: {
         ...generateKeys(11, '', 10, true),
       },

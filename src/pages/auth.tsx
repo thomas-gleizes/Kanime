@@ -1,12 +1,22 @@
 import { NextPage } from 'next';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 
 import LoginForm from '../components/auth/LoginForm';
 import RegisterForm from '../components/auth/RegisterForm';
 import Content from '@layouts/Content';
 import Title from '@layouts/Title';
+import { useUserContext } from '@context/user';
 
 const Auth: NextPage = () => {
+  const { isLogin, user } = useUserContext();
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isLogin) router.push(`users/${user.id}`);
+  }, [isLogin]);
+
   return (
     <Content>
       <Title>Authentification</Title>

@@ -52,6 +52,9 @@
       ],
       "@helpers/*": [
         "src/lib/helpers/*"
+      ],
+      "@validations/*": [
+        "src/lib/validations/*"
       ]
     }
   },

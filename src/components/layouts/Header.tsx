@@ -44,7 +44,7 @@ const DropDownExplore = () => {
 };
 
 const DropDownUser = () => {
-  const { user, logOut } = useUserContext();
+  const { user, signOut } = useUserContext();
   const imgRef = useRef<HTMLImageElement>();
 
   return (
@@ -64,7 +64,7 @@ const DropDownUser = () => {
           <DropDownItem href={`${routes.users}/${user.id}/settings`}>
             Settings
           </DropDownItem>
-          <div onClick={logOut}>
+          <div onClick={signOut}>
             <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
               Déconnexion
             </span>

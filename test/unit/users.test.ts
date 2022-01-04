@@ -1,9 +1,11 @@
+import { Gender, User } from '@prisma/client';
 import { UserModel } from '@models';
 import Security from '@services/security';
-import { expect } from '@jest/globals';
 import { defaultUsersMedia } from '@lib/constants';
 
 describe('users', () => {
+  let userId: number = null;
+
   beforeAll(async () => {
     await UserModel.deleteAll();
   });
@@ -25,6 +27,8 @@ describe('users', () => {
 
     expect(user).toBeDefined();
 
+    userId = user.id;
+
     expect(await Security.compare(password, user.password)).toBeTruthy();
     expect(user.is_admin).toBeFalsy();
     expect(user.follow_count).toBe(0);
@@ -33,6 +37,25 @@ describe('users', () => {
     expect(user.background_path).toBe(defaultUsersMedia.background);
     expect(user.gender).toBe('Secret');
   });
-});
 
-export {};
+  it('should update user', async () => {
+    const bio: string = 'Ceci est une description de test';
+    const gender: Gender = 'Male';
+    const birthDay: Date = new Date('1999-05-21');
+    const city: string = 'Montpellier';
+
+    const updateUser = await UserModel.update(userId, {
+      avatarPath: '',
+      backgroundPath: '',
+      birthday: birthDay,
+      city: city,
+      bio: bio,
+      gender: gender,
+    });
+
+    expect(updateUser.bio).toBe(bio);
+    expect(updateUser.city).toBe(city);
+    expect(updateUser.gender).toBe(gender);
+    expect(updateUser.birthday.toString()).toBe(birthDay.toString());
+  });
+});

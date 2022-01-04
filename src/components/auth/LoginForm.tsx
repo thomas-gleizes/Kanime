@@ -1,18 +1,13 @@
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import Field from '../common/field';
-import appAxios from '../../lib/api/appAxios';
-import { useUserContext } from '../../context/user';
-
-const loginSchema = Yup.object({
-  email: Yup.string()
-    .email('Veuillez saisir un email valide')
-    .required('Veuillez saisir un email'),
-  password: Yup.string().required('Veuillez saisir un mot de passe'),
-});
+import Field from '@components/common/field';
+import appAxios from '@lib/api/appAxios';
+import { useUserContext } from '@context/user';
+import { routes } from '@lib/constants';
+import { loginSchema } from '@validations/users';
 
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
@@ -22,16 +17,18 @@ const initialValues: loginType = {
 };
 
 const LoginForm: React.FunctionComponent = () => {
-  const { isLogin, user, logIn } = useUserContext();
+  const { signIn } = useUserContext();
   const router = useRouter();
 
-  useEffect(() => {
-    if (isLogin) router.push(`/users/${user.id}`);
-  }, [isLogin]);
-
   const handleSubmit = async (values: loginType, helpers: FormikHelpers<loginType>) => {
-    const response = await appAxios.post('auth/login', values);
-    logIn(response.data.user);
+    try {
+      const response = await appAxios.post('auth/login', values);
+      signIn(response.data.user);
+
+      await router.push(`${routes.users}/${response.data.user.id}`);
+    } catch (e) {
+      console.log('E', e);
+    }
   };
 
   return (
