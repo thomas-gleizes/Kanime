@@ -2,8 +2,8 @@ function generateKeys(length, indicator, multi = 10, negative = false) {
   const obj = {};
 
   for (let i = 0; i < length; i++) {
-    obj[i] = `${i * multi}${indicator}`;
-    if (negative) obj['-' + i] = `-${i * multi}${indicator}`;
+    obj[i * multi] = `${i * multi}${indicator}`;
+    if (negative) obj[`-${i * multi}`] = `-${i * multi}${indicator}`;
   }
 
   return obj;
@@ -30,7 +30,7 @@ module.exports = {
         full: '100%',
       },
       zIndex: {
-        ...generateKeys(10, '', 10),
+        ...generateKeys(11, '', 10, true),
       },
     },
   },
