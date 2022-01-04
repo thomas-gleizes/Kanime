@@ -7,7 +7,7 @@ import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import ApiError from '../errors/ApiError';
 
 const sessionOptions: IronSessionOptions = {
-  password: process.env.NODE_SECRET_TOKEN as string,
+  password: process.env.SECRET_TOKEN as string,
   cookieName: 'iron-session/examples/next.js',
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {

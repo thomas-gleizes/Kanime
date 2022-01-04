@@ -7,6 +7,7 @@ const config = {
   testEnvironment: 'node',
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths),
   modulePaths: ['<rootDir>'],
+  setupFiles: ['<rootDir>/test/setup.js'],
 };
 
 module.exports = config;

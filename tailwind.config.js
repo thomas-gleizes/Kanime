@@ -1,19 +1,13 @@
-const buildList = (length, indicator, multi = 10) => {
-  const json = Array(length)
-    .fill(0)
-    .reduce((prev, current, index) => {
-      let str = prev;
-      index++;
+function generateKeys(length, indicator, multi = 10, negative = false) {
+  const obj = {};
 
-      if (index === 1) str = '{';
-      str += `\"${index * multi}\": \"${index * multi}${indicator}\"`;
+  for (let i = 0; i < length; i++) {
+    obj[i] = `${i * multi}${indicator}`;
+    if (negative) obj['-' + i] = `-${i * multi}${indicator}`;
+  }
 
-      if (index === length) return str + '}';
-      else return str + ',';
-    }, '');
-
-  return JSON.parse(json);
-};
+  return obj;
+}
 
 module.exports = {
   mode: 'jit',
@@ -30,35 +24,13 @@ module.exports = {
         warning: '#fcbf00',
       },
       spacing: {
-        ...buildList(50, 'px', 50),
-        screen: '100vh',
-      },
-      minWidth: {
-        ...buildList(40, 'px', 50),
-        full: '100%',
-        screen: '100vw',
-        unset: 'unset',
-      },
-      maxWidth: {
-        ...buildList(40, 'px', 50),
-        full: '100%',
-        screen: '100vw',
-        unset: 'unset',
-      },
-      minHeight: {
-        ...buildList(40, 'px', 50),
-        full: '100%',
+        ...generateKeys(50, 'px', 50),
         screen: '100vh',
         unset: 'unset',
-      },
-      maxHeight: {
-        ...buildList(40, 'px', 50),
         full: '100%',
-        screen: '100vh',
-        unset: 'unset',
       },
       zIndex: {
-        ...buildList(10, '', 10),
+        ...generateKeys(10, '', 10),
       },
     },
   },
