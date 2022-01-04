@@ -5,7 +5,7 @@ import { DefaultErrorData, DefaultResponseData } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
 import { UserModel } from '@models';
-import { ApiError } from '@errors';
+import { defaultUsersMedia } from '@lib/constants';
 
 interface Data extends DefaultResponseData {}
 
@@ -13,47 +13,47 @@ interface Error extends DefaultErrorData {}
 
 // var matches = string.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};
+
 router.patch(
   verifyUser,
   async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
-    const { body } = req;
-    const { id } = req.session.user;
+    const {
+      body,
+      session: { user },
+    } = req;
 
-    const path = `/media/users/${id.toString().split('').join('/')}`;
+    const path = `${process.cwd()}/public/media/users/${user.id
+      .toString()
+      .split('')
+      .join('/')}`;
 
-    if (body.avatar) {
-      if (Buffer.byteLength(body.avatar, 'utf8') >= 1000000)
-        throw new ApiError(400, 'avatar is to big');
+    if (body.avatar !== user.avatarPath) {
+      if (user.avatarPath !== defaultUsersMedia.avatar) fs.unlinkSync(user.avatarPath);
 
-      await new Promise((resolve, reject) =>
-        fs.writeFile(`${path}/avatar.jpg`, new Buffer(body.avatar, 'base64'), (err) => {
-          if (err) reject(err);
-          resolve(null);
-        })
-      );
-      body.backgroundPath = `${path}/avatar.jpg`;
+      const avatarPath = `${path}/avatar.png`;
+      await fs.promises.writeFile(avatarPath, new Buffer(body.avatar, 'base64'));
+      body.backgroundPath = avatarPath;
     }
 
-    if (body.background) {
-      if (Buffer.byteLength(body.background, 'utf8') >= 1000000)
-        throw new ApiError(400, 'avatar is to big');
+    if (body.background !== user.backgroundPath) {
+      if (user.backgroundPath !== defaultUsersMedia.background)
+        fs.unlinkSync(user.backgroundPath);
 
-      await new Promise((resolve, reject) =>
-        fs.writeFile(
-          `${path}/background.jpg`,
-          new Buffer(body.avatar, 'base64'),
-          (err) => {
-            if (err) reject(err);
-            resolve(null);
-          }
-        )
-      );
-      body.backgroundPath = `${path}/background.jpg`;
+      const backgroundPath = `${path}/background.png`;
+      await fs.promises.writeFile(backgroundPath, new Buffer(body.background, 'base64'));
+      body.backgroundPath = backgroundPath;
     }
 
-    const user = await UserModel.update(id, body);
+    const updatedUser = await UserModel.update(user.id, body);
 
-    res.status(200).send({ success: true, params: user });
+    res.status(200).send({ success: true, params: updatedUser });
   }
 );
 
