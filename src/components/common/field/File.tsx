@@ -2,7 +2,7 @@ import React from 'react';
 import { useField } from 'formik';
 import base64 from '@helpers/base64';
 
-interface Props {
+interface Props extends React.HTMLAttributes<HTMLInputElement> {
   innerRef: any;
   name: string;
   disabled?: boolean;
@@ -14,16 +14,7 @@ const File: React.FunctionComponent<Props> = ({ innerRef, name, disabled }) => {
   const handleChange = ({ target }) => {
     const file = target.files[0];
 
-    base64
-      .encode(file)
-      .then((result) => {
-        console.log('data', result);
-
-        setValue({ data: result, extension: file.type });
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+    base64.encode(file).then((result) => setValue(`data:${file.type};base64,${result}`));
   };
 
   return (

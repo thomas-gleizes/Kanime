@@ -14,12 +14,12 @@ const fetchCountry = () => appAxios.get<Country[]>('common/countries');
 const EditUserModal: React.FunctionComponent = () => {
   const { user } = useUserContext();
 
-  const backgroundRef = useRef();
-  const avatarRef = useRef();
+  const avatarRef = useRef<HTMLInputElement>();
+  const backgroundRef = useRef<HTMLInputElement>();
 
   const [isOpen, toggleModal] = useToggle();
 
-  const [{ countries }, loading] = useFetch(fetchCountry);
+  const [{ countries }] = useFetch(fetchCountry);
 
   if (!user) return null;
 
@@ -57,10 +57,18 @@ const EditUserModal: React.FunctionComponent = () => {
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             <Form>
               <div
-                onClick={() => {}}
-                className="relative w-full h-400 rounded-t-md bg-center bg-no-repeat bg-auto bg-center bg-clip-content flex"
+                onClick={() => backgroundRef.current.click()}
+                className="relative w-full h-400 rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
                 style={{ background: `url('${user.backgroundPath}')` }}
-              />
+              >
+                <div
+                  onClick={() => avatarRef.current.click()}
+                  className="abosulte w-50 h-50 rounded-full top-1/2 right-10 bg-center bg-no-repeat bg-auto bg-clip-content"
+                  style={{ background: `url(${user.avatarPath})` }}
+                />
+                <File innerRef={avatarRef} name="avatar" />
+              </div>
+              <File innerRef={backgroundRef} name="background" />
 
               <ModalBody className="p-8">
                 <div className="flex">
@@ -86,10 +94,6 @@ const EditUserModal: React.FunctionComponent = () => {
                 </div>
                 <div>
                   <TextArea name="bio" label="Bio" />
-                </div>
-                <div>
-                  <div></div>
-                  <File innerRef={avatarRef} name="avatar" />
                 </div>
               </ModalBody>
               <ModalFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">

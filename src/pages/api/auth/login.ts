@@ -7,7 +7,7 @@ import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { ApiError, SchemaError } from '@errors';
-import { registerSchema } from '@validations/users';
+import { loginSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -16,8 +16,10 @@ interface Data extends DefaultResponseData {
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body } = req;
 
-  const error = await registerSchema.validate(body).catch((error) => error);
-  if (error) throw new SchemaError(400, error);
+  // const error = await loginSchema.validate(body).catch((error) => error);
+  // console.log('Error', error);
+  //
+  // if (error) throw new SchemaError(400, error);
 
   if (req.session) await req.session.destroy();
 
