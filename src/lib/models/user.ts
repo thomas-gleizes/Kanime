@@ -1,4 +1,4 @@
-import type { User } from '@prisma/client';
+import type { User, Gender } from '@prisma/client';
 import connexion from '../services/connexion';
 import { defaultUsersMedia } from '../constants';
 
@@ -30,7 +30,7 @@ export const update = (
     country_id: number | null;
     city: string | null;
     birthday: string | null;
-    gender: string;
+    gender: Gender;
     bio: string | null;
     avatarPath: string | null;
     backgroundPath: string | null;
@@ -68,3 +68,14 @@ export const findFollows = (id: number): Promise<Array<User>> =>
       followers: { some: { follower_id: +id } },
     },
   });
+
+export const deleteAll = (): Promise<any> => {
+  if (!(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'))
+    throw new Error('cannot delete all user in production');
+
+  return user.deleteMany({});
+};
+
+export const count = (): Promise<any> => {
+  return user.count();
+};

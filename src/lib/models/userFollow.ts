@@ -2,7 +2,7 @@ import connexion from '../services/connexion';
 
 const { userFollow } = connexion;
 
-export const createFollow = (followerId: number, followId: number): Promise<void> =>
+export const createFollow = (followerId: number, followId: number): Promise<any> =>
   userFollow.create({
     data: {
       follower_id: followerId,
