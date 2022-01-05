@@ -3,8 +3,8 @@ import { Category } from '@prisma/client';
 
 import { verifyAdmin, withSessionApi } from '@services/session';
 import connexion from '@services/connexion';
-import router from '../../../../lib/routing/router';
-import kitsuApi from '../../../../lib/api/kitsuApi';
+import router from '@lib/routing/router';
+import kitsuApi from '@lib/api/kitsuApi';
 
 router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   const categories: Category[] = await connexion.category.findMany({});

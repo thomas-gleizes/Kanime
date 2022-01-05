@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Transition } from '@headlessui/react';
+import { FaHeart, FaStar } from 'react-icons/fa';
 
 import { Anime } from '@types';
-import { routes } from '../../lib/constants';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { routes } from '@lib/constants';
 
 const AnimeCard: React.FunctionComponent<Anime> = (props) => {
   const { slug, poster, canonicalTitle, season_year, rating, popularity } = props;

@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { withSessionSsr } from '@services/session';
-import { routes } from '../../../lib/constants';
+import { routes } from '@lib/constants';
 import Content from '@layouts/Content';
 
 export const getServerSideProps: GetServerSideProps = withSessionSsr(({ req, query }) => {

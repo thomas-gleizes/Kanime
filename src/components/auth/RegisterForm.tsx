@@ -4,8 +4,8 @@ import { useRouter } from 'next/router';
 
 import * as Yup from 'yup';
 
-import appAxios from '../../lib/api/appAxios';
-import Field from '../common/field';
+import appAxios from '@lib/api/appAxios';
+import Field from '@components/common/field';
 import { useUserContext } from '@context/user';
 import { routes } from '@lib/constants';
 import { registerSchema } from '@validations/users';

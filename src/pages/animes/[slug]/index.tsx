@@ -6,9 +6,9 @@ import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 import { Anime, DefaultResponseData } from '@types';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
-import { useLayoutContext } from '../../../context/layout';
+import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
-import KitsuButton from '../../../components/common/KitsuButton';
+import KitsuButton from '@components/common/KitsuButton';
 
 interface Props extends DefaultResponseData {
   anime: Anime;

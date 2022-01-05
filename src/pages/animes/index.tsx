@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { Anime, DefaultResponseData } from '@types';
+import appAxios from '@lib/api/appAxios';
 import { AnimeModel } from '@models';
 import { AnimesResources } from '@resources';
-import AnimeCard from '../../components/common/AnimeCard';
-import { useScrollPercent } from '../../hooks';
-import appAxios from '../../lib/api/appAxios';
+import AnimeCard from '@components/common/AnimeCard';
+import { useScrollPercent } from '@hooks';
 import Content from '@layouts/Content';
 import Title from '@layouts/Title';
 

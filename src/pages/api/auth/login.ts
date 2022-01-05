@@ -7,7 +7,7 @@ import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersResources } from '@resources';
 import { ApiError, SchemaError } from '@errors';
-import { loginSchema } from '@validations/users';
+// import { loginSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;

@@ -8,7 +8,7 @@ import { UserModel } from '@models';
 import { withSessionSsr } from '@services/session';
 import { useLayoutContext } from '@context/layout';
 import { UsersResources } from '@resources';
-import EditUserModal from '../../../components/modal/EditUserModal';
+import EditUserModal from '@components/modal/EditUserModal';
 import Title from '@layouts/Title';
 
 interface Props {
