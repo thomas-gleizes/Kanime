@@ -16,3 +16,10 @@ export const routes = {
   forum: '/forum',
   admin: '/admin',
 };
+
+export const loggerReplaceKey = {
+  password: '********',
+  confirmPassword: '********',
+  avatar: 'data',
+  background: 'data',
+};

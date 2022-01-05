@@ -126,9 +126,10 @@ model Log {
   id         Int      @id @default(autoincrement())
   route      String
   method     Method
+  auth_token String?  @db.VarChar(255)
+  ip         String   @db.VarChar(64)
   query      String?  @db.Text
   body       String?  @db.Text
-  auth_token String?  @db.VarChar(255)
   created_at DateTime @default(now()) @db.Timestamp(0)
 
   @@map("logs")

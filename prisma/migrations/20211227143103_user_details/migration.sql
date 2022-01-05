@@ -22,7 +22,7 @@ CREATE TABLE `countries`
 ALTER TABLE `users`
     ADD CONSTRAINT `users_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `countries` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
-insert into kanime_dev.countries (id, iso, iso3, name, nicename)
+insert into countries (id, iso, iso3, name, nicename)
 values (1, 'AF', 'AFG', 'AFGHANISTAN', 'Afghanistan'),
        (2, 'AL', 'ALB', 'ALBANIA', 'Albania'),
        (3, 'DZ', 'DZA', 'ALGERIA', 'Algeria'),

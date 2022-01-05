@@ -29,7 +29,7 @@ const RegisterForm: React.FunctionComponent = () => {
     formik: FormikHelpers<registerForm>
   ) => {
     try {
-      const response = await appAxios.post('auth/login', values);
+      const response = await appAxios.post('auth/register', values);
       signIn(response.data.user);
 
       await router.push(`${routes.users}/${response.data.user.id}`);

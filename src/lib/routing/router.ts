@@ -3,6 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { Method, Middleware } from '@types';
 import { ApiError, SchemaError } from '@errors';
 import Route from './route';
+import logger from '@services/logger';
 
 class Router {
   private readonly _get: Route[];
@@ -59,6 +60,8 @@ class Router {
     const { method } = req;
 
     const routes = this['_' + method.toLowerCase()];
+
+    logger(req).catch((e) => console.log('log failed', e));
 
     try {
       for (const route of routes) {
