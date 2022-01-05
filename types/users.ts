@@ -1,5 +1,11 @@
 import { Gender } from '@prisma/client';
 
+export interface UserMediaHandling {
+  raw: string;
+  content: string;
+  type: string;
+}
+
 export declare type User = {
   id: number;
   email: string;

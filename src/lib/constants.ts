@@ -1,7 +1,9 @@
 export const defaultUsersMedia = {
-  background: '/media/users/default/background.png',
-  avatar: '/media/users/default/avatar.png',
+  background: '/media/default/users/background.png',
+  avatar: '/media/default/users/avatar.png',
 };
+
+export const publicPath = `${process.cwd()}/public`;
 
 export const routes = {
   home: '/',

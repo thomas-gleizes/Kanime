@@ -43,4 +43,4 @@ yarn-error.log*
 # users media
 /public/media/users/*
 !/public/media/users/.gitkeep
-!/public/media/users/default
+!/public/media/default

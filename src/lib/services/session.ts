@@ -5,10 +5,11 @@ import type { IronSessionOptions } from 'iron-session';
 import { User } from '@types';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import ApiError from '../errors/ApiError';
+import Security from '@services/security';
 
 const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_TOKEN as string,
-  cookieName: 'iron-session/examples/next.js',
+  cookieName: 'kanime_auth',
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
@@ -21,6 +22,8 @@ export const withSessionApi = (handler) =>
 
 export const verifyUser = (req: NextApiRequest) => {
   if (!req.session.user) throw new ApiError(401, 'Access denied');
+  else if (!Security.verifyToken(req.session.user.token))
+    throw new ApiError(401, 'token invalid');
 };
 
 export const verifyAdmin = (req: NextApiRequest) => {

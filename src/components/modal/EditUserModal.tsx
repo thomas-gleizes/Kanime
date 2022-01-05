@@ -8,20 +8,21 @@ import { useFetch, useToggle } from '@hooks';
 import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
 import Field, { File, Select, TextArea } from '@components/common/field';
 import Button from '@components/common/Button';
+import { UserMediaHandling } from '../../../types/users';
 
 declare type values = {
   city: string;
   birthday: Date | string;
   bio: string;
-  avatar: string;
-  background: string;
+  avatar: UserMediaHandling | string;
+  background: UserMediaHandling | string;
   gender: Gender;
 };
 
 const fetchCountry = () => appAxios.get<Country[]>('common/countries');
 
 const EditUserModal: React.FunctionComponent = () => {
-  const { user } = useUserContext();
+  const { user, signIn } = useUserContext();
 
   const formRef = useRef<FormikProps<values>>();
   const avatarRef = useRef<HTMLInputElement>();
@@ -44,6 +45,13 @@ const EditUserModal: React.FunctionComponent = () => {
 
   const handleSubmit = async (values: values, formik: FormikHelpers<values>) => {
     const response = await appAxios.patch(`users`, values);
+    signIn(response.data.user);
+    toggleModal();
+  };
+
+  const displayBackground = (media: UserMediaHandling | string) => {
+    if (typeof media === 'string') return media;
+    else return media.raw;
   };
 
   return (
@@ -71,13 +79,15 @@ const EditUserModal: React.FunctionComponent = () => {
                   <div
                     onClick={() => backgroundRef.current.click()}
                     className="absolute w-full h-full rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
-                    style={{ background: `url('${values.background}')` }}
+                    style={{
+                      background: `url('${displayBackground(values.background)}')`,
+                    }}
                   />
                   <File innerRef={backgroundRef} name="background" />
                   <div
                     onClick={() => avatarRef.current.click()}
                     className="absolute w-[260px] h-[260px] top-[20px] rounded-full right-10 bg-no-repeat bg-center"
-                    style={{ background: `url(${values.avatar})` }}
+                    style={{ background: `url(${displayBackground(values.avatar)})` }}
                   />
                   <File innerRef={avatarRef} name="avatar" />
                 </div>

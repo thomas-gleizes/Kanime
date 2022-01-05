@@ -1,13 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as fs from 'fs';
 
-import { DefaultErrorData, DefaultResponseData } from '@types';
+import { DefaultErrorData, DefaultResponseData, User } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
 import { UserModel } from '@models';
-import { defaultUsersMedia } from '@lib/constants';
+import { defaultUsersMedia, publicPath } from '@lib/constants';
+import { UsersResources } from '@resources';
+import Security from '@services/security';
 
-interface Data extends DefaultResponseData {}
+interface Data extends DefaultResponseData {
+  user: User;
+}
 
 interface Error extends DefaultErrorData {}
 
@@ -24,36 +28,45 @@ export const config = {
 router.patch(
   verifyUser,
   async (req: NextApiRequest, res: NextApiResponse<Data | Error>) => {
-    const {
-      body,
-      session: { user },
-    } = req;
+    const { body, session } = req;
+    const { user } = session;
 
-    const path = `${process.cwd()}/public/media/users/${user.id
-      .toString()
-      .split('')
-      .join('/')}`;
+    const path = `/media/users/${user.id.toString().split('').join('/')}`;
+    const fullPath = `${publicPath}${path}`;
 
-    if (body.avatar !== user.avatarPath) {
-      if (user.avatarPath !== defaultUsersMedia.avatar) fs.unlinkSync(user.avatarPath);
+    await fs.promises.mkdir(fullPath, { recursive: true });
 
-      const avatarPath = `${path}/avatar.png`;
-      await fs.promises.writeFile(avatarPath, new Buffer(body.avatar, 'base64'));
-      body.backgroundPath = avatarPath;
+    // TODO refactor this
+    if (!(typeof body.avatar === 'string')) {
+      if (user.avatarPath !== defaultUsersMedia.avatar)
+        await fs.promises.unlink(publicPath + user.avatarPath);
+
+      const avatarPath = `${path}/avatar.${body.avatar.type.split('/')[1]}`;
+      await fs.promises.writeFile(
+        publicPath + avatarPath,
+        new Buffer(body.avatar.content, 'base64')
+      );
+      body.avatarPath = avatarPath;
     }
 
-    if (body.background !== user.backgroundPath) {
+    if (!(typeof body.background === 'string')) {
       if (user.backgroundPath !== defaultUsersMedia.background)
-        fs.unlinkSync(user.backgroundPath);
+        await fs.promises.unlink(publicPath + user.backgroundPath);
 
-      const backgroundPath = `${path}/background.png`;
-      await fs.promises.writeFile(backgroundPath, new Buffer(body.background, 'base64'));
+      const backgroundPath = `${path}/background.${body.background.type.split('/')[1]}`;
+      await fs.promises.writeFile(
+        publicPath + backgroundPath,
+        new Buffer(body.background.content, 'base64')
+      );
       body.backgroundPath = backgroundPath;
     }
 
-    const updatedUser = await UserModel.update(user.id, body);
+    const [updatedUser] = UsersResources.one(await UserModel.update(user.id, body));
 
-    res.status(200).send({ success: true, params: updatedUser });
+    session.user = { ...updatedUser, token: Security.sign(updatedUser) };
+    await session.save();
+
+    res.status(200).send({ success: true, user: session.user });
   }
 );
 
