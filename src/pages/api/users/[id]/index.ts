@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { DefaultResponseData, User } from '@types';
 import router from '@lib/routing/router';
 import { UserModel } from '@models';
-import { UsersResources } from '@resources';
+import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
@@ -13,7 +13,7 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
-  const [user] = UsersResources.one(await UserModel.findById(+id));
+  const [user] = UsersMapper.one(await UserModel.findById(+id));
 
   if (!user) throw new ApiError(404, 'user not found');
 

@@ -5,6 +5,7 @@ import { User } from '@types';
 import { withSessionSsr } from '@services/session';
 import { routes } from '@lib/constants';
 import Content from '@layouts/Content';
+import ListLogs from '@components/admin/ListLogs';
 
 interface Props {
   user?: User;
@@ -33,6 +34,9 @@ const Admin: NextPage<Props> = ({ user }) => {
   return (
     <Content>
       <h1>{user?.login}: You are an admin</h1>
+      <div className="w-1000">
+        <ListLogs />
+      </div>
     </Content>
   );
 };

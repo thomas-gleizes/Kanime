@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Anime, DefaultErrorData, DefaultResponseData } from '@types';
 import router from '../../../lib/routing/router';
 import { AnimeModel } from '@models';
-import { AnimesResources } from '@resources';
+import { AnimesMapper } from '@mapper';
 
 interface Data extends DefaultResponseData {
   animes: Array<Anime>;
@@ -13,7 +13,7 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorData>) => {
   const { limit, skip } = req.query;
 
-  const animes: Array<Anime> = AnimesResources.many(
+  const animes: Array<Anime> = AnimesMapper.many(
     await AnimeModel.getMany({ limit: +limit, skip: +skip })
   );
 

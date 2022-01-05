@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Category, DefaultResponseData } from '@types';
 import router from '@lib/routing/router';
 import { CategoryModel } from '@models';
-import { CategoriesResources } from '@resources';
+import { CategoriesMapper } from '@mapper';
 
 interface Data extends DefaultResponseData {
   categories: Category[];
@@ -12,9 +12,7 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
-  const categories: any[] = CategoriesResources.many(
-    await CategoryModel.findByAnimeId(+id)
-  );
+  const categories: any[] = CategoriesMapper.many(await CategoryModel.findByAnimeId(+id));
 
   res.send({ success: true, categories, params: req.query });
 });

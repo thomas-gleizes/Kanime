@@ -5,7 +5,7 @@ import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
 
 import { Anime, DefaultResponseData } from '@types';
 import { AnimeModel } from '@models';
-import { AnimesResources } from '@resources';
+import { AnimesMapper } from '@mapper';
 import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
 import KitsuButton from '@components/common/KitsuButton';
@@ -17,7 +17,7 @@ interface Props extends DefaultResponseData {
 export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   const { slug } = context.params;
 
-  const anime = AnimesResources.one(await AnimeModel.findBySlug(slug as string));
+  const anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
   return { props: { anime } };
 };

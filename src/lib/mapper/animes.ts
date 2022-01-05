@@ -3,7 +3,7 @@ import Moment from 'moment';
 
 import { Anime, Resources } from '@types';
 
-class AnimesResources implements Resources<AnimeModel, Anime> {
+class Animes implements Resources<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
     if (!resource) return null;
 
@@ -52,4 +52,4 @@ class AnimesResources implements Resources<AnimeModel, Anime> {
   }
 }
 
-export default new AnimesResources();
+export default new Animes();

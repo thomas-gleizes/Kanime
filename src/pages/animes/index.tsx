@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import { Anime, DefaultResponseData } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { AnimeModel } from '@models';
-import { AnimesResources } from '@resources';
+import { AnimesMapper } from '@mapper';
 import AnimeCard from '@components/common/AnimeCard';
 import { useScrollPercent } from '@hooks';
 import Content from '@layouts/Content';
@@ -17,7 +17,7 @@ interface Props extends DefaultResponseData {
 export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) => {
   const { skip, limit } = query;
 
-  const animes = AnimesResources.many(
+  const animes = AnimesMapper.many(
     await AnimeModel.getMany({
       limit: +limit | 40,
       skip: +skip,

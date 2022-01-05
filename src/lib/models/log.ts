@@ -22,3 +22,6 @@ export const create = (
       query: JSON.stringify(query),
     },
   });
+
+export const get = (limit: number, skip: number): Promise<Log[]> =>
+  log.findMany({ skip: skip, take: limit });

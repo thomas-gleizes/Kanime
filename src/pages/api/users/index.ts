@@ -6,7 +6,7 @@ import { verifyUser, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
 import { UserModel } from '@models';
 import { defaultUsersMedia, publicPath } from '@lib/constants';
-import { UsersResources } from '@resources';
+import { UsersMapper } from '@mapper';
 import Security from '@services/security';
 
 interface Data extends DefaultResponseData {
@@ -61,7 +61,7 @@ router.patch(
       body.backgroundPath = backgroundPath;
     }
 
-    const [updatedUser] = UsersResources.one(await UserModel.update(user.id, body));
+    const [updatedUser] = UsersMapper.one(await UserModel.update(user.id, body));
 
     session.user = { ...updatedUser, token: Security.sign(updatedUser) };
     await session.save();

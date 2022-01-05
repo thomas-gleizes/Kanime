@@ -4,7 +4,7 @@ import { DefaultResponseData, User } from '@types';
 import router from '@lib/routing/router';
 import Security from '@services/security';
 import { UserModel } from '@models';
-import { UsersResources } from '@resources';
+import { UsersMapper } from '@mapper';
 import { withSessionApi } from '@services/session';
 import { ApiError, SchemaError } from '@errors';
 // import { registerSchema } from '@validations/users';
@@ -25,10 +25,10 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     let key = 'login';
     if (users[0].email === userData.email) key = 'email';
 
-    throw new ApiError(400, `${key} already exist`);
+    throw new ApiError(400, `${key} already Fexist`);
   }
 
-  const [user] = UsersResources.one(
+  const [user] = UsersMapper.one(
     await UserModel.create({
       login: userData.login,
       email: userData.email,

@@ -41,8 +41,8 @@
       "@services/*": [
         "src/lib/services/*"
       ],
-      "@resources": [
-        "src/lib/resources"
+      "@mapper": [
+        "src/lib/mapper"
       ],
       "@errors": [
         "src/lib/errors"

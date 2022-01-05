@@ -4,7 +4,7 @@ import { DefaultResponseData, User } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
 import { UserFollowModel, UserModel } from '@models';
-import { UsersResources } from '@resources';
+import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
@@ -17,9 +17,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(404, 'user not found');
 
-  const users = UsersResources.many(await UserModel.findFollows(+id)).map(
-    ([user]) => user
-  );
+  const users = UsersMapper.many(await UserModel.findFollows(+id)).map(([user]) => user);
 
   res.send({ success: true, users });
 });

@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Anime, DefaultResponseData } from '@types';
-import router from '../../../../lib/routing/router';
+import router from '@lib/routing/router';
 import { AnimeModel } from '@models';
-import { AnimesResources } from '@resources';
+import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
@@ -13,7 +13,7 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { slug } = req.query;
 
-  const anime: Anime = AnimesResources.one(await AnimeModel.findBySlug(slug as string));
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
   if (!anime) throw new ApiError(404, 'anime not found');
 

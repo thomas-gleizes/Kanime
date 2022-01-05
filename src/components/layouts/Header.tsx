@@ -100,9 +100,9 @@ const Header: React.FunctionComponent = () => {
               </Link>
             </div>
             <div className="flex justify-start items-center w-2/5 m-auto">
-              <span className="mx-3">
+              <div className="mx-3">
                 <DropDownExplore />
-              </span>
+              </div>
               <span className="mx-3">
                 <Link href={routes.forum}>
                   <a className="text-white"> Discussion </a>

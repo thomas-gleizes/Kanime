@@ -7,7 +7,7 @@ import { User } from '@types';
 import { UserModel } from '@models';
 import { withSessionSsr } from '@services/session';
 import { useLayoutContext } from '@context/layout';
-import { UsersResources } from '@resources';
+import { UsersMapper } from '@mapper';
 import EditUserModal from '@components/modal/EditUserModal';
 import Title from '@layouts/Title';
 
@@ -22,7 +22,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
     const { id } = query;
     const { user: sessionUser } = req.session;
 
-    const [user] = UsersResources.one(await UserModel.findById(+id));
+    const [user] = UsersMapper.one(await UserModel.findById(+id));
 
     if (user) {
       return {

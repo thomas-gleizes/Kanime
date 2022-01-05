@@ -2,7 +2,7 @@ import { Category as CategoryModel } from '@prisma/client';
 
 import { Category, Resources } from '@types';
 
-class CategoriesResources implements Resources<CategoryModel, Category> {
+class Categories implements Resources<CategoryModel, Category> {
   one(resource: CategoryModel): Category {
     if (!resource) return null;
 
@@ -20,4 +20,4 @@ class CategoriesResources implements Resources<CategoryModel, Category> {
   }
 }
 
-export default new CategoriesResources();
+export default new Categories();
