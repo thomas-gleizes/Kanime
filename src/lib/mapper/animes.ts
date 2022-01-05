@@ -1,9 +1,9 @@
 import { Anime as AnimeModel } from '@prisma/client';
 import Moment from 'moment';
 
-import { Anime, Resources } from '@types';
+import { Anime, Mapper } from '@types';
 
-class Animes implements Resources<AnimeModel, Anime> {
+class AnimesMapper implements Mapper<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
     if (!resource) return null;
 
@@ -52,4 +52,4 @@ class Animes implements Resources<AnimeModel, Anime> {
   }
 }
 
-export default new Animes();
+export default new AnimesMapper();

@@ -1,8 +1,8 @@
 import { Category as CategoryModel } from '@prisma/client';
 
-import { Category, Resources } from '@types';
+import { Category, Mapper } from '@types';
 
-class Categories implements Resources<CategoryModel, Category> {
+class CategoriesMapper implements Mapper<CategoryModel, Category> {
   one(resource: CategoryModel): Category {
     if (!resource) return null;
 
@@ -20,4 +20,4 @@ class Categories implements Resources<CategoryModel, Category> {
   }
 }
 
-export default new Categories();
+export default new CategoriesMapper();

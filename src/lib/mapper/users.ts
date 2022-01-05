@@ -1,9 +1,9 @@
 import { User as UserModel } from '@prisma/client';
 
-import { Resources, User } from '@types';
+import { Mapper, User } from '@types';
 import Moment from 'moment';
 
-class Users implements Resources<UserModel, [user: User, password: string]> {
+class UsersMapper implements Mapper<UserModel, [user: User, password: string]> {
   public one(resource: UserModel): [user: User, password: string] {
     if (resource) {
       const {
@@ -40,4 +40,4 @@ class Users implements Resources<UserModel, [user: User, password: string]> {
   }
 }
 
-export default new Users();
+export default new UsersMapper();

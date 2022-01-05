@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { User } from './users';
 
 export interface DefaultResponseData<T = any> {
   success?: boolean;
@@ -11,7 +12,7 @@ export interface DefaultErrorData<T = any> {
   data?: T;
 }
 
-export interface Resources<E = any, S = any> {
+export interface Mapper<E = any, S = any> {
   one: (resource: E) => S;
   many: (resources: Array<E>) => Array<S>;
 }
@@ -22,3 +23,16 @@ export type Middleware = (
   req: NextApiRequest,
   res: NextApiResponse
 ) => Promise<void> | void;
+
+export type Log = {
+  id: number;
+  route: string;
+  ip: string;
+  method: Method;
+  body: any;
+  query: any;
+  authToken?: User;
+  createAt: Date | string;
+};
+
+export type Logs = Array<Log>;

@@ -1,6 +1,8 @@
 import { Log } from '@prisma/client';
-import connexion from '@services/connexion';
+
 import { Method } from '@types';
+import connexion from '@services/connexion';
+import Security from '@services/security';
 
 const { log } = connexion;
 
@@ -17,7 +19,7 @@ export const create = (
       route: route,
       method: method,
       ip: ip,
-      auth_token: authToken,
+      auth_token: authToken ? JSON.stringify(Security.getTokenPayload(authToken)) : null,
       body: JSON.stringify(body),
       query: JSON.stringify(query),
     },

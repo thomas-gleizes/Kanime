@@ -1,33 +1,35 @@
-export interface Images {
+export type Images = {
   tiny?: string;
   small?: string;
   medium?: string;
   large?: string;
   original?: string;
-}
+};
 
-export interface Titles {
+export type Titles = {
   en: string;
   en_jp: string;
   ja_jp: string;
-}
+};
 
-export interface Rating {
+export type Rating = {
   average: number;
   rank: number;
-}
+};
 
-export interface Popularity {
+export type Popularity = {
   count: number;
   rank: number;
-}
+};
 
-export interface Episode {
+export type Episode = {
   length: number;
   count: number;
-}
+};
 
-export declare type Category = {
+export type Episodes = Array<Episode>;
+
+export type Category = {
   id: number;
   slug: string;
   name: string;
@@ -35,7 +37,9 @@ export declare type Category = {
   totalMediaCount: number;
 };
 
-export declare type Anime = {
+export type Categories = Array<Category>;
+
+export type Anime = {
   id: number;
   kitsu_id: string;
   slug: string;
@@ -55,3 +59,5 @@ export declare type Anime = {
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
 };
+
+export type Animes = Array<Anime>;

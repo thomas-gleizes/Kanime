@@ -23,3 +23,5 @@ export declare type User = {
   createdAt: string;
   updatedAt: string;
 };
+
+export declare type Users = Array<User>;

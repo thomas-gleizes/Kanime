@@ -1,9 +1,11 @@
-export type { Anime, Category, Images, Titles } from './animes';
-export type { User, UserMediaHandling } from './users';
+export type { Anime, Animes, Category, Categories, Images, Titles } from './animes';
+export type { User, Users, UserMediaHandling } from './users';
 export type {
   DefaultErrorData,
   DefaultResponseData,
-  Resources,
+  Mapper,
   Middleware,
   Method,
+  Log,
+  Logs,
 } from './server';

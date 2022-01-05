@@ -1,12 +1,22 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { DefaultResponseData, Logs } from '@types';
 import { verifyAdmin, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
+import { LogModel } from '@models';
+import { LogsMapper } from '@mapper';
 
-router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
+interface Data extends DefaultResponseData {
+  logs: Logs;
+  query?: any;
+}
+
+router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { start, limit } = req.query;
 
-  res.send({ success: true, start, limit, logs: [] });
+  const logs: Logs = LogsMapper.many(await LogModel.get(+limit, +start));
+
+  res.send({ success: true, query: req.query, logs });
 });
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
