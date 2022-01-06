@@ -7,7 +7,7 @@ CREATE OR REPLACE TABLE `logs`
     `ip`         VARCHAR(64)  NOT NULL,
     `body`       TEXT NULL,
     `query`      TEXT NULL,
-    `auth_token` TEXT NULL,
+    `auth_token` MEDIUMTEXT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
     PRIMARY KEY (`id`)
