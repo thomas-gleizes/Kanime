@@ -1,11 +1,10 @@
-import type { Gender, User } from '@prisma/client';
-import { Prisma } from '@prisma/client';
+import { Prisma, Gender, User } from '@prisma/client';
 
 import connexion, { ConnexionType } from '../services/connexion';
 import Model from '@lib/models/model';
 import { defaultUsersMedia } from '../constants';
 
-class UserModel extends Model {
+class UserModel extends Model<Prisma.UserDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.user);
   }
@@ -80,6 +79,15 @@ class UserModel extends Model {
         follows: { some: { follow_id: +id } },
       },
     });
+
+  public count = () => this.connexion.count({});
+
+  public deleteAll = (): Promise<any> => {
+    if (!(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'))
+      throw new Error('cannot delete all ressource in production');
+
+    return this.connexion.deleteMany({});
+  };
 }
 
 export default new UserModel(connexion);

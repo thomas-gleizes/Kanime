@@ -19,7 +19,9 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const animes = AnimesMapper.many(await AnimeModel.findByUser(+id));
 
-  res.send({ success: true, animes: animes, length: animes.length });
+  const test = await AnimeModel.count();
+
+  res.send({ params: test, success: true, animes: animes, length: animes.length });
 });
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -1,4 +1,4 @@
-import { Anime } from '@prisma/client';
+import { Prisma, Anime } from '@prisma/client';
 
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
@@ -8,7 +8,7 @@ type params = {
   skip?: number;
 };
 
-class AnimeModel extends Model {
+class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.anime);
   }
@@ -46,6 +46,8 @@ class AnimeModel extends Model {
       take: params.limit || 10,
       skip: params.skip || 0,
     });
+
+  public count = () => this.connexion.count({});
 }
 
 export default new AnimeModel(connexion);

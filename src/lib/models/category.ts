@@ -1,9 +1,9 @@
-import { Category } from '@prisma/client';
+import { Prisma, Category } from '@prisma/client';
 
 import connexion, { ConnexionType } from '../services/connexion';
 import Model from '@lib/models/model';
 
-class CategoryModel extends Model {
+class CategoryModel extends Model<Prisma.CategoryDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.category);
   }

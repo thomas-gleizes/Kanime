@@ -1,11 +1,11 @@
-import { Log } from '@prisma/client';
+import { Prisma, Log } from '@prisma/client';
 
 import { Method } from '@types';
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
 import Security from '@services/security';
 
-class LogModel extends Model {
+class LogModel extends Model<Prisma.LogDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.log);
   }

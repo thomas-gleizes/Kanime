@@ -1,9 +1,9 @@
-import { Country } from '@prisma/client';
+import { Country, Prisma } from '@prisma/client';
 
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
 
-class CountryModel extends Model {
+class CountryModel extends Model<Prisma.CountryDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.country);
   }
