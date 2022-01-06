@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultResponseData, User } from '@types';
+import { DefaultResponseData, Users } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
 import router from '@lib/routing/router';
 import { UserFollowModel, UserModel } from '@models';
@@ -8,18 +8,21 @@ import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 
 interface Data extends DefaultResponseData {
-  users: User[];
+  users: Users;
+  length: number;
 }
 
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
+
+  console.log('follow get');
 
   const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(404, 'user not found');
 
   const users = UsersMapper.many(await UserModel.findFollows(+id)).map(([user]) => user);
 
-  res.send({ success: true, users });
+  res.send({ success: true, users, length: users.length });
 });
 
 router.post(

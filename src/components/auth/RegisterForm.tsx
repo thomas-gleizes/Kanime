@@ -9,6 +9,7 @@ import Field from '@components/common/field';
 import { useUserContext } from '@context/user';
 import { routes } from '@lib/constants';
 import { registerSchema } from '@validations/users';
+import toast from '@helpers/toastr';
 
 type registerForm = Yup.TypeOf<typeof registerSchema>;
 
@@ -24,17 +25,14 @@ const RegisterForm: React.FunctionComponent = () => {
 
   const router = useRouter();
 
-  const handleSubmit = async (
-    values: registerForm,
-    formik: FormikHelpers<registerForm>
-  ) => {
+  const handleSubmit = async (values: registerForm) => {
     try {
       const response = await appAxios.post('auth/register', values);
       signIn(response.data.user);
 
       await router.push(`${routes.users}/${response.data.user.id}`);
     } catch (e) {
-      console.log('E', e);
+      toast(e.error, 'error');
     }
   };
 

@@ -2,11 +2,11 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 
+import { useUserContext } from '@context/user';
 import LoginForm from '../components/auth/LoginForm';
 import RegisterForm from '../components/auth/RegisterForm';
 import Content from '@layouts/Content';
 import Title from '@layouts/Title';
-import { useUserContext } from '@context/user';
 
 const Auth: NextPage = () => {
   const { isLogin, user } = useUserContext();

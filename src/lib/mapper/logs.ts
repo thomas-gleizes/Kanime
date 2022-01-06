@@ -5,12 +5,14 @@ class LogsMapper implements Mapper<LogModel, Log> {
   one(resource: LogModel): Log {
     const { created_at, auth_token, body, query, ...rest } = resource;
 
+    console.log('Auth_token', auth_token);
+
     return {
       ...rest,
       createAt: resource.created_at,
-      body: JSON.parse(body),
-      query: JSON.parse(query),
-      authToken: JSON.parse(auth_token),
+      body: body ? JSON.parse(body) : null,
+      query: query ? JSON.parse(query) : null,
+      authToken: auth_token ? JSON.parse(auth_token) : null,
     };
   }
 

@@ -32,7 +32,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.create({
       login: userData.login,
       email: userData.email,
-      password: await Security.hash(userData.password),
+      password: await Security.hash(userData.password + userData.login),
     })
   );
 

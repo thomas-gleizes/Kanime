@@ -1,16 +1,24 @@
 import { Category } from '@prisma/client';
-import connexion from '../services/connexion';
 
-const { category } = connexion;
+import connexion, { ConnexionType } from '../services/connexion';
+import Model from '@lib/models/model';
 
-export const findById = (id: number): Promise<Category> =>
-  category.findUnique({
-    where: { id: +id },
-  });
+class CategoryModel extends Model {
+  public constructor(connexion: ConnexionType) {
+    super(connexion.category);
+  }
 
-export const findByAnimeId = (id: number): Promise<Array<Category>> =>
-  category.findMany({
-    where: {
-      animes: { some: { anime_id: +id } },
-    },
-  });
+  public findById = (id: number): Promise<Category> =>
+    this.connexion.findUnique({
+      where: { id: +id },
+    });
+
+  public findByAnimeId = (id: number): Promise<Array<Category>> =>
+    this.connexion.findMany({
+      where: {
+        animes: { some: { anime_id: +id } },
+      },
+    });
+}
+
+export default new CategoryModel(connexion);

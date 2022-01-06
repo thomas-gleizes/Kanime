@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 
+export type ConnexionType = PrismaClient;
+
 class Connexion extends PrismaClient {
   private static _instance;
 
@@ -15,6 +17,6 @@ class Connexion extends PrismaClient {
   }
 }
 // todo fix it on test env
-// export default Connexion.create();
+export default Connexion.create();
 
-export default new PrismaClient();
+// export default new PrismaClient();

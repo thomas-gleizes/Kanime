@@ -19,14 +19,14 @@ class UsersMapper implements Mapper<UserModel, [user: User, password: string]> {
       } = resource;
 
       const user: User = {
-        email: rest.email,
         id: rest.id,
+        email: rest.email,
         login: rest.login,
         isAdmin: is_admin,
-        avatarPath: avatar_path,
-        backgroundPath: background_path,
         followCount: follow_count,
         followerCount: follower_count,
+        avatarPath: avatar_path,
+        backgroundPath: background_path,
         createdAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss'),
         updatedAt: Moment(created_at).format('DD-MM-YYYY HH:mm:ss'),
       };

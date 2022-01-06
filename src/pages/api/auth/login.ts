@@ -27,7 +27,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !(await Security.compare(body.password, hash))) {
+  if (!user || !(await Security.compare(body.password + user.login, hash))) {
     throw new ApiError(400, 'email/password wrong');
   }
 

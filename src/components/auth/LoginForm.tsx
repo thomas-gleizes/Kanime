@@ -8,6 +8,7 @@ import appAxios from '@lib/api/appAxios';
 import { useUserContext } from '@context/user';
 import { routes } from '@lib/constants';
 import { loginSchema } from '@validations/users';
+import toast from '@helpers/toastr';
 
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
@@ -20,14 +21,14 @@ const LoginForm: React.FunctionComponent = () => {
   const { signIn } = useUserContext();
   const router = useRouter();
 
-  const handleSubmit = async (values: loginType, helpers: FormikHelpers<loginType>) => {
+  const handleSubmit = async (values: loginType) => {
     try {
       const response = await appAxios.post('auth/login', values);
       signIn(response.data.user);
 
       await router.push(`${routes.users}/${response.data.user.id}`);
     } catch (e) {
-      console.log('E', e);
+      toast(e.error, 'error');
     }
   };
 

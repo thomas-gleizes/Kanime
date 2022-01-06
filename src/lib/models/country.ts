@@ -1,8 +1,14 @@
 import { Country } from '@prisma/client';
-import connexion from '@services/connexion';
 
-const { country } = connexion;
+import connexion, { ConnexionType } from '@services/connexion';
+import Model from '@lib/models/model';
 
-export const all = (): Promise<Country[]> => {
-  return country.findMany();
-};
+class CountryModel extends Model {
+  public constructor(connexion: ConnexionType) {
+    super(connexion.country);
+  }
+
+  public all = (): Promise<Country[]> => this.connexion.findMany({});
+}
+
+export default new CountryModel(connexion);

@@ -9,13 +9,13 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.user.deleteMany({ where: {} });
 
-  const hash = await Security.hash('azerty');
+  const password = 'azerty';
 
   await prisma.user.create({
     data: {
       id: 1,
       email: 'kalat@kanime.fr',
-      password: hash,
+      password: await Security.hash(password + 'Kalat'),
       login: 'Kalat',
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
@@ -26,12 +26,14 @@ async function main() {
     },
   });
 
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 200; i++) {
+    const login = faker.internet.userName();
+
     await prisma.user.create({
       data: {
         email: faker.internet.email(),
-        login: faker.internet.userName(),
-        password: hash,
+        login: login,
+        password: await Security.hash('azerty' + login),
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
         bio: faker.lorem.sentence(),

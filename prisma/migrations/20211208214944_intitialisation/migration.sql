@@ -84,7 +84,7 @@ CREATE TABLE `animes_users`
   COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `users_follow`
+CREATE TABLE `users_follows`
 (
     `follower_id` INTEGER      NOT NULL,
     `follow_id`   INTEGER      NOT NULL,
@@ -111,9 +111,9 @@ ALTER TABLE `animes_users`
     ADD CONSTRAINT `animes_users_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `users_follow`
-    ADD CONSTRAINT `users_follow_follower_id_fkey` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `users_follows`
+    ADD CONSTRAINT `users_follows_follower_id_fkey` FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `users_follow`
-    ADD CONSTRAINT `users_follow_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `users_follows`
+    ADD CONSTRAINT `users_follows_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

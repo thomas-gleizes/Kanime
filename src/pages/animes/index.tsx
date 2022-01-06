@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
-import { Anime, DefaultResponseData } from '@types';
+import { Animes, DefaultResponseData } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
-import AnimeCard from '@components/common/AnimeCard';
 import { useScrollPercent } from '@hooks';
+import toast from '@helpers/toastr';
+import AnimeCard from '@components/common/AnimeCard';
 import Content from '@layouts/Content';
 import Title from '@layouts/Title';
 
 interface Props extends DefaultResponseData {
-  animes: Array<Anime>;
+  animes: Animes;
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) => {
@@ -31,7 +32,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =
 
 const ExploreAnimes: NextPage<Props> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [animes, setAnimes] = useState<Anime[]>(props.animes);
+  const [animes, setAnimes] = useState<Animes>(props.animes);
 
   const percent = useScrollPercent();
 
@@ -47,7 +48,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
 
           setAnimes([...animes, ...response.data.animes]);
         } catch (e) {
-          console.error(e);
+          toast(e.error, 'error');
         } finally {
           setLoading(false);
         }
@@ -59,7 +60,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
     <Content>
       <Title>Animes</Title>
       <div className="grid grid-cols-4 max-w-1100 mx-auto">
-        {animes.map((anime: Anime, index: number) => (
+        {animes.map((anime, index) => (
           <div key={index} className="my-3 mx-auto">
             <AnimeCard {...anime} />
           </div>
