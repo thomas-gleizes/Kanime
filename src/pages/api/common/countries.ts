@@ -15,6 +15,6 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, countries });
 });
 
-export default function (req, res) {
+export default function handler(req, res) {
   router.handler(req, res);
 }

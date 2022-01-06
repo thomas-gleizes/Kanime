@@ -1,4 +1,4 @@
-import { Prisma, Gender, User } from '@prisma/client';
+import { Prisma, Gender, User, Anime } from '@prisma/client';
 
 import connexion, { ConnexionType } from '../services/connexion';
 import Model from '@lib/models/model';
@@ -77,6 +77,13 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
     this.connexion.findMany({
       where: {
         follows: { some: { follow_id: +id } },
+      },
+    });
+
+  public findByAnime = (animeId: number): Promise<Array<User>> =>
+    this.connexion.findMany({
+      where: {
+        animes: { some: { anime_id: animeId } },
       },
     });
 
