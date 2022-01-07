@@ -31,7 +31,7 @@ router.post(
     const { query, session } = req;
 
     try {
-      await UserFollowModel.createFollow(+session.user.id, +query.id);
+      await UserFollowModel.create(+session.user.id, +query.id);
 
       res.status(201).send({ success: true });
     } catch (e) {
@@ -46,7 +46,7 @@ router.delete(
     const { query, session } = req;
 
     try {
-      const result = await UserFollowModel.deleteFollow(+session.user.id, +query.id);
+      const result = await UserFollowModel.delete(+session.user.id, +query.id);
 
       res.status(200).send({ success: true, data: result });
     } catch (e) {

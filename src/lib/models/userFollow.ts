@@ -8,7 +8,7 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
     super(connexion.userFollow);
   }
 
-  public createFollow = (followerId: number, followId: number): Promise<UserFollow> =>
+  public create = (followerId: number, followId: number): Promise<UserFollow> =>
     this.connexion.create({
       data: {
         follower_id: followerId,
@@ -16,13 +16,10 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
       },
     });
 
-  public deleteFollow = (
-    followerId: number,
-    followId: number
-  ): Promise<{ count: number }> =>
-    this.connexion.deleteMany({
+  public delete = (followerId: number, followId: number): Promise<UserFollow> =>
+    this.connexion.delete({
       where: {
-        AND: {
+        follower_id_follow_id: {
           follower_id: followerId,
           follow_id: followId,
         },

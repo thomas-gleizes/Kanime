@@ -9,18 +9,35 @@ import { verifyUser, withSessionApi } from '@services/session';
 
 interface Data extends DefaultResponseData {}
 
-router.post(verifyUser, async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id: animeId, status } = req.query;
   const { id: userId } = req.session.user;
 
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(404, 'anime not found');
+  if (!status) throw new ApiError(400, 'status must be a AnimeStatus');
 
-  await AnimeUserModel.create(userId, +animeId, status as AnimeUserStatus);
+  await AnimeUserModel.upsert(userId, +animeId, status as AnimeUserStatus);
 
   res.send({ success: true });
-});
+};
 
+router.post(verifyUser, createOrUpdate);
+router.patch(verifyUser, createOrUpdate);
+
+router.delete(verifyUser, async (req: NextApiRequest, res: NextApiResponse) => {
+  const { id: animeId } = req.query;
+  const { id: userId } = req.session.user;
+
+  const anime = await AnimeModel.findById(+animeId);
+  if (!anime) throw new ApiError(404, 'anime not found');
+
+  const test = await AnimeUserModel.delete(userId, +animeId);
+
+  console.log('Test', test);
+
+  res.send({ success: true, test });
+});
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);
 });

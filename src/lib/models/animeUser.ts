@@ -1,4 +1,4 @@
-import { Prisma, AnimeUser, AnimeUserStatus } from '@prisma/client';
+import { AnimeUser, AnimeUserStatus, Prisma } from '@prisma/client';
 
 import Model from '@lib/models/model';
 import connexion, { ConnexionType } from '@services/connexion';
@@ -8,30 +8,29 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
     super(connexion.animeUser);
   }
 
-  public create = (
+  public upsert = (
     userId: number,
     animeId: number,
     status: AnimeUserStatus
   ): Promise<AnimeUser> =>
-    this.connexion.create({
-      data: { user_id: userId, anime_id: animeId, status: status },
-    });
-
-  public update = (
-    userId: number,
-    animeId: number,
-    status: AnimeUserStatus
-  ): Promise<AnimeUser> =>
-    this.connexion.update({
+    this.connexion.upsert({
       where: {
-        AND: { user_id: userId, anime_id: animeId },
+        anime_id_user_id: {
+          user_id: userId,
+          anime_id: animeId,
+        },
       },
+      update: { status: status },
+      create: { anime_id: animeId, user_id: userId, status: status },
     });
 
-  public delete = (userId: number, animeId: number): Promise<{ count: number }> =>
-    this.connexion.deleteMany({
+  public delete = (userId: number, animeId: number): Promise<AnimeUser> =>
+    this.connexion.delete({
       where: {
-        AND: { user_id: userId, anime_id: animeId },
+        anime_id_user_id: {
+          user_id: userId,
+          anime_id: animeId,
+        },
       },
     });
 }
