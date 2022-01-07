@@ -6,6 +6,7 @@ import router from '@lib/routing/router';
 import { UserFollowModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
+import { errorMessage } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
   users: Users;
@@ -18,7 +19,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   console.log('follow get');
 
   const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(404, 'user not found');
+  if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
 
   const users = UsersMapper.many(await UserModel.findFollows(+id)).map(([user]) => user);
 
@@ -35,7 +36,7 @@ router.post(
 
       res.status(201).send({ success: true });
     } catch (e) {
-      throw new ApiError(400, 'you already follow this user !');
+      throw new ApiError(400, errorMessage.FOLLOW);
     }
   }
 );
@@ -50,7 +51,7 @@ router.delete(
 
       res.status(200).send({ success: true, data: result });
     } catch (e) {
-      throw new ApiError(400, "you can't unfollow this user");
+      throw new ApiError(400, errorMessage.UNFOLLOW);
     }
   }
 );

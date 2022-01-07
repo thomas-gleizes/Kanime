@@ -5,6 +5,7 @@ import router from '@lib/routing/router';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
+import { errorMessage } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
   users: Users;
@@ -15,7 +16,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(404, 'user not found');
+  if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
 
   const users = UsersMapper.many(await UserModel.findFollowers(+id)).map(
     ([user]) => user

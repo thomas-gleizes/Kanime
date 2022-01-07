@@ -4,6 +4,7 @@ import { Method, Middleware } from '@types';
 import { ApiError, SchemaError } from '@errors';
 import Route from './route';
 import logger from '@services/logger';
+import { errorMessage } from '@lib/constants';
 
 class Router {
   private readonly _get: Route[];
@@ -64,7 +65,7 @@ class Router {
     logger(req).catch((e) => console.log('log failed', e));
 
     try {
-      if (!routes.length) throw new ApiError('405', 'Method not allowed');
+      if (!routes.length) throw new ApiError('405', errorMessage.METHOD_NOT_ALLOWED);
 
       for (const route of routes) {
         await route.call(req, res);
@@ -79,7 +80,7 @@ class Router {
 
         res.status(500).send(e.message);
       } else {
-        res.status(500).send('Internal error');
+        res.status(500).send(errorMessage.INTERNAL_ERROR);
       }
     }
   }

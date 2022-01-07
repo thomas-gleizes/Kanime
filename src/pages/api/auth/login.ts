@@ -7,6 +7,7 @@ import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError, SchemaError } from '@errors';
+import { errorMessage } from '@lib/constants';
 // import { loginSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
@@ -28,7 +29,7 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   );
 
   if (!user || !(await Security.compare(body.password + user.login, hash))) {
-    throw new ApiError(400, 'email/password wrong');
+    throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
   user.token = Security.sign(user);

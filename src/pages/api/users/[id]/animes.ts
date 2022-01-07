@@ -5,6 +5,7 @@ import router from '@lib/routing/router';
 import { UserModel, AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';
+import { errorMessage } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
   animes: Animes;
@@ -15,13 +16,11 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(404, 'user not found');
+  if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
 
   const animes = AnimesMapper.many(await AnimeModel.findByUser(+id));
 
-  const test = await AnimeModel.count();
-
-  res.send({ params: test, success: true, animes: animes, length: animes.length });
+  res.send({ success: true, animes: animes, length: animes.length });
 });
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
