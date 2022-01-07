@@ -20,8 +20,8 @@ export const routes = {
 export const loggerReplaceKey = {
   password: '********',
   confirmPassword: '********',
-  avatar: 'data',
-  background: 'data',
+  avatar: 'data:Image/*;base64:*****',
+  background: 'data:Image/*;base64:*****',
 };
 
 export const errorMessage = {
