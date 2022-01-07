@@ -21,9 +21,11 @@ export const withSessionApi = (handler) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
 export const verifyUser = (req: NextApiRequest) => {
-  if (!req.session.user) throw new ApiError(401, 'Access denied');
-  else if (!Security.verifyToken(req.session.user.token))
-    throw new ApiError(401, 'token invalid');
+  const token = req.headers.authorization?.replace('Bearer ', '');
+
+  if (!req.session.user && !Security.verifyToken(token)) {
+    throw new ApiError(401, 'Access denied');
+  } else if (!req.session.user) req.session = Security.getTokenPayload(token);
 };
 
 export const verifyAdmin = (req: NextApiRequest) => {

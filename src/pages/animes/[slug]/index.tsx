@@ -1,4 +1,5 @@
 import { GetServerSideProps, NextPage } from 'next';
+import { AnimeUserStatus } from '@prisma/client';
 import Image from 'next/image';
 import React, { useEffect } from 'react';
 import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
@@ -42,9 +43,9 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
   if (!anime) return null;
 
   const handleAdd = async (event) => {
-    const res = await appAxios.post(
-      `${routes.animes}/${anime.id}/entries?status=Watching`
-    );
+    const res = await appAxios.post(`${routes.animes}/${anime.id}/entries`, {
+      status: AnimeUserStatus.Watching,
+    });
 
     console.log('Res', res);
   };

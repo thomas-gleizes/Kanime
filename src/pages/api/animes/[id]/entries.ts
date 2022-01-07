@@ -12,8 +12,11 @@ interface Data extends DefaultResponseData {
 }
 
 const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { id: animeId, status } = req.query;
+  const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
+  const { status } = req.body;
+
+  console.log('req', req.session);
 
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(404, 'anime not found');

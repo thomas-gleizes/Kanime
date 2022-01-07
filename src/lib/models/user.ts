@@ -4,6 +4,22 @@ import connexion, { ConnexionType } from '../services/connexion';
 import Model from '@lib/models/model';
 import { defaultUsersMedia } from '../constants';
 
+type createData = {
+  login: string;
+  email: string;
+  password: string;
+};
+
+type updateData = {
+  country_id?: number | null;
+  city?: string | null;
+  birthday?: Date | null;
+  gender?: Gender;
+  bio?: string | null;
+  avatarPath?: string | null;
+  backgroundPath?: string | null;
+};
+
 class UserModel extends Model<Prisma.UserDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.user);
@@ -14,11 +30,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       where: { id: id },
     });
 
-  public create = (data: {
-    login: string;
-    email: string;
-    password: string;
-  }): Promise<User> =>
+  public create = (data: createData): Promise<User> =>
     this.connexion.create({
       data: {
         login: data.login,
@@ -29,18 +41,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       },
     });
 
-  public update = (
-    id: number,
-    data: {
-      country_id?: number | null;
-      city?: string | null;
-      birthday?: Date | null;
-      gender?: Gender;
-      bio?: string | null;
-      avatarPath?: string | null;
-      backgroundPath?: string | null;
-    }
-  ): Promise<User> =>
+  public update = (id: number, data: updateData): Promise<User> =>
     this.connexion.update({
       where: { id },
       data: {
@@ -89,7 +90,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
 
   public count = () => this.connexion.count({});
 
-  public deleteAll = (): Promise<any> => {
+  public deleteAll = (): Promise<{ count: number }> => {
     if (!(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'))
       throw new Error('cannot delete all ressource in production');
 
