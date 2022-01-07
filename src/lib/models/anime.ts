@@ -39,8 +39,9 @@ class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
   public search = (query: string, params?: params): Promise<Array<Anime>> =>
     this.connexion.findMany({
       where: {
-        canonical_title: {
-          contains: `${query}`,
+        OR: {
+          canonical_title: { contains: query },
+          titles: { contains: query },
         },
       },
       take: params.limit || 10,

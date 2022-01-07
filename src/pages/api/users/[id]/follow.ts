@@ -16,8 +16,6 @@ interface Data extends DefaultResponseData {
 router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
-  console.log('follow get');
-
   const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
 
