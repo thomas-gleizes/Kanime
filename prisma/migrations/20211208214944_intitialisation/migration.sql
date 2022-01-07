@@ -74,7 +74,7 @@ CREATE TABLE `animes_users`
 (
     `anime_id`   INTEGER      NOT NULL,
     `user_id`    INTEGER      NOT NULL,
-    `status`     ENUM ('Wanted', 'Watching', 'Completed', 'OnHold', 'Droped') NOT NULL DEFAULT 'Wanted',
+    `status`     ENUM ('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP (0),
 

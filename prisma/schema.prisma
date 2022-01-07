@@ -165,7 +165,7 @@ enum AnimeUserStatus {
   Watching
   Completed
   OnHold
-  Droped
+  Dropped
 }
 
 enum Method {

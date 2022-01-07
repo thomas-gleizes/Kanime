@@ -9,6 +9,8 @@ import { AnimesMapper } from '@mapper';
 import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
 import KitsuButton from '@components/common/KitsuButton';
+import appAxios from '@lib/api/appAxios';
+import { routes } from '@lib/constants';
 
 interface Props extends DefaultResponseData {
   anime: Anime;
@@ -38,6 +40,20 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
   }, []);
 
   if (!anime) return null;
+
+  const handleAdd = async (event) => {
+    const res = await appAxios.post(
+      `${routes.animes}/${anime.id}/entries?status=Watching`
+    );
+
+    console.log('Res', res);
+  };
+
+  const handleDelete = async (event) => {
+    const res = await appAxios.delete(`${routes.animes}/${anime.id}/entries`);
+
+    console.log('Res', res);
+  };
 
   return (
     <div className="h-1900">
@@ -92,9 +108,23 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
             <div>
               <div className="mx-auto">
                 <div className="my-1">
-                  <button className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition">
+                  <button
+                    onClick={handleAdd}
+                    className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition"
+                  >
                     <span className="flex justify-center font-bold">
                       Ajouter
+                      <i className="ml-2 my-auto">
+                        <FaPlus />
+                      </i>
+                    </span>
+                  </button>
+                  <button
+                    onClick={handleDelete}
+                    className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition"
+                  >
+                    <span className="flex justify-center font-bold">
+                      Delete
                       <i className="ml-2 my-auto">
                         <FaPlus />
                       </i>
