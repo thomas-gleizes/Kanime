@@ -18,8 +18,6 @@ function replaceKey(data: any) {
   return { ...data, ...result };
 }
 
-function ip(req: NextApiRequest) {}
-
 export default async function logger(req: NextApiRequest) {
   await LogModel.create(
     req.url.split('?')[0],

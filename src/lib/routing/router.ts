@@ -64,6 +64,8 @@ class Router {
     logger(req).catch((e) => console.log('log failed', e));
 
     try {
+      if (!routes.length) throw new ApiError('405', 'Method not allowed');
+
       for (const route of routes) {
         await route.call(req, res);
       }
