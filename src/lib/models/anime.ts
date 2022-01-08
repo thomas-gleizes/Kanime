@@ -36,19 +36,14 @@ class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
       },
     });
 
-  public search = (query: string, params?: params): Promise<Array<Anime>> =>
+  public search = (query: string, params: params): Promise<Array<Anime>> =>
     this.connexion.findMany({
       where: {
-        OR: {
-          canonical_title: { contains: query },
-          titles: { contains: query },
-        },
+        canonical_title: { contains: query },
       },
       take: params.limit || 10,
       skip: params.skip || 0,
     });
-
-  public count = () => this.connexion.count({});
 }
 
 export default new AnimeModel(connexion);

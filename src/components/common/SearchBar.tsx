@@ -41,7 +41,11 @@ const SearchBar: React.FunctionComponent = () => {
         >
           <div className="w-full bg-white rounded border border-gray-300 shadow-xl p-2">
             {animes.length ? (
-              <div></div>
+              <div>
+                {animes.map((anime) => (
+                  <div className="">{anime.canonicalTitle}</div>
+                ))}
+              </div>
             ) : (
               <div>
                 <p>Aucun résultat</p>

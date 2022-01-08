@@ -62,7 +62,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
       <div className="grid grid-cols-4 max-w-1100 mx-auto">
         {animes.map((anime, index) => (
           <div key={index} className="my-3 mx-auto">
-            <AnimeCard {...anime} />
+            <AnimeCard anime={anime} index={index} />
           </div>
         ))}
       </div>

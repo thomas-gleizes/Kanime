@@ -44,7 +44,7 @@ export type Anime = {
   kitsu_id: string;
   slug: string;
   canonicalTitle: string;
-  titles: Titles;
+  titles: Titles | string;
   synopsis: string;
   description: string;
   season: 'Winter' | 'Springs' | 'Summer' | 'Fall' | string;
@@ -53,8 +53,8 @@ export type Anime = {
   popularity: Popularity;
   date_begin: string;
   date_end: string;
-  poster: Images;
-  cover: Images;
+  poster: Images | string;
+  cover: Images | string;
   episode: Episode;
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';

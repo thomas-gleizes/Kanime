@@ -2,6 +2,7 @@ import { Anime as AnimeModel } from '@prisma/client';
 import Moment from 'moment';
 
 import { Anime, Mapper } from '@types';
+import JsonParser from '@helpers/jsonParser';
 
 class AnimesMapper implements Mapper<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
@@ -26,9 +27,9 @@ class AnimesMapper implements Mapper<AnimeModel, Anime> {
 
     return {
       canonicalTitle: canonical_title,
-      titles: JSON.parse(titles),
-      cover: JSON.parse(cover),
-      poster: JSON.parse(poster),
+      titles: JsonParser(titles),
+      cover: JsonParser(cover),
+      poster: JsonParser(poster),
       rating: {
         average: rating_average,
         rank: rating_rank,
