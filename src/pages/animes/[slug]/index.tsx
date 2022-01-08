@@ -1,35 +1,44 @@
-import { GetServerSideProps, NextPage } from 'next';
-import { AnimeUserStatus } from '@prisma/client';
+import { NextPage } from 'next';
+import { AnimeUser, AnimeUserStatus } from '@prisma/client';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
-import { FaHeart, FaPlus, FaStar } from 'react-icons/fa';
+import React, { useEffect, useState } from 'react';
+import { FaHeart, FaStar } from 'react-icons/fa';
 
 import { Anime, DefaultResponseData } from '@types';
-import { AnimeModel } from '@models';
+import { AnimeModel, AnimeUserModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { useLayoutContext } from '@context/layout';
 import Title from '@layouts/Title';
 import KitsuButton from '@components/common/KitsuButton';
 import appAxios from '@lib/api/appAxios';
 import { routes } from '@lib/constants';
+import { withSessionSsr } from '@services/session';
+import ListGroup from '@components/common/ListGroup';
 
 interface Props extends DefaultResponseData {
   anime: Anime;
+  animeUser: AnimeUser;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
-  const { slug } = context.params;
+export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
+  const { slug } = params;
 
   const anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+  if (req.session.user) {
+    const test = await AnimeUserModel.unique(+req.session.user.id, anime.id);
+    console.log('Test', test);
+  }
 
-  return { props: { anime } };
-};
+  return { props: { anime: anime } };
+});
 
 const AnimePage: NextPage<Props> = ({ anime }) => {
   const {
     headerTransparentState: [headerTransparent, setHeaderTransparent],
     scrollPercent,
   } = useLayoutContext();
+
+  const [status, setStatus] = useState(AnimeUserStatus.Wanted);
 
   useEffect(() => {
     const boolean: boolean = scrollPercent < 10;
@@ -59,11 +68,11 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
       <Title>{anime.canonicalTitle}</Title>
       <div className="relative">
         <div
-          className="absolute top-[-56px] bottom-0 -z-10 w-full h-[400px] bg-primary bg-top"
+          className="absolute top-[-56px] bottom-0 -z-10 w-full h-[400px] bg-no-repeat bg-cover bg-top"
           style={{ backgroundImage: `url('${anime.cover.small}')` }}
         />
-        <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[240px] max-w-[1200px]">
-          <div className="mx-1 w-full mt-[10px]">
+        <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[260px] max-w-[1200px]">
+          <div className="mx-1 w-full">
             <div className="h-20 w-full border rounded" />
             <div className="mx-1 py-3 divide-opacity-10 divide-y-2">
               <div className="flex justify-between py-1">
@@ -112,32 +121,16 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
             />
             <div>
               <div className="mx-auto">
-                <div className="my-1">
-                  <button
-                    onClick={handleAdd}
-                    className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition"
-                  >
-                    <span className="flex justify-center font-bold">
-                      Ajouter
-                      <i className="ml-2 my-auto">
-                        <FaPlus />
-                      </i>
-                    </span>
-                  </button>
-                  <button
-                    onClick={handleDelete}
-                    className="w-full text-white rounded bg-primary py-1 shadow-lg hover:shadow-2xl hover:scale-105 transform transition"
-                  >
-                    <span className="flex justify-center font-bold">
-                      Delete
-                      <i className="ml-2 my-auto">
-                        <FaPlus />
-                      </i>
-                    </span>
-                  </button>
-                </div>
                 <div className="my-2">
                   <KitsuButton slug={anime.slug} />
+                </div>
+                <div className="my-2">
+                  <ListGroup
+                    color="amber"
+                    value={status}
+                    handleChange={(value) => setStatus(value)}
+                    options={Object.values(AnimeUserStatus)}
+                  />
                 </div>
               </div>
             </div>

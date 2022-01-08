@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 
-import Field from '@components/common/field';
+import Field from '@components/common/formik';
 import appAxios from '@lib/api/appAxios';
 import { useUserContext } from '@context/user';
 import { routes } from '@lib/constants';

@@ -47,11 +47,11 @@ input, button, select, option, textarea {
 }
 
 .bg-primary {
-    @apply bg-gradient-to-r from-red-500 to-yellow-500
+    @apply bg-gradient-to-r from-red-500 to-amber-500
 }
 
 .hover\:bg-primary:hover {
-    @apply bg-gradient-to-r from-red-500 to-yellow-500
+    @apply bg-gradient-to-r from-red-500 to-amber-500
 }
 
 .text-primary {

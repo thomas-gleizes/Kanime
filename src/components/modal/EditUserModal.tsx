@@ -7,7 +7,7 @@ import appAxios from '@lib/api/appAxios';
 import { useUserContext } from '@context/user';
 import { useFetch, useToggle } from '@hooks';
 import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
-import Field, { File, Select, TextArea } from '@components/common/field';
+import Field, { File, Select, TextArea } from '@components/common/formik';
 import Button from '@components/common/Button';
 import toast from '@helpers/toastr';
 

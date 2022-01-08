@@ -37,3 +37,39 @@ export const errorMessage = {
   AUTH_REGISTER: '[400-21]',
   ANIME_USER_STATUS: 'status must be a AnimeStatus [400-30]',
 };
+
+export const tailwindcssGradiant = {
+  50: '50',
+  100: '100',
+  200: '200',
+  300: '300',
+  500: '500',
+  600: '600',
+  700: '800',
+  900: '900',
+}
+
+export const tailwindcssColors = {
+  Slate: "Slate",
+  Gray: "Gray",
+  Zinc: "Zinc",
+  Neutral: "Neutral",
+  Stone: "Stone",
+  Red: "Red",
+  Orange: "Orange",
+  Amber: "Amber",
+  Yellow: "Yellow",
+  Lime: "Lime",
+  Green: "Green",
+  Emerald: "Emerald",
+  Teal: "Teal",
+  Cyan: "Cyan",
+  Sky: "Sky",
+  Blue: "Blue",
+  Indigo: "Indigo",
+  Violet: "Violet",
+  Purple: "Purple",
+  Fuchsia: "Fuchsia",
+  Pink: "Pink",
+  Rose: "Rose",
+}

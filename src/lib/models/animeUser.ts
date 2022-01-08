@@ -8,6 +8,15 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
     super(connexion.animeUser);
   }
 
+  public unique = (userId: number, animeId: number): Promise<AnimeUser> => this.model.findUnique({
+    where: {
+      anime_id_user_id: {
+        user_id: userId,
+        anime_id: animeId
+      }
+    }
+  });
+
   public upsert = (
     userId: number,
     animeId: number,
@@ -17,11 +26,11 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
       where: {
         anime_id_user_id: {
           user_id: userId,
-          anime_id: animeId,
-        },
+          anime_id: animeId
+        }
       },
       update: { status: status },
-      create: { anime_id: animeId, user_id: userId, status: status },
+      create: { anime_id: animeId, user_id: userId, status: status }
     });
 
   public delete = (userId: number, animeId: number): Promise<AnimeUser> =>
@@ -29,9 +38,9 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
       where: {
         anime_id_user_id: {
           user_id: userId,
-          anime_id: animeId,
-        },
-      },
+          anime_id: animeId
+        }
+      }
     });
 }
 
