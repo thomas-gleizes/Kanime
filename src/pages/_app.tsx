@@ -2,6 +2,7 @@ import type { AppProps } from 'next/app';
 import React from 'react';
 
 import '../styles/globals.css';
+import 'simplebar/dist/simplebar.min.css';
 
 import Layout from '@components/layouts';
 import LayoutContextProvider from '@context/layout';

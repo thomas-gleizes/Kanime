@@ -23,10 +23,13 @@ const LoginForm: React.FunctionComponent = () => {
 
   const handleSubmit = async (values: loginType) => {
     try {
-      const response = await appAxios.post('auth/login', values);
-      signIn(response.data.user);
+      const {
+        data: { user, token },
+      } = await appAxios.post('auth/login', values);
 
-      await router.push(`${routes.users}/${response.data.user.id}`);
+      signIn(user, token);
+
+      await router.push(`${routes.users}/${user.id}`);
     } catch (e) {
       toast(e.error, 'error');
     }

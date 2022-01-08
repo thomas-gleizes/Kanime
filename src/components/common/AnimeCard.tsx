@@ -124,6 +124,7 @@ const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
           <a>
             <div className="flex justify-center">
               <Image
+                //@ts-ignore
                 src={poster.small}
                 width={250}
                 height={340}
@@ -131,7 +132,7 @@ const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
                 className="mx-auto"
               />
             </div>
-            <h3 className="text-center text-white font-bold py-1 truncate px-1">
+            <h3 className="text-center text-white font-bold py-1 truncate px-2">
               {canonicalTitle}
             </h3>
           </a>

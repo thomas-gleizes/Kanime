@@ -12,17 +12,18 @@ import { errorMessage } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
   user: User;
+  token: string;
 }
 
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { body } = req;
+  const { body, session } = req;
 
   // const error = await loginSchema.validate(body).catch((error) => error);
   // console.log('Error', error);
   //
   // if (error) throw new SchemaError(400, error);
 
-  if (req.session) await req.session.destroy();
+  if (session) await session.destroy();
 
   const [user, hash]: [User, string] = UsersMapper.one(
     await UserModel.findByEmail(body.email)
@@ -32,12 +33,14 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
-  user.token = Security.sign(user);
+  const token = Security.sign(user);
 
-  req.session.user = user;
-  await req.session.save();
+  session.user = user;
+  session.token = token;
 
-  res.send({ success: true, user });
+  await session.save();
+
+  res.send({ success: true, user: user, token: token });
 });
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {

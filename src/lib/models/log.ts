@@ -5,32 +5,32 @@ import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
 import Security from '@services/security';
 
+type crateData = {
+  route: string;
+  method: Method;
+  ip: string;
+  body: any;
+  query: any;
+  authToken?: string;
+};
+
 class LogModel extends Model<Prisma.LogDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {
     super(connexion.log);
   }
 
   public get = (limit: number, skip: number): Promise<Log[]> =>
-    this.connexion.findMany({ skip: skip, take: limit });
+    this.connexion.findMany({ skip: skip, take: limit, orderBy: [{ id: 'desc' }] });
 
-  public create = (
-    route: string,
-    method: Method,
-    ip: string,
-    body: any,
-    query: any,
-    authToken?: string
-  ): Promise<Log> =>
+  public create = (data: crateData): Promise<Log> =>
     this.connexion.create({
       data: {
-        route: route,
-        method: method,
-        ip: ip,
-        auth_token: authToken
-          ? JSON.stringify(Security.getTokenPayload(authToken))
-          : null,
-        body: body ? JSON.stringify(body) : null,
-        query: query ? JSON.stringify(query) : null,
+        route: data.route,
+        method: data.method,
+        ip: data.ip,
+        auth_token: data.authToken,
+        body: data.body ? JSON.stringify(data.body) : null,
+        query: data.query ? JSON.stringify(data.query) : null,
       },
     });
 }

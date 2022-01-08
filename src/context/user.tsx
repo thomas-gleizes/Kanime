@@ -1,14 +1,18 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { User } from '@types';
 import { useContextFactory } from '@hooks';
 import LocalStorage from '@services/localStorage';
 import appAxios from '@lib/api/appAxios';
+import { routes } from '@lib/constants';
+import toast from '@helpers/toastr';
+import { ref } from 'yup';
 
 export declare type UserContext = {
   isLogin: boolean;
   user: User;
-  signIn: (user: User) => void;
+  token: string;
+  signIn: (user: User, token: string) => void;
   signOut: () => Promise<void>;
 };
 
@@ -22,24 +26,47 @@ const UserContext = createContext<UserContext>(null);
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
 const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
-  const [user, setUser] = useState<User>(LocalStorage.fetchUser());
+  const [user, setUser] = useState<User>(LocalStorage.getUser());
+  const [token, setToken] = useState<string>(LocalStorage.getToken());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
-  const signIn = useCallback((user: User): void => {
+  const signIn = useCallback((user: User, token: string): void => {
     LocalStorage.saveUser(user);
+    LocalStorage.saveToken(token);
+
     setUser(user);
+    setToken(token);
     setIsLogin(true);
   }, []);
 
   const signOut = useCallback(async (): Promise<void> => {
-    await appAxios.get('auth/logout');
-    LocalStorage.removeUser();
+    await appAxios.get(`${routes.authentification}/logout`);
+    LocalStorage.clearUser();
     setIsLogin(false);
     setUser(null);
+    setToken(null);
   }, []);
 
+  const refreshUser = useCallback(async (): Promise<void> => {
+    try {
+      const { data } = await appAxios.get(routes.users);
+      setUser(data.user);
+    } catch (e) {
+      await signOut();
+      toast('Veuillez vous reconnecter', 'warning');
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (process.browser && isLogin) {
+      const interval = window.setTimeout(refreshUser, 1000 * 60 * 30);
+
+      return () => clearInterval(interval);
+    }
+  }, [process.browser, isLogin]);
+
   return (
-    <UserContext.Provider value={{ user, isLogin, signIn, signOut }}>
+    <UserContext.Provider value={{ user, token, isLogin, signIn, signOut }}>
       {children}
     </UserContext.Provider>
   );

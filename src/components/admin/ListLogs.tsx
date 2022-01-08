@@ -2,17 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 import { Logs } from '@types';
 import appAxios from '@lib/api/appAxios';
-import Moment from '@helpers/momentFr';
 import toast from '@helpers/toastr';
+import useClockFromDate from '../../hooks/useClockFromDate';
 
 const fetchLogs = (limit: number, start: number) =>
   appAxios.get('logs', { params: { limit, start } });
 
-const ListLogs = () => {
+interface TimeCellProps {
+  date: Date | string;
+}
+
+const TimeCell: React.FunctionComponent<TimeCellProps> = ({ date }) => {
+  const time = useClockFromDate(new Date(date));
+
+  return <>{time}</>;
+};
+
+const ListLogs: React.FunctionComponent<null> = () => {
   const [logs, setLogs] = useState<Logs>([]);
 
   useEffect(() => {
-    fetchLogs(1000, 0)
+    fetchLogs(20, 0)
       .then((response) => setLogs(response.data.logs))
       .catch((error) => toast(error.message, 'error'));
   }, []);
@@ -36,7 +46,9 @@ const ListLogs = () => {
             <td>{log.method}</td>
             <td>{log.route}</td>
             <td>{log.ip}</td>
-            <td>{Moment(log.createAt).fromNow()}</td>
+            <td>
+              <TimeCell date={log.createAt} />
+            </td>
             <td>{log.authToken ? 'Oui' : 'Non'}</td>
           </tr>
         ))}

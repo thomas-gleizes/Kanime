@@ -1,5 +1,6 @@
 import { Log as LogModel } from '@prisma/client';
 import { Mapper, Log, Logs } from '@types';
+import Security from '@services/security';
 
 class LogsMapper implements Mapper<LogModel, Log> {
   one(resource: LogModel): Log {
@@ -10,7 +11,7 @@ class LogsMapper implements Mapper<LogModel, Log> {
       createAt: resource.created_at,
       body: body ? JSON.parse(body) : null,
       query: query ? JSON.parse(query) : null,
-      authToken: auth_token ? JSON.parse(auth_token) : null,
+      authToken: auth_token ? Security.getTokenPayload(auth_token) : null,
     };
   }
 

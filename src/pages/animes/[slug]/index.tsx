@@ -46,13 +46,11 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
     const res = await appAxios.post(`${routes.animes}/${anime.id}/entries`, {
       status: AnimeUserStatus.Watching,
     });
-
     console.log('Res', res);
   };
 
   const handleDelete = async (event) => {
     const res = await appAxios.delete(`${routes.animes}/${anime.id}/entries`);
-
     console.log('Res', res);
   };
 
@@ -61,18 +59,23 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
       <Title>{anime.canonicalTitle}</Title>
       <div className="relative">
         <div
-          className="absolute top-[-56px] bottom-0 -z-10 w-full h-[570px] bg-gradient-to-b from-red-800 bg-cover bg-top"
+          className="absolute top-[-56px] bottom-0 -z-10 w-full h-[400px] bg-primary bg-top"
           style={{ backgroundImage: `url('${anime.cover.small}')` }}
         />
-        <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[250px] max-w-[1200px]">
-          <div className="mx-1 w-full mt-[175px]">
+        <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[240px] max-w-[1200px]">
+          <div className="mx-1 w-full mt-[10px]">
             <div className="h-20 w-full border rounded" />
             <div className="mx-1 py-3 divide-opacity-10 divide-y-2">
-              <div className="flex py-1">
-                <h2 className="text-3xl">{anime.canonicalTitle}</h2>
-                <span className="text-md mt-2 ml-2 text-opacity-70">
-                  ({anime.season})
-                </span>
+              <div className="flex justify-between py-1">
+                <h2 className="text-3xl">
+                  {anime.canonicalTitle}{' '}
+                  <span className="text-md mt-2 ml-2 text-opacity-70">
+                    ({anime.type})
+                  </span>
+                </h2>
+                <h3 className="align-sub">
+                  {anime.season} ({anime.season_year})
+                </h3>
               </div>
               <div className="flex w-full py-2 justify-between">
                 <div className="flex text-sm">
@@ -99,10 +102,11 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
           </div>
           <div className="sticky top-[250px] mx-4">
             <Image
+              // @ts-ignore
+              src={anime.poster.small}
               width={320}
               className="rounded-sm shadow-lg"
               height={440}
-              src={anime.poster.small}
               alt="poster"
               onClick={() => window?.open(`https://kitsu.io/anime/${anime.slug}`)}
             />

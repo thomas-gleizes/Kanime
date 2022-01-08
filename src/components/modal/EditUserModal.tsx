@@ -9,6 +9,7 @@ import { useFetch, useToggle } from '@hooks';
 import Modal, { ModalBody, ModalFooter } from '@layouts/Modal';
 import Field, { File, Select, TextArea } from '@components/common/field';
 import Button from '@components/common/Button';
+import toast from '@helpers/toastr';
 
 declare type values = {
   city: string;
@@ -44,9 +45,18 @@ const EditUserModal: React.FunctionComponent = () => {
   };
 
   const handleSubmit = async (values: values, formik: FormikHelpers<values>) => {
-    const response = await appAxios.patch(`users`, values);
-    signIn(response.data.user);
-    toggleModal();
+    try {
+      const {
+        data: { user, token },
+      } = await appAxios.patch(`users`, values);
+
+      signIn(user, token);
+      toggleModal();
+    } catch (e) {
+      toast(e.message, 'error');
+
+      // TODO setFieldError with formik and yup schema
+    }
   };
 
   const displayBackground = (media: UserMediaHandling | string) => {

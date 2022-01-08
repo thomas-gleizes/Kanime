@@ -39,5 +39,6 @@ export const verifyAdmin = (req: NextApiRequest) => {
 declare module 'iron-session' {
   interface IronSessionData {
     user: User;
+    token: string;
   }
 }

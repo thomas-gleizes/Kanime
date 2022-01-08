@@ -11,13 +11,16 @@ import { ApiError, SchemaError } from '@errors';
 
 interface Data extends DefaultResponseData {
   user: User;
+  token: string;
 }
 
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { body: userData } = req;
+  const { body: userData, session } = req;
 
   // const error = await registerSchema.validate(userData).catch((error) => error);
   // if (error) throw new SchemaError(400, error);
+
+  session.destroy();
 
   const users = await UserModel.findByEmailOrLogin(userData.email, userData.login);
 
@@ -36,12 +39,13 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     })
   );
 
-  req.session.user = user;
-  await req.session.save();
+  const token = Security.sign(user);
 
-  user.token = Security.sign(user);
+  session.user = user;
+  session.token = token;
+  await session.save();
 
-  res.status(201).send({ success: true, user: user });
+  res.status(201).send({ success: true, user: user, token: token });
 });
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {

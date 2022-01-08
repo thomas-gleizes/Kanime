@@ -27,10 +27,12 @@ const RegisterForm: React.FunctionComponent = () => {
 
   const handleSubmit = async (values: registerForm) => {
     try {
-      const response = await appAxios.post('auth/register', values);
-      signIn(response.data.user);
+      const {
+        data: { user, token },
+      } = await appAxios.post('auth/register', values);
+      signIn(user, token);
 
-      await router.push(`${routes.users}/${response.data.user.id}`);
+      await router.push(`${routes.users}/${user.id}`);
     } catch (e) {
       toast(e.error, 'error');
     }

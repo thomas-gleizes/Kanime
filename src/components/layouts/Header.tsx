@@ -79,6 +79,7 @@ const Header: React.FunctionComponent = () => {
   const { user, isLogin } = useUserContext();
   const {
     headerTransparentState: [headerTransparent],
+    scrollPercent,
   } = useLayoutContext();
 
   const [extend, setExtend] = useState<boolean>(false);
@@ -88,6 +89,7 @@ const Header: React.FunctionComponent = () => {
       className={`z-90 fixed top-0 w-full shadow-lg transition-all duration-500 ${
         headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary'
       }`}
+      onMouseEnter={() => {}}
     >
       <nav className="">
         <div className="relative">

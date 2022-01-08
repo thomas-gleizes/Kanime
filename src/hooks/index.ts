@@ -4,3 +4,4 @@ export { default as useScrollPercent } from './useScrollPercent';
 export { default as useCallbackRef } from './useCallbackRef';
 export { default as useContextFactory } from './useContextFactory';
 export { default as useAsyncEffect } from './useAsyncEffect';
+export { default as useClockFormDate } from './useClockFromDate';

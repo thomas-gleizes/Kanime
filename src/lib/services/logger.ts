@@ -19,12 +19,12 @@ function replaceKey(data: any) {
 }
 
 export default async function logger(req: NextApiRequest) {
-  await LogModel.create(
-    req.url.split('?')[0],
-    req.method as Method,
-    requestIp.getClientIp(req),
-    replaceKey(req.body),
-    replaceKey(req.query),
-    req?.session?.user?.token
-  );
+  await LogModel.create({
+    route: req.url.split('?')[0],
+    method: req.method as Method,
+    ip: requestIp.getClientIp(req),
+    body: replaceKey(req.body),
+    query: replaceKey(req.query),
+    authToken: req.session.token || req.headers.authorization.replace('Bearer ', ''),
+  });
 }
