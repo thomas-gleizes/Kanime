@@ -18,7 +18,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
   if (!query) throw new ApiError(400, 'query required');
 
   const animes = AnimesMapper.many(
-    await AnimeModel.search(`${query}`, { limit: +limit, skip: +skip })
+    await AnimeModel.search(`${query}`, { take: +limit, skip: +skip })
   );
 
   res.send({ success: true, animes, length: animes.length, params: { query } });

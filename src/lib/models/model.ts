@@ -1,8 +1,14 @@
+import { ModelParams } from '@types';
+
 abstract class Model<D = any> {
-  protected connexion: D;
+  protected model: D;
 
   protected constructor(connexionModule: D) {
-    this.connexion = connexionModule;
+    this.model = connexionModule;
+  }
+
+  protected getKeyParams(params?: ModelParams): { take: number, skip: number } {
+    return { skip: params.skip || 0, take: params.limit || 50 };
   }
 }
 

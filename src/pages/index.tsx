@@ -16,7 +16,7 @@ const Home: NextPage<Props> = ({ time }) => {
   return (
     <Content>
       <Title>Accueil</Title>
-      <div className="flex flex-col-2 items-center justify-center min-h-screen py-2">
+      <div className="flex flex-col-2 items-center justify-center h-[80vh] py-2">
         <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
           <div className="text-center">{time}</div>
           <h1 className="text-6xl font-bold first-letter:text-[#db8000]">

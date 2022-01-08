@@ -1,7 +1,8 @@
-import { Prisma, Anime } from '@prisma/client';
+import { Anime, Prisma } from '@prisma/client';
 
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
+import { ModelParams } from '@types';
 
 type params = {
   limit?: number;
@@ -14,35 +15,38 @@ class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
   }
 
   public findById = (id: number): Promise<Anime> =>
-    this.connexion.findUnique({
-      where: { id: id },
+    this.model.findUnique({
+      where: { id: id }
     });
 
   public findBySlug = (slug: string): Promise<Anime> =>
-    this.connexion.findUnique({
+    this.model.findUnique({
       where: { slug },
     });
 
-  public getMany = (params?: params): Promise<Array<Anime>> =>
-    this.connexion.findMany({
-      take: params.limit || 10,
-      skip: params.skip || 0,
+  public all = (params?: ModelParams): Promise<Array<Anime>> =>
+    this.model.findMany({
+      ...this.getKeyParams(params)
     });
 
-  public findByUser = (userId: number): Promise<Array<Anime>> =>
-    this.connexion.findMany({
+  public findByUser = (userId: number, params?: ModelParams): Promise<Array<Anime>> =>
+    this.model.findMany({
       where: {
-        users: { some: { user_id: userId } },
+        users: { some: { user_id: userId } }
       },
+      ...this.getKeyParams(params)
     });
 
-  public search = (query: string, params: params): Promise<Array<Anime>> =>
-    this.connexion.findMany({
+  public search = (query: string, params?: ModelParams): Promise<Array<Anime>> =>
+    this.model.findMany({
       where: {
-        canonical_title: { contains: query },
+        OR: [
+          { canonical_title: { contains: query } },
+          { slug: { contains: query } },
+          { titles: { contains: query } }
+        ]
       },
-      take: params.limit || 10,
-      skip: params.skip || 0,
+      ...this.getKeyParams(params)
     });
 }
 

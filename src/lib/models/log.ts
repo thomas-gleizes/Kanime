@@ -3,7 +3,6 @@ import { Prisma, Log } from '@prisma/client';
 import { Method } from '@types';
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
-import Security from '@services/security';
 
 type crateData = {
   route: string;
@@ -20,10 +19,10 @@ class LogModel extends Model<Prisma.LogDelegate<unknown>> {
   }
 
   public get = (limit: number, skip: number): Promise<Log[]> =>
-    this.connexion.findMany({ skip: skip, take: limit, orderBy: [{ id: 'desc' }] });
+    this.model.findMany({ skip: skip, take: limit, orderBy: [{ id: 'desc' }] });
 
   public create = (data: crateData): Promise<Log> =>
-    this.connexion.create({
+    this.model.create({
       data: {
         route: data.route,
         method: data.method,

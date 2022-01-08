@@ -8,7 +8,7 @@ class CountryModel extends Model<Prisma.CountryDelegate<unknown>> {
     super(connexion.country);
   }
 
-  public all = (): Promise<Country[]> => this.connexion.findMany({});
+  public all = (): Promise<Country[]> => this.model.findMany({});
 }
 
 export default new CountryModel(connexion);

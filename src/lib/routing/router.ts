@@ -57,12 +57,12 @@ class Router {
     this.delete(...middlewares);
   }
 
-  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void>{
     const { method } = req;
 
     const routes = this['_' + method.toLowerCase()];
 
-    logger(req).catch((e) => console.log('log failed', e));
+    logger(req).catch((e) => console.log('log failed :', e));
 
     try {
       if (!routes.length) throw new ApiError('405', errorMessage.METHOD_NOT_ALLOWED);

@@ -9,7 +9,7 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
   }
 
   public create = (followerId: number, followId: number): Promise<UserFollow> =>
-    this.connexion.create({
+    this.model.create({
       data: {
         follower_id: followerId,
         follow_id: followId,
@@ -17,7 +17,7 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
     });
 
   public delete = (followerId: number, followId: number): Promise<UserFollow> =>
-    this.connexion.delete({
+    this.model.delete({
       where: {
         follower_id_follow_id: {
           follower_id: followerId,

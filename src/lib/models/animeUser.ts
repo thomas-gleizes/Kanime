@@ -13,7 +13,7 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
     animeId: number,
     status: AnimeUserStatus
   ): Promise<AnimeUser> =>
-    this.connexion.upsert({
+    this.model.upsert({
       where: {
         anime_id_user_id: {
           user_id: userId,
@@ -25,7 +25,7 @@ class AnimeUserModel extends Model<Prisma.AnimeUserDelegate<unknown>> {
     });
 
   public delete = (userId: number, animeId: number): Promise<AnimeUser> =>
-    this.connexion.delete({
+    this.model.delete({
       where: {
         anime_id_user_id: {
           user_id: userId,

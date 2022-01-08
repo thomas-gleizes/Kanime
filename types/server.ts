@@ -24,15 +24,3 @@ export type Middleware = (
   res: NextApiResponse
 ) => Promise<void> | void;
 
-export type Log = {
-  id: number;
-  route: string;
-  ip: string;
-  method: Method;
-  body: any;
-  query: any;
-  authToken?: User;
-  createAt: Date | string;
-};
-
-export type Logs = Array<Log>;
