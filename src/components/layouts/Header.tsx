@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import { useUserContext } from '@context/user';
 import { useLayoutContext } from '@context/layout';
 import { routes } from '@lib/constants';
-import DropDown from '@layouts/DropDown';
+import DropDownButton from '@layouts/DropDownButton';
 import SearchBar from '@components/common/SearchBar';
 
 const DropDownItem = ({ href, children }) => (
@@ -32,13 +32,13 @@ const DropDownExplore = () => {
           </i>
         </button>
       </div>
-      <DropDown innerRef={button}>
+      <DropDownButton innerRef={button}>
         <div className="absolute py-1 top-5 -left-2 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
           <DropDownItem href={routes.animes}>Animes</DropDownItem>
           <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
           <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
         </div>
-      </DropDown>
+      </DropDownButton>
     </div>
   );
 };
@@ -58,7 +58,7 @@ const DropDownUser = () => {
           alt="avatar"
         />
       </div>
-      <DropDown innerRef={imgRef}>
+      <DropDownButton innerRef={imgRef}>
         <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
           <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
           <DropDownItem href={`${routes.users}/${user.id}/settings`}>
@@ -70,7 +70,7 @@ const DropDownUser = () => {
             </span>
           </div>
         </div>
-      </DropDown>
+      </DropDownButton>
     </div>
   );
 };
@@ -89,7 +89,7 @@ const Header: React.FunctionComponent = () => {
         headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary'
       }`}
     >
-      <nav className="bg-amber-500">
+      <nav>
         <div className="relative">
           <div className="hidden md:flex justify-between w-full h-14 px-5">
             <div className="text-center m-auto">

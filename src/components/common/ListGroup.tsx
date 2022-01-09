@@ -14,8 +14,10 @@ const ListGroup: FunctionComponent<Props> = ({ color, value, handleChange, optio
   return (
     <Listbox value={value} onChange={handleChange}>
       <div className="relative mt-1">
-        <Listbox.Button className={`relative w-full py-2 pl-3 pr-10 text-left bg-${color}-400 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}>
-          <span className="block truncate">{value}</span>
+        <Listbox.Button
+          className={`relative w-full py-2 pl-3 pr-10 text-left bg-amber-400 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm`}
+        >
+          <span className="block truncate lowercase font-bold">{value}</span>
           <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
             <SelectorIcon className="w-5 h-5 text-gray-400" aria-hidden="true" />
           </span>
@@ -32,7 +34,7 @@ const ListGroup: FunctionComponent<Props> = ({ color, value, handleChange, optio
                 key={index}
                 className={({ active }) =>
                   `cursor-default select-none relative py-2 pl-10 pr-4 ${
-                    active ? `text-${color}-900 bg-${color}-100` : 'text-gray-900'
+                    active ? `text-amber-900 bg-amber-100` : 'text-gray-900'
                   }`
                 }
                 value={option}
@@ -42,7 +44,7 @@ const ListGroup: FunctionComponent<Props> = ({ color, value, handleChange, optio
                     <span
                       className={`${
                         selected ? 'font-medium' : 'font-normal'
-                      } block truncate`}
+                      } block truncate lowercase`}
                     >
                       {option}
                     </span>

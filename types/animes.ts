@@ -1,3 +1,5 @@
+import { AnimeUserStatus } from '@prisma/client';
+
 export type Images = {
   tiny?: string;
   small?: string;
@@ -61,3 +63,13 @@ export type Anime = {
 };
 
 export type Animes = Array<Anime>;
+
+export type AnimeUser = {
+  animeId: number;
+  userId: number;
+  status: AnimeUserStatus;
+  createAt: Date | string;
+  updateAt: Date | string;
+};
+
+export type AnimesUsers = Array<AnimeUser>;

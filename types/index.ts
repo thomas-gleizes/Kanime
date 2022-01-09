@@ -1,4 +1,13 @@
-export type { Anime, Animes, Category, Categories, Images, Titles } from './animes';
+export type {
+  Anime,
+  Animes,
+  Category,
+  Categories,
+  Images,
+  Titles,
+  AnimesUsers,
+  AnimeUser,
+} from './animes';
 export type { User, Users, UserMediaHandling } from './users';
 export type { Log, Logs, ModelParams } from './global';
 export type {
@@ -6,5 +15,5 @@ export type {
   DefaultResponseData,
   Mapper,
   Middleware,
-  Method
+  Method,
 } from './server';

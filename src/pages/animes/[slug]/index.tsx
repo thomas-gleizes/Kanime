@@ -1,44 +1,50 @@
 import { NextPage } from 'next';
-import { AnimeUser, AnimeUserStatus } from '@prisma/client';
+import { AnimeUserStatus } from '@prisma/client';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
-import { Anime, DefaultResponseData } from '@types';
-import { AnimeModel, AnimeUserModel } from '@models';
-import { AnimesMapper } from '@mapper';
-import { useLayoutContext } from '@context/layout';
-import Title from '@layouts/Title';
-import KitsuButton from '@components/common/KitsuButton';
+import { Anime, AnimeUser } from '@types';
 import appAxios from '@lib/api/appAxios';
-import { routes } from '@lib/constants';
 import { withSessionSsr } from '@services/session';
+import { routes } from '@lib/constants';
+import { AnimeModel, AnimeUserModel } from '@models';
+import { AnimesMapper, AnimesUsersMapper } from '@mapper';
+import { useLayoutContext } from '@context/layout';
+import KitsuButton from '@components/common/KitsuButton';
 import ListGroup from '@components/common/ListGroup';
+import Title from '@layouts/Title';
 
-interface Props extends DefaultResponseData {
+interface Props {
   anime: Anime;
-  animeUser: AnimeUser;
+  animeUser: AnimeUser | null;
 }
+
+const DEFAULT_STATUS = 'Ajouter';
 
 export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   const { slug } = params;
 
-  const anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
-  if (req.session.user) {
-    const test = await AnimeUserModel.unique(+req.session.user.id, anime.id);
-    console.log('Test', test);
-  }
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  return { props: { anime: anime } };
+  let animeUser = null;
+  if (req.session.user)
+    animeUser = AnimesUsersMapper.one(
+      await AnimeUserModel.unique(+req.session.user.id, anime.id)
+    );
+
+  return { props: { anime: anime, animeUser } };
 });
 
-const AnimePage: NextPage<Props> = ({ anime }) => {
+const AnimePage: NextPage<Props> = (props) => {
+  const { anime, animeUser } = props;
+
   const {
     headerTransparentState: [headerTransparent, setHeaderTransparent],
     scrollPercent,
   } = useLayoutContext();
 
-  const [status, setStatus] = useState(AnimeUserStatus.Wanted);
+  const [status, setStatus] = useState<string>(DEFAULT_STATUS);
 
   useEffect(() => {
     const boolean: boolean = scrollPercent < 10;
@@ -51,17 +57,23 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
 
   if (!anime) return null;
 
-  const handleAdd = async (event) => {
-    const res = await appAxios.post(`${routes.animes}/${anime.id}/entries`, {
-      status: AnimeUserStatus.Watching,
-    });
-    console.log('Res', res);
+  const handleChangeStatus = async (value) => {
+    setStatus(value);
+
+    if (AnimeUserStatus.hasOwnProperty(value))
+      if (animeUser)
+        await appAxios.patch(`${routes.animes}/${anime.id}/entries`, { status: value });
+      else await appAxios.post(`${routes.animes}/${anime.id}/entries`, { status: value });
   };
 
-  const handleDelete = async (event) => {
-    const res = await appAxios.delete(`${routes.animes}/${anime.id}/entries`);
-    console.log('Res', res);
-  };
+  useEffect(() => {
+    console.log('Props changed', props);
+  }, [props]);
+
+  useEffect(() => {
+    if (animeUser) setStatus(animeUser.status);
+    else setStatus(DEFAULT_STATUS);
+  }, [animeUser]);
 
   return (
     <div className="h-1900">
@@ -128,8 +140,12 @@ const AnimePage: NextPage<Props> = ({ anime }) => {
                   <ListGroup
                     color="amber"
                     value={status}
-                    handleChange={(value) => setStatus(value)}
-                    options={Object.values(AnimeUserStatus)}
+                    handleChange={(value) => handleChangeStatus(value)}
+                    options={
+                      animeUser
+                        ? [...Object.values(AnimeUserStatus), 'Supprimer']
+                        : ['Ajouter', ...Object.values(AnimeUserStatus)]
+                    }
                   />
                 </div>
               </div>

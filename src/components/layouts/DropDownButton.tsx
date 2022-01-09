@@ -6,7 +6,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const DropDown: React.FC<Props> = ({ innerRef, children }) => {
+const DropDownButton: React.FC<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -26,16 +26,16 @@ const DropDown: React.FC<Props> = ({ innerRef, children }) => {
   return (
     <Transition
       show={open}
-      enter="transition ease-out duration-100"
-      enterFrom="transform opacity-0 scale-95"
+      enter="transition ease-out duration-200"
+      enterFrom="transform opacity-0 scale-0"
       enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
+      leave="transition ease-in duration-150"
       leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
+      leaveTo="transform opacity-0 scale-0"
     >
       <div className="absolute">{children}</div>
     </Transition>
   );
 };
 
-export default DropDown;
+export default DropDownButton;
