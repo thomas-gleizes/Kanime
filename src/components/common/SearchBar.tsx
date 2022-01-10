@@ -59,7 +59,7 @@ const SearchBar: React.FunctionComponent = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-0"
         >
-          <div className="w-full bg-gray-50 bg-opacity-30 backdrop-blur rounded border border-gray-300 shadow-xl">
+          <div className="w-full bg-gray-50 backdrop-blur rounded border border-gray-300 shadow-xl">
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">
                 <div className="py-1 bg-kitsu rounded-t text-white">
@@ -74,7 +74,7 @@ const SearchBar: React.FunctionComponent = () => {
                         <a>
                           <div
                             id={`anime-search-${anime.id}`}
-                            className="my-0.5 py-1.5 px-3 bg-white bg-opacity-40 hover:bg-opacity-60 cursor-pointer"
+                            className="my-0.5 py-1.5 px-3 bg-white hover:bg-gray-200 cursor-pointer"
                           >
                             <div>
                               <h6 className="truncate">{anime.canonicalTitle}</h6>
