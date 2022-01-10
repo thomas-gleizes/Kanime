@@ -25,6 +25,7 @@ export default async function logger(req: NextApiRequest) {
     ip: requestIp.getClientIp(req),
     body: replaceKey(req.body),
     query: replaceKey(req.query),
-    authToken: req.session?.token || req.headers.authorization.replace('Bearer ', ''),
+    authToken:
+      req.session?.token || req.headers.authorization?.replace('Bearer ', '') || '',
   });
 }
