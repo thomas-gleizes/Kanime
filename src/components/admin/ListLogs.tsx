@@ -18,7 +18,7 @@ const TimeCell: React.FunctionComponent<TimeCellProps> = ({ date }) => {
   return <>{time}</>;
 };
 
-const ListLogs: React.FunctionComponent<null> = () => {
+const ListLogs: React.FunctionComponent = () => {
   const [logs, setLogs] = useState<Logs>([]);
 
   useEffect(() => {
