@@ -3,7 +3,7 @@ import { UserModel } from '@models';
 import Security from '@services/security';
 import { defaultUsersMedia } from '@lib/constants';
 
-describe('users', () => {
+describe('users model', () => {
   let userId: number = null;
 
   beforeAll(async () => {
