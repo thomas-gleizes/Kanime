@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =
 
   const animes = AnimesMapper.many(
     await AnimeModel.all({
-      limit: +limit | 40,
+      limit: +limit || 40,
       skip: +skip,
     })
   );

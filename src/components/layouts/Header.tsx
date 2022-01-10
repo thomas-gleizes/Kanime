@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaBars, FaCaretDown } from 'react-icons/fa';
+import { FaBars } from 'react-icons/fa';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 
 import { useUserContext } from '@context/user';
 import { useLayoutContext } from '@context/layout';
 import { routes } from '@lib/constants';
-import DropDownButton from '@layouts/DropDownButton';
+import DropDownByRef from '@layouts/DropDownByRef';
 import SearchBar from '@components/common/SearchBar';
 
 const DropDownItem = ({ href, children }) => (
@@ -24,21 +25,18 @@ const DropDownExplore = () => {
       <div>
         <button ref={button} type="button" className="text-white flex group">
           Explore
-          <i className="my-auto h-full ml-0.5">
-            <FaCaretDown
-              size={12}
-              className="transform transition rotate-90 group-focus:rotate-0"
-            />
+          <i className="mx-1 my-auto">
+            <ChevronDownIcon className="h-4 w-4 transform transition rotate-90 group-focus:rotate-0" />
           </i>
         </button>
       </div>
-      <DropDownButton innerRef={button}>
-        <div className="absolute py-1 top-5 -left-2 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
+      <DropDownByRef innerRef={button}>
+        <div className="absolute top-5 py-1 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
           <DropDownItem href={routes.animes}>Animes</DropDownItem>
           <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
           <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
         </div>
-      </DropDownButton>
+      </DropDownByRef>
     </div>
   );
 };
@@ -48,7 +46,7 @@ const DropDownUser = () => {
   const imgRef = useRef<HTMLImageElement>();
 
   return (
-    <div>
+    <div className="my-auto">
       <div className="cursor-pointer" ref={imgRef}>
         <Image
           className="rounded-full"
@@ -58,8 +56,8 @@ const DropDownUser = () => {
           alt="avatar"
         />
       </div>
-      <DropDownButton innerRef={imgRef}>
-        <div className="absolute py-1 top-12 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
+      <DropDownByRef innerRef={imgRef}>
+        <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
           <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
           <DropDownItem href={`${routes.users}/${user.id}/settings`}>
             Settings
@@ -70,7 +68,7 @@ const DropDownUser = () => {
             </span>
           </div>
         </div>
-      </DropDownButton>
+      </DropDownByRef>
     </div>
   );
 };
