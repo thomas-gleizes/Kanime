@@ -90,6 +90,12 @@ model AnimeUser {
   anime_id   Int
   user_id    Int
   status     AnimeUserStatus @default(Wanted)
+  rating     Float?
+  progress   Int             @default(0) @db.SmallInt
+  started_at DateTime?       @default(now())
+  finish_at  DateTime?       @default(now())
+  note       String?         @db.MediumText
+  visibility Visibility      @default(public)
   created_at DateTime        @default(now()) @db.Timestamp(0)
   updated_at DateTime        @default(now()) @db.Timestamp(0)
   animes     Anime           @relation(fields: [anime_id], references: [id])
@@ -180,4 +186,10 @@ enum Gender {
   Male
   Female
   Secret
+}
+
+enum Visibility {
+  private
+  public
+  follow
 }

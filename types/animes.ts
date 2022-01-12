@@ -68,6 +68,11 @@ export type AnimeUser = {
   animeId: number;
   userId: number;
   status: AnimeUserStatus;
+  rating: number;
+  progress: number;
+  startedAt: Date | string;
+  finishAt: Date | string;
+  note: string;
   createAt: Date | string;
   updateAt: Date | string;
 };

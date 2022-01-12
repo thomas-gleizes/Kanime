@@ -14,6 +14,7 @@ import { useLayoutContext } from '@context/layout';
 import KitsuButton from '@components/common/KitsuButton';
 import ListGroup from '@components/common/ListGroup';
 import Title from '@layouts/Title';
+import EditAnimeUser from '@components/modal/EditAnimeUser';
 
 interface Props {
   anime: Anime;
@@ -55,6 +56,11 @@ const AnimePage: NextPage<Props> = (props) => {
     return () => setHeaderTransparent(false);
   }, []);
 
+  useEffect(() => {
+    if (animeUser) setStatus(animeUser.status);
+    else setStatus(DEFAULT_STATUS);
+  }, [animeUser]);
+
   if (!anime) return null;
 
   const handleChangeStatus = async (value) => {
@@ -65,15 +71,6 @@ const AnimePage: NextPage<Props> = (props) => {
         await appAxios.patch(`${routes.animes}/${anime.id}/entries`, { status: value });
       else await appAxios.post(`${routes.animes}/${anime.id}/entries`, { status: value });
   };
-
-  useEffect(() => {
-    console.log('Props changed', props);
-  }, [props]);
-
-  useEffect(() => {
-    if (animeUser) setStatus(animeUser.status);
-    else setStatus(DEFAULT_STATUS);
-  }, [animeUser]);
 
   return (
     <div className="h-1900">
@@ -149,6 +146,7 @@ const AnimePage: NextPage<Props> = (props) => {
                   />
                 </div>
               </div>
+              {animeUser && <EditAnimeUser anime={anime} />}
             </div>
           </div>
         </div>

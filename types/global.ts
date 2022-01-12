@@ -17,11 +17,23 @@ export type Logs = Array<Log>;
 export type ModelParams = {
   limit?: number;
   skip?: number;
-}
+};
 
-export type TailwindcssGradiant = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
+export type CustomDate = Date | string;
+
+export type TailwindcssGradiant =
+  | 50
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900;
 export type TailwindcssColors =
-  'slate'
+  | 'slate'
   | 'gray'
   | 'zinc'
   | 'neutral'
@@ -42,7 +54,4 @@ export type TailwindcssColors =
   | 'purple'
   | 'fuchsia'
   | 'pink'
-  | 'rose'
-
-
-
+  | 'rose';

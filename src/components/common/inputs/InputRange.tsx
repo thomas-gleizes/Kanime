@@ -1,9 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-type minmax = {
-  min: number;
-  max: number;
-};
+type minmax = { min: number; max: number };
 
 interface Props {
   min: number;
@@ -12,7 +9,7 @@ interface Props {
   onChange: (values: minmax) => void;
 }
 
-const Range: React.FunctionComponent<Props> = ({ min, max, step, onChange }) => {
+const InputRange: React.FunctionComponent<Props> = ({ min, max, step, onChange }) => {
   const [minValue, setMinValue] = useState<number>(min);
   const [maxValue, setMaxValue] = useState<number>(max);
 
@@ -100,10 +97,10 @@ const Range: React.FunctionComponent<Props> = ({ min, max, step, onChange }) => 
   );
 };
 
-Range.defaultProps = {
+InputRange.defaultProps = {
   min: 0,
   max: 10,
   step: 1,
 };
 
-export default Range;
+export default InputRange;

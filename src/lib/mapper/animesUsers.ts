@@ -1,7 +1,6 @@
 import { AnimeUser as AnimeUserModel } from '@prisma/client';
 
-import { Mapper } from '@types';
-import { AnimesUsers, AnimeUser } from '@types';
+import { AnimesUsers, AnimeUser, Mapper } from '@types';
 import { formatForMapper } from '@helpers/momentFr';
 
 class AnimesUsersMapper implements Mapper {
@@ -12,6 +11,11 @@ class AnimesUsersMapper implements Mapper {
       animeId: resource.anime_id,
       userId: resource.user_id,
       status: resource.status,
+      rating: resource.rating,
+      progress: resource.progress,
+      startedAt: formatForMapper(resource.started_at),
+      finishAt: formatForMapper(resource.finish_at),
+      note: resource.note,
       createAt: formatForMapper(resource.created_at),
       updateAt: formatForMapper(resource.updated_at),
     };

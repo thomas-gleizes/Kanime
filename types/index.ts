@@ -9,7 +9,7 @@ export type {
   AnimeUser,
 } from './animes';
 export type { User, Users, UserMediaHandling } from './users';
-export type { Log, Logs, ModelParams } from './global';
+export type { Log, Logs, ModelParams, CustomDate } from './global';
 export type {
   DefaultErrorData,
   DefaultResponseData,
