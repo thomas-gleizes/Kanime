@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import uuid from 'react-uuid';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Transition } from '@headlessui/react';
+import uuid from 'react-uuid';
 
 interface Props {
   innerRef: { current: HTMLElement };
@@ -9,16 +9,17 @@ interface Props {
 
 const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
-  const [id] = useState<string>('dropdown-' + uuid());
+
+  const identifier = useMemo<string>(() => `dropdown-${uuid()}`, []);
 
   useEffect(() => {
     if (innerRef?.current) {
-      innerRef.current.classList.add(id);
+      innerRef.current.classList.add(identifier);
     } else throw new Error('Dropdown by ref must provide a valide ref');
   }, [innerRef]);
 
   useEffect(() => {
-    if (innerRef?.current) {
+    if (innerRef) {
       const toggleOpen = () => setOpen(!open);
 
       innerRef.current.addEventListener('click', toggleOpen, true);
@@ -29,7 +30,7 @@ const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
 
   useEffect(() => {
     const handleClick = (event) => {
-      if (!event.target.classList.contains(id)) setOpen(false);
+      if (!event.target.classList.contains(identifier)) setOpen(false);
     };
 
     document.body.addEventListener('click', handleClick, true);
