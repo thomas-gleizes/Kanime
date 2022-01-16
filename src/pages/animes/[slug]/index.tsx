@@ -8,7 +8,7 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import { Anime, AnimeUser } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { withSessionSsr } from '@services/session';
-import { ErrorPage } from '@errors';
+import { ApiError, ErrorPage } from '@errors';
 import { errorMessage, routes } from '@lib/constants';
 import { AnimeModel, AnimeUserModel } from '@models';
 import { AnimesMapper, AnimesUsersMapper } from '@mapper';
@@ -16,7 +16,7 @@ import { useLayoutContext } from '@context/layout';
 import KitsuButton from '@components/common/KitsuButton';
 import ListGroup from '@components/common/ListGroup';
 import Title from '@layouts/Title';
-import EditAnimeUser from '@components/modal/EditAnimeUser';
+import EditAnimesEntries from '@components/modal/EditAnimesEntries';
 
 interface Props {
   anime: Anime;
@@ -32,7 +32,7 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
   if (!anime)
-    return { props: { error: new ErrorPage(404, errorMessage.ANIME_NOT_FOUND) } };
+    return { props: { error: ErrorPage.create(404, errorMessage.ANIME_NOT_FOUND) } };
 
   let animeUser = null;
   if (req.session.user)
@@ -52,7 +52,7 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
   const [status, setStatus] = useState<string>(DEFAULT_STATUS);
 
   useEffect(() => {
-    const boolean: boolean = scrollPercent < 10;
+    const boolean: boolean = !error && scrollPercent < 10;
     if (headerTransparent !== boolean) setHeaderTransparent(boolean);
   }, [scrollPercent]);
 
@@ -65,7 +65,7 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
     else setStatus(DEFAULT_STATUS);
   }, [animeUser]);
 
-  if (error) return <Er ror {...error} />;
+  if (error) return <Error {...error} />;
 
   if (!anime) return null;
 
@@ -152,7 +152,7 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
                   />
                 </div>
               </div>
-              {animeUser && <EditAnimeUser anime={anime} />}
+              {animeUser && <EditAnimesEntries anime={anime} />}
             </div>
           </div>
         </div>

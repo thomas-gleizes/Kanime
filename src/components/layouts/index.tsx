@@ -15,7 +15,7 @@ const Layout: React.FunctionComponent<Props> = ({ children }) => {
         <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
       </Head>
       <Header />
-      <main className="py-14">{children}</main>
+      <main className="py-[56px]">{children}</main>
       <Footer />
     </>
   );
