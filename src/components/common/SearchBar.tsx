@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
 import SimpleBar from 'simplebar-react';
@@ -28,12 +28,15 @@ const SearchBar: React.FunctionComponent = () => {
         .then(({ data }) => setAnimes(data.animes))
         .catch((e) => toast(e.message, 'error'));
 
-      const usersPromises = appAxios
-        .get(`${routes.users}/search`, { params: { query: value, limit: 50, skip: 0 } })
-        .then(({ data }) => setUsers(data.users))
-        .catch((e) => toast(e.message, 'error'));
+      // const usersPromises = appAxios
+      //   .get(`${routes.users}/search`, { params: { query: value, limit: 50, skip: 0 } })
+      //   .then(({ data }) => setUsers(data.users))
+      //   .catch((e) => toast(e.message, 'error'));
 
-      Promise.all([animesPromises, usersPromises]).finally(() => setLoading(false));
+      Promise.all([animesPromises]).finally(() => setLoading(false));
+    } else {
+      setAnimes([]);
+      setUsers([]);
     }
   };
 
@@ -67,7 +70,7 @@ const SearchBar: React.FunctionComponent = () => {
                     Animes {loading && <BeatLoader size={12} color="#F59509" />}
                   </h3>
                 </div>
-                {animes.length ? (
+                {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>
                     {animes.map((anime) => (
                       <Link key={anime.id} href={`${routes.animes}/${anime.slug}`}>

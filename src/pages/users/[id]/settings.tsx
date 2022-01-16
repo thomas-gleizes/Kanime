@@ -5,20 +5,24 @@ import { withSessionSsr } from '@services/session';
 import { routes } from '@lib/constants';
 import Content from '@layouts/Content';
 
-export const getServerSideProps: GetServerSideProps = withSessionSsr(({ req, query }) => {
-  if (+req.session.user.id != +query.id) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: `${routes.users}/${query.id}`,
-      },
-    };
+interface Props {}
+
+export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
+  ({ req, query }) => {
+    if (+req.session.user.id != +query.id) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: `${routes.users}/${query.id}`,
+        },
+      };
+    }
+
+    return { props: {} };
   }
+);
 
-  return { props: {} };
-});
-
-const SettingsPage: NextPage = () => {
+const SettingsPage: NextPage<Props> = () => {
   return (
     <Content>
       <h1 className="text-center text-3xl">Settings</h1>

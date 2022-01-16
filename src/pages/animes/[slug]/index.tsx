@@ -1,13 +1,15 @@
 import { NextPage } from 'next';
-import { AnimeUserStatus } from '@prisma/client';
-import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Error from 'next/error';
+import { AnimeUserStatus } from '@prisma/client';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
 import { Anime, AnimeUser } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { withSessionSsr } from '@services/session';
-import { routes } from '@lib/constants';
+import { ErrorPage } from '@errors';
+import { errorMessage, routes } from '@lib/constants';
 import { AnimeModel, AnimeUserModel } from '@models';
 import { AnimesMapper, AnimesUsersMapper } from '@mapper';
 import { useLayoutContext } from '@context/layout';
@@ -19,6 +21,7 @@ import EditAnimeUser from '@components/modal/EditAnimeUser';
 interface Props {
   anime: Anime;
   animeUser: AnimeUser | null;
+  error?: ErrorPage;
 }
 
 const DEFAULT_STATUS = 'Ajouter';
@@ -27,6 +30,9 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   const { slug } = params;
 
   const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+
+  if (!anime)
+    return { props: { error: new ErrorPage(404, errorMessage.ANIME_NOT_FOUND) } };
 
   let animeUser = null;
   if (req.session.user)
@@ -37,9 +43,7 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   return { props: { anime: anime, animeUser } };
 });
 
-const AnimePage: NextPage<Props> = (props) => {
-  const { anime, animeUser } = props;
-
+const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
   const {
     headerTransparentState: [headerTransparent, setHeaderTransparent],
     scrollPercent,
@@ -60,6 +64,8 @@ const AnimePage: NextPage<Props> = (props) => {
     if (animeUser) setStatus(animeUser.status);
     else setStatus(DEFAULT_STATUS);
   }, [animeUser]);
+
+  if (error) return <Er ror {...error} />;
 
   if (!anime) return null;
 

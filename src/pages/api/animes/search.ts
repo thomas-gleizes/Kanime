@@ -20,7 +20,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data | DefaultErrorD
     await AnimeModel.search(query as string, { limit: +limit, skip: +skip })
   );
 
-  res.send({
+  res.status(200).send({
     success: true,
     animes,
     length: animes.length,

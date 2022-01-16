@@ -11,8 +11,10 @@ export type {
 export type { User, Users, UserMediaHandling } from './users';
 export type { Log, Logs, ModelParams, CustomDate } from './global';
 export type {
+  responseCode,
   DefaultErrorData,
   DefaultResponseData,
+  ErrorPage,
   Mapper,
   Middleware,
   Method,

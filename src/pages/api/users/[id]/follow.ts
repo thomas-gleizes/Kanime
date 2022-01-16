@@ -47,7 +47,7 @@ router.delete(
     try {
       const result = await UserFollowModel.delete(+session.user.id, +query.id);
 
-      res.status(200).send({ success: true, data: result });
+      res.status(200).send({ success: true, debug: result });
     } catch (e) {
       throw new ApiError(400, errorMessage.UNFOLLOW);
     }

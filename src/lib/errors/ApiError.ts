@@ -1,5 +1,7 @@
+import { responseCode } from '@types';
+
 class ApiError extends Error {
-  private readonly _code: 404 | 400 | 500 | 401 | number;
+  private readonly _code: responseCode;
 
   constructor(code, message) {
     super(message);

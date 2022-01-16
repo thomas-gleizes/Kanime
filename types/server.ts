@@ -1,15 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { User } from './users';
+
+export declare type responseCode = 404 | 400 | 500 | 401 | number;
 
 export interface DefaultResponseData<T = any> {
   success?: boolean;
   params?: any;
-  data?: T;
+  debug?: T;
 }
 
 export interface DefaultErrorData<T = any> {
   error: string;
-  data?: T;
+  debug?: T;
+}
+
+export interface ErrorPage {
+  code: responseCode;
+  message: string;
 }
 
 export interface Mapper<E = any, S = any> {
@@ -23,4 +29,3 @@ export type Middleware = (
   req: NextApiRequest,
   res: NextApiResponse
 ) => Promise<void> | void;
-
