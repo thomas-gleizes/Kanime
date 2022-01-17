@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import uuid from 'react-uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   innerRef: { current: HTMLElement };
@@ -10,7 +10,10 @@ interface Props {
 const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const identifier = useMemo<string>(() => `dropdown-${uuid()}`, []);
+  const identifier = useMemo<string>(
+    () => `dropdown-${uuidv4().replaceAll('-', '')}`,
+    []
+  );
 
   useEffect(() => {
     if (innerRef?.current) {
