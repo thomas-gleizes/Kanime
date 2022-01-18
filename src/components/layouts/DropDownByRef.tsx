@@ -11,7 +11,7 @@ const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const identifier = useMemo<string>(
-    () => `dropdown-${uuidv4().replaceAll('-', '')}`,
+    () => `dropdown-${uuidv4().split('-').join('')}`,
     []
   );
 
