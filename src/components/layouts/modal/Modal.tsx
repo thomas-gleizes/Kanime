@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
-import { Transition } from '@headlessui/react';
+import domUuid from '@helpers/domUuid';
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   isOpen: boolean;
@@ -8,13 +8,19 @@ interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest }) => {
-  const background = useRef<HTMLDivElement>();
+  const backgroundId = useMemo(() => `modal-${domUuid()}`, []);
+  const modalNode = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
 
-  const handleClose: React.MouseEventHandler = ({ target }) => {
-    if (background.current === target) {
-      toggle && toggle();
+  useEffect(() => {
+    if (isOpen) {
+      modalNode.id = `modal m-${domUuid()}`;
+      document.body.appendChild(modalNode);
+
+      return () => {
+        document.body.removeChild(modalNode);
+      };
     }
-  };
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -24,25 +30,21 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest })
     }
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  const handleClick = (event) => {
+    if (event.target.id === backgroundId) toggle();
+  };
 
   const component = (
-    <Transition
-      show={isOpen}
-      enter="transition ease-out duration-200"
-      enterFrom="transform opacity-0 scale-0"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
+    <div
+      id={backgroundId}
+      onClick={handleClick}
+      className="z-100 fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-gray-800"
     >
-      <div ref={background} onClick={handleClose} className="modal">
-        {isOpen && <div {...rest} />}
-      </div>
-    </Transition>
+      <div {...rest} />
+    </div>
   );
 
-  return ReactDOM.createPortal(component, document.getElementById('modal'));
+  return ReactDOM.createPortal(component, modalNode);
 };
 
 export default Modal;

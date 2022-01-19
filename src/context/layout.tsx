@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { useContextFactory, useScrollPercent } from '@hooks';
 
-type Dialog<T = undefined> = {
+type Dialog<T = any> = {
   type: string;
   text: string;
   resolve: (params: T) => void;

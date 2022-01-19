@@ -2,8 +2,8 @@ import React, { useRef } from 'react';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Country, Gender } from '@prisma/client';
 
-import { UserMediaHandling } from '@types';
 import appAxios from '@lib/api/appAxios';
+import { UserMediaHandling } from '@types';
 import { useUserContext } from '@context/user';
 import { useFetch, useToggle } from '@hooks';
 import Modal, { ModalBody, ModalFooter } from '@layouts/modal';

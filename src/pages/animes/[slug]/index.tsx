@@ -17,6 +17,8 @@ import KitsuButton from '@components/common/KitsuButton';
 import ListGroup from '@components/common/ListGroup';
 import Title from '@layouts/Title';
 import EditAnimesEntries from '@components/modal/EditAnimesEntries';
+import { SendButton } from '@layouts/buttons';
+import useDialog from '../../../hooks/useDialog';
 
 interface Props {
   anime: Anime;
@@ -48,6 +50,8 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
     headerTransparentState: [headerTransparent, setHeaderTransparent],
     scrollPercent,
   } = useLayoutContext();
+
+  const { confirm } = useDialog();
 
   const [status, setStatus] = useState<string>(DEFAULT_STATUS);
 
@@ -153,6 +157,15 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
                 </div>
               </div>
               {animeUser && <EditAnimesEntries anime={anime} />}
+              <div>
+                <SendButton
+                  onClick={async () => {
+                    const result = await confirm('test');
+
+                    console.log('Result', result);
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
