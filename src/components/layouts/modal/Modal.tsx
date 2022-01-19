@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Transition } from '@headlessui/react';
 
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,7 +26,7 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest })
 
   if (!isOpen) return null;
 
-  return (
+  const component = (
     <Transition
       show={isOpen}
       enter="transition ease-out duration-200"
@@ -40,6 +41,8 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest })
       </div>
     </Transition>
   );
+
+  return ReactDOM.createPortal(component, document.getElementById('modal'));
 };
 
 export default Modal;

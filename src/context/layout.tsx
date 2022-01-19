@@ -1,8 +1,15 @@
 import React, { createContext, useState } from 'react';
 import { useContextFactory, useScrollPercent } from '@hooks';
 
+type Dialog<T = undefined> = {
+  type: string;
+  text: string;
+  resolve: (params: T) => void;
+};
+
 export declare type LayoutContext = {
   headerTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+  dialogState: [Dialog, React.Dispatch<React.SetStateAction<Dialog>>];
   scrollPercent: number;
 };
 
@@ -17,10 +24,14 @@ export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 
 const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   const headerTransparentState = useState<boolean>(false);
+  const dialogState = useState<Dialog>({ type: null, text: '', resolve: null });
+
   const scrollPercent = useScrollPercent();
 
   return (
-    <LayoutContext.Provider value={{ headerTransparentState, scrollPercent }}>
+    <LayoutContext.Provider
+      value={{ headerTransparentState, dialogState, scrollPercent }}
+    >
       {children}
     </LayoutContext.Provider>
   );

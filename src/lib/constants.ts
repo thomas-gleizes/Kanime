@@ -17,6 +17,12 @@ export const routes = {
   admin: '/admin',
 };
 
+export const dialogTypes = {
+  confirm: 'confirm',
+  alert: 'alert',
+  prompt: 'prompt',
+};
+
 export const loggerReplaceKey = {
   password: '********',
   confirmPassword: '********',

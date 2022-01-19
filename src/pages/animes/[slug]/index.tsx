@@ -8,7 +8,7 @@ import { FaHeart, FaStar } from 'react-icons/fa';
 import { Anime, AnimeUser } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { withSessionSsr } from '@services/session';
-import { ApiError, ErrorPage } from '@errors';
+import { ErrorPage } from '@errors';
 import { errorMessage, routes } from '@lib/constants';
 import { AnimeModel, AnimeUserModel } from '@models';
 import { AnimesMapper, AnimesUsersMapper } from '@mapper';
@@ -65,7 +65,7 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
     else setStatus(DEFAULT_STATUS);
   }, [animeUser]);
 
-  if (error) return <Error {...error} />;
+  if (error) return <Error statusCode={error.statusCode} title={error.title} />;
 
   if (!anime) return null;
 
