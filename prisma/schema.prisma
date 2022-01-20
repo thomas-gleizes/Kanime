@@ -37,6 +37,31 @@ model Anime {
   @@map("animes")
 }
 
+model AnimeImport {
+  id               Int             @id @default(autoincrement())
+  kitsu_id         String
+  slug             String
+  canonical_title  String
+  titles           String?         @db.LongText
+  synopsis         String?         @db.Text
+  description      String?         @db.Text
+  date_begin       DateTime?       @db.Date
+  date_end         DateTime?       @db.Date
+  rating_average   Float?
+  rating_rank      Int?            @db.UnsignedInt
+  popularity_count Float?
+  popularity_rank  Int?            @db.UnsignedInt
+  type             String?
+  poster           String?         @db.LongText
+  cover            String?         @db.LongText
+  episode_count    Int?            @db.UnsignedInt
+  episode_length   Int?            @db.UnsignedInt
+  status           String?
+  import_at        DateTime         @default(now()) @db.Timestamp(0)
+
+  @@map("animes_import")
+}
+
 model Category {
   id                Int             @id @default(autoincrement())
   name              String
