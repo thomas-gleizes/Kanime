@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useLayoutContext } from '@context/layout';
 import { dialogTypes } from '@lib/constants';
@@ -10,6 +10,22 @@ const AlertDialog: React.FunctionComponent = () => {
     dialogState: [dialog, setDialog],
   } = useLayoutContext();
 
+  const isOpen = useMemo<boolean>(() => dialog.type === dialogTypes.alert, [dialog.type]);
+
+  useEffect(() => {
+    if (isOpen) {
+      const listener = (event) => {
+        if (event.which === 27 || event.which === 13) handleClose();
+      };
+
+      document.addEventListener('keydown', listener);
+
+      return () => {
+        document.removeEventListener('keydown', listener);
+      };
+    }
+  }, [isOpen]);
+
   const handleClose = () => {
     dialog.resolve(null);
     setDialog({ type: null, text: '', resolve: null });
@@ -17,7 +33,7 @@ const AlertDialog: React.FunctionComponent = () => {
 
   return (
     <Modal
-      isOpen={dialog.type === dialogTypes.alert}
+      isOpen={isOpen}
       toggle={handleClose}
       className="max-w-500 mx-auto my-auto h-auto bg-white"
     >

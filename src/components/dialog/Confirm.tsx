@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { useLayoutContext } from '@context/layout';
 import { dialogTypes } from '@lib/constants';
@@ -10,6 +10,26 @@ const ConfirmDialog: React.FunctionComponent = () => {
     dialogState: [dialog, setDialog],
   } = useLayoutContext();
 
+  const isOpen = useMemo<boolean>(
+    () => dialog.type === dialogTypes.confirm,
+    [dialog.type]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      const listener = (event) => {
+        if (event.which === 27) handleClose(false);
+        else if (event.which === 13) handleClose(true);
+      };
+
+      document.addEventListener('keydown', listener);
+
+      return () => {
+        document.removeEventListener('keydown', listener);
+      };
+    }
+  }, [isOpen]);
+
   const handleClose = (result: boolean) => {
     dialog.resolve(result);
     setDialog({ type: null, text: '', resolve: null });
@@ -17,7 +37,7 @@ const ConfirmDialog: React.FunctionComponent = () => {
 
   return (
     <Modal
-      isOpen={dialog.type === dialogTypes.confirm}
+      isOpen={isOpen}
       toggle={() => handleClose(false)}
       className="max-w-500 mx-auto my-auto h-auto bg-white"
     >

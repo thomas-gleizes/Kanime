@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useLayoutContext } from '@context/layout';
 import { dialogTypes } from '@lib/constants';
@@ -12,7 +12,26 @@ const PromptDialog: React.FunctionComponent = () => {
 
   const [value, setValue] = useState<string>('');
 
-  const handleClose = (value) => {
+  const isOpen = useMemo<boolean>(
+    () => dialog.type === dialogTypes.prompt,
+    [dialog.type]
+  );
+
+  useEffect(() => {
+    if (isOpen) {
+      const listener = (event) => {
+        if (event.which === 27) handleClose(false);
+      };
+
+      document.addEventListener('keydown', listener);
+
+      return () => {
+        document.removeEventListener('keydown', listener);
+      };
+    }
+  }, [isOpen]);
+
+  const handleClose = (value: string | false) => {
     dialog.resolve(value);
     setDialog({ type: null, text: '', resolve: null });
     setValue('');
@@ -20,7 +39,7 @@ const PromptDialog: React.FunctionComponent = () => {
 
   return (
     <Modal
-      isOpen={dialog.type === dialogTypes.prompt}
+      isOpen={isOpen}
       toggle={() => handleClose(false)}
       className="max-w-500 mx-auto my-auto h-auto bg-white"
     >
