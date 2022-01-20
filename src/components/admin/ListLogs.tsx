@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Logs } from '@types';
 import appAxios from '@lib/api/appAxios';
 import toast from '@helpers/toastr';
-import useClockFromDate from '../../hooks/useClockFromDate';
+import { useClockFromDate } from '../../hooks';
 
 const fetchLogs = (limit: number, start: number) =>
   appAxios.get('logs', { params: { limit, start } });

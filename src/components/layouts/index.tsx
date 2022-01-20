@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import Header from './Header';
 import Footer from './Footer';
-import ConfirmDialog from '@components/dialog/ConfirmDialog';
+import { ConfirmDialog, PromptDialog, AlertDialog } from '@components/dialog';
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +13,8 @@ const AllDialog: React.FunctionComponent = () => {
   return (
     <>
       <ConfirmDialog />
+      <PromptDialog />
+      <AlertDialog />
     </>
   );
 };

@@ -4,7 +4,7 @@ import { dialogTypes } from '@lib/constants';
 type result = {
   alert: (text: string) => Promise<void>;
   confirm: (text: string) => Promise<boolean>;
-  prompt: (text: string) => Promise<string>;
+  prompt: (text: string) => Promise<string | false>;
 };
 
 const useDialog = (): result => {
@@ -18,7 +18,7 @@ const useDialog = (): result => {
   return {
     alert: (text) => generateDialog<void>(text, dialogTypes.alert),
     confirm: (text) => generateDialog<boolean>(text, dialogTypes.confirm),
-    prompt: (text) => generateDialog<string>(text, dialogTypes.prompt),
+    prompt: (text) => generateDialog<string | false>(text, dialogTypes.prompt),
   };
 };
 

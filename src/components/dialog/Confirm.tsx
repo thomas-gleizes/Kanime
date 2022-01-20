@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useLayoutContext } from '@context/layout';
-import Modal, { ModalBody, ModalFooter, ModalHeader } from '@layouts/modal';
 import { dialogTypes } from '@lib/constants';
+import Modal, { ModalBody, ModalFooter, ModalHeader } from '@layouts/modal';
 import Button from '@components/common/Button';
 
 const ConfirmDialog: React.FunctionComponent = () => {
