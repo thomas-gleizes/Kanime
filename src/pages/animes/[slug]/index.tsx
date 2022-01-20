@@ -2,16 +2,16 @@ import { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Error from 'next/error';
-import { AnimeUserStatus } from '@prisma/client';
+import { EntryStatus } from '@prisma/client';
 import { FaHeart, FaStar } from 'react-icons/fa';
 
-import { Anime, AnimeUser } from '@types';
+import { Anime, Entry } from '@types';
 import appAxios from '@lib/api/appAxios';
 import { withSessionSsr } from '@services/session';
 import { ErrorPage } from '@errors';
 import { errorMessage, routes } from '@lib/constants';
-import { AnimeModel, AnimeUserModel } from '@models';
-import { AnimesMapper, AnimesUsersMapper } from '@mapper';
+import { AnimeModel, EntryModel } from '@models';
+import { AnimesMapper, EntriesMapper } from '@mapper';
 import { useLayoutContext } from '@context/layout';
 import KitsuButton from '@components/common/KitsuButton';
 import ListGroup from '@components/common/ListGroup';
@@ -22,7 +22,7 @@ import useDialog from '../../../hooks/useDialog';
 
 interface Props {
   anime: Anime;
-  animeUser: AnimeUser | null;
+  animeUser: Entry | null;
   error?: ErrorPage;
 }
 
@@ -38,8 +38,8 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
 
   let animeUser = null;
   if (req.session.user)
-    animeUser = AnimesUsersMapper.one(
-      await AnimeUserModel.unique(+req.session.user.id, anime.id)
+    animeUser = EntriesMapper.one(
+      await EntryModel.unique(+req.session.user.id, anime.id)
     );
 
   return { props: { anime: anime, animeUser } };
@@ -76,7 +76,7 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
   const handleChangeStatus = async (value) => {
     setStatus(value);
 
-    if (AnimeUserStatus.hasOwnProperty(value))
+    if (EntryStatus.hasOwnProperty(value))
       if (animeUser)
         await appAxios.patch(`${routes.animes}/${anime.id}/entries`, { status: value });
       else await appAxios.post(`${routes.animes}/${anime.id}/entries`, { status: value });
@@ -150,8 +150,8 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
                     handleChange={(value) => handleChangeStatus(value)}
                     options={
                       animeUser
-                        ? [...Object.values(AnimeUserStatus), 'Supprimer']
-                        : ['Ajouter', ...Object.values(AnimeUserStatus)]
+                        ? [...Object.values(EntryStatus), 'Supprimer']
+                        : ['Ajouter', ...Object.values(EntryStatus)]
                     }
                   />
                 </div>

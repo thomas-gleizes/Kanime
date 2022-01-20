@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { Anime, AnimeUser } from '@types';
+import { Anime, Entry } from '@types';
 import { useToggle } from '@hooks';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
 import { EditButton } from '@layouts/buttons';
@@ -10,7 +10,7 @@ import { InputNumber, InputRange } from '@components/common/inputs';
 
 interface Props {
   anime: Anime;
-  animeUser?: AnimeUser;
+  animeUser?: Entry;
 }
 
 const EditAnimesEntries: React.FunctionComponent<Props> = ({ anime, animeUser }) => {

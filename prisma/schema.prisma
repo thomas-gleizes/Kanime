@@ -30,7 +30,7 @@ model Anime {
   episode_length   Int?            @db.UnsignedInt
   status           AnimeStatus     @default(unreleased)
   created_at       DateTime        @default(now()) @db.Timestamp(0)
-  users            AnimeUser[]
+  users            Entry[]
   categories       AnimeCategory[]
 
   @@index([canonical_title], map: "animes_canonical_title_index")
@@ -103,7 +103,7 @@ model User {
   is_admin        Boolean      @default(false)
   created_at      DateTime     @default(now()) @db.Timestamp(0)
   updated_at      DateTime     @default(now()) @db.Timestamp(0)
-  animes          AnimeUser[]
+  animes          Entry[]
   follows         UserFollow[] @relation("follows")
   followers       UserFollow[] @relation("followers")
   country         Country?     @relation(fields: [country_id], references: [id])
@@ -111,10 +111,10 @@ model User {
   @@map("users")
 }
 
-model AnimeUser {
+model Entry {
   anime_id   Int
   user_id    Int
-  status     AnimeUserStatus @default(Wanted)
+  status     EntryStatus @default(Wanted)
   rating     Float?
   progress   Int             @default(0) @db.SmallInt
   started_at DateTime?       @default(now())
@@ -127,8 +127,7 @@ model AnimeUser {
   user       User            @relation(fields: [user_id], references: [id])
 
   @@id([anime_id, user_id])
-  @@index([user_id], map: "animes_users_user_id_fkey")
-  @@map("animes_users")
+  @@map("entries")
 }
 
 model UserFollow {
@@ -191,7 +190,7 @@ enum AnimeStatus {
   upcoming
 }
 
-enum AnimeUserStatus {
+enum EntryStatus {
   Wanted
   Watching
   Completed

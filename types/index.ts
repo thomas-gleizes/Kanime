@@ -5,8 +5,8 @@ export type {
   Categories,
   Images,
   Titles,
-  AnimesUsers,
-  AnimeUser,
+  Entries,
+  Entry,
 } from './animes';
 export type { User, Users, UserMediaHandling } from './users';
 export type { Log, Logs, ModelParams, CustomDate } from './global';

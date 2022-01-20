@@ -1,10 +1,10 @@
-import { AnimeUser as AnimeUserModel } from '@prisma/client';
+import { Entry as EntryModel } from '@prisma/client';
 
-import { AnimesUsers, AnimeUser, Mapper } from '@types';
+import { Entries, Entry, Mapper } from '@types';
 import { formatForMapper } from '@helpers/momentFr';
 
-class AnimesUsersMapper implements Mapper {
-  one(resource: AnimeUserModel): AnimeUser {
+class EntriesMapper implements Mapper {
+  one(resource: EntryModel): Entry {
     if (!resource) return null;
 
     return {
@@ -21,9 +21,9 @@ class AnimesUsersMapper implements Mapper {
     };
   }
 
-  many(resources: Array<AnimeUserModel>): AnimesUsers {
+  many(resources: Array<EntryModel>): Entries {
     return resources.map(this.one);
   }
 }
 
-export default new AnimesUsersMapper();
+export default new EntriesMapper();
