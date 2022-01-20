@@ -12,7 +12,7 @@ interface Props {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
-  async ({ req, res }) => {
+  async ({ req }) => {
     const user: User = req.session.user;
 
     if (!user || !user.isAdmin) {

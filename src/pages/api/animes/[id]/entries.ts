@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { AnimeUserStatus, AnimeUser } from '@prisma/client';
+import type { EntryStatus, Entry } from '@prisma/client';
 
 import { DefaultResponseData } from '@types';
 import router from '@lib/routing/router';
@@ -9,7 +9,7 @@ import { verifyUser, withSessionApi } from '@services/session';
 import { errorMessage } from '@lib/constants';
 
 interface Data extends DefaultResponseData {
-  animeUser: AnimeUser;
+  animeUser: Entry;
 }
 
 const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
@@ -21,7 +21,7 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
   if (!status) throw new ApiError(400, errorMessage.ANIME_USER_STATUS);
 
-  const animeUser = await EntryModel.upsert(userId, +animeId, status as AnimeUserStatus);
+  const animeUser = await EntryModel.upsert(userId, +animeId, status as EntryStatus);
 
   res.send({ success: true, animeUser });
 };
