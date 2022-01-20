@@ -30,6 +30,7 @@ model Anime {
   episode_length   Int?            @db.UnsignedInt
   status           AnimeStatus     @default(unreleased)
   created_at       DateTime        @default(now()) @db.Timestamp(0)
+  updated_at       DateTime        @default(now()) @db.Timestamp(0)
   users            Entry[]
   categories       AnimeCategory[]
 
@@ -38,26 +39,26 @@ model Anime {
 }
 
 model AnimeImport {
-  id               Int             @id @default(autoincrement())
+  id               Int       @id @default(autoincrement())
   kitsu_id         String
   slug             String
   canonical_title  String
-  titles           String?         @db.LongText
-  synopsis         String?         @db.Text
-  description      String?         @db.Text
-  date_begin       DateTime?       @db.Date
-  date_end         DateTime?       @db.Date
+  titles           String?   @db.LongText
+  synopsis         String?   @db.Text
+  description      String?   @db.Text
+  date_begin       DateTime? @db.Date
+  date_end         DateTime? @db.Date
   rating_average   Float?
-  rating_rank      Int?            @db.UnsignedInt
+  rating_rank      Int?      @db.UnsignedInt
   popularity_count Float?
-  popularity_rank  Int?            @db.UnsignedInt
+  popularity_rank  Int?      @db.UnsignedInt
   type             String?
-  poster           String?         @db.LongText
-  cover            String?         @db.LongText
-  episode_count    Int?            @db.UnsignedInt
-  episode_length   Int?            @db.UnsignedInt
+  poster           String?   @db.LongText
+  cover            String?   @db.LongText
+  episode_count    Int?      @db.UnsignedInt
+  episode_length   Int?      @db.UnsignedInt
   status           String?
-  import_at        DateTime         @default(now()) @db.Timestamp(0)
+  import_at        DateTime  @default(now()) @db.Timestamp(0)
 
   @@map("animes_import")
 }
@@ -79,6 +80,7 @@ model AnimeCategory {
   anime_id    Int
   category_id Int
   created_at  DateTime @default(now()) @db.Timestamp(0)
+  updated_at  DateTime @default(now()) @db.Timestamp(0)
   animes      Anime    @relation(fields: [anime_id], references: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
@@ -116,15 +118,15 @@ model Entry {
   user_id    Int
   status     EntryStatus @default(Wanted)
   rating     Float?
-  progress   Int             @default(0) @db.SmallInt
-  started_at DateTime?       @default(now())
-  finish_at  DateTime?       @default(now())
-  note       String?         @db.MediumText
-  visibility Visibility      @default(public)
-  created_at DateTime        @default(now()) @db.Timestamp(0)
-  updated_at DateTime        @default(now()) @db.Timestamp(0)
-  animes     Anime           @relation(fields: [anime_id], references: [id])
-  user       User            @relation(fields: [user_id], references: [id])
+  progress   Int         @default(0) @db.SmallInt
+  started_at DateTime?   @default(now())
+  finish_at  DateTime?   @default(now())
+  note       String?     @db.MediumText
+  visibility Visibility  @default(public)
+  created_at DateTime    @default(now()) @db.Timestamp(0)
+  updated_at DateTime    @default(now()) @db.Timestamp(0)
+  animes     Anime       @relation(fields: [anime_id], references: [id])
+  user       User        @relation(fields: [user_id], references: [id])
 
   @@id([anime_id, user_id])
   @@map("entries")

@@ -23,6 +23,7 @@ CREATE TABLE `animes`
     `episode_length`   INTEGER UNSIGNED                                              NULL,
     `status`           ENUM ('finished', 'current', 'unreleased', 'tba', 'upcoming') NOT NULL DEFAULT 'unreleased',
     `created_at`       TIMESTAMP(0)                                                  NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updated_at`       TIMESTAMP(0)                                                  NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
     UNIQUE INDEX `animes_kitsu_id_key` (`kitsu_id`),
     UNIQUE INDEX `animes_slug_key` (`slug`),
@@ -48,6 +49,7 @@ CREATE TABLE `animes_categories`
     `anime_id`    INTEGER      NOT NULL,
     `category_id` INTEGER      NOT NULL,
     `created_at`  TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updated_at`  TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
     PRIMARY KEY (`anime_id`, `category_id`)
 ) DEFAULT CHARACTER SET utf8mb4
@@ -61,7 +63,7 @@ CREATE TABLE `users`
     `password`   VARCHAR(191) NOT NULL,
     `login`      VARCHAR(191) NOT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
-    `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+    `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
     UNIQUE INDEX `users_email_key` (`email`),
     INDEX `users_login_index` (`login`),
@@ -116,3 +118,14 @@ ALTER TABLE `users_follows`
 -- AddForeignKey
 ALTER TABLE `users_follows`
     ADD CONSTRAINT `users_follows_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE EVENT update_animes_status ON SCHEDULE EVERY 24 HOUR
+    DO
+    UPDATE animes
+    SET status = 'finished'
+    WHERE CURDATE() > date_end
+      AND status != 'finished';
+UPDATE animes
+SET status = 'current'
+WHERE status != 'finished'
+  AND CURDATE() BETWEEN date_begin AND date_end;
