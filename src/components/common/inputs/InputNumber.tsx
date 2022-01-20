@@ -1,6 +1,7 @@
 import React from 'react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 
+// @ts-ignore TODO remove
 interface Props extends React.InputHTMLAttributes<any> {
   value: number;
   onChange: (value: number) => void;
