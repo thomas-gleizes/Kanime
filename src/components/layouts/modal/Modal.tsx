@@ -9,7 +9,10 @@ interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest }) => {
   const backgroundId = useMemo(() => `modal-${domUuid()}`, []);
-  const modalNode = useMemo<HTMLDivElement>(() => document.createElement('div'), []);
+  const modalNode = useMemo<HTMLDivElement>(
+    () => process.browser && document.createElement('div'),
+    [process.browser]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -33,6 +36,8 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest })
   const handleClick = (event) => {
     if (event.target.id === backgroundId) toggle();
   };
+
+  if (!process.browser) return null;
 
   const component = (
     <div
