@@ -32,7 +32,7 @@ const RegisterForm: React.FunctionComponent = () => {
       } = await appAxios.post('auth/register', values);
       signIn(user, token);
 
-      await router.push(`${routes.users}/${user.id}`);
+      await router.push(`${routes.users}/${user.login}`);
     } catch (e) {
       toast(e.error, 'error');
     }

@@ -27,9 +27,10 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
   }
 
   public findById = (id: number): Promise<User> =>
-    this.model.findUnique({
-      where: { id: id }
-    });
+    this.model.findUnique({ where: { id: +id } });
+
+  public findByLogin = (login: string): Promise<User> =>
+    this.model.findUnique({ where: { login } });
 
   public create = (data: createData): Promise<User> =>
     this.model.create({
@@ -38,8 +39,8 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
         email: data.email,
         password: data.password,
         avatar_path: defaultUsersMedia.avatar,
-        background_path: defaultUsersMedia.background
-      }
+        background_path: defaultUsersMedia.background,
+      },
     });
 
   public update = (id: number, data: updateData): Promise<User> =>
@@ -52,53 +53,52 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
         gender: data.gender,
         birthday: data.birthday,
         avatar_path: data.avatarPath || defaultUsersMedia.avatar,
-        background_path: data.backgroundPath || defaultUsersMedia.background
-      }
+        background_path: data.backgroundPath || defaultUsersMedia.background,
+      },
     });
 
   public findByEmail = (email: string): Promise<User> =>
     this.model.findUnique({
-      where: { email }
+      where: { email },
     });
 
   public findByEmailOrLogin = (email: string, login: string): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        OR: [{ email: email }, { login: login }]
-      }
+        OR: [{ email: email }, { login: login }],
+      },
     });
 
   public findFollows = (id: number, params?: ModelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        followers: { some: { follower_id: +id } }
+        followers: { some: { follower_id: +id } },
       },
-      ...this.getKeyParams(params)
+      ...this.getKeyParams(params),
     });
 
   public findFollowers = (id: number, params?: ModelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        follows: { some: { follow_id: +id } }
+        follows: { some: { follow_id: +id } },
       },
-      ...this.getKeyParams(params)
+      ...this.getKeyParams(params),
     });
 
   public findByAnime = (animeId: number): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        animes: { some: { anime_id: animeId } }
-      }
+        animes: { some: { anime_id: animeId } },
+      },
     });
 
-  public search = (query: string, params?: ModelParams): Promise<Array<User>> => this.model.findMany({
-    where: {
-      OR: [
-        { login: { contains: query } }
-      ]
-    },
-    ...this.getKeyParams(params)
-  });
+  public search = (query: string, params?: ModelParams): Promise<Array<User>> =>
+    this.model.findMany({
+      where: {
+        OR: [{ login: { contains: query } }],
+      },
+      ...this.getKeyParams(params),
+    });
 
   public count = () => this.model.count({});
 

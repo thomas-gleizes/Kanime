@@ -58,8 +58,8 @@ const DropDownUser = () => {
       </div>
       <DropDownByRef innerRef={imgRef}>
         <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-          <DropDownItem href={`${routes.users}/${user.id}`}>Mon profile</DropDownItem>
-          <DropDownItem href={`${routes.users}/${user.id}/settings`}>
+          <DropDownItem href={`${routes.users}/${user.login}`}>Mon profile</DropDownItem>
+          <DropDownItem href={`${routes.users}/${user.login}/settings`}>
             Settings
           </DropDownItem>
           <div onClick={signOut}>

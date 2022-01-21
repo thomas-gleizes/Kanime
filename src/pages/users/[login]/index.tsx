@@ -8,7 +8,6 @@ import { UserModel } from '@models';
 import { withSessionSsr } from '@services/session';
 import { useLayoutContext } from '@context/layout';
 import { UsersMapper } from '@mapper';
-import EditUserModal from '@components/modal/EditUserModal';
 import Title from '@layouts/Title';
 
 interface Props {
@@ -19,10 +18,10 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = withSessionSsr(
   async ({ query, req }) => {
-    const { id } = query;
+    const { login } = query;
     const { user: sessionUser } = req.session;
 
-    const [user] = UsersMapper.one(await UserModel.findById(+id));
+    const [user] = UsersMapper.one(await UserModel.findByLogin(login));
 
     if (user) {
       return {
@@ -79,9 +78,6 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
             />
             <div className="mt-3 ml-2 select-none">
               <h2 className="text-2xl font-medium"> {user.login} </h2>
-              <span className="my-1">
-                {process.browser && isCurrent ? <EditUserModal /> : null}
-              </span>
             </div>
           </div>
         </div>
