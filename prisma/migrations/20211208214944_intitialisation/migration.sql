@@ -119,6 +119,16 @@ ALTER TABLE `users_follows`
 ALTER TABLE `users_follows`
     ADD CONSTRAINT `users_follows_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
+-- CreateTable
+CREATE TABLE `event_logs` (
+                              `id` INTEGER NOT NULL AUTO_INCREMENT,
+                              `name` VARCHAR(64) NOT NULL,
+                              `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+
+                              PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+
 CREATE EVENT update_animes_status ON SCHEDULE EVERY 24 HOUR
     DO
     UPDATE animes
@@ -129,3 +139,5 @@ UPDATE animes
 SET status = 'current'
 WHERE status != 'finished'
   AND CURDATE() BETWEEN date_begin AND date_end;
+
+INSERT INTO event_logs SET name = 'update_animes_status'

@@ -167,6 +167,14 @@ model Log {
   @@map("logs")
 }
 
+model EventLog {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(64)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("event_logs")
+}
+
 enum AnimeSeason {
   Winter
   Springs

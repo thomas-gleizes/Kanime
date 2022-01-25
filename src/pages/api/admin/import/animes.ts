@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     );
 
     total = meta.count;
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     for (const anime of animes) {
       n += 1;
