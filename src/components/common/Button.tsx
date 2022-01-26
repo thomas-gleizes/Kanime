@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+
 import { TailwindcssColors } from '../../../types/global';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
       className={classnames(
         customColor,
         className,
-        'shadow-lg select-none text-lg mx-2 font-bold rounded transition transform hover:scale-105 duration-150 outline-none text-white focus:ring ring-offset-2'
+        'shadow-lg select-none py-1 text-lg font-bold rounded transition transform duration-150 outline-none text-white focus:ring ring-offset-2'
       )}
       {...rest}
     />
@@ -23,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
 
 Button.defaultProps = {
   color: 'blue',
-  className: 'px-4 py-1.5',
+  className: 'w-full',
   type: 'button',
 };
 

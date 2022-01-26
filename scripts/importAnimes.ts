@@ -22,6 +22,15 @@ async function run() {
       n += 1;
       console.log(anime.id, anime.attributes.slug);
 
+      const finded = await prisma.animeImport.findFirst({
+        where: { kitsu_id: +anime.id },
+      });
+
+      if (finded) {
+        console.log('skip');
+        continue;
+      }
+
       try {
         const cover = {
           tiny: anime.attributes.coverImage?.tiny,
@@ -40,7 +49,7 @@ async function run() {
 
         await prisma.animeImport.create({
           data: {
-            kitsu_id: anime.id,
+            kitsu_id: +anime.id,
             slug: anime.attributes.slug,
             canonical_title: anime.attributes.canonicalTitle,
             titles: JSON.stringify(anime.attributes.titles),

@@ -63,8 +63,8 @@ const Header: React.FunctionComponent = () => {
     <header
       onMouseOver={() => setHeaderHovered(true)}
       onMouseLeave={() => setHeaderHovered(false)}
-      className={`z-90 fixed top-0 w-full shadow-lg transition-all duration-500 ${
-        headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary'
+      className={`z-90 fixed top-0 w-full shadow-lg transition-opacity duration-200 ${
+        headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary bg-opacity-100'
       }`}
     >
       <nav>

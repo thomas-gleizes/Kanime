@@ -12,12 +12,12 @@ function getSeason(date: Date): AnimeSeason {
 async function run() {
   const prisma = new PrismaClient();
 
-  const animes = await prisma.animeImport.findMany({});
+  const animes = await prisma.animeImport.findMany({ where: { anime_id: null } });
 
   for (const anime of animes) {
     console.log(anime.id, anime.slug);
 
-    await prisma.anime.upsert({
+    const newAnime = await prisma.anime.upsert({
       where: { kitsu_id: anime.kitsu_id },
       update: {},
       create: {
@@ -41,6 +41,13 @@ async function run() {
         episode_count: anime.episode_count,
         episode_length: anime.episode_length,
         status: anime.status as AnimeStatus,
+      },
+    });
+
+    await prisma.animeImport.update({
+      where: { id: anime.id },
+      data: {
+        anime_id: newAnime.id,
       },
     });
   }
