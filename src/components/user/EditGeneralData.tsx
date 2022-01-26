@@ -110,7 +110,7 @@ const EditUserModal: React.FunctionComponent = () => {
               </div>
             </CardBody>
             <CardFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">
-              <Button color="primary" type="submit">
+              <Button color="amber" type="submit">
                 Enregistrer
               </Button>
             </CardFooter>
