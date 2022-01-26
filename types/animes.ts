@@ -43,7 +43,7 @@ export type Categories = Array<Category>;
 
 export type Anime = {
   id: number;
-  kitsu_id: string;
+  kitsu_id: number;
   slug: string;
   canonicalTitle: string;
   titles: Titles | string;

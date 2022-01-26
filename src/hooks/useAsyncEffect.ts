@@ -5,7 +5,7 @@ type Effect = () => Promise<void>;
 const useAsyncEffect = (effect: Effect, dependencies: React.DependencyList) => {
   useEffect(() => {
     (async () => {
-      await effect();
+      return await effect();
     })();
   }, [dependencies]);
 };

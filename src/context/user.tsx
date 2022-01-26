@@ -6,7 +6,6 @@ import LocalStorage from '@services/localStorage';
 import appAxios from '@lib/api/appAxios';
 import { routes } from '@lib/constants';
 import toast from '@helpers/toastr';
-import { ref } from 'yup';
 
 export declare type UserContext = {
   isLogin: boolean;

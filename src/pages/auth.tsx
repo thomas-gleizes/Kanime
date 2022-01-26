@@ -14,7 +14,7 @@ const Auth: NextPage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isLogin) router.push(`users/${user.id}`);
+    if (isLogin) router.push(`users/${user.login}`);
   }, [isLogin]);
 
   return (

@@ -8,43 +8,34 @@ class AnimesMapper implements Mapper<AnimeModel, Anime> {
   public one(resource: AnimeModel): Anime {
     if (!resource) return null;
 
-    const {
-      canonical_title,
-      titles,
-      cover,
-      poster,
-      rating_rank,
-      rating_average,
-      popularity_count,
-      popularity_rank,
-      episode_count,
-      episode_length,
-      created_at,
-      date_begin,
-      date_end,
-      ...rest
-    } = resource;
-
     return {
-      canonicalTitle: canonical_title,
-      titles: JsonParser(titles),
-      cover: JsonParser(cover),
-      poster: JsonParser(poster),
+      id: resource.id,
+      kitsu_id: resource.kitsu_id,
+      slug: resource.slug,
+      canonicalTitle: resource.canonical_title,
+      titles: JsonParser(resource.titles),
+      season: resource.season,
+      season_year: resource.season_year,
+      status: resource.status,
+      type: resource.type,
       rating: {
-        average: rating_average,
-        rank: rating_rank,
+        average: resource.rating_average,
+        rank: resource.rating_rank,
       },
       popularity: {
-        count: popularity_count,
-        rank: popularity_rank,
+        count: resource.popularity_count,
+        rank: resource.popularity_rank,
       },
       episode: {
-        length: episode_length,
-        count: episode_count,
+        length: resource.episode_length,
+        count: resource.episode_count,
       },
-      date_begin: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
-      date_end: Moment(date_begin).format('YYYY-MM-DD HH:mm:ss'),
-      ...rest,
+      date_begin: Moment(resource.date_begin).format('YYYY-MM-DD HH:mm:ss'),
+      date_end: Moment(resource.date_end).format('YYYY-MM-DD HH:mm:ss'),
+      cover: JsonParser(resource.cover),
+      poster: JsonParser(resource.poster),
+      synopsis: resource.synopsis,
+      description: resource.description,
     };
   }
 

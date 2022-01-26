@@ -25,6 +25,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =
     })
   );
 
+  console.log('la', animes[0]);
+
   return {
     props: { animes },
   };

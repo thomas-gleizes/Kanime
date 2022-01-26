@@ -2,7 +2,7 @@
 CREATE TABLE `animes`
 (
     `id`               INTEGER                                                       NOT NULL AUTO_INCREMENT,
-    `kitsu_id`         VARCHAR(191)                                                  NULL,
+    `kitsu_id`         INTEGER                                                       NULL,
     `slug`             VARCHAR(191)                                                  NOT NULL,
     `canonical_title`  VARCHAR(191)                                                  NOT NULL,
     `titles`           LONGTEXT                                                      NULL,
