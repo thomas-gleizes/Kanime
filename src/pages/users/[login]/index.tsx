@@ -45,18 +45,14 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
 
 export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
   const {
-    headerTransparentState: [headerTransparent, setHeaderTransparent],
-    scrollPercent,
+    activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
 
   useEffect(() => {
-    const boolean: boolean = scrollPercent < 10;
-    if (headerTransparent !== boolean) setHeaderTransparent(boolean);
-  }, [scrollPercent]);
+    setHeaderTransparent(true);
 
-  useEffect(() => {
     return () => setHeaderTransparent(false);
-  }, []);
+  }, [setHeaderTransparent]);
 
   if (error) return <Error statusCode={error.code} title={error.message} />;
 

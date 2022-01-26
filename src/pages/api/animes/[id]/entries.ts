@@ -17,6 +17,9 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   const { id: userId } = req.session.user;
   const { status } = req.body;
 
+  console.log('UserId', userId);
+  console.log('AnimeId', animeId);
+
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
   if (!status) throw new ApiError(400, errorMessage.ANIME_USER_STATUS);

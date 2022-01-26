@@ -26,7 +26,7 @@ async function main() {
     },
   });
 
-  for (let i = 0; i < 200; i++) {
+  for (let i = 0; i < 20; i++) {
     const login = faker.internet.userName();
 
     await prisma.user.create({

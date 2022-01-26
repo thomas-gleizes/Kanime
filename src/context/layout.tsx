@@ -8,7 +8,7 @@ type Dialog<T = any> = {
 };
 
 export declare type LayoutContext = {
-  headerTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+  activeTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   dialogState: [Dialog, React.Dispatch<React.SetStateAction<Dialog>>];
   scrollPercent: number;
 };
@@ -23,14 +23,14 @@ const LayoutContext = createContext<LayoutContext>(null);
 export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 
 const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => {
-  const headerTransparentState = useState<boolean>(false);
+  const activeTransparentState = useState<boolean>(false);
   const dialogState = useState<Dialog>({ type: null, text: '', resolve: null });
 
   const scrollPercent = useScrollPercent();
 
   return (
     <LayoutContext.Provider
-      value={{ headerTransparentState, dialogState, scrollPercent }}
+      value={{ activeTransparentState, dialogState, scrollPercent }}
     >
       {children}
     </LayoutContext.Provider>

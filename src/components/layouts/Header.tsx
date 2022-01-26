@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaBars } from 'react-icons/fa';
@@ -41,48 +41,28 @@ const DropDownExplore = () => {
   );
 };
 
-const DropDownUser = () => {
-  const { user, signOut } = useUserContext();
-  const imgRef = useRef<HTMLImageElement>();
-
-  return (
-    <div className="my-auto">
-      <div className="cursor-pointer" ref={imgRef}>
-        <Image
-          className="rounded-full"
-          src={user.avatarPath}
-          width={35}
-          height={35}
-          alt="avatar"
-        />
-      </div>
-      <DropDownByRef innerRef={imgRef}>
-        <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-          <DropDownItem href={`${routes.users}/${user.login}`}>Mon profile</DropDownItem>
-          <DropDownItem href={`${routes.users}/${user.login}/settings`}>
-            Settings
-          </DropDownItem>
-          <div onClick={signOut}>
-            <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-              Déconnexion
-            </span>
-          </div>
-        </div>
-      </DropDownByRef>
-    </div>
-  );
-};
-
 const Header: React.FunctionComponent = () => {
-  const { user, isLogin } = useUserContext();
+  const { user, isLogin, signOut } = useUserContext();
   const {
-    headerTransparentState: [headerTransparent],
+    scrollPercent,
+    activeTransparentState: [activeTransparent],
   } = useLayoutContext();
 
+  const avatarRef = useRef<HTMLImageElement>();
+
   const [extend, setExtend] = useState<boolean>(false);
+  const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent);
+  const [headerHovered, setHeaderHovered] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollPercent < 5);
+    else setHeaderTransparent(false);
+  }, [activeTransparent, scrollPercent, headerHovered]);
 
   return (
     <header
+      onMouseOver={() => setHeaderHovered(true)}
+      onMouseLeave={() => setHeaderHovered(false)}
       className={`z-90 fixed top-0 w-full shadow-lg transition-all duration-500 ${
         headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary'
       }`}
@@ -131,22 +111,42 @@ const Header: React.FunctionComponent = () => {
                   </Link>
                 </div>
               ) : (
-                <DropDownUser />
+                <div className="my-auto">
+                  <div className="cursor-pointer" ref={avatarRef}>
+                    <Image
+                      className="rounded-full"
+                      src={user.avatarPath}
+                      width={35}
+                      height={35}
+                      alt="avatar"
+                    />
+                  </div>
+                  <DropDownByRef innerRef={avatarRef}>
+                    <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
+                      <DropDownItem href={`${routes.users}/${user.login}`}>
+                        Mon profile
+                      </DropDownItem>
+                      <DropDownItem href={`${routes.users}/${user.login}/settings`}>
+                        Settings
+                      </DropDownItem>
+                      <div onClick={signOut}>
+                        <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
+                          Déconnexion
+                        </span>
+                      </div>
+                    </div>
+                  </DropDownByRef>
+                </div>
               )}
             </div>
           </div>
 
-          <div
-            className={classnames('block md:hidden transform duration-100', {
-              'h-56': extend,
-              'h-14': !extend,
-            })}
-          >
+          <div className="block md:hidden h-14">
             <div className="h-14 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
                 <Link href={routes.home}>
                   <a className="cursor-pointer font-bold text-3xl text-white">
-                    {process.env.NEXT_PUBLIC_SITE_NAME}
+                    {process.env.NEXT_PUBLIC_APP_NAME}
                   </a>
                 </Link>
               </div>
@@ -158,6 +158,30 @@ const Header: React.FunctionComponent = () => {
                   />
                 </i>
               </div>
+            </div>
+            <div
+              className={classnames(
+                'bg-primary w-full transform ease-in-out duration-200',
+                { 'h-36 translate-y-0': extend, 'translate-y-[-100px]': !extend }
+              )}
+            >
+              {extend && (
+                <div className="py-4 divide-y">
+                  <div className="my-1 text-lg font-medium">
+                    <DropDownExplore />
+                  </div>
+                  <div>
+                    <Link href={routes.forum}>
+                      <a className="text-white"> Discussion </a>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link href={routes.feedback}>
+                      <a className="text-white"> Feedback </a>
+                    </Link>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

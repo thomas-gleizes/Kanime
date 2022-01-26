@@ -19,6 +19,7 @@ import Title from '@layouts/Title';
 import EditAnimesEntries from '@components/modal/EditAnimesEntries';
 import { SendButton } from '@layouts/buttons';
 import useDialog from '../../../hooks/useDialog';
+import Button from '@components/common/Button';
 
 interface Props {
   anime: Anime;
@@ -47,22 +48,16 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
 
 const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
   const {
-    headerTransparentState: [headerTransparent, setHeaderTransparent],
-    scrollPercent,
+    activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
-
-  const { confirm } = useDialog();
 
   const [status, setStatus] = useState<string>(DEFAULT_STATUS);
 
   useEffect(() => {
-    const boolean: boolean = !error && scrollPercent < 10;
-    if (headerTransparent !== boolean) setHeaderTransparent(boolean);
-  }, [scrollPercent]);
+    setHeaderTransparent(true);
 
-  useEffect(() => {
     return () => setHeaderTransparent(false);
-  }, []);
+  }, [setHeaderTransparent]);
 
   useEffect(() => {
     if (animeUser) setStatus(animeUser.status);
@@ -138,33 +133,16 @@ const AnimePage: NextPage<Props> = ({ anime, animeUser, error }) => {
               alt="poster"
               onClick={() => window?.open(`https://kitsu.io/anime/${anime.slug}`)}
             />
-            <div>
+            <div className="bg-gray-100 border border-gray-200 rounded p-2 shadow">
               <div className="mx-auto">
                 <div className="my-2">
                   <KitsuButton slug={anime.slug} />
                 </div>
-                <div className="my-2">
-                  <ListGroup
-                    color="amber"
-                    value={status}
-                    handleChange={(value) => handleChangeStatus(value)}
-                    options={
-                      animeUser
-                        ? [...Object.values(EntryStatus), 'Supprimer']
-                        : ['Ajouter', ...Object.values(EntryStatus)]
-                    }
-                  />
-                </div>
               </div>
-              {animeUser && <EditAnimesEntries anime={anime} />}
               <div>
-                <SendButton
-                  onClick={async () => {
-                    const result = await confirm('test');
-
-                    console.log('Result', result);
-                  }}
-                />
+                <Button className="w-full" color="sky">
+                  Ajouter
+                </Button>
               </div>
             </div>
           </div>

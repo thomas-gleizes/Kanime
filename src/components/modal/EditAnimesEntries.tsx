@@ -5,8 +5,6 @@ import { Anime, Entry } from '@types';
 import { useToggle } from '@hooks';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
 import { EditButton } from '@layouts/buttons';
-import Field from '@components/common/formik';
-import { InputNumber, InputRange } from '@components/common/inputs';
 
 interface Props {
   anime: Anime;

@@ -1,25 +1,13 @@
 import React from 'react';
 import classnames from 'classnames';
+import { TailwindcssColors } from '../../../types/global';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?:
-    | string
-    | 'secondary'
-    | 'primary'
-    | 'gray'
-    | 'red'
-    | 'yellow'
-    | 'green'
-    | 'blue'
-    | 'indigo'
-    | 'purple'
-    | 'pink';
+  color?: TailwindcssColors;
 }
 
 const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
-  const customColor = !['primary', 'secondary'].includes(color)
-    ? `bg-${color}-500 hover:bg-${color}-600 ring-${color}-600`
-    : `bg-${color}`;
+  const customColor = `bg-${color}-500 hover:bg-${color}-600 ring-${color}-600`;
 
   return (
     <button

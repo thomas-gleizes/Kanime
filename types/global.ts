@@ -32,6 +32,7 @@ export type TailwindcssGradiant =
   | 700
   | 800
   | 900;
+
 export type TailwindcssColors =
   | 'slate'
   | 'gray'
