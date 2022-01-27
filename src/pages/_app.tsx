@@ -1,4 +1,4 @@
-import type { AppProps } from 'next/app';
+import { NextComponentType, NextPageContext } from 'next';
 import React from 'react';
 import Head from 'next/head';
 
@@ -11,6 +11,11 @@ import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import EmptyLayout from '@layouts/EmptyLayout';
 import { AlertDialog, ConfirmDialog, PromptDialog } from '@components/dialog';
+
+type AppProps = {
+  pageProps: any;
+  Component: NextComponentType<NextPageContext, any, {}> & { Layout?: any };
+};
 
 const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
   children,
@@ -32,7 +37,7 @@ const AllDialog: React.FunctionComponent<{ children: React.ReactNode }> = ({
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const Layout = Component['Layout'] || EmptyLayout;
+  const Layout = Component.Layout || EmptyLayout;
 
   return (
     <AllContextProvider>

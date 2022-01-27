@@ -47,6 +47,7 @@ const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
   );
 };
 
-AnimeCategories['Layout'] = AnimeLayout;
+// TODO fix types
+AnimeCategories.Layout = AnimeLayout;
 
 export default AnimeCategories;

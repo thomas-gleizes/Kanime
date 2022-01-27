@@ -37,6 +37,7 @@ const AnimeHome: NextPage<Props> = (props) => {
   return <p className="m-10 text-justify">{props.anime.synopsis}</p>;
 };
 
-AnimeHome['Layout'] = AnimeLayout;
+// TODO fix types
+AnimeCategories.Layout = AnimeLayout;
 
 export default AnimeHome;
