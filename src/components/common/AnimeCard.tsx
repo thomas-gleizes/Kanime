@@ -120,14 +120,18 @@ const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
         <Link href={`${routes.animes}/${slug}`}>
           <a>
             <div className="flex justify-center">
-              <Image
-                //@ts-ignore
-                src={poster.small}
-                width={250}
-                height={340}
-                alt={canonicalTitle}
-                className="mx-auto"
-              />
+              {poster?.small ? (
+                <Image
+                  //@ts-ignore
+                  src={poster.small}
+                  width={250}
+                  height={340}
+                  alt={canonicalTitle}
+                  className="mx-auto"
+                />
+              ) : (
+                <div className="bg-kitsu w-[232px] h-[315px]" />
+              )}
             </div>
             <h3 className="text-center text-white font-bold py-1 truncate px-2">
               {canonicalTitle}
