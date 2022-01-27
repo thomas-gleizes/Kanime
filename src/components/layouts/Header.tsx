@@ -103,10 +103,10 @@ const Header: React.FunctionComponent = () => {
               <SearchBar />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <Link href={routes.authentification}>
+                  <Link href={`${routes.authentification}/login`}>
                     <a className="mx-3 cursor-pointer">Connexion</a>
                   </Link>
-                  <Link href={routes.authentification}>
+                  <Link href={`${routes.authentification}/register`}>
                     <a className="mx-3 cursor-pointer">Inscription</a>
                   </Link>
                 </div>

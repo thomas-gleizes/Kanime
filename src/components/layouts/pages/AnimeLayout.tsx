@@ -27,7 +27,7 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
 }) => {
   return (
     <Link href={href}>
-      <a className="px-5 py-2 text-gray-800 text-opacity-50 hover:text-opacity-100 transition duration-100 hover:bg-white">
+      <a className="py-2 text-center w-full text-gray-800 text-opacity-50 hover:text-opacity-100 transition duration-100 hover:bg-white rounded-t-2xl">
         {children}
       </a>
     </Link>
@@ -70,8 +70,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
           <div className="flex relative z-30 w-full mx-auto px-10 lg:px-2 pt-[254px] max-w-[1200px]">
             <div className="mx-1 w-full">
               <div className="relative h-[90px]">
-                <div className="absolute bottom-0 flex justify-center rounded-t-2xl divide-x-2 divide-gray-300 divide-opacity-50 hover:divide-opacity-100 w-full left-0 bg-gray-100 bg-opacity-40 hover:bg-opacity-100 transition duration-100 ease-linear">
-                  <div />
+                <div className="absolute bottom-0 flex justify-between rounded-t-2xl divide-x-2 divide-gray-300 divide-opacity-50 hover:divide-opacity-100 w-full left-0 bg-gray-100 bg-opacity-40 hover:bg-opacity-100 transition duration-100 ease-linear">
                   <NavLink href={`${routes.animes}/${anime.slug}`}>Résumé</NavLink>
                   <NavLink href={`${routes.animes}/${anime.slug}/categories`}>
                     Categories
@@ -86,7 +85,6 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
                   <NavLink href={`${routes.animes}/${anime.slug}/characters`}>
                     Personnages
                   </NavLink>
-                  <div />
                 </div>
               </div>
               <div className="mx-1 py-3 divide-opacity-10 divide-y-2">

@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
       className={classnames(
         customColor,
         className,
-        'shadow-lg select-none py-1 text-lg font-bold rounded transition transform duration-150 outline-none text-white focus:ring ring-offset-2'
+        'shadow-lg select-none w-full text-lg font-bold rounded transition transform duration-150 outline-none text-white focus:ring ring-offset-2'
       )}
       {...rest}
     />
@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({ color, className, ...rest }) => {
 
 Button.defaultProps = {
   color: 'blue',
-  className: 'w-full',
+  className: 'py-2',
   type: 'button',
 };
 

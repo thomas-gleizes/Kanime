@@ -11,7 +11,7 @@ export const routes = {
   categories: '/categories',
   mangas: '/mangas',
   sagas: '/sagas',
-  authentification: '/auth',
+  authentification: '/authentification',
   users: '/users',
   feedback: '/feedback',
   forum: '/forum',

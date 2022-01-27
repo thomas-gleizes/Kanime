@@ -1,9 +1,10 @@
 import React from 'react';
-import { AnimeStatus, EntryStatus } from '@prisma/client';
+import { EntryStatus } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
 
 import { Anime, Entry } from '@types';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
+import Select from '@components/common/formik/Select';
 
 interface Props {
   anime: Anime;
@@ -52,19 +53,15 @@ const FormContent: React.FunctionComponent<FormikProps<values>> = ({
   handleBlur,
 }) => {
   return (
-    <Form>
-      <div>
-        <label>Statut</label>
-        <select
-          name="status"
-          value={values.status}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        >
+    <Form className="p-3">
+      <div className="mb-1">
+        <Select name="status" label="Status">
           {Object.values(EntryStatus).map((status, index) => (
-            <option key={index}>{status}</option>
+            <option key={index} value={status}>
+              {status}
+            </option>
           ))}
-        </select>
+        </Select>
       </div>
       <div>
         <label>Avancement</label>
