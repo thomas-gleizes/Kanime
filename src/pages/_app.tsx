@@ -32,26 +32,23 @@ const AllDialog: React.FunctionComponent<{ children: React.ReactNode }> = ({
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
-  // @ts-ignore
-  const PageLayout = Component.Layout || EmptyLayout;
+  const Layout = Component['Layout'] || EmptyLayout;
 
   return (
-    <>
-      <AllContextProvider>
-        <AllDialog>
-          <Head>
-            <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
-          </Head>
-          <Header />
-          <main className="py-[56px]">
-            <PageLayout>
-              <Component {...pageProps} />
-            </PageLayout>
-          </main>
-          <Footer />
-        </AllDialog>
-      </AllContextProvider>
-    </>
+    <AllContextProvider>
+      <AllDialog>
+        <Head>
+          <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+        </Head>
+        <Header />
+        <main className="py-[56px]">
+          <Layout {...pageProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
+        <Footer />
+      </AllDialog>
+    </AllContextProvider>
   );
 };
 

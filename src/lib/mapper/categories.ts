@@ -1,6 +1,6 @@
 import { Category as CategoryModel } from '@prisma/client';
 
-import { Category, Mapper } from '@types';
+import { Categories, Category, Mapper } from '@types';
 
 class CategoriesMapper implements Mapper<CategoryModel, Category> {
   one(resource: CategoryModel): Category {
@@ -15,7 +15,7 @@ class CategoriesMapper implements Mapper<CategoryModel, Category> {
     };
   }
 
-  many(resources: Array<CategoryModel>): Array<Category> {
+  many(resources: Array<CategoryModel>): Categories {
     return resources.map(this.one);
   }
 }

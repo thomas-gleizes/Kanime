@@ -7,8 +7,8 @@ abstract class Model<D = any> {
     this.model = connexionModule;
   }
 
-  protected getKeyParams(params?: ModelParams): { take: number, skip: number } {
-    return { skip: params.skip || 0, take: params.limit || 50 };
+  protected getKeyParams(params?: ModelParams): { take?: number; skip?: number } {
+    return { skip: params?.skip || 0, take: params?.limit || 50 };
   }
 }
 

@@ -8,6 +8,7 @@ export const publicPath = `${process.cwd()}/public`;
 export const routes = {
   home: '/',
   animes: '/animes',
+  categories: '/categories',
   mangas: '/mangas',
   sagas: '/sagas',
   authentification: '/auth',
