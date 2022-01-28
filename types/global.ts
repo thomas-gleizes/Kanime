@@ -1,5 +1,3 @@
-import * as Prisma from '@prisma/client';
-
 import { User } from './users';
 import { Method } from './server';
 

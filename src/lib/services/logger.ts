@@ -19,7 +19,7 @@ function replaceKey(data: any) {
 }
 
 export default async function logger(req: NextApiRequest) {
-  const userId = req.session.user?.id || null;
+  const userId = req.session?.user?.id || null;
 
   await LogModel.create({
     route: req.url.split('?')[0],

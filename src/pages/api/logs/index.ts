@@ -6,9 +6,12 @@ import router from '@lib/routing/router';
 import { LogModel } from '@models';
 import { LogsMapper } from '@mapper';
 
+import { theme } from 'tailwind.config';
+
 interface Data extends DefaultResponseData {
   logs: Logs;
   query?: any;
+  test: any;
 }
 
 router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<Data>) => {
@@ -18,7 +21,7 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<Data>) 
     await LogModel.show({ limit: +limit || 20, skip: +start })
   );
 
-  res.send({ success: true, query: req.query, logs });
+  res.send({ success: true, query: req.query, logs, test: theme });
 });
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
