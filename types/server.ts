@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import * as Prisma from '@prisma/client';
 
 export declare type responseCode = 404 | 400 | 500 | 401 | number;
 
@@ -23,7 +24,7 @@ export interface Mapper<E = any, S = any> {
   many: (resources: Array<E>) => Array<S>;
 }
 
-export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+export type Method = Prisma.Method;
 
 export type Middleware = (
   req: NextApiRequest,

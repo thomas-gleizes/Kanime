@@ -14,7 +14,9 @@ interface Data extends DefaultResponseData {
 router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { start, limit } = req.query;
 
-  const logs: Logs = LogsMapper.many(await LogModel.get(+limit, +start));
+  const logs: Logs = LogsMapper.many(
+    await LogModel.show({ limit: +limit || 20, skip: +start })
+  );
 
   res.send({ success: true, query: req.query, logs });
 });

@@ -1,22 +1,24 @@
+import * as Prisma from '@prisma/client';
+
 import { User } from './users';
 import { Method } from './server';
 
 export type Log = {
   id: number;
-  route: string;
+  route: Method;
   ip: string;
   method: Method;
   body: any;
   query: any;
-  authToken?: User;
-  createAt: Date | string;
+  user?: User | null;
+  createAt: string;
 };
 
 export type Logs = Array<Log>;
 
 export type ModelParams = {
-  limit?: number;
-  skip?: number;
+  limit?: number | string;
+  skip?: number | string;
 };
 
 export type CustomDate = Date | string;

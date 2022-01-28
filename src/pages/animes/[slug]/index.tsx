@@ -38,6 +38,7 @@ const AnimeHome: NextPage<Props> = (props) => {
 };
 
 // TODO fix types
-AnimeCategories.Layout = AnimeLayout;
+// @ts-ignore
+AnimeHome.Layout = AnimeLayout;
 
 export default AnimeHome;

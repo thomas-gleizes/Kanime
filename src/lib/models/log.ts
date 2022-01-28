@@ -1,6 +1,6 @@
 import { Prisma, Log } from '@prisma/client';
 
-import { Method } from '@types';
+import { Method, ModelParams } from '@types';
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
 
@@ -10,7 +10,7 @@ type crateData = {
   ip: string;
   body: any;
   query: any;
-  authToken?: string;
+  userId?: number;
 };
 
 class LogModel extends Model<Prisma.LogDelegate<unknown>> {
@@ -18,18 +18,25 @@ class LogModel extends Model<Prisma.LogDelegate<unknown>> {
     super(connexion.log);
   }
 
-  public get = (limit: number, skip: number): Promise<Log[]> =>
-    this.model.findMany({ skip: skip, take: limit, orderBy: [{ id: 'desc' }] });
+  public show = (params: ModelParams) =>
+    this.model.findMany({
+      orderBy: [{ id: 'desc' }],
+      include: { user: true },
+      ...this.getKeyParams(params),
+    });
 
-  public create = (data: crateData): Promise<Log> =>
+  public showUserLog = (userId: number, params: ModelParams) =>
+    this.model.findMany({ where: { user_id: userId }, ...this.getKeyParams(params) });
+
+  public create = (data: crateData) =>
     this.model.create({
       data: {
         route: data.route,
         method: data.method,
         ip: data.ip,
-        auth_token: data.authToken,
         body: data.body ? JSON.stringify(data.body) : null,
         query: data.query ? JSON.stringify(data.query) : null,
+        user_id: data.userId,
       },
     });
 }

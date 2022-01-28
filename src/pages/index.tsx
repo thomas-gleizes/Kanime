@@ -21,9 +21,7 @@ const Home: NextPage<Props> = ({ time }) => {
           <div className="text-center">{time}</div>
           <h1 className="text-6xl font-bold first-letter:text-[#db8000]">
             Welcome to{' '}
-            <a className="text-blue-600" href="https://nextjs.org">
-              {process.env.NEXT_PUBLIC_APP_NAME}!
-            </a>
+            <span className="text-sky-500">{process.env.NEXT_PUBLIC_APP_NAME}!</span>
           </h1>
 
           <p className="mt-3 text-2xl">

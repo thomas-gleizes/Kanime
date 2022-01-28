@@ -35,8 +35,8 @@ const ListLogs: React.FunctionComponent = () => {
           <th>Method</th>
           <th>Route</th>
           <th>Ip</th>
+          <th>Utilisateur</th>
           <th>Il y a</th>
-          <th>Authentifié</th>
         </tr>
       </thead>
       <tbody>
@@ -46,10 +46,10 @@ const ListLogs: React.FunctionComponent = () => {
             <td>{log.method}</td>
             <td>{log.route}</td>
             <td>{log.ip}</td>
+            <td>{log.user?.id}</td>
             <td>
               <TimeCell date={log.createAt} />
             </td>
-            <td>{log.authToken ? 'Oui' : 'Non'}</td>
           </tr>
         ))}
       </tbody>

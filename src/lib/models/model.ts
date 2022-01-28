@@ -8,7 +8,7 @@ abstract class Model<D = any> {
   }
 
   protected getKeyParams(params?: ModelParams): { take?: number; skip?: number } {
-    return { skip: params?.skip || 0, take: params?.limit || 50 };
+    return { skip: +params?.skip || 0, take: +params?.limit || 50 };
   }
 }
 

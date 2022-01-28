@@ -48,6 +48,7 @@ const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
 };
 
 // TODO fix types
+// @ts-ignore
 AnimeCategories.Layout = AnimeLayout;
 
 export default AnimeCategories;

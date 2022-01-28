@@ -21,17 +21,22 @@ export const withSessionSsr = (handler) => withIronSessionSsr(handler, sessionOp
 export const withSessionApi = (handler) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
-export const verifyUser = (req: NextApiRequest) => {
-  const token = req.headers.authorization?.replace('Bearer ', '');
+export const verifyUser = async (req: NextApiRequest) => {
+  try {
+    const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
+    const content = Security.getTokenPayload(token);
 
-  if (!req.session.user && !Security.verifyToken(token)) {
-    throw new ApiError(401, errorMessage.ACCESS_DENIED);
-  } else if (!req.session.user) req.session = Security.getTokenPayload(token);
+    if (!Object.keys(req.session).length) {
+      req.session = content;
+      await req.session.save();
+    }
+  } catch (e) {
+    throw new ApiError('401', errorMessage.ACCESS_DENIED);
+  }
 };
 
-export const verifyAdmin = (req: NextApiRequest) => {
-  verifyUser(req);
-
+export const verifyAdmin = async (req: NextApiRequest) => {
+  await verifyUser(req);
   if (!req.session.user.isAdmin) throw new ApiError(401, errorMessage.ACCESS_DENIED);
 };
 

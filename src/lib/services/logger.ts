@@ -19,13 +19,14 @@ function replaceKey(data: any) {
 }
 
 export default async function logger(req: NextApiRequest) {
+  const userId = req.session.user?.id || null;
+
   await LogModel.create({
     route: req.url.split('?')[0],
     method: req.method as Method,
     ip: requestIp.getClientIp(req),
     body: replaceKey(req.body),
     query: replaceKey(req.query),
-    authToken:
-      req.session?.token || req.headers.authorization?.replace('Bearer ', '') || '',
+    userId: userId,
   });
 }
