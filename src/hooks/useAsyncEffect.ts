@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 
 type Effect = () => Promise<void>;
 
-const useAsyncEffect = (effect: Effect, dependencies: React.DependencyList) => {
+export default function useAsyncEffect(
+  effect: Effect,
+  dependencies: React.DependencyList
+): void {
   useEffect(() => {
     (async () => {
       return await effect();
     })();
   }, [dependencies]);
-};
-
-export default useAsyncEffect;
+}

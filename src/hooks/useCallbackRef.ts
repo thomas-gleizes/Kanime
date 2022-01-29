@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useCallBackRef = <T>(): [state: T | null, ref: any] => {
+export default function useCallBackRef<T>(): [state: T | null, ref: any] {
   const [state, setState] = useState<T | null>(null);
 
   const ref = useCallback<any>(
@@ -11,6 +11,4 @@ const useCallBackRef = <T>(): [state: T | null, ref: any] => {
   );
 
   return [state, ref];
-};
-
-export default useCallBackRef;
+}

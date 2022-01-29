@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetch = (
+export default function useFetch(
   fetch: (params: any) => Promise<any>,
   params: any = null,
   deps: Array<any> = [],
   errorCallBack: (error: any) => any = null,
   condition: boolean = true
-): [state: any, loading: boolean, crash: any] => {
+): [state: any, loading: boolean, crash: any] {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState<boolean>(false);
   const [crash, setCrash] = useState<any>(false);
@@ -33,6 +33,4 @@ const useFetch = (
   }, [...deps]);
 
   return [data, loading, crash];
-};
-
-export default useFetch;
+}

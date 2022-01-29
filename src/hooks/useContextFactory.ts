@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-const useContextFactory = <T = any>(context: React.Context<T>) => {
+export default function useContextFactory<T = any>(context: React.Context<T>) {
   return () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const ctx = useContext<T>(context);
@@ -10,6 +10,4 @@ const useContextFactory = <T = any>(context: React.Context<T>) => {
 
     return ctx;
   };
-};
-
-export default useContextFactory;
+}

@@ -7,9 +7,9 @@ type result = {
   prompt: (text: string) => Promise<string | false>;
 };
 
-const useDialog = (): result => {
+export default function useDialog(): result {
   const {
-    dialogState: [dialog, setDialog],
+    dialogState: [_unused, setDialog],
   } = useLayoutContext();
 
   const generateDialog = <T>(text: string, type): Promise<T> =>
@@ -20,6 +20,4 @@ const useDialog = (): result => {
     confirm: (text) => generateDialog<boolean>(text, dialogTypes.confirm),
     prompt: (text) => generateDialog<string | false>(text, dialogTypes.prompt),
   };
-};
-
-export default useDialog;
+}
