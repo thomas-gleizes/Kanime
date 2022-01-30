@@ -1,8 +1,8 @@
 import type { GetStaticProps, NextPage } from 'next';
 import Moment from 'moment';
 
-import Content from '@layouts/Content';
 import Title from '@layouts/Title';
+import Layout from '@layouts/Layout';
 
 interface Props {
   time: string;
@@ -14,7 +14,7 @@ export const getStaticProps: GetStaticProps<Props> = () => {
 
 const Home: NextPage<Props> = ({ time }) => {
   return (
-    <Content>
+    <Layout>
       <Title>Accueil</Title>
       <div className="flex flex-col-2 items-center justify-center h-[80vh] py-2">
         <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
@@ -74,7 +74,7 @@ const Home: NextPage<Props> = ({ time }) => {
           </div>
         </div>
       </div>
-    </Content>
+    </Layout>
   );
 };
 

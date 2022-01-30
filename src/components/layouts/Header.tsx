@@ -44,7 +44,7 @@ const DropDownExplore = () => {
 const Header: React.FunctionComponent = () => {
   const { user, isLogin, signOut } = useUserContext();
   const {
-    scrollPercent,
+    scrollHeight,
     activeTransparentState: [activeTransparent],
   } = useLayoutContext();
 
@@ -55,17 +55,18 @@ const Header: React.FunctionComponent = () => {
   const [headerHovered, setHeaderHovered] = useState<boolean>(false);
 
   useEffect(() => {
-    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollPercent < 5);
+    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250);
     else setHeaderTransparent(false);
-  }, [activeTransparent, scrollPercent, headerHovered]);
+  }, [activeTransparent, scrollHeight, headerHovered]);
 
   return (
     <header
       onMouseOver={() => setHeaderHovered(true)}
       onMouseLeave={() => setHeaderHovered(false)}
-      className={`z-90 fixed top-0 w-full shadow-lg transition-opacity duration-200 ${
-        headerTransparent ? 'bg-gray-900 bg-opacity-20' : 'bg-primary bg-opacity-100'
-      }`}
+      className={classnames(
+        'z-90 fixed top-0 w-full h-header shadow-lg bg-primary transition-all duration-500 ease-in-out',
+        { 'bg-opacity-20 bg-black': headerTransparent }
+      )}
     >
       <nav>
         <div className="relative">
@@ -100,7 +101,7 @@ const Header: React.FunctionComponent = () => {
               ) : null}
             </div>
             <div className="flex justify-between w-2/5 px-3 my-auto">
-              <SearchBar />
+              <SearchBar transparent={headerTransparent} />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
                   <Link href={`${routes.authentification}/login`}>
@@ -123,10 +124,10 @@ const Header: React.FunctionComponent = () => {
                   </div>
                   <DropDownByRef innerRef={avatarRef}>
                     <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                      <DropDownItem href={`${routes.users}/${user.login}`}>
+                      <DropDownItem href={`${routes.users} /${user.login}`}>
                         Mon profile
                       </DropDownItem>
-                      <DropDownItem href={`${routes.users}/${user.login}/settings`}>
+                      <DropDownItem href={`${routes.users} /${user.login}/settings`}>
                         Settings
                       </DropDownItem>
                       <div onClick={signOut}>

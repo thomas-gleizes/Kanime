@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Transition } from '@headlessui/react';
 import SimpleBar from 'simplebar-react';
 import { BeatLoader } from 'react-spinners';
+import classnames from 'classnames';
 
 import { Animes, Users } from '@types';
 import appAxios from '@lib/api/appAxios';
@@ -10,7 +11,11 @@ import toast from '@helpers/toastr';
 import { routes } from '@lib/constants';
 import timeout from '@helpers/timeout';
 
-const SearchBar: React.FunctionComponent = () => {
+interface Props {
+  transparent: boolean;
+}
+
+const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
   const [query, setQuery] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [animes, setAnimes] = useState<Animes>([]);
@@ -48,7 +53,13 @@ const SearchBar: React.FunctionComponent = () => {
     >
       <input
         type="search"
-        className="w-full h-[35px] px-3 bg-gray-300 rounded bg-opacity-10 hover:bg-opacity-20 focus:bg-opacity-60"
+        className={classnames(
+          'w-full h-[35px] text-gray-100 px-3 rounded duration-500 ease-in-out transition-all',
+          {
+            'bg-opacity-30 bg-black': transparent,
+            'bg-primary-dark bg-opacity-100': !transparent,
+          }
+        )}
         value={query}
         onChange={handleChangeQuery}
       />
@@ -65,7 +76,7 @@ const SearchBar: React.FunctionComponent = () => {
           <div className="w-full bg-gray-50 backdrop-blur rounded border border-gray-300 shadow-xl">
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">
-                <div className="py-1 bg-kitsu rounded-t text-white">
+                <div className="py-1 bg-primary rounded-t text-white">
                   <h3 className="text-center text-xl">
                     Animes {loading && <BeatLoader size={12} color="#F59509" />}
                   </h3>

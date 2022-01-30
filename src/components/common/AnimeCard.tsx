@@ -43,7 +43,7 @@ const AnimePopup: React.FunctionComponent<AnimePopupProps> = ({
       leaveTo="transform opacity-0 scale-95"
     >
       <div
-        className="absolute flex flex-col w-400 top-0 h-[103%] z-50 bg-kitsu rounded shadow-lg p-4"
+        className="absolute flex flex-col w-400 top-0 h-[103%] z-50 bg-primary-dark rounded shadow-lg p-4"
         style={styles}
       >
         <div className="flex justify-between flex-wrap mb-2">
@@ -130,7 +130,7 @@ const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
                   className="mx-auto"
                 />
               ) : (
-                <div className="bg-kitsu w-[232px] h-[315px]" />
+                <div className="bg-primary-dark w-[232px] h-[315px]" />
               )}
             </div>
             <h3 className="text-center text-white font-bold py-1 truncate px-2">

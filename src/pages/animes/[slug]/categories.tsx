@@ -32,8 +32,8 @@ interface Props {
 
 const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
   return (
-    <>
-      <h1 className="text-xl font-black text-center my-10">Categories</h1>
+    <div>
+      <h1 className="text-xl font-black text-center">Categories</h1>
       <ul className="list-disc m-10">
         {categories.map((category) => (
           <li key={category.id}>
@@ -43,7 +43,7 @@ const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 

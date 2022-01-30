@@ -4,8 +4,6 @@ import { tailwindcssColors } from '@lib/constants';
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const GenericButton: React.FunctionComponent<Props> = ({ children, ...props }) => {
-  console.log('TailwindcssColors', tailwindcssColors);
-
   return (
     <button
       {...props}

@@ -1,5 +1,5 @@
+import React from 'react';
 import { NextPage } from 'next';
-import React, { useEffect } from 'react';
 
 import { Anime, Entry } from '@types';
 import { withSessionSsr } from '@services/session';
@@ -7,7 +7,6 @@ import { ErrorPage } from '@errors';
 import { errorMessage } from '@lib/constants';
 import { AnimeModel, EntryModel } from '@models';
 import { AnimesMapper, EntriesMapper } from '@mapper';
-
 import AnimeLayout from '@layouts/pages/AnimeLayout';
 
 interface Props {
@@ -34,7 +33,12 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
 });
 
 const AnimeHome: NextPage<Props> = (props) => {
-  return <p className="m-10 text-justify">{props.anime.synopsis}</p>;
+  return (
+    <div className="w-full py-5 bg-red-300">
+      <p className="w-11/12 mx-auto text-justify">{props.anime.synopsis}</p>
+      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+    </div>
+  );
 };
 
 // TODO fix types

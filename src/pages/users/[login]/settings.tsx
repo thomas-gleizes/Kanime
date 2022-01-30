@@ -3,7 +3,7 @@ import { GetServerSideProps, NextPage } from 'next';
 
 import { withSessionSsr } from '@services/session';
 import { routes } from '@lib/constants';
-import Content from '@layouts/Content';
+import Layout from '@layouts/Layout';
 import EditGeneralData from '@components/user/EditGeneralData';
 
 interface Props {}
@@ -25,9 +25,9 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
 
 const SettingsPage: NextPage<Props> = () => {
   return (
-    <Content>
+    <Layout>
       <EditGeneralData />
-    </Content>
+    </Layout>
   );
 };
 

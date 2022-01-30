@@ -16,18 +16,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        kitsu: {
-          DEFAULT: '#402F3F',
+        primary: {
+          light: '#64171E',
+          DEFAULT: '#541218',
+          dark: '#430F14',
+        },
+        secondary: {
+          light: '#64171E',
+          DEFAULT: '#541218',
+          dark: '#430F14',
+        },
+        tertiary: {
+          light: '#64171E',
+          DEFAULT: '#541218',
+          dark: '#430F14',
         },
         success: '#1abc9c',
         danger: '#e74c3c',
         warning: '#fcbf00',
+        kitsu: {
+          DEFAULT: '#402F3F',
+          dark: '#332532',
+        },
       },
       spacing: {
         ...generateKeys(50, 'px', 50),
-        screen: '100vh',
         unset: 'unset',
         full: '100%',
+        header: '56px',
+        banner: `${400 - 56}px`,
       },
       minWidth: {
         ...generateKeys(40, 'px', 50),
@@ -44,7 +61,13 @@ module.exports = {
       minHeight: {
         ...generateKeys(50, 'px', 50),
         full: '100%',
-        screen: '100vw',
+        screen: '100vh',
+        unset: 'unset',
+      },
+      maxHeight: {
+        ...generateKeys(50, 'px', 50),
+        full: '100%',
+        screen: '100vh',
         unset: 'unset',
       },
       zIndex: {

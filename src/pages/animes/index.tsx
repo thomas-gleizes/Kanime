@@ -8,8 +8,8 @@ import { AnimesMapper } from '@mapper';
 import { useScrollPercent } from '@hooks';
 import toast from '@helpers/toastr';
 import AnimeCard from '@components/common/AnimeCard';
-import Content from '@layouts/Content';
 import Title from '@layouts/Title';
+import Layout from '@layouts/Layout';
 
 interface Props extends DefaultResponseData {
   animes: Animes;
@@ -57,7 +57,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
   }, [percent]);
 
   return (
-    <Content>
+    <Layout>
       <Title>Animes</Title>
       <div className="grid grid-cols-4 max-w-1100 mx-auto">
         {animes.map((anime, index) => (
@@ -66,7 +66,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
           </div>
         ))}
       </div>
-    </Content>
+    </Layout>
   );
 };
 

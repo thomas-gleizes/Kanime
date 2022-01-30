@@ -8,6 +8,7 @@ import { UserModel } from '@models';
 import { withSessionSsr } from '@services/session';
 import { useLayoutContext } from '@context/layout';
 import { UsersMapper } from '@mapper';
+import Layout from '@layouts/Layout';
 import Title from '@layouts/Title';
 
 interface Props {
@@ -57,11 +58,11 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
   if (error) return <Error statusCode={error.code} title={error.message} />;
 
   return (
-    <div>
+    <Layout>
       <Title>{user.login}</Title>
       <div className="w-full">
         <div
-          className="relative bg-center mt-[-56px] h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
+          className="relative bg-center -mt-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
           style={{ backgroundImage: `url('${user.backgroundPath}')` }}
         >
           <div className="absolute bottom-[10%] left-[10%] flex select-none">
@@ -79,7 +80,7 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
         </div>
       </div>
       <div className="text-center mt-5 h-screen"> Coming soon...</div>
-    </div>
+    </Layout>
   );
 };
 

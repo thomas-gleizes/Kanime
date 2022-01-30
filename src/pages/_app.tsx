@@ -46,11 +46,9 @@ const App = ({ Component, pageProps }: AppProps) => {
           <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
         </Head>
         <Header />
-        <main className="py-[56px]">
-          <Layout {...pageProps}>
-            <Component {...pageProps} />
-          </Layout>
-        </main>
+        <Layout {...pageProps}>
+          <Component {...pageProps} />
+        </Layout>
         <Footer />
       </AllDialog>
     </AllContextProvider>

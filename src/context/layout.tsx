@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { useContextFactory, useScrollPercent } from '@hooks';
+import { useContextFactory, useScrollHeight, useScrollPercent } from '@hooks';
 
 type Dialog<T = any> = {
   type: string;
@@ -11,6 +11,7 @@ export declare type LayoutContext = {
   activeTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
   dialogState: [Dialog, React.Dispatch<React.SetStateAction<Dialog>>];
   scrollPercent: number;
+  scrollHeight: number;
 };
 
 interface Props {
@@ -27,10 +28,11 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
   const dialogState = useState<Dialog>({ type: null, text: '', resolve: null });
 
   const scrollPercent = useScrollPercent();
+  const scrollHeight = useScrollHeight();
 
   return (
     <LayoutContext.Provider
-      value={{ activeTransparentState, dialogState, scrollPercent }}
+      value={{ activeTransparentState, dialogState, scrollPercent, scrollHeight }}
     >
       {children}
     </LayoutContext.Provider>

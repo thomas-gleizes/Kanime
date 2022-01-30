@@ -19,8 +19,6 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.search(query as string, { limit: +limit, skip: +skip })
   ).map(([user]) => user);
 
-  console.log('Users', users);
-
   res.send({ success: true, users: users });
 });
 
