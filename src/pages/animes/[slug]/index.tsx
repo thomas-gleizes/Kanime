@@ -37,6 +37,10 @@ const AnimeHome: NextPage<Props> = (props) => {
     <div className="w-full py-5 bg-red-300">
       <p className="w-11/12 mx-auto text-justify">{props.anime.synopsis}</p>
       <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
     </div>
   );
 };

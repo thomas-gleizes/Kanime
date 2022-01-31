@@ -31,8 +31,8 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
   children,
 }) => {
   const active = useMemo(
-    () => document.location.pathname === href,
-    [href, document.location.pathname]
+    () => process.browser && document.location.pathname === href,
+    [href]
   );
 
   if (active) console.log(children);
@@ -41,8 +41,8 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
     <Link href={href}>
       <a
         className={classnames(
-          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200',
-          { 'bg-white text-gray-500': !active, 'bg-gray-100 text-gray-700': active }
+          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
+          { 'bg-white text-gray-300': !active, 'bg-gray-100 text-gray-700': active }
         )}
       >
         {children}
@@ -76,9 +76,9 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
       <Title>{anime.canonicalTitle}</Title>
       <div className="bg-gray-100 min-h-screen pb-16">
         <div className="w-full">
-          <div className="relative w-full h-[400px]">
+          <div className="relative w-full h-[450px]">
             <div
-              className="relative h-full"
+              className="relative h-full bg-cover bg-no-repeat bg-primary-dark"
               style={{ backgroundImage: `url('${anime.cover?.small}')` }}
             >
               <div className="w-full h-full bg-black bg-opacity-40" />

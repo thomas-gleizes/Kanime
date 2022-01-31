@@ -1,6 +1,5 @@
-import { NextComponentType, NextPageContext } from 'next';
+import type { NextComponentType, NextPageContext } from 'next';
 import React from 'react';
-import Head from 'next/head';
 
 import '../styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
@@ -9,6 +8,7 @@ import LayoutContextProvider from '@context/layout';
 import UserContextProvider from '@context/user';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
+import Title from '@layouts//Title';
 import EmptyLayout from '@layouts/EmptyLayout';
 import { AlertDialog, ConfirmDialog, PromptDialog } from '@components/dialog';
 
@@ -42,9 +42,7 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <AllContextProvider>
       <AllDialog>
-        <Head>
-          <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
-        </Head>
+        <Title>{process.env.NEXT_PUBLIC_APP_NAME}</Title>
         <Header />
         <Layout {...pageProps}>
           <Component {...pageProps} />

@@ -4,8 +4,8 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Content: React.FunctionComponent<Props> = ({ children }) => {
+const Container: React.FunctionComponent<Props> = ({ children }) => {
   return <div className="px-2 py-4">{children}</div>;
 };
 
-export default Content;
+export default Container;
