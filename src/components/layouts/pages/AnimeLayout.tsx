@@ -9,6 +9,8 @@ import { useLayoutContext } from '@context/layout';
 import { routes } from '@lib/constants';
 import Title from '@layouts/Title';
 import classnames from 'classnames';
+import KitsuButton from '@components/common/KitsuButton';
+import Button from '@components/common/Button';
 
 interface Props {
   children: any;
@@ -26,30 +28,27 @@ const TABS: Array<{ label: string; path: string }> = [
   { label: 'Personnages', path: '/characters' },
 ];
 
-const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
-  href,
-  children,
-}) => {
-  const active = useMemo(
-    () => process.browser && document.location.pathname === href,
-    [href]
-  );
+const NavLink: React.FunctionComponent<{ href: string; children: string }> = React.memo(
+  ({ href, children }) => {
+    const active = useMemo(
+      () => process.browser && document.location.pathname === href,
+      [href]
+    );
 
-  if (active) console.log(children);
-
-  return (
-    <Link href={href}>
-      <a
-        className={classnames(
-          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
-          { 'bg-white text-gray-300': !active, 'bg-gray-100 text-gray-700': active }
-        )}
-      >
-        {children}
-      </a>
-    </Link>
-  );
-};
+    return (
+      <Link href={href}>
+        <a
+          className={classnames(
+            'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
+            { 'bg-white text-gray-300': !active, 'bg-gray-100 text-gray-700': active }
+          )}
+        >
+          {children}
+        </a>
+      </Link>
+    );
+  }
+);
 
 const AnimeLayout: React.FunctionComponent<Props> = ({
   children,
@@ -98,7 +97,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
           <div className="mx-auto w-full max-w-[1150px]">
             <div className="sticky float-right w-200 top-[230px]">
               <div className="relative top-[-150px]">
-                <span className="w-[214px] h-[304px] bg-kitsu">
+                <span className="w-[214px] h-[304px] bg-kitsu mb-2">
                   {anime.poster?.small ? (
                     <Image
                       src={anime.poster.small as string}
@@ -110,6 +109,16 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
                     <div className="h-full w-full bg-primary" />
                   )}
                 </span>
+                <div className="border border-gray-200 p-2">
+                  <div className="flex flex-col space-y-2">
+                    <div>
+                      <KitsuButton slug={anime.slug} />
+                    </div>
+                    <div className="">
+                      <Button color="sky">Entrée</Button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div className="mr-[210px]">

@@ -46,7 +46,7 @@ export type Anime = {
   kitsu_id: number;
   slug: string;
   canonicalTitle: string;
-  titles: Titles | string;
+  titles: Titles;
   synopsis: string;
   description: string;
   season: 'Winter' | 'Springs' | 'Summer' | 'Fall' | string;

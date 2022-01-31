@@ -32,15 +32,31 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   return { props: { anime: anime, animeUser } };
 });
 
-const AnimeHome: NextPage<Props> = (props) => {
+const AnimeHome: NextPage<Props> = ({ anime }) => {
+  console.log('Anime', anime);
+
+  const Item = ({ label, content }) => (
+    <li className="text-sm">
+      <strong>{label} : </strong>
+      <span>{content}</span>
+    </li>
+  );
+
   return (
-    <div className="w-full py-5 bg-red-300">
-      <p className="w-11/12 mx-auto text-justify">{props.anime.synopsis}</p>
-      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
-      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
-      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
-      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
-      <p className="w-11/12 mx-auto text-justify">{props.anime.description}</p>
+    <div className="w-full my-5 flex">
+      <div className="w-1/3 h-100">
+        <div className="bg-white border shadow p-2 ">
+          <h2 className="text-md font-medium mb-2">Details de l'anime</h2>
+          <ul>
+            <Item label="Anglais" content={anime.titles.en} />
+            <Item label="Japonais" content={anime.titles.en_jp} />
+            <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h2 className="text-xl font-medium px-1">{anime.canonicalTitle}</h2>
+      </div>
     </div>
   );
 };

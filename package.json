@@ -7,7 +7,8 @@
     "start": "next start -p 8000",
     "lint": "next lint",
     "studio": "npx prisma studio",
-    "scripts": "ts-node -O '{\"module\": \"commonjs\"}' scripts/convertAnimes.ts && ts-node -O '{\"module\": \"commonjs\"}' scripts/convertAnimes.ts",
+    "import": "ts-node -O '{\"module\": \"commonjs\"}' scripts/importAnimes.ts",
+    "convert": "ts-node -O '{\"module\": \"commonjs\"}' scripts/convertAnimes.ts",
     "test": "jest",
     "format": "npx prisma format"
   },
