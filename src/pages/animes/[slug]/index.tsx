@@ -9,7 +9,7 @@ import { errorMessage } from '@lib/constants';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { useToggle } from '@hooks';
-import AnimeSide from '@components/anime/animeSide';
+import AnimeSide from '@components/anime/AnimeSide';
 import AnimeLayout from '@layouts/pages/AnimeLayout';
 
 interface Props {
@@ -36,12 +36,14 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
     <div className="w-full my-5 flex">
       <AnimeSide anime={anime} />
       <div className="w-2/3 px-2">
-        <div className=" flex flex-col space-y-2">
+        <div className="flex flex-col space-y-2">
           <div>
             <h2 className="text-3xl text-gray-700 font-semibold inline">
               {anime.titles.en_jp || anime.canonicalTitle}
             </h2>
-            <span className="text-gray-500 text-xl ml-2 inline">{anime.season_year}</span>
+            <span className="text-gray-500 text-lg ml-2 inline font-black">
+              {anime.season_year}
+            </span>
           </div>
           <div className="text-amber-500 font-semibold text-md">
             <span>Approuvé à 71.97% par la communauté</span>

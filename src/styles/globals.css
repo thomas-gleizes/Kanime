@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+@font-face {
+    font-family: "asap";
+    src: url("/fonts/asap/Asap-VariableFont_wght.ttf");
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
 body {
     padding: 0;
     margin: 0;

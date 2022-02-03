@@ -36,11 +36,10 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
   href,
   children,
 }) => {
-  const active = useMemo(() => {
-    console.log(href);
-
-    return process.browser && document.location.pathname === href;
-  }, [href, process.browser && document.location.pathname]);
+  const active = useMemo(
+    () => process.browser && document.location.pathname === href,
+    [href, process.browser && document.location.pathname]
+  );
 
   return (
     <Link href={href}>
@@ -102,8 +101,8 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
         <div className="w-full">
           <div className="mx-auto w-full max-w-[1150px]">
             <div className="sticky float-right w-200 top-[230px]">
-              <div className="relative top-[-150px]">
-                <span className="w-[214px] h-[304px] bg-kitsu">
+              <div className="relative w-[214px] top-[-150px]">
+                <div className="w-full shadow h-[304px] bg-kitsu mb-2">
                   {anime.poster?.small && (
                     <Image
                       src={anime.poster.small as string}
@@ -112,14 +111,16 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
                       alt="test"
                     />
                   )}
-                </span>
-                <div className="border border-gray-200 p-1">
+                </div>
+                <div className="border w-full border-gray-200 p-2">
                   <div className="flex flex-col space-y-2">
                     <div>
                       <KitsuButton slug={anime.slug} />
                     </div>
-                    <div className="">
-                      <Button color="sky">Entrée</Button>
+                    <div>
+                      <Button outline color="amber">
+                        Ajouter
+                      </Button>
                     </div>
                   </div>
                 </div>
