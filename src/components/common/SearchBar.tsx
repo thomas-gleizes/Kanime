@@ -6,6 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import classnames from 'classnames';
 
 import { Animes, Users } from '@types';
+import { AnimesApi } from '@api';
 import appAxios from '@lib/api/appAxios';
 import toast from '@helpers/toastr';
 import { routes } from '@lib/constants';
@@ -28,15 +29,9 @@ const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
     if (value.length > 3) {
       setLoading(true);
 
-      const animesPromises = appAxios
-        .get(`${routes.animes}/search`, { params: { query: value, limit: 50, skip: 0 } })
+      const animesPromises = AnimesApi.search(value, { limit: 50, skip: 0 })
         .then(({ data }) => setAnimes(data.animes))
         .catch((e) => toast(e.message, 'error'));
-
-      // const usersPromises = appAxios
-      //   .get(`${routes.users}/search`, { params: { query: value, limit: 50, skip: 0 } })
-      //   .then(({ data }) => setUsers(data.users))
-      //   .catch((e) => toast(e.message, 'error'));
 
       Promise.all([animesPromises]).finally(() => setLoading(false));
     } else {

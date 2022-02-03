@@ -26,7 +26,7 @@ export const getServerSideProps = withSessionSsr(async ({ params }) => {
 });
 
 const SagaPage: NextPage<Props> = (props) => {
-  return <div>Saga</div>;
+  return <h1 className="text-xl font-black text-center">Saga</h1>;
 };
 
 // @ts-ignore

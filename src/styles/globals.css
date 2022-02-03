@@ -23,6 +23,19 @@ p, span, h1, h2, h3, h4, h5, h6, p > *, h1 > *, h2 > *, h3 > *, h4 > *, h5 > *, 
     user-select: text;
 }
 
+.p-truncate-9 {
+    display: -webkit-box;
+    -webkit-line-clamp: 9;
+    -webkit-box-orient: vertical;
+}
+
+.p-truncate-5 {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+
 input, button, select, option, textarea {
     outline: unset !important;
 }

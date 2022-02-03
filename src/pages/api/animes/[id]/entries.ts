@@ -7,6 +7,8 @@ import { AnimeModel, EntryModel } from '@models';
 import { ApiError } from '@errors';
 import { verifyUser, withSessionApi } from '@services/session';
 import { errorMessage } from '@lib/constants';
+import { EntriesMapper } from '@mapper';
+import anime from '@lib/models/anime';
 
 interface Data extends DefaultResponseData {
   animeUser: Entry;
@@ -29,7 +31,17 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) =
 router.post(verifyUser, createOrUpdate);
 router.patch(verifyUser, createOrUpdate);
 
-router.delete(verifyUser, async (req: NextApiRequest, res: NextApiResponse) => {
+router.get(verifyUser, async (req, res) => {
+  const { id: animeId } = req.query;
+
+  const entry = EntriesMapper.one(
+    await EntryModel.unique(+req.session.user.id, +animeId)
+  );
+
+  res.send({ success: true, entry });
+});
+
+router.delete(verifyUser, async (req, res) => {
   const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
 

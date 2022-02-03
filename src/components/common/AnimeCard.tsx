@@ -98,7 +98,9 @@ const AnimePopup: React.FunctionComponent<AnimePopupProps> = ({
           )}
         </div>
         <div className="h-auto overflow-hidden">
-          <p className="text-gray-300 text-light text-sm text-justify">{synopsis}</p>
+          <p className="text-gray-300 text-light text-sm text-justify p-truncate-9 overflow-hidden">
+            {synopsis}
+          </p>
         </div>
       </div>
     </Transition>

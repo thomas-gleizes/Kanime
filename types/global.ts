@@ -14,9 +14,9 @@ export type Log = {
 
 export type Logs = Array<Log>;
 
-export type ModelParams = {
-  limit?: number | string;
-  skip?: number | string;
+export type modelParams = {
+  limit?: number | string | string[];
+  skip?: number | string | string[];
 };
 
 export type CustomDate = Date | string;

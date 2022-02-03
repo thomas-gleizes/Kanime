@@ -1,4 +1,4 @@
-import { ModelParams } from '@types';
+import { modelParams } from '@types';
 
 abstract class Model<D = any> {
   protected model: D;
@@ -7,7 +7,7 @@ abstract class Model<D = any> {
     this.model = connexionModule;
   }
 
-  protected getKeyParams(params?: ModelParams): { take?: number; skip?: number } {
+  protected getKeyParams(params?: modelParams): { take?: number; skip?: number } {
     return { skip: +params?.skip || 0, take: +params?.limit || 50 };
   }
 }

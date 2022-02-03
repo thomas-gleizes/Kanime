@@ -26,7 +26,7 @@ export const getServerSideProps = withSessionSsr(async ({ params }) => {
 });
 
 const DiscussionsPage: NextPage<Props> = (props) => {
-  return <div>discussions</div>;
+  return <h1 className="text-xl font-black text-center">Discussions</h1>;
 };
 
 // @ts-ignore

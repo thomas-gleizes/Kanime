@@ -15,11 +15,15 @@ import Button from '@components/common/Button';
 interface Props {
   children: any;
   anime: Anime;
-  animeUser: Entry | null;
   error?: ErrorPage;
 }
 
-const TABS: Array<{ label: string; path: string }> = [
+type tab = {
+  label: string;
+  path: string;
+};
+
+const TABS: Array<tab> = [
   { label: 'Résumé', path: '' },
   { label: 'Catégories', path: '/categories' },
   { label: 'Discussions', path: '/discussions' },
@@ -28,32 +32,34 @@ const TABS: Array<{ label: string; path: string }> = [
   { label: 'Personnages', path: '/characters' },
 ];
 
-const NavLink: React.FunctionComponent<{ href: string; children: string }> = React.memo(
-  ({ href, children }) => {
-    const active = useMemo(
-      () => process.browser && document.location.pathname === href,
-      [href]
-    );
+const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
+  href,
+  children,
+}) => {
+  const active = useMemo(() => {
+    console.log(href);
 
-    return (
-      <Link href={href}>
-        <a
-          className={classnames(
-            'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
-            { 'bg-white text-gray-300': !active, 'bg-gray-100 text-gray-700': active }
-          )}
-        >
-          {children}
-        </a>
-      </Link>
-    );
-  }
-);
+    return process.browser && document.location.pathname === href;
+  }, [href, process.browser && document.location.pathname]);
+
+  return (
+    <Link href={href}>
+      <a
+        className={classnames(
+          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
+          { 'bg-white text-gray-300': !active, 'bg-gray-100 text-gray-700': active }
+        )}
+      >
+        {children}
+      </a>
+    </Link>
+  );
+};
 
 const AnimeLayout: React.FunctionComponent<Props> = ({
   children,
   anime,
-  animeUser,
+
   error,
 }) => {
   const {
@@ -97,19 +103,17 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
           <div className="mx-auto w-full max-w-[1150px]">
             <div className="sticky float-right w-200 top-[230px]">
               <div className="relative top-[-150px]">
-                <span className="w-[214px] h-[304px] bg-kitsu mb-2">
-                  {anime.poster?.small ? (
+                <span className="w-[214px] h-[304px] bg-kitsu">
+                  {anime.poster?.small && (
                     <Image
                       src={anime.poster.small as string}
                       width={214}
                       height={304}
                       alt="test"
                     />
-                  ) : (
-                    <div className="h-full w-full bg-primary" />
                   )}
                 </span>
-                <div className="border border-gray-200 p-2">
+                <div className="border border-gray-200 p-1">
                   <div className="flex flex-col space-y-2">
                     <div>
                       <KitsuButton slug={anime.slug} />

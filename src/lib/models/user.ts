@@ -3,7 +3,7 @@ import { Gender, Prisma, User } from '@prisma/client';
 import connexion, { ConnexionType } from '../services/connexion';
 import Model from '@lib/models/model';
 import { defaultUsersMedia } from '../constants';
-import { ModelParams } from '@types';
+import { modelParams } from '@types';
 
 type createData = {
   login: string;
@@ -69,7 +69,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       },
     });
 
-  public findFollows = (id: number, params?: ModelParams): Promise<Array<User>> =>
+  public findFollows = (id: number, params?: modelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
         followers: { some: { follower_id: +id } },
@@ -77,7 +77,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       ...this.getKeyParams(params),
     });
 
-  public findFollowers = (id: number, params?: ModelParams): Promise<Array<User>> =>
+  public findFollowers = (id: number, params?: modelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
         follows: { some: { follow_id: +id } },
@@ -92,7 +92,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       },
     });
 
-  public search = (query: string, params?: ModelParams): Promise<Array<User>> =>
+  public search = (query: string, params?: modelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
         OR: [{ login: { contains: query } }],

@@ -71,7 +71,7 @@ const RegisterPage: NextPage = () => {
                 </label>
               </div>
               <div>
-                <Link href={routes.authentification + '/forgot-password'}>
+                <Link href={routes.authentication + '/forgot-password'}>
                   <a className="text-sm text-blue-600 hover:underline">
                     mot de passe oublié ?
                   </a>

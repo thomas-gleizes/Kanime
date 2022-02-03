@@ -1,6 +1,6 @@
 import { Prisma, Log } from '@prisma/client';
 
-import { Method, ModelParams } from '@types';
+import { Method, modelParams } from '@types';
 import connexion, { ConnexionType } from '@services/connexion';
 import Model from '@lib/models/model';
 
@@ -18,14 +18,14 @@ class LogModel extends Model<Prisma.LogDelegate<unknown>> {
     super(connexion.log);
   }
 
-  public show = (params: ModelParams) =>
+  public show = (params: modelParams) =>
     this.model.findMany({
       orderBy: [{ id: 'desc' }],
       include: { user: true },
       ...this.getKeyParams(params),
     });
 
-  public showUserLog = (userId: number, params: ModelParams) =>
+  public showUserLog = (userId: number, params: modelParams) =>
     this.model.findMany({ where: { user_id: userId }, ...this.getKeyParams(params) });
 
   public create = (data: crateData) =>

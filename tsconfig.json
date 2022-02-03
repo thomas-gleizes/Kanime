@@ -55,7 +55,8 @@
       ],
       "@validations/*": [
         "src/lib/validations/*"
-      ]
+      ],
+      "@api": ["src/api"]
     }
   },
   "include": [
