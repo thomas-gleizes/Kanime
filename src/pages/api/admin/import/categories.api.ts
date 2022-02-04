@@ -5,7 +5,7 @@ import connexion from '@services/connexion';
 import router from '@lib/routing/router';
 import KitsuApi from '@lib/api/kitsuApi';
 
-router.get(async (req: NextApiRequest, res: NextApiResponse) => {
+router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   let categories: Array<any> = [];
   let count: number = await connexion.category.count();
   let limit: number = 0;
