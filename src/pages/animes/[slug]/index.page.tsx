@@ -1,6 +1,5 @@
 import React from 'react';
 import { NextPage } from 'next';
-import classnames from 'classnames';
 
 import { Anime, Entry } from '@types';
 import { withSessionSsr } from '@services/session';
@@ -18,7 +17,9 @@ interface Props {
   error?: ErrorPage;
 }
 
-export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
+const DESCRIPTION_LENGTH = 400;
+
+export const getServerSideProps = withSessionSsr(async ({ params }) => {
   const { slug } = params;
 
   const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
@@ -33,9 +34,9 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
   const [extendParagraph, toggleParagraph] = useToggle(true);
 
   return (
-    <div className="w-full my-5 flex">
+    <div className="w-full flex h-screen">
       <AnimeSide anime={anime} />
-      <div className="w-2/3 px-2">
+      <div className="w-2/3 px-2 mt-4">
         <div className="flex flex-col space-y-2">
           <div>
             <h2 className="text-3xl text-gray-700 font-semibold inline">
@@ -46,21 +47,24 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
             </span>
           </div>
           <div className="text-amber-500 font-semibold text-md">
-            <span>Approuvé à 71.97% par la communauté</span>
+            <span>Approuvé à {anime.rating.average}% par la communauté</span>
           </div>
-          <div>
-            <p className="text-ellipsis overflow-hidden text-gray-800 mb-4">
-              {extendParagraph
-                ? anime.description.split('').splice(0, 400).join('') + ' ...'
-                : anime.description}
-            </p>
-            <div
-              className="text-lg text-orange-500 cursor-pointer text-center w-full"
-              onClick={toggleParagraph}
-            >
-              <span>read {extendParagraph ? 'more' : 'less'}</span>
+          {anime.description && (
+            <div>
+              <p className="text-ellipsis overflow-hidden text-gray-800 mb-4">
+                {extendParagraph && anime.description?.length > DESCRIPTION_LENGTH
+                  ? anime.description.split('').splice(0, DESCRIPTION_LENGTH).join('') +
+                    ' ...'
+                  : anime?.description}
+              </p>
+              <div
+                className="text-lg text-orange-500 cursor-pointer text-center w-full"
+                onClick={toggleParagraph}
+              >
+                <span>read {extendParagraph ? 'more' : 'less'}</span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import Error from 'next/error';
 import Link from 'next/link';
 import Image from 'next/image';
 
-import { Anime, Entry } from '@types';
+import { Anime } from '@types';
 import { ErrorPage } from '@errors';
 import { useLayoutContext } from '@context/layout';
 import { routes } from '@lib/constants';
@@ -11,6 +11,7 @@ import Title from '@layouts/Title';
 import classnames from 'classnames';
 import KitsuButton from '@components/common/KitsuButton';
 import Button from '@components/common/Button';
+import isBrowser from '@helpers/isBrowser';
 
 interface Props {
   children: any;
@@ -36,9 +37,11 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
   href,
   children,
 }) => {
+  const isClient = isBrowser();
+
   const active = useMemo(
-    () => process.browser && document.location.pathname === href,
-    [href, process.browser && document.location.pathname]
+    () => isClient && document.location.pathname === href,
+    [href, isClient]
   );
 
   return (
@@ -78,11 +81,11 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
   return (
     <>
       <Title>{anime.canonicalTitle}</Title>
-      <div className="bg-gray-100 min-h-screen pb-16">
+      <div className="min-h-screen pb-16">
         <div className="w-full">
           <div className="relative w-full h-[450px]">
             <div
-              className="relative h-full bg-cover bg-no-repeat bg-primary-dark"
+              className="fixed -z-10 w-full h-[450px] bg-cover bg-no-repeat bg-primary-dark"
               style={{ backgroundImage: `url('${anime.cover?.small}')` }}
             >
               <div className="w-full h-full bg-black bg-opacity-40" />
@@ -98,7 +101,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
             </div>
           </nav>
         </div>
-        <div className="w-full">
+        <div className="w-full bg-gray-100 z-100">
           <div className="mx-auto w-full max-w-[1150px]">
             <div className="sticky float-right w-200 top-[230px]">
               <div className="relative w-[214px] top-[-150px]">
@@ -127,7 +130,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({
               </div>
             </div>
             <div className="mr-[210px]">
-              <div className="w-full">{children}</div>
+              <div className="w-full py-5">{children}</div>
             </div>
           </div>
         </div>

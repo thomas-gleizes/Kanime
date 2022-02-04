@@ -20,8 +20,15 @@ const AnimeSide: React.FunctionComponent<Props> = ({ anime }) => {
           <Item label="Japonais" content={anime.titles.en_jp} />
           <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
           <Item label="Type" content={anime.type} />
-          <Item label="Episodes" content={anime.episode.count.toString()} />
-          <Item label="Durée" content={`${anime.episode.length.toString()} minutes`} />
+          <Item label="Episodes" content={anime.episode.count?.toString()} />
+          {
+            <Item
+              label="Durée"
+              content={
+                anime.episode.length ? `${anime.episode.length} minutes` : 'Inconnu'
+              }
+            />
+          }
           <Item label="Status" content={anime.status} />
         </ul>
       </div>

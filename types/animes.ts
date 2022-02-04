@@ -25,8 +25,8 @@ export type Popularity = {
 };
 
 export type Episode = {
-  length: number;
-  count: number;
+  length: number | null;
+  count: number | null;
 };
 
 export type Episodes = Array<Episode>;
