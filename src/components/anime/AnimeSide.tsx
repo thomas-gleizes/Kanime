@@ -15,7 +15,8 @@ const AnimeSide: React.FunctionComponent<Props> = ({ anime }) => {
     <div className="w-1/3 h-100">
       <div className="bg-white border shadow px-4 py-8">
         <h2 className="font-semibold mb-2">Details de {"l'anime"}</h2>
-        <ul className="space-y-2 text-sm">
+        <ul className="space-y-2 text-sm table">
+          <Item label="Id" content={anime.id.toString()} />
           <Item label="Anglais" content={anime.titles.en} />
           <Item label="Japonais" content={anime.titles.en_jp} />
           <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />

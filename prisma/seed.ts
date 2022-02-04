@@ -14,9 +14,9 @@ async function main() {
   await prisma.user.create({
     data: {
       id: 1,
-      username: 'Kalat',
+      username: 'kalat',
       email: 'kalat@kanime.fr',
-      password: await Security.hash(password + 'Kalat'),
+      password: await Security.hash(password + 'kalat'),
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
