@@ -11,7 +11,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: React.FC<ButtonProps> = ({ color, className, outline, ...rest }) => {
   const customColor = useMemo<string>(() => {
     if (outline)
-      return `text-black hover:text-white border-4 bg-gray-50 border-${color}-400 hover:bg-${color}-500`;
+      return `text-black hover:text-white border-[2.8px] bg-gray-50 border-${color}-400 hover:bg-${color}-500`;
     else
       return `text-white bg-${color}-500 hover:bg-${color}-600 focus:ring ring-offset-2 ring-${color}-600`;
   }, [color, outline]);
