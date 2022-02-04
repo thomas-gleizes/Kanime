@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
 export const registerSchema = Yup.object({
-  login: Yup.string()
+  username: Yup.string()
     .min(3, 'Votre pseudo doit contenir au moins 3 caractère')
     .required('Veuillez saisir un pseudo'),
   email: Yup.string()

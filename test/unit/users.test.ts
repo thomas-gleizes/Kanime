@@ -1,4 +1,4 @@
-import { Gender, User } from '@prisma/client';
+import { Gender } from '@prisma/client';
 import { UserModel } from '@models';
 import Security from '@services/security';
 import { defaultUsersMedia } from '@lib/constants';
@@ -16,11 +16,11 @@ describe('users model', () => {
 
   it('should create user', async () => {
     const password: string = 'password';
-    const login: string = 'Kalat';
+    const username: string = 'Kalat';
     const email: string = 'kalat@email.fr';
 
     const user = await UserModel.create({
-      login: login,
+      username: username,
       email: email,
       password: await Security.hash(password),
     });

@@ -19,10 +19,10 @@ interface Props {
 
 export const getServerSideProps: GetServerSideProps = withSessionSsr(
   async ({ query, req }) => {
-    const { login } = query;
+    const { username } = query;
     const { user: sessionUser } = req.session;
 
-    const [user] = UsersMapper.one(await UserModel.findByLogin(login));
+    const [user] = UsersMapper.one(await UserModel.findByUsername(username));
 
     if (user) {
       return {
@@ -59,7 +59,7 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
 
   return (
     <Layout>
-      <Title>{user.login}</Title>
+      <Title>{user.username}</Title>
       <div className="w-full">
         <div
           className="relative bg-center -mt-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
@@ -74,7 +74,7 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
               alt="big avatar"
             />
             <div className="mt-3 ml-2 select-none">
-              <h2 className="text-2xl font-medium"> {user.login} </h2>
+              <h2 className="text-2xl font-medium"> {user.username} </h2>
             </div>
           </div>
         </div>

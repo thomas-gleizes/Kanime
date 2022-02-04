@@ -14,9 +14,9 @@ async function main() {
   await prisma.user.create({
     data: {
       id: 1,
+      username: 'Kalat',
       email: 'kalat@kanime.fr',
       password: await Security.hash(password + 'Kalat'),
-      login: 'Kalat',
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
@@ -27,13 +27,13 @@ async function main() {
   });
 
   for (let i = 0; i < 20; i++) {
-    const login = faker.internet.userName();
+    const username: string = faker.internet.userName();
 
     await prisma.user.create({
       data: {
         email: faker.internet.email(),
-        login: login,
-        password: await Security.hash('azerty' + login),
+        username: username,
+        password: await Security.hash('azerty' + username),
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
         bio: faker.lorem.sentence(),

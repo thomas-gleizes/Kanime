@@ -21,7 +21,7 @@ class UsersMapper implements Mapper<UserModel, [user: User, password: string]> {
       const user: User = {
         id: rest.id,
         email: rest.email,
-        login: rest.login,
+        username: rest.username,
         isAdmin: is_admin,
         followCount: follow_count,
         followerCount: follower_count,

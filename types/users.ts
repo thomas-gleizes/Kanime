@@ -8,8 +8,8 @@ export interface UserMediaHandling {
 
 export declare type User = {
   id: number;
+  username: string;
   email: string;
-  login: string;
   gender?: Gender;
   bio?: string;
   birthday?: string;

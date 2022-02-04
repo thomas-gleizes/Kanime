@@ -59,14 +59,14 @@ CREATE TABLE `animes_categories`
 CREATE TABLE `users`
 (
     `id`         INTEGER      NOT NULL AUTO_INCREMENT,
+    `username`   VARCHAR(191) NOT NULL,
     `email`      VARCHAR(191) NOT NULL,
     `password`   VARCHAR(191) NOT NULL,
-    `login`      VARCHAR(191) NOT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
     UNIQUE INDEX `users_email_key` (`email`),
-    INDEX `users_login_index` (`login`),
+    INDEX `users_username_index` (`username`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -129,15 +129,15 @@ CREATE TABLE `event_logs` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 
-CREATE EVENT update_animes_status ON SCHEDULE EVERY 24 HOUR
-    DO
-    UPDATE animes
-    SET status = 'finished'
-    WHERE CURDATE() > date_end
-      AND status != 'finished';
-UPDATE animes
-SET status = 'current'
-WHERE status != 'finished'
-  AND CURDATE() BETWEEN date_begin AND date_end;
-
-INSERT INTO event_logs SET name = 'update_animes_status'
+-- CREATE EVENT update_animes_status ON SCHEDULE EVERY 24 HOUR
+--     DO
+--     UPDATE animes
+--     SET status = 'finished'
+--     WHERE CURDATE() > date_end
+--       AND status != 'finished';
+-- UPDATE animes
+-- SET status = 'current'
+-- WHERE status != 'finished'
+--   AND CURDATE() BETWEEN date_begin AND date_end;
+--
+-- INSERT INTO event_logs SET name = 'update_animes_status'

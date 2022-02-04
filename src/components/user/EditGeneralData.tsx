@@ -6,7 +6,7 @@ import appAxios from '@lib/api/appAxios';
 import { UserMediaHandling } from '@types';
 import { useUserContext } from '@context/user';
 import { useFetch } from '@hooks';
-import Field, { File, Select, TextArea } from '@components/common/formik';
+import { Field, File, Select, Textarea } from '@components/common/formik';
 import Button from '@components/common/Button';
 import toast from '@helpers/toastr';
 import { CardBody, CardFooter } from '@layouts/card';
@@ -106,7 +106,7 @@ const EditUserModal: React.FunctionComponent = () => {
                 </Select>
               </div>
               <div>
-                <TextArea name="bio" label="Bio" />
+                <Textarea name="bio" label="Bio" />
               </div>
             </CardBody>
             <CardFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">

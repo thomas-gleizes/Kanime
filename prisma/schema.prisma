@@ -93,9 +93,9 @@ model AnimeCategory {
 
 model User {
   id              Int          @id @default(autoincrement())
+  username        String       @unique
   email           String       @unique
   password        String
-  login           String       @unique
   avatar_path     String?
   background_path String?
   bio             String?      @db.Text

@@ -6,7 +6,7 @@ import { defaultUsersMedia } from '../constants';
 import { modelParams } from '@types';
 
 type createData = {
-  login: string;
+  username: string;
   email: string;
   password: string;
 };
@@ -29,13 +29,13 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
   public findById = (id: number): Promise<User> =>
     this.model.findUnique({ where: { id: +id } });
 
-  public findByLogin = (login: string): Promise<User> =>
-    this.model.findUnique({ where: { login } });
+  public findByUsername = (username: string): Promise<User> =>
+    this.model.findUnique({ where: { username } });
 
   public create = (data: createData): Promise<User> =>
     this.model.create({
       data: {
-        login: data.login,
+        username: data.username,
         email: data.email,
         password: data.password,
         avatar_path: defaultUsersMedia.avatar,
@@ -62,10 +62,13 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       where: { email },
     });
 
-  public findByEmailOrLogin = (email: string, login: string): Promise<Array<User>> =>
+  public findByEmailOrUsername = (
+    email: string,
+    username: string
+  ): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        OR: [{ email: email }, { login: login }],
+        OR: [{ email }, { username }],
       },
     });
 
@@ -95,7 +98,7 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
   public search = (query: string, params?: modelParams): Promise<Array<User>> =>
     this.model.findMany({
       where: {
-        OR: [{ login: { contains: query } }],
+        OR: [{ username: { contains: query } }],
       },
       ...this.getKeyParams(params),
     });

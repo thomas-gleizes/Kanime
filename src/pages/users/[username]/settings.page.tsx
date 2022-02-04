@@ -10,11 +10,11 @@ interface Props {}
 
 export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
   ({ req, query }) => {
-    if (req.session.user.login !== query.login) {
+    if (req.session.user.username !== query.username) {
       return {
         redirect: {
           permanent: false,
-          destination: `${routes.users}/${query.login}`,
+          destination: `${routes.users}/${query.username}`,
         },
       };
     }

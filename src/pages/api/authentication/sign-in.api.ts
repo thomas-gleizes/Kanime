@@ -6,9 +6,8 @@ import Security from '@services/security';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
-import { ApiError, SchemaError } from '@errors';
+import { ApiError } from '@errors';
 import { errorMessage } from '@lib/constants';
-// import { loginSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -18,18 +17,13 @@ interface Data extends DefaultResponseData {
 router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body, session } = req;
 
-  // const error = await loginSchema.validate(body).catch((error) => error);
-  // console.log('Error', error);
-  //
-  // if (error) throw new SchemaError(400, error);
-
   if (session) await session.destroy();
 
   const [user, hash]: [User, string] = UsersMapper.one(
     await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !(await Security.compare(body.password + user.login, hash))) {
+  if (!user || !(await Security.compare(body.password + user.username, hash))) {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 

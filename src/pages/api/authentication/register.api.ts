@@ -22,10 +22,10 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   session.destroy();
 
-  const users = await UserModel.findByEmailOrLogin(userData.email, userData.login);
+  const users = await UserModel.findByEmailOrUsername(userData.email, userData.username);
 
   if (users.length) {
-    let key = 'login';
+    let key = 'username';
     if (users[0].email === userData.email) key = 'email';
 
     throw new ApiError(400, `${key} already Fexist`);
@@ -33,9 +33,9 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   const [user] = UsersMapper.one(
     await UserModel.create({
-      login: userData.login,
+      username: userData.username,
       email: userData.email,
-      password: await Security.hash(userData.password + userData.login),
+      password: await Security.hash(userData.password + userData.username),
     })
   );
 

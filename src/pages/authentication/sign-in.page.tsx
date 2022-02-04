@@ -19,7 +19,7 @@ const initialValues: loginType = {
   password: 'azerty',
 };
 
-const LoginPage: NextPage = () => {
+const SignInPage: NextPage = () => {
   const { signIn } = useUserContext();
   const router = useRouter();
 
@@ -27,11 +27,11 @@ const LoginPage: NextPage = () => {
     try {
       const {
         data: { user, token },
-      } = await appAxios.post(`${routes.authentication}/login`, values);
+      } = await appAxios.post(`${routes.authentication}/sign-in`, values);
 
       signIn(user, token);
 
-      await router.push(`${routes.users}/${user.login}`);
+      await router.push(`${routes.users}/${user.username}`);
     } catch (e) {
       console.log('E', e);
 
@@ -97,4 +97,4 @@ const LoginPage: NextPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignInPage;

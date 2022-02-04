@@ -1,28 +1,28 @@
+import React from 'react';
 import { NextPage } from 'next';
-import { Field, Form, Formik } from 'formik';
-import Button from '@components/common/Button';
-import Link from 'next/link';
-import { routes } from '@lib/constants';
 import * as Yup from 'yup';
+import Link from 'next/link';
+import { Form, Formik } from 'formik';
+
 import { registerSchema } from '@validations/users';
-import useDialog from '../../hooks/useDialog';
+import { routes } from '@lib/constants';
+import { Field } from '@components/common/formik';
+import Button from '@components/common/Button';
 import Layout from '@layouts/Layout';
 
 type valuesTypes = Yup.TypeOf<typeof registerSchema>;
 
 const initialValues: valuesTypes = {
-  email: 'kalat@kanime.fr',
-  login: 'Kalat',
-  password: 'azerty',
-  confirmPassword: 'azerty',
+  email: '',
+  username: '',
+  password: '',
+  confirmPassword: '',
 };
 
 const RegisterPage: NextPage = () => {
   const handleSubmit = (values) => {
     console.log('Values', values);
   };
-
-  const { confirm } = useDialog();
 
   return (
     <Layout>
@@ -36,26 +36,23 @@ const RegisterPage: NextPage = () => {
               </h2>
             </div>
             <div>
-              <Field
-                className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500"
-                type="email"
-                name="email"
-                placeholder="Email"
-              />
+              <Field type="email" name="email" placeholder="adresse email" />
+            </div>
+            <div>
+              <Field type="text" name="username" placeholder="nom d'utilisateur" />
+            </div>
+            <div>
+              <Field type="password" name="password" placeholder="mot de passe" />
             </div>
             <div>
               <Field
-                className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500"
                 type="password"
-                name="password"
-                placeholder="Password"
+                name="confirmPassword"
+                placeholder="confirmez vot mot de passe"
               />
             </div>
             <div>
               <Button type="submit">Connexion</Button>
-              <Button onClick={() => confirm('salut')} type="submit">
-                confirm
-              </Button>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex flex-row items-center">

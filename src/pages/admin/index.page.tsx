@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
 const Admin: NextPage<Props> = ({ user }) => {
   return (
     <Layout>
-      <h1>{user?.login}: You are an admin</h1>
+      <h1>{user?.username}: You are an admin</h1>
       <div className="w-1000">
         <ListLogs />
       </div>

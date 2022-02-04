@@ -4,7 +4,7 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import { Anime, Entry } from '@types';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
-import Select from '@components/common/formik/Select';
+import { Select } from '@components/common/formik';
 
 interface Props {
   anime: Anime;
