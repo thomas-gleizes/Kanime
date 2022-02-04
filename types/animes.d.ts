@@ -1,6 +1,6 @@
 import { EntryStatus } from '@prisma/client';
 
-export type Images = {
+type Images = {
   tiny?: string;
   small?: string;
   medium?: string;
@@ -8,30 +8,30 @@ export type Images = {
   original?: string;
 };
 
-export type Titles = {
+type Titles = {
   en: string;
   en_jp: string;
   ja_jp: string;
 };
 
-export type Rating = {
+type Rating = {
   average: number;
   rank: number;
 };
 
-export type Popularity = {
+type Popularity = {
   count: number;
   rank: number;
 };
 
-export type Episode = {
+type Episode = {
   length: number | null;
   count: number | null;
 };
 
-export type Episodes = Array<Episode>;
+type Episodes = Array<Episode>;
 
-export type Category = {
+type Category = {
   id: number;
   slug: string;
   name: string;
@@ -39,9 +39,9 @@ export type Category = {
   totalMediaCount: number;
 };
 
-export type Categories = Array<Category>;
+type Categories = Array<Category>;
 
-export type Anime = {
+type Anime = {
   id: number;
   kitsu_id: number;
   slug: string;
@@ -62,9 +62,9 @@ export type Anime = {
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
 };
 
-export type Animes = Array<Anime>;
+type Animes = Array<Anime>;
 
-export type Entry = {
+type Entry = {
   animeId: number;
   userId: number;
   status: EntryStatus;
@@ -77,4 +77,4 @@ export type Entry = {
   updateAt: Date | string;
 };
 
-export type Entries = Array<Entry>;
+type Entries = Array<Entry>;

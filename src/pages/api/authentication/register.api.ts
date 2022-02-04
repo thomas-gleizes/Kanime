@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultResponseData, User } from '@types';
+import { ResDefaultError, ResRegister } from '@types';
 import router from '@lib/routing/router';
 import Security from '@services/security';
 import { UserModel } from '@models';
@@ -9,44 +9,44 @@ import { withSessionApi } from '@services/session';
 import { ApiError, SchemaError } from '@errors';
 // import { registerSchema } from '@validations/users';
 
-interface Data extends DefaultResponseData {
-  user: User;
-  token: string;
-}
+router.post(
+  async (req: NextApiRequest, res: NextApiResponse<ResRegister | ResDefaultError>) => {
+    const { body: userData, session } = req;
 
-router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { body: userData, session } = req;
+    // const error = await registerSchema.validate(userData).catch((error) => error);
+    // if (error) throw new SchemaError(400, error);
 
-  // const error = await registerSchema.validate(userData).catch((error) => error);
-  // if (error) throw new SchemaError(400, error);
+    session.destroy();
 
-  session.destroy();
+    const users = await UserModel.findByEmailOrUsername(
+      userData.email,
+      userData.username
+    );
 
-  const users = await UserModel.findByEmailOrUsername(userData.email, userData.username);
+    if (users.length) {
+      let key = 'username';
+      if (users[0].email === userData.email) key = 'email';
 
-  if (users.length) {
-    let key = 'username';
-    if (users[0].email === userData.email) key = 'email';
+      throw new ApiError(400, `${key} already Fexist`);
+    }
 
-    throw new ApiError(400, `${key} already Fexist`);
+    const [user] = UsersMapper.one(
+      await UserModel.create({
+        username: userData.username,
+        email: userData.email,
+        password: await Security.hash(userData.password + userData.username),
+      })
+    );
+
+    const token = Security.sign(user);
+
+    session.user = user;
+    session.token = token;
+    await session.save();
+
+    res.status(201).send({ success: true, user: user, token: token });
   }
-
-  const [user] = UsersMapper.one(
-    await UserModel.create({
-      username: userData.username,
-      email: userData.email,
-      password: await Security.hash(userData.password + userData.username),
-    })
-  );
-
-  const token = Security.sign(user);
-
-  session.user = user;
-  session.token = token;
-  await session.save();
-
-  res.status(201).send({ success: true, user: user, token: token });
-});
+);
 
 export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
   router.handler(req, res);

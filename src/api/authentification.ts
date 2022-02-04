@@ -1,9 +1,15 @@
+import * as Yup from 'yup';
+
 import appAxios from '@lib/api/appAxios';
 import { routes } from '@lib/constants';
-import { AxiosRes } from '@types';
+import { loginSchema, registerSchema } from '@validations/users';
+import { AxiosRes, ResRegister } from '@types';
 
 const path = routes.authentication;
 
-export const login = (data: any): AxiosRes<any> => appAxios.get(`${path}/login`);
+export const login = (payload: Yup.TypeOf<typeof loginSchema>): AxiosRes<any> =>
+  appAxios.post(`${path}/login`, payload);
 
-export const register = (data: any): AxiosRes<any> => appAxios.get(`${path}/register`);
+export const register = (
+  payload: Yup.TypeOf<typeof registerSchema>
+): AxiosRes<ResRegister> => appAxios.post(`${path}/register`, payload);

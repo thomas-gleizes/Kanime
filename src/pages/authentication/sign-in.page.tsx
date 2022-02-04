@@ -1,16 +1,18 @@
 import { NextPage } from 'next';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { routes } from '@lib/constants';
 import * as Yup from 'yup';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 
-import Button from '@components/common/Button';
+import { routes } from '@lib/constants';
 import { loginSchema } from '@validations/users';
 import { useUserContext } from '@context/user';
 import appAxios from '@lib/api/appAxios';
 import toast from '@helpers/toastr';
+import Button from '@components/common/Button';
 import Layout from '@layouts/Layout';
+import { Field } from '@components/common/formik';
 
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
@@ -52,18 +54,20 @@ const SignInPage: NextPage = () => {
             </div>
             <div>
               <Field
-                className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500"
                 type="email"
                 name="email"
-                placeholder="Email"
+                label="Email"
+                placeholder="exemple@kanime.fr"
+                required
               />
             </div>
             <div>
               <Field
-                className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500"
                 type="password"
                 name="password"
-                placeholder="Password"
+                label="Mot de passe"
+                placeholder="password"
+                required
               />
             </div>
             <div>

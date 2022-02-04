@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Field as FormikField, useField } from 'formik';
+import classnames from 'classnames';
 
 interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -17,13 +18,24 @@ const Field: React.FC<FieldProps> = ({ name, label, required, ...props }) => {
 
   return (
     <div>
-      <label>{}</label>
+      {label && (
+        <label>
+          {label} {required && <em>*</em>}
+        </label>
+      )}
       <FormikField
-        className="w-full p-4 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500"
+        className={classnames(
+          'w-full px-4 py-3 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500 transition duration-150',
+          { 'border-danger': error }
+        )}
         name={name}
         {...props}
       />
-      <div>{error}</div>
+      <div
+        className={classnames('text-danger text-right text-sm', { invisible: !error })}
+      >
+        {error || 'none'}
+      </div>
     </div>
   );
 };

@@ -21,7 +21,7 @@ const Button: React.FC<ButtonProps> = ({ color, className, outline, ...rest }) =
       className={classnames(
         customColor,
         className,
-        'shadow-lg select-none w-full text-lg font-bold rounded-lg transition transform duration-150 outline-none text-white'
+        'shadow-lg select-none w-full text-lg font-bold rounded-sm transition transform duration-150 outline-none text-white'
       )}
       {...rest}
     />

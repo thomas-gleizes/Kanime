@@ -1,7 +1,7 @@
 import { User } from './users';
 import { Method } from './server';
 
-export type Log = {
+type Log = {
   id: number;
   route: Method;
   ip: string;
@@ -12,28 +12,18 @@ export type Log = {
   createAt: string;
 };
 
-export type Logs = Array<Log>;
+type Logs = Array<Log>;
 
-export type modelParams = {
+type modelParams = {
   limit?: number | string | string[];
   skip?: number | string | string[];
 };
 
-export type CustomDate = Date | string;
+type CustomDate = Date | string;
 
-export type TailwindcssGradiant =
-  | 50
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900;
+type TailwindcssGradiant = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
 
-export type TailwindcssColors =
+type TailwindcssColors =
   | 'slate'
   | 'gray'
   | 'zinc'

@@ -1,18 +1,20 @@
 import React from 'react';
 import { NextPage } from 'next';
+import { useRouter } from 'next/router';
 import * as Yup from 'yup';
-import Link from 'next/link';
 import { Form, Formik } from 'formik';
 
-import { registerSchema } from '@validations/users';
+import { useUserContext } from '@context/user';
 import { routes } from '@lib/constants';
+import { registerSchema } from '@validations/users';
+import { AuthenticationApi } from '@api';
 import { Field } from '@components/common/formik';
 import Button from '@components/common/Button';
 import Layout from '@layouts/Layout';
 
-type valuesTypes = Yup.TypeOf<typeof registerSchema>;
+type registerPayload = Yup.TypeOf<typeof registerSchema>;
 
-const initialValues: valuesTypes = {
+const initialValues: registerPayload = {
   email: '',
   username: '',
   password: '',
@@ -20,15 +22,30 @@ const initialValues: valuesTypes = {
 };
 
 const RegisterPage: NextPage = () => {
-  const handleSubmit = (values) => {
-    console.log('Values', values);
+  const { signIn } = useUserContext();
+  const router = useRouter();
+
+  const handleSubmit = async (values) => {
+    try {
+      const {
+        data: { user, token },
+      } = await AuthenticationApi.register(values);
+
+      signIn(user, token);
+
+      await router.push(`${routes.users}/${user.username}`);
+    } catch (e) {}
   };
 
   return (
     <Layout>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6 space-y-4">
+        <Formik
+          initialValues={initialValues}
+          onSubmit={handleSubmit}
+          validationSchema={registerSchema}
+        >
+          <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6 space-y-3">
             <div className="mb-4">
               <p className="text-gray-600">Connexion</p>
               <h2 className="text-xl font-bold">
@@ -36,20 +53,41 @@ const RegisterPage: NextPage = () => {
               </h2>
             </div>
             <div>
-              <Field type="email" name="email" placeholder="adresse email" />
-            </div>
-            <div>
-              <Field type="text" name="username" placeholder="nom d'utilisateur" />
-            </div>
-            <div>
-              <Field type="password" name="password" placeholder="mot de passe" />
-            </div>
-            <div>
-              <Field
-                type="password"
-                name="confirmPassword"
-                placeholder="confirmez vot mot de passe"
-              />
+              <div>
+                <Field
+                  type="email"
+                  name="email"
+                  label="Email"
+                  placeholder="exemple@kanime.fr"
+                  required
+                />
+              </div>
+              <div>
+                <Field
+                  type="text"
+                  name="username"
+                  label="Nom d'utilisateur"
+                  placeholder="john_doe"
+                />
+              </div>
+              <div>
+                <Field
+                  type="password"
+                  name="password"
+                  label="Mot de passe"
+                  placeholder="password"
+                  required
+                />
+              </div>
+              <div>
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  label="Confirmez votre mot de passe"
+                  placeholder="password"
+                  required
+                />
+              </div>
             </div>
             <div>
               <Button type="submit">Connexion</Button>
@@ -66,13 +104,6 @@ const RegisterPage: NextPage = () => {
                 >
                   Se souvenir de moi
                 </label>
-              </div>
-              <div>
-                <Link href={routes.authentication + '/forgot-password'}>
-                  <a className="text-sm text-blue-600 hover:underline">
-                    mot de passe oublié ?
-                  </a>
-                </Link>
               </div>
             </div>
           </Form>
