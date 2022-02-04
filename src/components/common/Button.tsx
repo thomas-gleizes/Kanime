@@ -5,7 +5,7 @@ import { TailwindcssColors } from '@types';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: TailwindcssColors;
-  outline: boolean;
+  outline?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({ color, className, outline, ...rest }) => {
