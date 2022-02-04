@@ -36,6 +36,9 @@ export const routes = {
   users: {
     index: (username: string) => `/users/${username}`,
     settings: (username: string) => `/users/${username}/settings`,
+    api: {
+      index: 'api/users',
+    },
   },
   feedback: '/feedback',
   forum: '/forum',

@@ -39,7 +39,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async (): Promise<void> => {
-    await appAxios.get(`${routes.authentication}/logout`);
+    await appAxios.get(routes.authentication.api.logout);
     LocalStorage.clearUser();
     setIsLogin(false);
     setUser(null);
@@ -48,7 +48,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   const refreshUser = useCallback(async (): Promise<void> => {
     try {
-      const { data } = await appAxios.get(routes.users);
+      const { data } = await appAxios.get(routes.users.api.index);
       setUser(data.user);
     } catch (e) {
       await signOut();
