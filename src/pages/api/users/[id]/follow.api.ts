@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { UserFollowModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';

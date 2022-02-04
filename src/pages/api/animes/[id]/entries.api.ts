@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntryStatus, Entry } from '@prisma/client';
 
 import { DefaultResponseData } from '@types';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { AnimeModel, EntryModel } from '@models';
 import { ApiError } from '@errors';
 import { verifyUser, withSessionApi } from '@services/session';

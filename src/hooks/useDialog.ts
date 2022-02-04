@@ -1,4 +1,4 @@
-import { useLayoutContext } from '@context/layout';
+import { useLayoutContext } from '@context/layout.context';
 import { dialogTypes } from '@lib/constants';
 
 type result = {

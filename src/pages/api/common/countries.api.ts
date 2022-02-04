@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Country } from '@prisma/client';
 
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { CountryModel } from '@models';
 import { DefaultResponseData } from '@types';
 

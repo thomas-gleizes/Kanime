@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { User } from '@types';
 import { UserModel } from '@models';
 import { withSessionSsr } from '@services/session';
-import { useLayoutContext } from '@context/layout';
+import { useLayoutContext } from '@context/layout.context';
 import { UsersMapper } from '@mapper';
 import Layout from '@layouts/Layout';
 import Title from '@layouts/Title';

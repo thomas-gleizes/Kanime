@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Category, DefaultResponseData } from '@types';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { CategoryModel } from '@models';
 import { CategoriesMapper } from '@mapper';
 

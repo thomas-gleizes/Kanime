@@ -3,6 +3,6 @@ module.exports = {
   images: {
     domains: ['media.kitsu.io'],
   },
-  pageExtensions: ['page.tsx', 'api.ts'],
+  pageExtensions: ['page.tsx', 'axios.ts'],
   reactStrictMode: true,
 };

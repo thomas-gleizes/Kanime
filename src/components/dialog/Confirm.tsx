@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
-import { useLayoutContext } from '@context/layout';
+import { useLayoutContext } from '@context/layout.context';
 import { dialogTypes } from '@lib/constants';
 import Modal, { ModalBody, ModalFooter, ModalHeader } from '@layouts/modal';
 import Button from '@components/common/Button';

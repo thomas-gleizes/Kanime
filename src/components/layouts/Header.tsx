@@ -5,8 +5,8 @@ import { FaBars } from 'react-icons/fa';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 
-import { useUserContext } from '@context/user';
-import { useLayoutContext } from '@context/layout';
+import { useUserContext } from '@context/user.context';
+import { useLayoutContext } from '@context/layout.context';
 import { routes } from '@lib/constants';
 import DropDownByRef from '@layouts/DropDownByRef';
 import SearchBar from '@components/common/SearchBar';
@@ -32,9 +32,9 @@ const DropDownExplore = () => {
       </div>
       <DropDownByRef innerRef={button}>
         <div className="absolute top-5 py-1 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-          <DropDownItem href={routes.animes}>Animes</DropDownItem>
-          <DropDownItem href={routes.mangas}>Mangas</DropDownItem>
-          <DropDownItem href={routes.sagas}>Sagas</DropDownItem>
+          <DropDownItem href={routes.animes.index}>Animes</DropDownItem>
+          <DropDownItem href={routes.animes.index}>Mangas</DropDownItem>
+          <DropDownItem href={routes.animes.index}>Sagas</DropDownItem>
         </div>
       </DropDownByRef>
     </div>
@@ -104,10 +104,10 @@ const Header: React.FunctionComponent = () => {
               <SearchBar transparent={headerTransparent} />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <Link href={`${routes.authentication}/sign-in`}>
+                  <Link href={routes.authentication.signIn}>
                     <a className="mx-3 cursor-pointer">Connexion</a>
                   </Link>
-                  <Link href={`${routes.authentication}/register`}>
+                  <Link href={routes.authentication.register}>
                     <a className="mx-3 cursor-pointer">Inscription</a>
                   </Link>
                 </div>
@@ -124,10 +124,10 @@ const Header: React.FunctionComponent = () => {
                   </div>
                   <DropDownByRef innerRef={avatarRef}>
                     <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                      <DropDownItem href={`${routes.users}/${user.username}`}>
+                      <DropDownItem href={routes.users.index(user.username)}>
                         Mon profile
                       </DropDownItem>
-                      <DropDownItem href={`${routes.users}/${user.username}/settings`}>
+                      <DropDownItem href={routes.users.settings(user.username)}>
                         Settings
                       </DropDownItem>
                       <div onClick={signOut}>

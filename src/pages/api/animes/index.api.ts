@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Anime, ResAnimes, ResDefaultError } from '@types';
-import router from '../../../lib/routing/router';
+import router from '@lib/routing/handler';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { withSessionApi } from '@services/session';

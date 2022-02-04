@@ -2,9 +2,9 @@ import React, { useRef } from 'react';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Country, Gender } from '@prisma/client';
 
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import { UserMediaHandling } from '@types';
-import { useUserContext } from '@context/user';
+import { useUserContext } from '@context/user.context';
 import { useFetch } from '@hooks';
 import { Field, File, Select, Textarea } from '@components/common/formik';
 import Button from '@components/common/Button';

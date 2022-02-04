@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { Animes, DefaultResponseData } from '@types';
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { useScrollPercent } from '@hooks';

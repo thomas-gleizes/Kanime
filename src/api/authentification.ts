@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import { routes } from '@lib/constants';
 import { loginSchema, registerSchema } from '@validations/users';
 import { AxiosRes, ResRegister } from '@types';

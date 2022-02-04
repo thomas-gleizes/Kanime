@@ -5,8 +5,8 @@ import Head from 'next/head';
 import '../styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
 
-import LayoutContextProvider from '@context/layout';
-import UserContextProvider from '@context/user';
+import LayoutContextProvider from '@context/layout.context';
+import UserContextProvider from '@context/user.context';
 import Header from '@layouts/Header';
 import Footer from '@layouts/Footer';
 import EmptyLayout from '@layouts/EmptyLayout';

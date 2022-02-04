@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 import { DefaultResponseData, User } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { UserModel } from '@models';
 import { defaultUsersMedia, publicPath } from '@lib/constants';
 import { UsersMapper } from '@mapper';

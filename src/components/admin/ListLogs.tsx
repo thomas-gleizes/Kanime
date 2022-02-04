@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Logs } from '@types';
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
 import { useClockFromDate } from '../../hooks';
 

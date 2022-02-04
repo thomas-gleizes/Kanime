@@ -7,8 +7,8 @@ import { Formik, Form } from 'formik';
 
 import { routes } from '@lib/constants';
 import { loginSchema } from '@validations/users';
-import { useUserContext } from '@context/user';
-import appAxios from '@lib/api/appAxios';
+import { useUserContext } from '@context/user.context';
+import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
 import Button from '@components/common/Button';
 import Layout from '@layouts/Layout';

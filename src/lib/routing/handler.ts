@@ -2,16 +2,15 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Method, Middleware } from '@types';
 import { ApiError, SchemaError } from '@errors';
-import Route from './route';
 import logger from '@services/logger';
 import { errorMessage } from '@lib/constants';
 
-class Router {
-  private readonly _get: Route[];
-  private readonly _post: Route[];
-  private readonly _put: Route[];
-  private readonly _patch: Route[];
-  private readonly _delete: Route[];
+class Handler {
+  private readonly _get: Middleware[];
+  private readonly _post: Middleware[];
+  private readonly _put: Middleware[];
+  private readonly _patch: Middleware[];
+  private readonly _delete: Middleware[];
 
   constructor() {
     this._get = [];
@@ -25,7 +24,7 @@ class Router {
     const key = `_${method.toLowerCase()}`;
 
     for (const middleware of middlewares) {
-      this[key].push(new Route(method, middleware));
+      this[key].push(middleware);
     }
   }
 
@@ -57,7 +56,7 @@ class Router {
     this.delete(...middlewares);
   }
 
-  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void>{
+  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
     const { method } = req;
 
     const routes = this['_' + method.toLowerCase()];
@@ -68,7 +67,7 @@ class Router {
       if (!routes.length) throw new ApiError('405', errorMessage.METHOD_NOT_ALLOWED);
 
       for (const route of routes) {
-        await route.call(req, res);
+        await route(req, res);
       }
     } catch (e) {
       if (e instanceof ApiError) {
@@ -86,4 +85,4 @@ class Router {
   }
 }
 
-export default new Router();
+export default new Handler();

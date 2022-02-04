@@ -7,12 +7,36 @@ export const publicPath = `${process.cwd()}/public`;
 
 export const routes = {
   home: '/',
-  animes: '/animes',
-  categories: '/categories',
-  mangas: '/mangas',
-  sagas: '/sagas',
-  authentication: '/authentication',
-  users: '/users',
+  animes: {
+    index: '/animes',
+    anime: (slug: string) => `/animes/${slug}`,
+    categories: (slug: string) => `/animes/${slug}/categories`,
+    discussions: (slug: string) => `/animes/${slug}/discussions`,
+    saga: (slug: string) => `/animes/${slug}/saga`,
+    episodes: (slug: string) => `/animes/${slug}/episodes`,
+    characters: (slug: string) => `/animes/${slug}/characters`,
+    api: {
+      slug: (slug: string) => `api/animes/slug${slug}`,
+      anime: (id: number) => `/api/animes/${id}`,
+      categories: (id: number) => `/api/animes/${id}/categories`,
+      entries: (id: number) => `/api/animes/${id}/entries`,
+      users: (id: number) => `/api/animes/${id}/users`,
+    },
+  },
+  authentication: {
+    signIn: '/authentication/sign-in',
+    register: '/authentication/register',
+    forgotPassword: '/authentication/forgot-password',
+    api: {
+      signIn: '/axios/authentication/sign-in',
+      register: '/axios/authentication/register',
+      logout: '/axios/authentication/logout',
+    },
+  },
+  users: {
+    index: (username: string) => `/users/${username}`,
+    settings: (username: string) => `/users/${username}/settings`,
+  },
   feedback: '/feedback',
   forum: '/forum',
   admin: '/admin',

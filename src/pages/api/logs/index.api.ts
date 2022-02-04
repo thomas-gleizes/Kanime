@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Logs } from '@types';
 import { verifyAdmin, withSessionApi } from '@services/session';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 import { LogModel } from '@models';
 import { LogsMapper } from '@mapper';
 

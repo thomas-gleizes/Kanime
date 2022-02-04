@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import { Animes, Users } from '@types';
 import { AnimesApi } from '@api';
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
 import { routes } from '@lib/constants';
 import timeout from '@helpers/timeout';
@@ -79,7 +79,7 @@ const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
                 {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>
                     {animes.map((anime) => (
-                      <Link key={anime.id} href={`${routes.animes}/${anime.slug}`}>
+                      <Link key={anime.id} href={routes.animes.anime(anime.slug)}>
                         <a>
                           <div
                             id={`anime-search-${anime.id}`}

@@ -119,7 +119,7 @@ const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
         onMouseLeave={() => setOpen(false)}
         className="my-3 bg-primary shadow hover:shadow-lg cursor-pointer border rounded-b rounded-lg"
       >
-        <Link href={`${routes.animes}/${slug}`}>
+        <Link href={`${routes.animes.index}/${slug}`}>
           <a>
             <div className="flex justify-center">
               {poster?.small ? (

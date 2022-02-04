@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 
-import { useUserContext } from '@context/user';
+import { useUserContext } from '@context/user.context';
 import { routes } from '@lib/constants';
 import { registerSchema } from '@validations/users';
 import { AuthenticationApi } from '@api';

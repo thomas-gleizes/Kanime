@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import router from '@lib/routing/router';
+import router from '@lib/routing/handler';
 
 router.all(async (req: NextApiRequest, res: NextApiResponse) => {
   const routes = {

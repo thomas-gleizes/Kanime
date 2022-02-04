@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { User } from '@types';
 import { useContextFactory } from '@hooks';
 import LocalStorage from '@services/localStorage';
-import appAxios from '@lib/api/appAxios';
+import appAxios from '@lib/axios/appAxios';
 import { routes } from '@lib/constants';
 import toast from '@helpers/toastr';
 
