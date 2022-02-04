@@ -6,7 +6,7 @@
 
 */
 -- DropIndex
-DROP INDEX `users_user_index` ON `users`;
+DROP INDEX `users_username_index` ON `users`;
 
 -- CreateIndex
 CREATE UNIQUE INDEX `categories_slug_key` ON `categories` (`slug`);
