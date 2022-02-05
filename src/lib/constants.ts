@@ -40,6 +40,10 @@ export const routes = {
       index: 'api/users',
     },
   },
+  categories: {
+    index: '/categories',
+    slug: (slug: string) => `/categories/${slug}`,
+  },
   feedback: '/feedback',
   forum: '/forum',
   admin: '/admin',

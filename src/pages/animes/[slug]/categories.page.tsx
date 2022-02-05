@@ -37,7 +37,7 @@ const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
       <ul className="list-disc m-10">
         {categories.map((category) => (
           <li key={category.id}>
-            <Link href={`${routes.categories}/${category.slug}`}>
+            <Link href={routes.categories.slug(category.slug)}>
               <a>{category.name}</a>
             </Link>
           </li>
