@@ -11,11 +11,11 @@ function generateKeys(length, indicator, multi = 10, negative = false) {
 
 module.exports = {
   mode: 'jit',
-  purge: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
-  darkMode: false,
+  content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
+        current: 'currentColor',
         primary: {
           light: '#64171E',
           DEFAULT: '#541218',
@@ -73,6 +73,9 @@ module.exports = {
       zIndex: {
         ...generateKeys(11, '', 10, true),
       },
+      lineClamp: {
+        ...generateKeys(20, '', 1),
+      },
     },
   },
   variants: {
@@ -87,5 +90,10 @@ module.exports = {
       inset: ['hover', 'focus', 'group-focus'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('@tailwindcss/forms')({
+      strategy: 'class',
+    }),
+  ],
 };

@@ -17,9 +17,11 @@ const AnimeSide: React.FunctionComponent<Props> = ({ anime }) => {
         <h2 className="font-semibold mb-2">Details de {"l'anime"}</h2>
         <ul className="space-y-2 text-sm table">
           <Item label="Id" content={anime.id.toString()} />
-          <Item label="Anglais" content={anime.titles.en} />
-          <Item label="Japonais" content={anime.titles.en_jp} />
-          <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
+          {anime.titles?.en && <Item label="Anglais" content={anime.titles.en} />}
+          {anime.titles?.en_jp && <Item label="Japonais" content={anime.titles.en_jp} />}
+          {anime.titles?.ja_jp && (
+            <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
+          )}
           <Item label="Type" content={anime.type} />
           <Item label="Episodes" content={anime.episode.count?.toString()} />
           {

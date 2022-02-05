@@ -40,7 +40,7 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
         <div className="flex flex-col space-y-2">
           <div>
             <h2 className="text-3xl text-gray-700 font-semibold inline">
-              {anime.titles.en_jp || anime.canonicalTitle}
+              {anime.titles?.en_jp || anime.canonicalTitle}
             </h2>
             <span className="text-gray-500 text-lg ml-2 inline font-black">
               {anime.season_year}

@@ -45,7 +45,10 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, toggle, ...rest })
       onClick={handleClick}
       className="z-100 fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-gray-800"
     >
-      <div {...rest} />
+      <div
+        className="fixed backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4"
+        {...rest}
+      />
     </div>
   );
 

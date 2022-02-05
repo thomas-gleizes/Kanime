@@ -2,14 +2,15 @@ import React, { useRef } from 'react';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Country, Gender } from '@prisma/client';
 
-import appAxios from '@lib/axios/appAxios';
 import { UserMediaHandling } from '@types';
 import { useUserContext } from '@context/user.context';
 import { useFetch } from '@hooks';
-import { Field, File, Select, Textarea } from '@components/common/formik';
-import Button from '@components/common/Button';
+import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
+import Button from '@components/common/Button';
+import { Field, File, Select, Textarea } from '@components/common/formik';
 import { CardBody, CardFooter } from '@layouts/card';
+import { routes } from '@lib/constants';
 
 declare type values = {
   city: string;
@@ -20,7 +21,7 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountry = () => appAxios.get<Country[]>('common/countries');
+const fetchCountry = () => appAxios.get<Country[]>(routes.common.countries.list);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
@@ -46,7 +47,7 @@ const EditUserModal: React.FunctionComponent = () => {
     try {
       const {
         data: { user, token },
-      } = await appAxios.patch(`users`, values);
+      } = await appAxios.patch(routes.users.api.current, values);
 
       signIn(user, token);
     } catch (e) {
@@ -70,9 +71,7 @@ const EditUserModal: React.FunctionComponent = () => {
               <div
                 onClick={() => backgroundRef.current.click()}
                 className="absolute w-full h-full rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
-                style={{
-                  background: `url('${displayBackground(values.background)}')`,
-                }}
+                style={{ background: `url('${displayBackground(values.background)}')` }}
               />
               <File innerRef={backgroundRef} name="background" />
               <div

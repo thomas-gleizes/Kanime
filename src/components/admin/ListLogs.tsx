@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Logs } from '@types';
+import { useClockFromDate } from '@hooks';
+import { routes } from '@lib/constants';
 import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
-import { useClockFromDate } from '../../hooks';
 
 const fetchLogs = (limit: number, start: number) =>
-  appAxios.get('logs', { params: { limit, start } });
+  appAxios.get(routes.logs.api.list, { params: { limit, start } });
 
 interface TimeCellProps {
   date: Date | string;

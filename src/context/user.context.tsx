@@ -48,7 +48,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   const refreshUser = useCallback(async (): Promise<void> => {
     try {
-      const { data } = await appAxios.get(routes.users.api.index);
+      const { data } = await appAxios.get(routes.users.api.current);
       setUser(data.user);
     } catch (e) {
       await signOut();

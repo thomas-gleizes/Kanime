@@ -10,6 +10,7 @@ import toast from '@helpers/toastr';
 import AnimeCard from '@components/common/AnimeCard';
 import Title from '@layouts/Title';
 import Layout from '@layouts/Layout';
+import { routes } from '@lib/constants';
 
 interface Props extends DefaultResponseData {
   animes: Animes;
@@ -42,7 +43,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
         setLoading(true);
 
         try {
-          const response = await appAxios.get('animes', {
+          const response = await appAxios.get(routes.animes.api.list, {
             params: { limit: 40, skip: animes.length },
           });
 

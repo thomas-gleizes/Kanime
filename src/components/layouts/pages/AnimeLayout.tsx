@@ -85,7 +85,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error })
               {TABS.map((tab, index) => (
                 <NavLink
                   key={index}
-                  href={`${routes.animes.index}/${anime.slug}${tab.path}`}
+                  href={`${routes.animes.list}/${anime.slug}${tab.path}`}
                 >
                   {tab.label}
                 </NavLink>

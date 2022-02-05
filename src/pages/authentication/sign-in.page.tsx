@@ -5,14 +5,14 @@ import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 
+import { AuthenticationApi } from '@api';
 import { routes } from '@lib/constants';
 import { loginSchema } from '@validations/users';
 import { useUserContext } from '@context/user.context';
-import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
-import Button from '@components/common/Button';
 import Layout from '@layouts/Layout';
 import { Field } from '@components/common/formik';
+import Button from '@components/common/Button';
 
 type loginType = Yup.TypeOf<typeof loginSchema>;
 
@@ -29,11 +29,13 @@ const SignInPage: NextPage = () => {
     try {
       const {
         data: { user, token },
-      } = await appAxios.post(`${routes.authentication}/sign-in`, values);
+      } = await AuthenticationApi.login(values);
 
-      signIn(user, token);
-
-      await router.push(`${routes.users}/${user.username}`);
+      if (!user || !token) window.location.reload();
+      else {
+        signIn(user, token);
+        await router.push(routes.users.page(user.username));
+      }
     } catch (e) {
       console.log('E', e);
 
@@ -87,7 +89,7 @@ const SignInPage: NextPage = () => {
                 </label>
               </div>
               <div>
-                <Link href={routes.authentication + '/forgot-password'}>
+                <Link href={routes.authentication.forgotPassword}>
                   <a className="text-sm text-blue-600 hover:underline">
                     mot de passe oublié ?
                   </a>

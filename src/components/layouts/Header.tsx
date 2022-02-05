@@ -32,9 +32,9 @@ const DropDownExplore = () => {
       </div>
       <DropDownByRef innerRef={button}>
         <div className="absolute top-5 py-1 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
-          <DropDownItem href={routes.animes.index}>Animes</DropDownItem>
-          <DropDownItem href={routes.animes.index}>Mangas</DropDownItem>
-          <DropDownItem href={routes.animes.index}>Sagas</DropDownItem>
+          <DropDownItem href={routes.animes.list}>Animes</DropDownItem>
+          <DropDownItem href={routes.animes.list}>Mangas</DropDownItem>
+          <DropDownItem href={routes.animes.list}>Sagas</DropDownItem>
         </div>
       </DropDownByRef>
     </div>
@@ -124,7 +124,7 @@ const Header: React.FunctionComponent = () => {
                   </div>
                   <DropDownByRef innerRef={avatarRef}>
                     <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                      <DropDownItem href={routes.users.index(user.username)}>
+                      <DropDownItem href={routes.users.page(user.username)}>
                         Mon profile
                       </DropDownItem>
                       <DropDownItem href={routes.users.settings(user.username)}>

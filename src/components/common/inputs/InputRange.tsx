@@ -48,7 +48,7 @@ const InputRange: React.FunctionComponent<Props> = ({ min, max, step, onChange }
           max={max}
           value={minValue}
           onChange={handleMin}
-          className="absolute pointer-events-none appearance-none z-20 h-3 w-full opacity-0 cursor-pointer"
+          className="w-6 h-6 appearance-none pointer-events-auto absolute pointer-events-none appearance-none z-20 h-3 w-full opacity-0 cursor-pointer"
         />
         <input
           type="range"
@@ -57,7 +57,7 @@ const InputRange: React.FunctionComponent<Props> = ({ min, max, step, onChange }
           max={max}
           value={maxValue}
           onChange={handleMax}
-          className="absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
+          className="w-6 h-6 appearance-none pointer-events-auto absolute pointer-events-none appearance-none z-20 h-2 w-full opacity-0 cursor-pointer"
         />
         <div className="relative z-10 h-4">
           <div className="absolute z-10 left-0 right-0 bottom-0 top-0 rounded-md bg-gray-200" />

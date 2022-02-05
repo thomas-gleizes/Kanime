@@ -3,7 +3,7 @@ import { ApiError } from '@errors';
 import LocalStorage from '@services/localStorage';
 
 const appAxios = axios.create({
-  baseURL: `/api/`,
+  baseURL: `/`,
   responseType: 'json',
 });
 
