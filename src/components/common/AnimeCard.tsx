@@ -25,12 +25,7 @@ const AnimePopup: React.FunctionComponent<AnimePopupProps> = ({
 }) => {
   const { synopsis, canonicalTitle, season_year, rating, popularity, type } = anime;
 
-  const styles = useMemo(() => {
-    const styles = {};
-    styles[position] = '100%';
-
-    return styles;
-  }, [position]);
+  const styles = useMemo(() => ({ [position]: '100%' }), [position]);
 
   return (
     <Transition

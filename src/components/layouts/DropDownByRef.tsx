@@ -27,7 +27,7 @@ const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
 
       innerRef.current.addEventListener('click', toggleOpen, true);
 
-      return () => innerRef.current.removeEventListener('click', toggleOpen, true);
+      return () => innerRef.current?.removeEventListener('click', toggleOpen, true);
     }
   }, [innerRef, open]);
 

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { TailwindcssColors } from '../../../types/global';
+import { TailwindcssColors } from '@types';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 

@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import { Animes, Users } from '@types';
 import { AnimesApi } from '@api';
-import appAxios from '@lib/axios/appAxios';
 import toast from '@helpers/toastr';
 import { routes } from '@lib/constants';
 import timeout from '@helpers/timeout';
@@ -31,7 +30,7 @@ const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
 
       const animesPromises = AnimesApi.search(value, { limit: 50, skip: 0 })
         .then(({ data }) => setAnimes(data.animes))
-        .catch((e) => toast(e.message, 'error'));
+        .catch((e) => toast(e.error, 'error'));
 
       Promise.all([animesPromises]).finally(() => setLoading(false));
     } else {
