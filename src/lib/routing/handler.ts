@@ -6,7 +6,7 @@ import { errorMessage } from '@lib/constants';
 import logger from '@services/logger';
 
 const handler = nc<NextApiRequest, NextApiResponse>({
-  onError: (err, req, res, next) => {
+  onError: (err, req, res) => {
     if (err instanceof ApiError) {
       res.status(err.code).send({ error: err.message });
     } else if (err instanceof SchemaError) {
