@@ -2,10 +2,10 @@ import * as Yup from 'yup';
 
 import appAxios from '@lib/axios/appAxios';
 import { AxiosRes, ResRegister } from '@types';
-import { loginSchema, registerSchema } from '@validations/users';
+import { signInSchema, registerSchema } from '@validations/users';
 import { routes } from '@lib/constants';
 
-export const login = (payload: Yup.TypeOf<typeof loginSchema>): AxiosRes<any> =>
+export const login = (payload: Yup.TypeOf<typeof signInSchema>): AxiosRes<any> =>
   appAxios.post(routes.authentication.api.signIn, payload);
 
 export const register = (

@@ -7,14 +7,14 @@ import { Formik, Form } from 'formik';
 
 import { AuthenticationApi } from '@api';
 import { routes } from '@lib/constants';
-import { loginSchema } from '@validations/users';
+import { signInSchema } from '@validations/users';
 import { useUserContext } from '@context/user.context';
 import toast from '@helpers/toastr';
 import Layout from '@layouts/Layout';
 import { Field } from '@components/common/formik';
 import Button from '@components/common/Button';
 
-type loginType = Yup.TypeOf<typeof loginSchema>;
+type loginType = Yup.TypeOf<typeof signInSchema>;
 
 const initialValues: loginType = {
   email: 'kalat@kanime.fr',

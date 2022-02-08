@@ -15,7 +15,7 @@ export const registerSchema = Yup.object({
     .oneOf([Yup.ref('password')], 'Les mot de passe correspondent pas'),
 });
 
-export const loginSchema = Yup.object({
+export const signInSchema = Yup.object({
   email: Yup.string()
     .email('Veuillez saisir un email valide')
     .required('Veuillez saisir un email'),

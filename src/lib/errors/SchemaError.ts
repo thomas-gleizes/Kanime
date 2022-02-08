@@ -1,10 +1,9 @@
 class SchemaError extends Error {
-  private readonly _code: 404 | 400 | 500 | 401 | number;
+  private readonly _code = 422;
   private readonly _data: any;
 
-  constructor(code, data) {
+  constructor(data) {
     super('keys errors');
-    this._code = code;
     this._data = data;
   }
 

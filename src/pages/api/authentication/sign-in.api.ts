@@ -6,8 +6,9 @@ import Security from '@services/security';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
-import { ApiError } from '@errors';
+import { ApiError, SchemaError } from '@errors';
 import { errorMessage } from '@lib/constants';
+import { signInSchema } from '@validations/users';
 
 interface Data extends DefaultResponseData {
   user: User;
@@ -16,6 +17,12 @@ interface Data extends DefaultResponseData {
 
 handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body, session } = req;
+
+  try {
+    await signInSchema.validate(body);
+  } catch (err) {
+    throw new SchemaError(err);
+  }
 
   if (session) await session.destroy();
 

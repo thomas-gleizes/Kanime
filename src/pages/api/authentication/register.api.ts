@@ -6,14 +6,18 @@ import Security from '@services/security';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { withSessionApi } from '@services/session';
-import { ApiError } from '@errors';
+import { ApiError, SchemaError } from '@errors';
+import { registerSchema } from '@validations/users';
 
 handler.post(
   async (req: NextApiRequest, res: NextApiResponse<ResRegister | ResDefaultError>) => {
     const { body: userData, session } = req;
 
-    // const error = await registerSchema.validate(userData).catch((error) => error);
-    // if (error) throw new SchemaError(400, error);
+    try {
+      await registerSchema.validate(userData);
+    } catch (err) {
+      throw new SchemaError(err);
+    }
 
     session.destroy();
 
@@ -26,7 +30,7 @@ handler.post(
       let key = 'username';
       if (users[0].email === userData.email) key = 'email';
 
-      throw new ApiError(400, `${key} already Fexist`);
+      throw new ApiError(409, `${key} already exist`);
     }
 
     const [user] = UsersMapper.one(

@@ -10,11 +10,13 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     if (err instanceof ApiError) {
       res.status(err.code).send({ error: err.message });
     } else if (err instanceof SchemaError) {
-      res.status(err.code).send({ error: err.message, keys: err.data });
+      res.status(err.code).send({ error: err.message, schemaError: err.data });
     } else if (process.env.NODE_ENV !== 'production') {
       console.error(err.stack);
       res.status(500).send(err.message);
     } else {
+      console.error(err.stack);
+
       res.status(500).send(errorMessage.INTERNAL_ERROR);
     }
   },
