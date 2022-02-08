@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import handler from '@lib/routing/handler';
+import handler from '@lib/routing';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';

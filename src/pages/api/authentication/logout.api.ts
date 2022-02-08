@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import handler from '@lib/routing/handler';
+import handler from '@lib/routing';
 import { withSessionApi } from '@services/session';
 
 handler.all(async (req: NextApiRequest, res: NextApiResponse) => {

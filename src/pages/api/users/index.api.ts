@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import * as fs from 'fs';
 
 import { DefaultResponseData, User } from '@types';
-import { verifyUser, withSessionApi } from '@services/session';
-import handler from '@lib/routing/handler';
+import { withSessionApi } from '@services/session';
+import handler, { verifyUser } from '@lib/routing';
 import { UserModel } from '@models';
 import { defaultUsersMedia, publicPath } from '@lib/constants';
 import { UsersMapper } from '@mapper';

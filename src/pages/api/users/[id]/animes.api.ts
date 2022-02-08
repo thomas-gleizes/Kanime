@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Animes } from '@types';
-import handler from '@lib/routing/handler';
+import handler from '@lib/routing';
 import { UserModel, AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';

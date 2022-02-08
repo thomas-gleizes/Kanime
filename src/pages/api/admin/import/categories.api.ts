@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { verifyAdmin, withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session';
 import connexion from '@services/connexion';
-import handler from '@lib/routing/handler';
+import handler, { verifyAdmin } from '@lib/routing';
 import KitsuApi from '@lib/axios/kitsuApi';
 
 handler.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {

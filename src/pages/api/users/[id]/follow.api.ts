@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
-import { verifyUser, withSessionApi } from '@services/session';
-import handler from '@lib/routing/handler';
+import { withSessionApi } from '@services/session';
+import handler, { verifyUser } from '@lib/routing';
 import { UserFollowModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';

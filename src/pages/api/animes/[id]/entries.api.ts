@@ -2,10 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntryStatus, Entry } from '@prisma/client';
 
 import { DefaultResponseData } from '@types';
-import handler from '@lib/routing/handler';
+import handler, { verifyUser } from '@lib/routing';
 import { AnimeModel, EntryModel } from '@models';
 import { ApiError } from '@errors';
-import { verifyUser, withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session';
 import { errorMessage } from '@lib/constants';
 import { EntriesMapper } from '@mapper';
 

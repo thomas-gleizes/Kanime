@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Country } from '@prisma/client';
 
-import handler from '@lib/routing/handler';
+import handler from '@lib/routing';
 import { CountryModel } from '@models';
 import { DefaultResponseData } from '@types';
 import { withSessionApi } from '@services/session';
