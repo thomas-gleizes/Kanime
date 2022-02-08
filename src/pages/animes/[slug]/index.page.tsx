@@ -36,7 +36,7 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
   return (
     <div className="w-full flex h-screen">
       <AnimeSide anime={anime} />
-      <div className="w-2/3 px-2 mt-4">
+      <div className="w-2/3 px-3 mt-4">
         <div className="flex flex-col space-y-2">
           <div>
             <h2 className="text-3xl text-gray-700 font-semibold inline">
@@ -51,7 +51,7 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
           </div>
           {anime.description && (
             <div>
-              <p className="text-ellipsis overflow-hidden text-gray-800 mb-4">
+              <p className="text-ellipsis overflow-hidden text-gray-800 mb-4 prose">
                 {extendParagraph && anime.description?.length > DESCRIPTION_LENGTH
                   ? anime.description.split('').splice(0, DESCRIPTION_LENGTH).join('') +
                     ' ...'
