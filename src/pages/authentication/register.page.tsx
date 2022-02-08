@@ -47,7 +47,7 @@ const RegisterPage: NextPage = () => {
         >
           <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6 space-y-3">
             <div className="mb-4">
-              <p className="text-gray-600">Connexion</p>
+              <p className="text-gray-600">Inscription</p>
               <h2 className="text-xl font-bold">
                 Rejoignez {process.env.NEXT_PUBLIC_APP_NAME}
               </h2>

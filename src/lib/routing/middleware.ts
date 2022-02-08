@@ -1,6 +1,6 @@
 import Security from '@services/security';
-import ApiError from '../errors/ApiError';
 import { errorMessage } from '@lib/constants';
+import { ApiError } from '@errors';
 
 export const verifyUser = async (req, res, next) => {
   try {

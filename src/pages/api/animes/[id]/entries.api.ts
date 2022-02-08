@@ -49,7 +49,7 @@ handler.delete(verifyUser, async (req, res) => {
 
   const animeUser = await EntryModel.delete(userId, +animeId);
 
-  res.send({ success: true, animeUser });
+  res.status(204).send({ success: true, animeUser });
 });
 
 export default withSessionApi(handler);

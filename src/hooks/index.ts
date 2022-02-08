@@ -6,3 +6,4 @@ export { default as useCallbackRef } from './useCallbackRef';
 export { default as useContextFactory } from './useContextFactory';
 export { default as useAsyncEffect } from './useAsyncEffect';
 export { default as useClockFromDate } from './useClockFromDate';
+export { default as useKeyPress } from './useKeyPress';

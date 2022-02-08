@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
-import SimpleBar from 'simplebar-react';
 import { BeatLoader } from 'react-spinners';
+import SimpleBar from 'simplebar-react';
 import classnames from 'classnames';
 
 import { Animes, Users } from '@types';
-import { AnimesApi } from '@api';
-import toast from '@helpers/toastr';
 import { routes } from '@lib/constants';
+import { AnimesApi } from '@api';
+import { useKeyPress } from '@hooks';
+import toast from '@helpers/toastr';
 import timeout from '@helpers/timeout';
 
 interface Props {
@@ -21,9 +23,32 @@ const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
   const [animes, setAnimes] = useState<Animes>([]);
   const [users, setUsers] = useState<Users>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [iSelected, setISelected] = useState<number>(0);
+
+  const router = useRouter();
+
+  const arrowUp = useKeyPress('ArrowUp');
+  const arrowDown = useKeyPress('ArrowDown');
+  const enterPress = useKeyPress('Enter');
+
+  useEffect(() => {
+    if (arrowDown && iSelected < animes.length) setISelected(iSelected + 1);
+  }, [arrowDown]);
+
+  useEffect(() => {
+    if (arrowUp && iSelected > 0) setISelected(iSelected - 1);
+  }, [arrowUp]);
+
+  useEffect(() => {
+    if (enterPress) {
+      router.push(`/animes/${animes[iSelected].slug}`).then(() => setOpen(false));
+    }
+  }, [enterPress]);
 
   const handleChangeQuery = ({ target: { value } }) => {
     setQuery(value);
+    setOpen(true);
+    setISelected(0);
 
     if (value.length > 3) {
       setLoading(true);
@@ -77,12 +102,15 @@ const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
                 </div>
                 {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>
-                    {animes.map((anime) => (
+                    {animes.map((anime, index) => (
                       <Link key={anime.id} href={routes.animes.anime(anime.slug)}>
                         <a>
                           <div
                             id={`anime-search-${anime.id}`}
-                            className="my-0.5 py-1.5 px-3 bg-white hover:bg-gray-200 cursor-pointer"
+                            className={classnames(
+                              'my-0.5 py-1.5 px-3 bg-white hover:bg-gray-200 cursor-pointer',
+                              { 'bg-gray-200': index === iSelected }
+                            )}
                           >
                             <div>
                               <h6 className="truncate">{anime.canonicalTitle}</h6>
