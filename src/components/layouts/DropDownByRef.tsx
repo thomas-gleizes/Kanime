@@ -19,7 +19,7 @@ const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
     if (innerRef?.current) {
       innerRef.current.classList.add(identifier);
     } else throw new Error('Dropdown by ref must provide a valide ref');
-  }, [innerRef]);
+  }, [innerRef]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (innerRef) {
@@ -27,7 +27,7 @@ const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
 
       innerRef.current.addEventListener('click', toggleOpen, true);
 
-      return () => innerRef?.current?.removeEventListener('click', toggleOpen, true);
+      return () => innerRef.current.removeEventListener('click', toggleOpen, true);
     }
   }, [innerRef, open]);
 

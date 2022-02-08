@@ -1,4 +1,4 @@
-export default function (str: string) {
+export default function jsonParser(str: string) {
   try {
     return JSON.parse(str);
   } catch (e) {

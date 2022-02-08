@@ -28,7 +28,7 @@ const ConfirmDialog: React.FunctionComponent = () => {
         document.removeEventListener('keydown', listener);
       };
     }
-  }, [isOpen]);
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClose = (result: boolean) => {
     dialog.resolve(result);

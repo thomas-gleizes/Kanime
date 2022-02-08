@@ -35,7 +35,7 @@ const InputRange: React.FunctionComponent<Props> = ({ min, max, step, onChange }
 
   useEffect(
     () => onChange && onChange({ min: minValue, max: maxValue }),
-    [minValue, maxValue]
+    [minValue, maxValue] // eslint-disable-line react-hooks/exhaustive-deps
   );
 
   return (

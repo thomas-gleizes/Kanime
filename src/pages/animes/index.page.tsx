@@ -55,7 +55,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
         }
       }
     })();
-  }, [percent]);
+  }, [percent]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Layout>

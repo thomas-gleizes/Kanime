@@ -29,7 +29,7 @@ const PromptDialog: React.FunctionComponent = () => {
         document.removeEventListener('keydown', listener);
       };
     }
-  }, [isOpen]);
+  }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleClose = (value: string | false) => {
     dialog.resolve(value);
