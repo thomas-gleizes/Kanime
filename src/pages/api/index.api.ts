@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 
-router.all(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.all(async (req: NextApiRequest, res: NextApiResponse) => {
   const routes = {
     '/': {
       GET: {
@@ -33,6 +33,5 @@ router.all(async (req: NextApiRequest, res: NextApiResponse) => {
 
   res.send({ routes });
 });
-export default function (req: NextApiRequest, res: NextApiResponse) {
-  router.handler(req, res);
-}
+
+export default handler;

@@ -2,13 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import type { EntryStatus, Entry } from '@prisma/client';
 
 import { DefaultResponseData } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { AnimeModel, EntryModel } from '@models';
 import { ApiError } from '@errors';
 import { verifyUser, withSessionApi } from '@services/session';
 import { errorMessage } from '@lib/constants';
 import { EntriesMapper } from '@mapper';
-import anime from '@lib/models/anime';
 
 interface Data extends DefaultResponseData {
   animeUser: Entry;
@@ -28,10 +27,10 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) =
   res.send({ success: true, animeUser });
 };
 
-router.post(verifyUser, createOrUpdate);
-router.patch(verifyUser, createOrUpdate);
+handler.post(verifyUser, createOrUpdate);
+handler.patch(verifyUser, createOrUpdate);
 
-router.get(verifyUser, async (req, res) => {
+handler.get(verifyUser, async (req, res) => {
   const { id: animeId } = req.query;
 
   const entry = EntriesMapper.one(
@@ -41,7 +40,7 @@ router.get(verifyUser, async (req, res) => {
   res.send({ success: true, entry });
 });
 
-router.delete(verifyUser, async (req, res) => {
+handler.delete(verifyUser, async (req, res) => {
   const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
 
@@ -52,6 +51,5 @@ router.delete(verifyUser, async (req, res) => {
 
   res.send({ success: true, animeUser });
 });
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
-  router.handler(req, res);
-});
+
+export default withSessionApi(handler);

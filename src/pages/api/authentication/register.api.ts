@@ -1,15 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { ResDefaultError, ResRegister } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import Security from '@services/security';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { withSessionApi } from '@services/session';
-import { ApiError, SchemaError } from '@errors';
-// import { registerSchema } from '@validations/users';
+import { ApiError } from '@errors';
 
-router.post(
+handler.post(
   async (req: NextApiRequest, res: NextApiResponse<ResRegister | ResDefaultError>) => {
     const { body: userData, session } = req;
 
@@ -48,6 +47,4 @@ router.post(
   }
 );
 
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
-  router.handler(req, res);
-});
+export default withSessionApi(handler);

@@ -1,88 +1,30 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import nc from 'next-connect';
 
-import { Method, Middleware } from '@types';
 import { ApiError, SchemaError } from '@errors';
-import logger from '@services/logger';
 import { errorMessage } from '@lib/constants';
+import logger from '@services/logger';
 
-class Handler {
-  private readonly _get: Middleware[];
-  private readonly _post: Middleware[];
-  private readonly _put: Middleware[];
-  private readonly _patch: Middleware[];
-  private readonly _delete: Middleware[];
-
-  constructor() {
-    this._get = [];
-    this._post = [];
-    this._put = [];
-    this._patch = [];
-    this._delete = [];
-  }
-
-  private add(method: Method, ...middlewares: Middleware[]): void {
-    const key = `_${method.toLowerCase()}`;
-
-    for (const middleware of middlewares) {
-      this[key].push(middleware);
+const handler = nc<NextApiRequest, NextApiResponse>({
+  onError: (err, req, res, next) => {
+    if (err instanceof ApiError) {
+      res.status(err.code).send({ error: err.message });
+    } else if (err instanceof SchemaError) {
+      res.status(err.code).send({ error: err.message, keys: err.data });
+    } else if (process.env.NODE_ENV !== 'production') {
+      console.error(err.stack);
+      res.status(500).send(err.message);
+    } else {
+      res.status(500).send(errorMessage.INTERNAL_ERROR);
     }
-  }
+  },
+  onNoMatch: (req, res) => {
+    res.status(405).send({ error: errorMessage.METHOD_NOT_ALLOWED });
+  },
+}).use((req, res, next) => {
+  logger(req).catch((e) => console.log('log failed :', e));
 
-  public get(...middlewares: Middleware[]): void {
-    this.add('GET', ...middlewares);
-  }
+  next();
+});
 
-  public post(...middlewares: Middleware[]): void {
-    this.add('POST', ...middlewares);
-  }
-
-  public put(...middlewares: Middleware[]): void {
-    this.add('PUT', ...middlewares);
-  }
-
-  public patch(...middlewares: Middleware[]): void {
-    this.add('PATCH', ...middlewares);
-  }
-
-  public delete(...middlewares: Middleware[]): void {
-    this.add('DELETE', ...middlewares);
-  }
-
-  public all(...middlewares: Middleware[]) {
-    this.get(...middlewares);
-    this.post(...middlewares);
-    this.put(...middlewares);
-    this.patch(...middlewares);
-    this.delete(...middlewares);
-  }
-
-  public async handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
-    const { method } = req;
-
-    const routes = this['_' + method.toLowerCase()];
-
-    logger(req).catch((e) => console.log('log failed :', e));
-
-    try {
-      if (!routes.length) throw new ApiError('405', errorMessage.METHOD_NOT_ALLOWED);
-
-      for (const route of routes) {
-        await route(req, res);
-      }
-    } catch (e) {
-      if (e instanceof ApiError) {
-        res.status(e.code).send({ error: e.message });
-      } else if (e instanceof SchemaError) {
-        res.status(e.code).send({ error: e.message, keys: e.data });
-      } else if (process.env.NODE_ENV !== 'production') {
-        console.error('Error :', e);
-
-        res.status(500).send(e.message);
-      } else {
-        res.status(500).send(errorMessage.INTERNAL_ERROR);
-      }
-    }
-  }
-}
-
-export default new Handler();
+export default handler;

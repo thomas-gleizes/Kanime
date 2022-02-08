@@ -1,17 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Users, DefaultResponseData } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { AnimeModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 import { errorMessage } from '@lib/constants';
+import { withSessionApi } from '@services/session';
 
 interface Data extends DefaultResponseData {
   users: Users;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const anime = await AnimeModel.findById(+id);
@@ -22,6 +23,4 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, users, params: req.query });
 });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  router.handler(req, res);
-}
+export default withSessionApi(handler);

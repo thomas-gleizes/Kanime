@@ -18,13 +18,20 @@ function replaceKey(data: any) {
   return { ...data, ...result };
 }
 
+function ip(req): string {
+  const str: string = requestIp.getClientIp(req);
+  const arr = str.split(':');
+
+  return arr[arr.length - 1];
+}
+
 export default async function logger(req: NextApiRequest) {
   const userId = req.session?.user?.id || null;
 
   await LogModel.create({
     route: req.url.split('?')[0],
     method: req.method as Method,
-    ip: requestIp.getClientIp(req),
+    ip: ip(req),
     body: replaceKey(req.body),
     query: replaceKey(req.query),
     userId: userId,

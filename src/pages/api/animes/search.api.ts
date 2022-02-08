@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { ResAnimesSearch, ResDefaultError } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';
+import { withSessionApi } from '@services/session';
 
-router.get(
+handler.get(
   async (
     req: NextApiRequest,
     res: NextApiResponse<ResAnimesSearch | ResDefaultError>
@@ -28,6 +29,4 @@ router.get(
   }
 );
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  router.handler(req, res);
-}
+export default withSessionApi(handler);

@@ -1,5 +1,10 @@
 // this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
-import type { NextApiRequest } from 'next';
+import type {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  NextApiHandler,
+  NextApiRequest,
+} from 'next';
 import type { IronSessionOptions } from 'iron-session';
 
 import { User } from '@types';
@@ -18,10 +23,12 @@ const sessionOptions: IronSessionOptions = {
 };
 
 export const withSessionSsr = (handler) => withIronSessionSsr(handler, sessionOptions);
-export const withSessionApi = (handler) =>
+export const withSessionApi = (handler: NextApiHandler) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
-export const verifyUser = async (req: NextApiRequest) => {
+export const verifyUser = async (req, res, next) => {
+  console.log('Req', req);
+
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const content = Security.getTokenPayload(token);
@@ -33,11 +40,15 @@ export const verifyUser = async (req: NextApiRequest) => {
   } catch (e) {
     throw new ApiError('401', errorMessage.ACCESS_DENIED);
   }
+
+  next();
 };
 
-export const verifyAdmin = async (req: NextApiRequest) => {
-  await verifyUser(req);
+export const verifyAdmin = async (req, res, next) => {
+  await verifyUser(req, res, next);
   if (!req.session.user.isAdmin) throw new ApiError(401, errorMessage.ACCESS_DENIED);
+
+  next();
 };
 
 // This is where we specify the typings of req.session.*

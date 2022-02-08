@@ -1,16 +1,17 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { ApiError } from '@errors';
 import { UsersMapper } from '@mapper';
 import { UserModel } from '@models';
+import { withSessionApi } from '@services/session';
 
 interface Data extends DefaultResponseData {
   users: Users;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { query, limit, skip } = req.query;
 
   if (!query) throw new ApiError(400, 'query is required');
@@ -22,6 +23,4 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, users: users });
 });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  router.handler(req, res);
-}
+export default withSessionApi(handler);

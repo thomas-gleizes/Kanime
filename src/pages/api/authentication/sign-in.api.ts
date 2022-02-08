@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import Security from '@services/security';
 import { withSessionApi } from '@services/session';
 import { UserModel } from '@models';
@@ -14,7 +14,7 @@ interface Data extends DefaultResponseData {
   token: string;
 }
 
-router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { body, session } = req;
 
   if (session) await session.destroy();
@@ -37,6 +37,4 @@ router.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, user: user, token: token });
 });
 
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
-  router.handler(req, res);
-});
+export default withSessionApi(handler);

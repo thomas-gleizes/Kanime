@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Anime, ResAnimes, ResDefaultError } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { withSessionApi } from '@services/session';
 
-router.get(
+handler.get(
   async (req: NextApiRequest, res: NextApiResponse<ResAnimes | ResDefaultError>) => {
     const { limit, skip } = req.query;
     const { user } = req.session;
@@ -19,6 +19,4 @@ router.get(
   }
 );
 
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) =>
-  router.handler(req, res)
-);
+export default withSessionApi(handler);

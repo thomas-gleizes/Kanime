@@ -2,10 +2,10 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { verifyAdmin, withSessionApi } from '@services/session';
 import connexion from '@services/connexion';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import KitsuApi from '@lib/axios/kitsuApi';
 
-router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
+handler.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   let categories: Array<any> = [];
   let count: number = await connexion.category.count();
   let limit: number = 0;
@@ -35,6 +35,4 @@ router.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse) => {
   res.send({ success: true, categories });
 });
 
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
-  router.handler(req, res);
-});
+export default withSessionApi(handler);

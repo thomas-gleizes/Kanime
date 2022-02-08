@@ -1,18 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 import { errorMessage } from '@lib/constants';
+import { withSessionApi } from '@services/session';
 
 interface Data extends DefaultResponseData {
   users: Users;
   length: number;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
@@ -25,6 +26,4 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, users, length: users.length });
 });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  router.handler(req, res);
-}
+export default withSessionApi(handler);

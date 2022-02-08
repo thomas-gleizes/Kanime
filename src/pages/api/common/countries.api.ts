@@ -1,20 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Country } from '@prisma/client';
 
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { CountryModel } from '@models';
 import { DefaultResponseData } from '@types';
+import { withSessionApi } from '@services/session';
 
 interface Data extends DefaultResponseData {
   countries: Array<Country>;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const countries = await CountryModel.all();
 
   res.send({ success: true, countries });
 });
 
-export default function handler(req, res) {
-  router.handler(req, res);
-}
+export default withSessionApi(handler);

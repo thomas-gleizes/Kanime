@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
 import { verifyUser, withSessionApi } from '@services/session';
-import router from '@lib/routing/handler';
+import handler from '@lib/routing/handler';
 import { UserFollowModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
@@ -13,7 +13,7 @@ interface Data extends DefaultResponseData {
   length: number;
 }
 
-router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
@@ -24,7 +24,7 @@ router.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, users, length: users.length });
 });
 
-router.post(
+handler.post(
   verifyUser,
   async (req: NextApiRequest, res: NextApiResponse<DefaultResponseData>) => {
     const { query, session } = req;
@@ -39,7 +39,7 @@ router.post(
   }
 );
 
-router.delete(
+handler.delete(
   verifyUser,
   async (req: NextApiRequest, res: NextApiResponse<DefaultResponseData>) => {
     const { query, session } = req;
@@ -54,6 +54,4 @@ router.delete(
   }
 );
 
-export default withSessionApi((req: NextApiRequest, res: NextApiResponse) => {
-  router.handler(req, res);
-});
+export default withSessionApi(handler);
