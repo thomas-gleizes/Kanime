@@ -21,7 +21,6 @@ async function main() {
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
       city: 'Montpellier',
-      country_id: 73,
       gender: 'Male',
     },
   });

@@ -1,7 +1,0 @@
--- AlterTable
-ALTER TABLE `entries` ADD COLUMN `finish_at` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
-    ADD COLUMN `note` MEDIUMTEXT NULL,
-    ADD COLUMN `progress` SMALLINT NOT NULL DEFAULT 0,
-    ADD COLUMN `rating` DOUBLE NULL,
-    ADD COLUMN `started_at` DATETIME(3) NULL DEFAULT CURRENT_TIMESTAMP(3),
-    ADD COLUMN `visibility` ENUM('private', 'public', 'follow') NOT NULL DEFAULT 'public';
