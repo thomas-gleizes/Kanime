@@ -28,8 +28,9 @@ BEGIN
     SET popularity_rank = (SELECT ranking
                            FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.popularity_count DESC) as ranking
                                  FROM animes a2
-                                 WHERE a2.popularity_count > 0) AS tab
-                           WHERE tab.id = a.id);
+                                 WHERE a2.popularity_count != 0) AS tab
+                           WHERE tab.id = a.id)
+    WHERE popularity_count != 0;
 
     IF NEW.rating IS NOT NULL THEN
         UPDATE animes
@@ -40,8 +41,9 @@ BEGIN
         SET rating_rank = (SELECT ranking
                            FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC) as ranking
                                  FROM animes a2
-                                 WHERE a2.rating_average IS NOT NULL) AS tab
-                           WHERE tab.id = a.id);
+                                 WHERE a2.rating_average != 0) AS tab
+                           WHERE tab.id = a.id)
+        WHERE rating_average != 0;
     END IF;
 END;
 
@@ -56,8 +58,9 @@ BEGIN
     SET popularity_rank = (SELECT ranking
                            FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.popularity_count DESC) as ranking
                                  FROM animes a2
-                                 WHERE a2.popularity_count > 0) AS tab
-                           WHERE tab.id = a.id);
+                                 WHERE a2.popularity_count != 0) AS tab
+                           WHERE tab.id = a.id)
+    WHERE popularity_count != 0;
 
     IF OLD.rating IS NOT NULL THEN
         UPDATE animes
@@ -68,8 +71,9 @@ BEGIN
         SET rating_rank = (SELECT ranking
                            FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC) as ranking
                                  FROM animes a2
-                                 WHERE a2.rating_average IS NOT NULL) AS tab
-                           WHERE tab.id = a.id);
+                                 WHERE a2.rating_average != 0) AS tab
+                           WHERE tab.id = a.id)
+        WHERE rating_average != 0;
     END IF;
 END;
 
@@ -80,14 +84,15 @@ CREATE OR REPLACE TRIGGER update_animes_after_entries_update
 BEGIN
     IF ((OLD.rating != NEW.rating)) THEN
         UPDATE animes
-        SET rating_average = (SELECT ROUND(AVG(rating), 2) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating), 2) FROM entries WHERE rating != 0 AND anime_id = NEW.anime_id)
         WHERE id = NEW.anime_id;
 
         UPDATE animes a
         SET rating_rank = (SELECT ranking
                            FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC) as ranking
                                  FROM animes a2
-                                 WHERE a2.rating_average IS NOT NULL) AS tab
-                           WHERE tab.id = a.id);
+                                 WHERE a2.rating_average != 0) AS tab
+                           WHERE tab.id = a.id)
+        WHERE rating_average != 0;
     END IF;
 END;
