@@ -37,8 +37,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 
-# idea
+# IDE
 .idea
+.vscode
 
 # users media
 /public/media/users/*
