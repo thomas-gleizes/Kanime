@@ -39,6 +39,8 @@ type Category = {
   totalMediaCount: number;
 };
 
+type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
+
 type Categories = Array<Category>;
 
 type Anime = {

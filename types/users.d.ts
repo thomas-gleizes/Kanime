@@ -6,6 +6,8 @@ interface UserMediaHandling {
   type: string;
 }
 
+type Visibility = 'private' | 'public' | 'limited';
+
 declare type User = {
   id: number;
   username: string;

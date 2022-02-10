@@ -97,6 +97,7 @@ CREATE TABLE `users` (
     `country_id` INTEGER NULL,
     `follow_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     `follower_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+    `visibility` ENUM('private', 'public', 'limited') NOT NULL DEFAULT 'public',
     `is_admin` BOOLEAN NOT NULL DEFAULT false,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -116,7 +117,7 @@ CREATE TABLE `entries` (
     `started_at` DATETIME(3) NULL DEFAULT NULL,
     `finish_at` DATETIME(3) NULL DEFAULT NULL,
     `note` MEDIUMTEXT NULL,
-    `visibility` ENUM('private', 'public', 'follow') NOT NULL DEFAULT 'public',
+    `visibility` ENUM('private', 'public', 'limited') NOT NULL DEFAULT 'public',
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 

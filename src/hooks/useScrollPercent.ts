@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import isBrowser from '@helpers/isBrowser';
 
 function getPercent(): number {
-  if (process.browser) {
+  if (isBrowser()) {
     const scrollTop = document.documentElement.scrollTop;
     const documentHeight = document.documentElement.offsetHeight;
     const windowHeight = window.innerHeight;
@@ -14,7 +15,7 @@ export default function useScrollPercent(): number {
   const [percent, setPercent] = useState<number>(getPercent());
 
   useEffect(() => {
-    if (process.browser) {
+    if (isBrowser()) {
       const listener = () => setPercent(getPercent());
 
       document.addEventListener('scroll', listener);

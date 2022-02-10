@@ -1,7 +1,19 @@
-import { Entry, EntryStatus, Prisma } from '@prisma/client';
+import { Entry, EntryStatus, Prisma, Visibility } from '@prisma/client';
 
 import Model from '@lib/models/model';
 import connexion, { ConnexionType } from '@services/connexion';
+
+export type upsertData = {
+  userId: number;
+  animeId: number;
+  status: EntryStatus;
+  rating: number | null;
+  progress: number;
+  note: string;
+  startAt: Date;
+  finishAt: Date;
+  visibility: Visibility;
+};
 
 class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
   constructor(connexion: ConnexionType) {
@@ -18,11 +30,7 @@ class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
       },
     });
 
-  public upsert = (
-    userId: number,
-    animeId: number,
-    status: EntryStatus
-  ): Promise<Entry> =>
+  public upsert = ({ userId, animeId, ...data }: upsertData): Promise<Entry> =>
     this.model.upsert({
       where: {
         anime_id_user_id: {
@@ -30,8 +38,26 @@ class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
           anime_id: animeId,
         },
       },
-      update: { status: status },
-      create: { anime_id: animeId, user_id: userId, status: status },
+      update: {
+        status: data.status,
+        rating: data.rating,
+        progress: data.progress,
+        note: data.note,
+        started_at: data.startAt,
+        finish_at: data.finishAt,
+        visibility: data.visibility,
+      },
+      create: {
+        anime_id: animeId,
+        user_id: userId,
+        status: data.status,
+        rating: data.rating,
+        progress: data.progress,
+        note: data.note,
+        started_at: data.startAt,
+        finish_at: data.finishAt,
+        visibility: data.visibility,
+      },
     });
 
   public delete = (userId: number, animeId: number): Promise<Entry> =>

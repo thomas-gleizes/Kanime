@@ -36,11 +36,11 @@ CREATE OR REPLACE TRIGGER update_animes_after_entries_delete
     ON entries
     FOR EACH ROW
 BEGIN
-    UPDATE animes SET popularity_count = IF(popularity_count - 1 = 0, NULL, popularity_count - 1), popularity_rank = NULL WHERE id = OLD.anime_id;
+    UPDATE animes SET popularity_count = IF(popularity_count - 1 = 0, NULL, popularity_count - 1) WHERE id = OLD.anime_id;
 
     IF OLD.rating IS NOT NULL THEN
         UPDATE animes
-        SET rating_rank = NULL, rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = OLD.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = OLD.anime_id)
         WHERE id = OLD.anime_id;
     END IF;
 END;
@@ -52,7 +52,7 @@ CREATE OR REPLACE TRIGGER update_animes_after_entries_update
 BEGIN
     IF ((NEW.rating IS NOT NULL AND OLD.rating IS NULL) OR (OLD.rating IS NOT NULL AND NEW.rating IS NULL) OR (OLD.rating != NEW.rating)) THEN
         UPDATE animes
-        SET rating_rank = NULL, rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
         WHERE id = NEW.anime_id;
     END IF;
 END;
