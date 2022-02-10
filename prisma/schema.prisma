@@ -124,8 +124,8 @@ model Entry {
   status     EntryStatus @default(Wanted)
   rating     Float?
   progress   Int         @default(0) @db.SmallInt
-  started_at DateTime?   @default(now())
-  finish_at  DateTime?   @default(now())
+  started_at DateTime?
+  finish_at  DateTime?
   note       String?     @db.MediumText
   visibility Visibility  @default(public)
   created_at DateTime    @default(now())
