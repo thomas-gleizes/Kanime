@@ -46,6 +46,7 @@ const Header: React.FunctionComponent = () => {
   const {
     scrollHeight,
     activeTransparentState: [activeTransparent],
+    header,
   } = useLayoutContext();
 
   const avatarRef = useRef<HTMLImageElement>();
@@ -58,6 +59,8 @@ const Header: React.FunctionComponent = () => {
     if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250);
     else setHeaderTransparent(false);
   }, [activeTransparent, scrollHeight, headerHovered]);
+
+  if (header.hiddenHeader) return null;
 
   return (
     <header
