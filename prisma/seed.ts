@@ -25,14 +25,14 @@ async function main() {
     },
   });
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 200; i++) {
     const username: string = faker.internet.userName();
 
     await prisma.user.create({
       data: {
         email: faker.internet.email(),
         username: username,
-        password: await Security.hash('azerty' + username),
+        password: await Security.hash(password + username),
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
         bio: faker.lorem.sentence(),

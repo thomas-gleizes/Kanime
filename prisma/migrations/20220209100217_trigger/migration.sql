@@ -26,7 +26,7 @@ BEGIN
 
     IF NEW.rating IS NOT NULL THEN
         UPDATE animes
-        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 2) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
         WHERE id = NEW.anime_id;
     END IF;
 END;
@@ -40,7 +40,7 @@ BEGIN
 
     IF OLD.rating IS NOT NULL THEN
         UPDATE animes
-        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = OLD.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 2) FROM entries WHERE rating IS NOT NULL AND anime_id = OLD.anime_id)
         WHERE id = OLD.anime_id;
     END IF;
 END;
@@ -52,7 +52,7 @@ CREATE OR REPLACE TRIGGER update_animes_after_entries_update
 BEGIN
     IF ((NEW.rating IS NOT NULL AND OLD.rating IS NULL) OR (OLD.rating IS NOT NULL AND NEW.rating IS NULL) OR (OLD.rating != NEW.rating)) THEN
         UPDATE animes
-        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 1) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
+        SET rating_average = (SELECT ROUND(AVG(rating) * 10, 2) FROM entries WHERE rating IS NOT NULL AND anime_id = NEW.anime_id)
         WHERE id = NEW.anime_id;
     END IF;
 END;
@@ -63,7 +63,7 @@ BEGIN
 
     UPDATE animes a
     SET popularity_rank = (SELECT ranking
-                           FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.popularity_count DESC) as ranking
+                           FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.popularity_count DESC, a2.created_at) as ranking
                                  FROM animes a2
                                  WHERE a2.popularity_count IS NOT NULL) AS tab
                            WHERE tab.id = a.id)
@@ -71,7 +71,7 @@ BEGIN
 
     UPDATE animes a
     SET rating_rank = (SELECT ranking
-                       FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC) as ranking
+                       FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC, a2.created_at) as ranking
                              FROM animes a2
                              WHERE a2.rating_average IS NOT NULL) AS tab
                        WHERE tab.id = a.id)
