@@ -19,10 +19,10 @@ model Anime {
   season_year      String?         @db.VarChar(4)
   date_begin       DateTime?       @db.Date
   date_end         DateTime?       @db.Date
-  rating_average   Float?          @default(0)
-  rating_rank      Int?            @default(0) @db.UnsignedInt
-  popularity_count Float?          @default(0)
-  popularity_rank  Int?            @default(0) @db.UnsignedInt
+  rating_average   Float?
+  rating_rank      Int?            @db.UnsignedInt
+  popularity_count Float?
+  popularity_rank  Int?            @db.UnsignedInt
   type             AnimeType?
   poster           String?         @db.LongText
   cover            String?         @db.LongText

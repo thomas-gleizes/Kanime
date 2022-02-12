@@ -17,39 +17,39 @@ async function run() {
   for (const anime of animes) {
     console.log(anime.id, anime.slug);
 
-    const newAnime = await prisma.anime.upsert({
-      where: { kitsu_id: anime.kitsu_id },
-      update: {},
-      create: {
-        kitsu_id: anime.kitsu_id,
-        slug: anime.slug,
-        canonical_title: anime.canonical_title,
-        titles: anime.titles,
-        synopsis: anime.synopsis,
-        description: anime.synopsis,
-        season: getSeason(new Date(anime.date_begin)),
-        season_year: `${new Date(anime.date_begin).getFullYear()}`,
-        date_begin: anime.date_begin,
-        date_end: anime.date_end,
-        rating_average: null,
-        rating_rank: null,
-        popularity_count: null,
-        popularity_rank: null,
-        type: anime.type as AnimeType,
-        poster: anime.poster,
-        cover: anime.cover,
-        episode_count: anime.episode_count,
-        episode_length: anime.episode_length,
-        status: anime.status as AnimeStatus,
-      },
-    });
-
-    await prisma.animeImport.update({
-      where: { id: anime.id },
-      data: {
-        anime_id: newAnime.id,
-      },
-    });
+    await prisma.anime
+      .create({
+        data: {
+          kitsu_id: anime.kitsu_id,
+          slug: anime.slug,
+          canonical_title: anime.canonical_title,
+          titles: anime.titles,
+          synopsis: anime.synopsis,
+          description: anime.synopsis,
+          season: getSeason(new Date(anime.date_begin)),
+          season_year: `${new Date(anime.date_begin).getFullYear()}`,
+          date_begin: anime.date_begin,
+          date_end: anime.date_end,
+          rating_average: null,
+          rating_rank: null,
+          popularity_count: null,
+          popularity_rank: null,
+          type: anime.type as AnimeType,
+          poster: anime.poster,
+          cover: anime.cover,
+          episode_count: anime.episode_count,
+          episode_length: anime.episode_length,
+          status: anime.status as AnimeStatus,
+        },
+      })
+      .then(async (newAnime) => {
+        await prisma.animeImport.update({
+          where: { id: anime.id },
+          data: {
+            anime_id: newAnime.id,
+          },
+        });
+      });
   }
 }
 

@@ -81,5 +81,5 @@ END;
 SET GLOBAL event_scheduler = ON;
 
 CREATE OR REPLACE EVENT event_update_animes_ranking
-    ON SCHEDULE EVERY 15 MINUTE STARTS NOW()
+    ON SCHEDULE EVERY 1 HOUR STARTS NOW()
     DO CALL update_animes_ranking();
