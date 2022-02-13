@@ -3,46 +3,63 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: "asap";
-    src: url("/fonts/asap/Asap-VariableFont_wght.ttf");
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
+  font-family: 'asap';
+  src: url('/fonts/asap/Asap-VariableFont_wght.ttf');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
 }
 
 body {
-    padding: 0;
-    margin: 0;
-    font-family: Asap, sans-serif
+  padding: 0;
+  margin: 0;
+  font-family: Asap, sans-serif;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 * {
-    box-sizing: border-box;
-    user-select: none;
+  box-sizing: border-box;
+  user-select: none;
 }
 
-p, span, h1, h2, h3, h4, h5, h6, p > *, h1 > *, h2 > *, h3 > *, h4 > *, h5 > *, h6 > * {
-    user-select: text;
+p,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p > *,
+h1 > *,
+h2 > *,
+h3 > *,
+h4 > *,
+h5 > *,
+h6 > * {
+  user-select: text;
 }
 
 .p-truncate-9 {
-    display: -webkit-box;
-    -webkit-line-clamp: 9;
-    -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 9;
+  -webkit-box-orient: vertical;
 }
 
 .p-truncate-5 {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 
-
-input, button, select, option, textarea {
-    outline: unset !important;
+input,
+button,
+select,
+option,
+textarea {
+  outline: unset !important;
 }

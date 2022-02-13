@@ -10,7 +10,9 @@
     "import": "ts-node -O '{\"module\": \"commonjs\"}' scripts/importAnimes.ts",
     "convert": "ts-node -O '{\"module\": \"commonjs\"}' scripts/convertAnimes.ts",
     "test": "jest",
-    "format": "npx prisma format"
+    "format": "npx prisma format",
+    "prettier": "prettier --write ./src && prettier --write ./types && prettier --write ./test",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
@@ -50,6 +52,7 @@
     "eslint": "^8.4.1",
     "eslint-config-next": "^12.0.7",
     "faker": "^5.5.3",
+    "husky": "^7.0.4",
     "jest": "^27.4.5",
     "postcss": "^8.4.4",
     "prettier": "^2.5.1",
