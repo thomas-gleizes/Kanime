@@ -4,7 +4,7 @@ import { Form, Formik, FormikProps } from 'formik';
 
 import { Anime, Entry } from '@types';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
-import { Select } from '@components/common/formik';
+import { Field, Select } from '@components/common/formik';
 
 interface Props {
   anime: Anime;
@@ -30,11 +30,7 @@ const EditAnimesEntries: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      toggle={toggle}
-      className="m-auto rounded-md max-w-700 w-full mt-28 bg-white"
-    >
+    <Modal isOpen={isOpen} toggle={toggle} size="xs">
       <ModalHeader>
         <ModalTitle>{anime.canonicalTitle}</ModalTitle>
       </ModalHeader>
@@ -64,14 +60,7 @@ const FormContent: React.FunctionComponent<FormikProps<values>> = ({
         </Select>
       </div>
       <div>
-        <label>Avancement</label>
-        <input
-          type="number"
-          name="progress"
-          value={values.progress}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+        <Field type="number" name="progress" label="Progression" />
       </div>
     </Form>
   );

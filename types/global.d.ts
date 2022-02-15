@@ -19,11 +19,23 @@ type modelParams = {
   skip?: number | string | string[];
 };
 
-type CustomDate = Date | string;
+declare type CustomDate = Date | string;
 
-type TailwindcssGradiant = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
+declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-type TailwindcssColors =
+declare type TailwindcssGradiant =
+  | 50
+  | 100
+  | 200
+  | 300
+  | 400
+  | 500
+  | 600
+  | 700
+  | 800
+  | 900;
+
+declare type TailwindcssColors =
   | 'slate'
   | 'gray'
   | 'zinc'

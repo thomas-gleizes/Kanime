@@ -12,6 +12,8 @@ import Title from '@layouts/Title';
 import classnames from 'classnames';
 import KitsuButton from '@components/common/KitsuButton';
 import Button from '@components/common/Button';
+import EditAnimesEntries from '@components/modal/EditAnimesEntries';
+import { useToggle } from '@hooks';
 
 interface Props {
   children: any;
@@ -55,6 +57,8 @@ const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error })
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
+
+  const [openModal, toggleModal] = useToggle();
 
   useEffect(() => {
     setHeaderTransparent(true);
@@ -113,7 +117,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error })
                       <KitsuButton slug={anime.slug} />
                     </div>
                     <div>
-                      <Button outline color="amber">
+                      <Button outline color="amber" onClick={toggleModal}>
                         Ajouter
                       </Button>
                     </div>
@@ -127,6 +131,7 @@ const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error })
           </div>
         </div>
       </div>
+      <EditAnimesEntries anime={anime} isOpen={openModal} toggle={toggleModal} />
     </>
   );
 };
