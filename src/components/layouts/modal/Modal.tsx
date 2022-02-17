@@ -11,6 +11,7 @@ interface ModalProps {
   toggle: () => void;
   size?: Size;
   children: React.ReactNode;
+  className?: string;
 }
 
 const Modal: React.FunctionComponent<ModalProps> = ({
