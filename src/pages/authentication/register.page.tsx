@@ -45,7 +45,7 @@ const RegisterPage: NextPage = () => {
           onSubmit={handleSubmit}
           validationSchema={registerSchema}
         >
-          <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6 space-y-3">
+          <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6">
             <div className="mb-4">
               <p className="text-gray-600">Inscription</p>
               <h2 className="text-xl font-bold">

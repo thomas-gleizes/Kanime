@@ -92,28 +92,29 @@ model AnimeCategory {
 }
 
 model User {
-  id              Int          @id @default(autoincrement())
-  username        String       @unique
-  email           String       @unique
-  password        String
-  avatar_path     String?
-  background_path String?
-  bio             String?      @db.Text
-  birthday        DateTime?    @db.Date
-  gender          Gender       @default(Secret)
-  city            String?
-  country_id      Int?
-  follow_count    Int          @default(0) @db.UnsignedSmallInt
-  follower_count  Int          @default(0) @db.UnsignedSmallInt
-  visibility      Visibility   @default(public)
-  is_admin        Boolean      @default(false)
-  created_at      DateTime     @default(now()) @db.Timestamp(0)
-  updated_at      DateTime     @default(now()) @db.Timestamp(0)
-  animes          Entry[]
-  follows         UserFollow[] @relation("follows")
-  followers       UserFollow[] @relation("followers")
-  country         Country?     @relation(fields: [country_id], references: [id])
-  Log             Log[]
+  id                   Int          @id @default(autoincrement())
+  username             String       @unique
+  email                String       @unique
+  password             String
+  avatar_path          String?
+  background_path      String?
+  bio                  String?      @db.Text
+  birthday             DateTime?    @db.Date
+  gender               Gender       @default(Secret)
+  city                 String?
+  country_id           Int?
+  reset_password_token String?      @db.VarChar(255)
+  follow_count         Int          @default(0) @db.UnsignedSmallInt
+  follower_count       Int          @default(0) @db.UnsignedSmallInt
+  visibility           Visibility   @default(public)
+  is_admin             Boolean      @default(false)
+  created_at           DateTime     @default(now()) @db.Timestamp(0)
+  updated_at           DateTime     @default(now()) @db.Timestamp(0)
+  animes               Entry[]
+  follows              UserFollow[] @relation("follows")
+  followers            UserFollow[] @relation("followers")
+  country              Country?     @relation(fields: [country_id], references: [id])
+  Log                  Log[]
 
   @@map("users")
 }

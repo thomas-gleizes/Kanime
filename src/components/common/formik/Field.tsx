@@ -1,15 +1,17 @@
 import React, { useMemo } from 'react';
-import { Field as FormikField, useField } from 'formik';
+import { useField } from 'formik';
 import classnames from 'classnames';
+import { Input } from '@components/common/inputs';
+import { InputProps } from '@components/common/inputs/Input';
 
-interface FieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface FieldProps extends InputProps {
   label?: string;
   name: string;
   required?: boolean;
 }
 
-const Field: React.FC<FieldProps> = ({ name, label, required, ...props }) => {
-  const [_, meta] = useField(name);
+const Field: React.FC<FieldProps> = ({ name, label, required, className, ...props }) => {
+  const [field, meta] = useField(name);
 
   const error = useMemo<string>(
     () => (meta.touched && !!meta.error ? meta.error : ''),
@@ -17,22 +19,23 @@ const Field: React.FC<FieldProps> = ({ name, label, required, ...props }) => {
   );
 
   return (
-    <div>
+    <div className={className}>
       {label && (
-        <label>
-          {label} {required && <em>*</em>}
+        <label className="text-sm">
+          {label} {required && <em className="text-primary">*</em>}
         </label>
       )}
-      <FormikField
-        className={classnames(
-          'w-full px-4 py-3 text-sm bg-gray-50 focus:outline-none border border-gray-200 rounded text-gray-600 focus:border-sky-500 transition duration-150',
-          { 'border-danger': error }
-        )}
+      <Input
         name={name}
+        invalid={meta.touched && !!meta.error}
+        valid={meta.touched && !meta.error}
+        {...field}
         {...props}
       />
       <div
-        className={classnames('text-danger text-right text-sm', { invisible: !error })}
+        className={classnames('text-danger text-right text-sm', {
+          invisible: !(meta.touched && !!meta.error),
+        })}
       >
         {error || 'none'}
       </div>

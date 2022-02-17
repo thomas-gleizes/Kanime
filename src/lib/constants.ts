@@ -29,10 +29,13 @@ export const routes = {
     signIn: '/authentication/sign-in',
     register: '/authentication/register',
     forgotPassword: '/authentication/forgot-password',
+    resetPassword: '/authentication/reset-password/:token',
     api: {
       signIn: '/api/authentication/sign-in',
       register: '/api/authentication/register',
       logout: '/api/authentication/logout',
+      forgotPassword: '/api/authentication/forgot-password',
+      resetPassword: '/api/authentication/reset-password',
     },
   },
   users: {

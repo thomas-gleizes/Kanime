@@ -19,5 +19,7 @@ export const signInSchema = Yup.object({
   email: Yup.string()
     .email('Veuillez saisir un email valide')
     .required('Veuillez saisir un email'),
-  password: Yup.string().required('Veuillez saisir un mot de passe'),
+  password: Yup.string()
+    .required('Veuillez saisir un mot de passe')
+    .min(6, 'Votre mot de passe contiens au moins 6 caractère'),
 });

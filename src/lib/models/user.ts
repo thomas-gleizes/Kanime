@@ -57,6 +57,14 @@ class UserModel extends Model<Prisma.UserDelegate<unknown>> {
       },
     });
 
+  public updateResetPasswordToken = (id: number, token: string | null): Promise<User> =>
+    this.model.update({
+      where: { id },
+      data: {
+        reset_password_token: token,
+      },
+    });
+
   public findByEmail = (email: string): Promise<User> =>
     this.model.findUnique({
       where: { email },
