@@ -99,6 +99,8 @@ CREATE TABLE `users` (
     `follower_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     `visibility` ENUM('private', 'public', 'limited') NOT NULL DEFAULT 'public',
     `reset_password_token` VARCHAR(255) NULL DEFAULT NULL,
+    `last_ask_reset_password` DATETIME NULL DEFAULT NULL,
+    `last_reset_password` DATETIME NOT NULL DEFAULT NOW(),
     `is_admin` BOOLEAN NOT NULL DEFAULT false,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),

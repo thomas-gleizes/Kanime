@@ -16,7 +16,7 @@ async function main() {
       id: 1,
       username: 'kalat',
       email: 'kalat@kanime.fr',
-      password: await Security.hash(password + 'kalat'),
+      password: Security.sha256(password + 'kalat'),
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
@@ -32,7 +32,7 @@ async function main() {
       data: {
         email: faker.internet.email(),
         username: username,
-        password: await Security.hash(password + username),
+        password: Security.sha256(password + username),
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
         bio: faker.lorem.sentence(),

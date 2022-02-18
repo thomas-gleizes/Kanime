@@ -8,14 +8,16 @@ import { Input } from '@components/common/inputs';
 import toast from '@helpers/toastr';
 
 const ForgotPasswordPage: NextPage = () => {
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<string>('kalat@kanime.fr');
 
   const handleClick = async () => {
     try {
       const response = await AuthenticationApi.forgotPassword(email);
       toast('Demande de nouveau mot de passe effectué', 'success');
     } catch (err) {
-      toast(err.error, 'error');
+      console.log('Err', err);
+
+      toast(err, 'error');
     }
   };
 
@@ -30,6 +32,7 @@ const ForgotPasswordPage: NextPage = () => {
             <Input
               type="email"
               name="email"
+              value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="exemple@kanime.fr"
               required

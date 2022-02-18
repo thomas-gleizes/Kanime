@@ -1,5 +1,5 @@
 class Base64 {
-  public static encode(file) {
+  public static encodeInputFile(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
@@ -9,10 +9,6 @@ class Base64 {
       };
       reader.onerror = (error) => reject(error);
     });
-  }
-
-  public static decode(data, extension) {
-    return `data:${extension};base64,${data}`;
   }
 }
 

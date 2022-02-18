@@ -1,17 +1,21 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import createHash from 'create-hash';
 
 class Security {
   private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN;
-  private static readonly SEED: string = process.env.PASS_SEED;
-  private static readonly SALT: number = 10;
 
-  static hash(str: string): Promise<string> {
-    return bcrypt.hash(this.SEED + str, this.SALT);
+  static sha256(stringToHash: string): string {
+    const hash = createHash('sha512');
+
+    hash.update(stringToHash);
+    const hashedString: string = hash.digest().toString('base64url');
+    hash.end();
+
+    return hashedString;
   }
 
-  static compare(str: string, encrypted: string): Promise<boolean> {
-    return bcrypt.compare(this.SEED + str, encrypted);
+  static compare(str: string, encrypted: string): boolean {
+    return this.sha256(str) === encrypted;
   }
 
   static sign(payload: any): string {

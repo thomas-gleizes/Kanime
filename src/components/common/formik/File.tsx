@@ -14,7 +14,7 @@ const File: React.FunctionComponent<Props> = ({ innerRef, name, disabled }) => {
   const handleChange = ({ target }) => {
     const file = target.files[0];
 
-    base64.encode(file).then((result) =>
+    base64.encodeInputFile(file).then((result) =>
       setValue({
         raw: `data:${file.type};base64,${result}`,
         type: file.type,

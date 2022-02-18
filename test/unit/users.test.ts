@@ -22,14 +22,14 @@ describe('users model', () => {
     const user = await UserModel.create({
       username: username,
       email: email,
-      password: await Security.hash(password),
+      password: Security.sha256(password),
     });
 
     expect(user).toBeDefined();
 
     userId = user.id;
 
-    expect(await Security.compare(password, user.password)).toBeTruthy();
+    expect(Security.compare(password, user.password)).toBeTruthy();
     expect(user.is_admin).toBeFalsy();
     expect(user.follow_count).toBe(0);
     expect(user.follower_count).toBe(0);

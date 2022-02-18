@@ -37,7 +37,7 @@ handler.post(
       await UserModel.create({
         username: userData.username,
         email: userData.email,
-        password: await Security.hash(userData.password + userData.username),
+        password: await Security.sha256(userData.password + userData.username),
       })
     );
 

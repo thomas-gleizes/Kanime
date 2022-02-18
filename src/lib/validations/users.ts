@@ -12,7 +12,7 @@ export const registerSchema = Yup.object({
     .required('Veuillez saisir un mot de passe'),
   confirmPassword: Yup.string()
     .required('Veuillez confirmer votre mot de passe')
-    .oneOf([Yup.ref('password')], 'Les mot de passe correspondent pas'),
+    .oneOf([Yup.ref('password')], 'Les mot de passe ne correspondent pas'),
 });
 
 export const signInSchema = Yup.object({
@@ -22,4 +22,20 @@ export const signInSchema = Yup.object({
   password: Yup.string()
     .required('Veuillez saisir un mot de passe')
     .min(6, 'Votre mot de passe contiens au moins 6 caractère'),
+});
+
+export const forgotPasswordSchema = Yup.object({
+  email: Yup.string()
+    .email('Veuillez saisir un email valide')
+    .required('Veuillez saisir un email'),
+});
+
+export const resetPasswordSchema = Yup.object({
+  newPassword: Yup.string()
+    .min(6, 'Votre nouveau mot de passe doit contenir au minimum 6 caractère')
+    .required('Veuillez saisir un mot de passe'),
+  confirmPassword: Yup.string()
+    .required('Veuillez confirmer votre mot de passe')
+    .oneOf([Yup.ref('newPassword')], 'Les mot de passe ne correspondent pas'),
+  token: Yup.string().required(),
 });

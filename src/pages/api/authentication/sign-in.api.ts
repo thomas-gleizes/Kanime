@@ -30,7 +30,7 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !(await Security.compare(body.password + user.username, hash))) {
+  if (!user || !Security.compare(body.password + user.username, hash)) {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
