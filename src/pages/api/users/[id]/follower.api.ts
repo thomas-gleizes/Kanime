@@ -6,7 +6,7 @@ import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError } from '@errors';
 import { errorMessage } from '@lib/constants';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 interface Data extends DefaultResponseData {
   users: Users;

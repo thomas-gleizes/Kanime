@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ApiError } from '@errors';
-import LocalStorage from '@services/localStorage';
+import LocalStorageService from '@services/localStorage.service';
 
 const appAxios = axios.create({
   baseURL: `/`,
@@ -8,7 +8,7 @@ const appAxios = axios.create({
 });
 
 appAxios.interceptors.request.use((config) => {
-  const token = LocalStorage.getToken();
+  const token = LocalStorageService.getToken();
   if (token) config.headers.authorization = `Bearer ${token}`;
 
   return config;

@@ -2,10 +2,10 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { ResDefaultError, ResRegister } from '@types';
 import handler from '@lib/routing';
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 import { ApiError, SchemaError } from '@errors';
 import { registerSchema } from '@validations/users';
 
@@ -37,11 +37,11 @@ handler.post(
       await UserModel.create({
         username: userData.username,
         email: userData.email,
-        password: await Security.sha256(userData.password + userData.username),
+        password: await SecurityService.sha256(userData.password + userData.username),
       })
     );
 
-    const token = Security.sign(user);
+    const token = SecurityService.sign(user);
 
     session.user = user;
     session.token = token;

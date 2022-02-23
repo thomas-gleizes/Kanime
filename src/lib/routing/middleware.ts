@@ -1,11 +1,11 @@
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 import { errorMessage } from '@lib/constants';
 import { ApiError } from '@errors';
 
 export const verifyUser = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
-    const content = Security.getTokenPayload(token);
+    const content = SecurityService.getTokenPayload(token);
 
     if (!Object.keys(req.session).length) {
       req.session = content;

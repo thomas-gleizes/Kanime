@@ -2,8 +2,8 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, User } from '@types';
 import handler from '@lib/routing';
-import Security from '@services/security';
-import { withSessionApi } from '@services/session';
+import SecurityService from '@services/security.service';
+import { withSessionApi } from '@services/session.service';
 import { UserModel } from '@models';
 import { UsersMapper } from '@mapper';
 import { ApiError, SchemaError } from '@errors';
@@ -30,11 +30,11 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !Security.compare(body.password + user.username, hash)) {
+  if (!user || !SecurityService.compare(body.password + user.username, hash)) {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
-  const token = Security.sign(user);
+  const token = SecurityService.sign(user);
 
   session.user = user;
   session.token = token;

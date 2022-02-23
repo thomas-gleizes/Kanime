@@ -1,7 +1,7 @@
 import { Prisma, Log } from '@prisma/client';
 
 import { Method, modelParams } from '@types';
-import connexion, { ConnexionType } from '@services/connexion';
+import connexion, { ConnexionType } from '@services/connexion.service';
 import Model from '@lib/models/model';
 
 type crateData = {

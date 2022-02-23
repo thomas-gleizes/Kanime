@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 
 export type ConnexionType = PrismaClient;
 
-class Connexion extends PrismaClient {
+class ConnexionService extends PrismaClient {
   private static _instance;
 
   private constructor() {
@@ -11,12 +11,12 @@ class Connexion extends PrismaClient {
 
   public static create() {
     if (this._instance == null) {
-      this._instance = new Connexion();
+      this._instance = new ConnexionService();
     }
     return this._instance;
   }
 }
 // todo fix it on test
-//export default Connexion.create();
+//export default ConnexionService.create();
 
 export default new PrismaClient();

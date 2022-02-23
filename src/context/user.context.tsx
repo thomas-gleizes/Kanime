@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { User } from '@types';
 import { useContextFactory } from '@hooks';
-import LocalStorage from '@services/localStorage';
+import LocalStorageService from '@services/localStorage.service';
 import appAxios from '@lib/axios/appAxios';
 import { routes } from '@lib/constants';
 import toast from '@helpers/toastr';
@@ -25,13 +25,13 @@ const UserContext = createContext<UserContext>(null);
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
 const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
-  const [user, setUser] = useState<User>(LocalStorage.getUser());
-  const [token, setToken] = useState<string>(LocalStorage.getToken());
+  const [user, setUser] = useState<User>(LocalStorageService.getUser());
+  const [token, setToken] = useState<string>(LocalStorageService.getToken());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
   const signIn = useCallback((user: User, token: string): void => {
-    LocalStorage.saveUser(user);
-    LocalStorage.saveToken(token);
+    LocalStorageService.saveUser(user);
+    LocalStorageService.saveToken(token);
 
     setUser(user);
     setToken(token);
@@ -40,7 +40,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   const signOut = useCallback(async (): Promise<void> => {
     await appAxios.get(routes.authentication.api.logout);
-    LocalStorage.clearUser();
+    LocalStorageService.clearUser();
     setIsLogin(false);
     setUser(null);
     setToken(null);

@@ -6,7 +6,7 @@ import { UserModel, AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';
 import { errorMessage } from '@lib/constants';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 interface Data extends DefaultResponseData {
   animes: Animes;

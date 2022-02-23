@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 
 import { Anime, Entry } from '@types';
-import { withSessionSsr } from '@services/session';
+import { withSessionSsr } from '@services/session.service';
 import { ErrorPage } from '@errors';
 import { errorMessage } from '@lib/constants';
 import { AnimeModel } from '@models';

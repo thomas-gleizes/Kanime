@@ -5,7 +5,7 @@ import { DefaultResponseData } from '@types';
 import handler, { verifyUser } from '@lib/routing';
 import { AnimeModel, EntryModel } from '@models';
 import { ApiError } from '@errors';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 import { errorMessage } from '@lib/constants';
 import { EntriesMapper } from '@mapper';
 

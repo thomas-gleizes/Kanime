@@ -5,7 +5,7 @@ import handler from '@lib/routing';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
 import { ApiError } from '@errors';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 handler.get(
   async (

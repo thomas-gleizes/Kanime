@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
 
-import { withSessionSsr } from '@services/session';
+import { withSessionSsr } from '@services/session.service';
 import { Anime, Categories } from '@types';
 import { AnimesMapper, CategoriesMapper } from '@mapper';
 import { AnimeModel, CategoryModel } from '@models';

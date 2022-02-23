@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 import { Method, Middleware } from '@types';
 import { ApiError, SchemaError } from '@errors';
-import logger from '@services/logger';
+import loggerService from '@services/logger.service';
 import { errorMessage } from '@lib/constants';
 
 class RouterUseless {
@@ -61,7 +61,7 @@ class RouterUseless {
 
     const routes = this['_' + method.toLowerCase()];
 
-    logger(req).catch((e) => console.log('log failed :', e));
+    loggerService(req).catch((e) => console.log('log failed :', e));
 
     try {
       if (!routes.length) throw new ApiError('405', errorMessage.METHOD_NOT_ALLOWED);

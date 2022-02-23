@@ -4,7 +4,7 @@ import { Country } from '@prisma/client';
 import handler from '@lib/routing';
 import { CountryModel } from '@models';
 import { DefaultResponseData } from '@types';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 interface Data extends DefaultResponseData {
   countries: Array<Country>;

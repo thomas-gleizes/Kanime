@@ -2,7 +2,7 @@ import React from 'react';
 import { NextPage } from 'next';
 
 import AnimeLayout from '@layouts/pages/AnimeLayout';
-import { withSessionSsr } from '@services/session';
+import { withSessionSsr } from '@services/session.service';
 import { Anime } from '@types';
 import { AnimesMapper } from '@mapper';
 import { AnimeModel } from '@models';

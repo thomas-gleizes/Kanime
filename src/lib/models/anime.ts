@@ -1,6 +1,6 @@
 import { Anime, Prisma } from '@prisma/client';
 
-import connexion, { ConnexionType } from '@services/connexion';
+import connexion, { ConnexionType } from '@services/connexion.service';
 import Model from '@lib/models/model';
 import { modelParams } from '@types';
 

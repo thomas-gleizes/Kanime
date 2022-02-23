@@ -2,12 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import * as fs from 'fs';
 
 import { DefaultResponseData, User } from '@types';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 import handler, { verifyUser } from '@lib/routing';
 import { UserModel } from '@models';
 import { defaultUsersMedia, publicPath } from '@lib/constants';
 import { UsersMapper } from '@mapper';
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 
 interface GetData extends DefaultResponseData {
   user: User;
@@ -74,7 +74,7 @@ handler.patch(
 
     const [updatedUser] = UsersMapper.one(await UserModel.update(user.id, body));
 
-    const token = Security.sign(updatedUser);
+    const token = SecurityService.sign(updatedUser);
 
     session.user = updatedUser;
     session.token = token;

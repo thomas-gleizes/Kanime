@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import createHash from 'create-hash';
 
-class Security {
+class SecurityService {
   private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN;
 
   static sha256(stringToHash: string): string {
@@ -31,4 +31,4 @@ class Security {
   }
 }
 
-export default Security;
+export default SecurityService;

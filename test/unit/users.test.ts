@@ -1,6 +1,6 @@
 import { Gender } from '@prisma/client';
 import { UserModel } from '@models';
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 import { defaultUsersMedia } from '@lib/constants';
 
 describe('users model', () => {
@@ -22,14 +22,14 @@ describe('users model', () => {
     const user = await UserModel.create({
       username: username,
       email: email,
-      password: Security.sha256(password),
+      password: SecurityService.sha256(password),
     });
 
     expect(user).toBeDefined();
 
     userId = user.id;
 
-    expect(Security.compare(password, user.password)).toBeTruthy();
+    expect(SecurityService.compare(password, user.password)).toBeTruthy();
     expect(user.is_admin).toBeFalsy();
     expect(user.follow_count).toBe(0);
     expect(user.follower_count).toBe(0);

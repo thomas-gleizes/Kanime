@@ -4,7 +4,7 @@ import { Category, DefaultResponseData } from '@types';
 import handler from '@lib/routing';
 import { CategoryModel } from '@models';
 import { CategoriesMapper } from '@mapper';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 interface Data extends DefaultResponseData {
   categories: Category[];

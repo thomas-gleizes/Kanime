@@ -10,7 +10,7 @@ import type { IronSessionOptions } from 'iron-session';
 import { User } from '@types';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import ApiError from '../errors/ApiError';
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 import { errorMessage } from '@lib/constants';
 
 const sessionOptions: IronSessionOptions = {

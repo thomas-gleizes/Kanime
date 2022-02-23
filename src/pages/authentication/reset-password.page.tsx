@@ -4,7 +4,7 @@ import { Input } from '@components/common/inputs';
 import Button from '@components/common/Button';
 import { Form, Formik } from 'formik';
 import { GetServerSideProps, NextPage } from 'next';
-import { withSessionSsr } from '@services/session';
+import { withSessionSsr } from '@services/session.service';
 import { routes } from '@lib/constants';
 import { Field } from '@components/common/formik';
 import { UserModel } from '@models';

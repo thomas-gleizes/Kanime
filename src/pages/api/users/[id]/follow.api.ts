@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Users } from '@types';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 import handler, { verifyUser } from '@lib/routing';
 import { UserFollowModel, UserModel } from '@models';
 import { UsersMapper } from '@mapper';

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { withSessionApi } from '@services/session';
-import connexion from '@services/connexion';
+import { withSessionApi } from '@services/session.service';
+import connexion from '@services/connexion.service';
 import handler, { verifyAdmin } from '@lib/routing';
 import KitsuApi from '@lib/axios/kitsuApi';
 

@@ -1,7 +1,7 @@
 import { Prisma, UserFollow } from '@prisma/client';
 
 import Model from '@lib/models/model';
-import connexion, { ConnexionType } from '@services/connexion';
+import connexion, { ConnexionType } from '@services/connexion.service';
 
 class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
   public constructor(connexion: ConnexionType) {

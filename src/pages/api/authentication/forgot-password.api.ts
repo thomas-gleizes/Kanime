@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import handler from '@lib/routing';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 import { UserModel } from '@models';
 import { ApiError } from '@errors';
-import Security from '@services/security';
+import SecurityService from '@services/security.service';
 import { DAY } from '@lib/constants';
 
 handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
@@ -20,7 +20,7 @@ handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   )
     throw new ApiError(400, 'you can ask to change your password only one time per day');
 
-  const hash = Security.sha256(user.password + user.username);
+  const hash = SecurityService.sha256(user.password + user.username);
   await UserModel.updateResetPasswordToken(user.id, hash);
 
   //TODO SEND email with new services for email

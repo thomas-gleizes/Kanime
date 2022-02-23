@@ -1,6 +1,6 @@
 import { Gender, Prisma, User } from '@prisma/client';
 
-import connexion, { ConnexionType } from '../services/connexion';
+import connexion, { ConnexionType } from '@services/connexion.service';
 import Model from '@lib/models/model';
 import { defaultUsersMedia } from '../constants';
 import { modelParams } from '@types';

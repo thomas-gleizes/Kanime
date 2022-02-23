@@ -2,7 +2,7 @@ import React from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 
 import { User } from '@types';
-import { withSessionSsr } from '@services/session';
+import { withSessionSsr } from '@services/session.service';
 import { routes } from '@lib/constants';
 import Layout from '@layouts/Layout';
 import ListLogs from '@components/admin/ListLogs';

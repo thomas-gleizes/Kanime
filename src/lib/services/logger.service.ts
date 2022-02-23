@@ -25,7 +25,7 @@ function ip(req): string {
   return arr[arr.length - 1];
 }
 
-export default async function logger(req: NextApiRequest) {
+export default async function loggerService(req: NextApiRequest) {
   const userId = req.session?.user?.id || null;
 
   await LogModel.create({

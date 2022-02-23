@@ -4,7 +4,7 @@ import { Anime, ResAnimes, ResDefaultError } from '@types';
 import handler from '@lib/routing';
 import { AnimeModel } from '@models';
 import { AnimesMapper } from '@mapper';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 handler.get(
   async (req: NextApiRequest, res: NextApiResponse<ResAnimes | ResDefaultError>) => {

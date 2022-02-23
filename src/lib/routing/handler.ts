@@ -3,7 +3,7 @@ import nc from 'next-connect';
 
 import { ApiError, SchemaError } from '@errors';
 import { errorMessage } from '@lib/constants';
-import logger from '@services/logger';
+import loggerService from '@services/logger.service';
 
 const handler = nc<NextApiRequest, NextApiResponse>({
   onError: (err, req, res) => {
@@ -24,7 +24,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     res.status(405).send({ error: errorMessage.METHOD_NOT_ALLOWED });
   },
 }).use((req, res, next) => {
-  logger(req).catch((e) => console.log('log failed :', e));
+  loggerService(req).catch((e) => console.log('log failed :', e));
 
   next();
 });

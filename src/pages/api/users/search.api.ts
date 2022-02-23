@@ -5,7 +5,7 @@ import handler from '@lib/routing';
 import { ApiError } from '@errors';
 import { UsersMapper } from '@mapper';
 import { UserModel } from '@models';
-import { withSessionApi } from '@services/session';
+import { withSessionApi } from '@services/session.service';
 
 interface Data extends DefaultResponseData {
   users: Users;

@@ -1,7 +1,7 @@
 import { Entry, EntryStatus, Prisma, Visibility } from '@prisma/client';
 
 import Model from '@lib/models/model';
-import connexion, { ConnexionType } from '@services/connexion';
+import connexion, { ConnexionType } from '@services/connexion.service';
 
 export type upsertData = {
   userId: number;
