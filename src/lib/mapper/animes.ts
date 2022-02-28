@@ -17,6 +17,7 @@ class AnimesMapper implements Mapper<AnimeModel, Anime> {
       season: resource.season,
       season_year: resource.season_year,
       status: resource.status,
+      sagaId: resource.saga_id,
       type: resource.type,
       rating: {
         average: resource.rating_average,
