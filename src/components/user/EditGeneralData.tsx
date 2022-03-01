@@ -2,15 +2,14 @@ import React, { useRef } from 'react';
 import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
 import { Country, Gender } from '@prisma/client';
 
-import { UserMediaHandling } from '@types';
-import { useUserContext } from '@context/user.context';
-import { useFetch } from '@hooks';
-import appAxios from '@lib/axios/appAxios';
-import toast from '../../utils/toastr';
-import Button from '@components/common/Button';
-import { Field, File, Select, Textarea } from '@components/common/formik';
-import { CardBody, CardFooter } from '@layouts/card';
-import { routes } from '../../ressources/constants';
+import { ApiService } from 'services/api.service';
+import { useUserContext } from 'context/user.context';
+import { useFetch } from 'hooks';
+import toast from 'utils/toastr';
+import { routes } from 'ressources/routes';
+import Button from 'components/common/Button';
+import { Field, File, Select, Textarea } from 'components/common/formik';
+import { CardBody, CardFooter } from 'components/layouts/card';
 
 declare type values = {
   city: string;
@@ -21,7 +20,7 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountry = () => appAxios.get<Country[]>(routes.common.countries.list);
+const fetchCountry = () => ApiService.get<Country[]>(routes.common.countries.list);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
@@ -43,11 +42,11 @@ const EditUserModal: React.FunctionComponent = () => {
     gender: user.gender,
   };
 
-  const handleSubmit = async (values: values, formik: FormikHelpers<values>) => {
+  const handleSubmit = async (values: values) => {
     try {
       const {
         data: { user, token },
-      } = await appAxios.patch(routes.users.api.current, values);
+      } = await ApiService.patch(routes.users.api.current, values);
 
       signIn(user, token);
     } catch (e) {

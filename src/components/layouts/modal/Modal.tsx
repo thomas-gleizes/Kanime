@@ -2,9 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 
-import { Size } from '@types';
-import domUuid from '../../../utils/domUuid';
-import isBrowser from '../../../utils/isBrowser';
+import domUuid from 'utils/domUuid';
+import isBrowser from 'utils/isBrowser';
 
 interface ModalProps {
   isOpen: boolean;
@@ -14,12 +13,7 @@ interface ModalProps {
   className?: string;
 }
 
-const Modal: React.FunctionComponent<ModalProps> = ({
-  isOpen,
-  toggle,
-  children,
-  size,
-}) => {
+const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
   const backgroundId = useMemo<string>(() => `modal-${domUuid()}`, []);
 
   const modalNode = useMemo<HTMLDivElement>(

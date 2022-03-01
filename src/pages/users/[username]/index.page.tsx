@@ -12,13 +12,13 @@ import Title from 'components/layouts/Title';
 interface Props {
   user: User;
   isCurrent: boolean;
+  error?: ErrorPage;
 }
 
-interface ErrorProps {
-  error: ErrorPage;
-}
-
-export const getServerSideProps: ServerSideProps<Props | ErrorProps> = withSessionSsr(
+// TODO remote ts-ignore
+// @ts-ignore
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+  // @ts-ignore
   async ({ query, req }) => {
     const { username } = query;
     const { user: sessionUser } = req.session;

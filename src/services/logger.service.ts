@@ -1,9 +1,8 @@
 import { NextApiRequest } from 'next';
 import requestIp from 'request-ip';
 
-import { Method } from '@types';
-import { LogModel } from '../models';
-import { loggerReplaceKey } from '../ressources/constants';
+import { LogModel } from 'models';
+import { loggerReplaceKey } from 'ressources/constants';
 
 function replaceKey(data: any) {
   const keys = Object.keys({ ...data });

@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 
-import { ApiError, SchemaError } from '../class';
-import { errorMessage } from '../ressources/constants';
+import { errorMessage } from 'ressources/constants';
+import ApiError from 'class/error/ApiError';
+import SchemaError from 'class/error/SchemaError';
 import loggerService from './logger.service';
 
 const handler = nc<NextApiRequest, NextApiResponse>({

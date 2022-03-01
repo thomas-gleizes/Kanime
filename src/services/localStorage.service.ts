@@ -1,11 +1,11 @@
-import { User } from '@types';
+import isBrowser from 'utils/isBrowser';
 
 class LocalStorageService {
   private static readonly USER: string = 'STORAGE_USER';
   private static readonly TOKEN: string = 'STORAGE_TOKEN';
 
   private static isBrowser(): boolean {
-    return process.browser;
+    return isBrowser();
   }
 
   static saveUser(user: User): void {

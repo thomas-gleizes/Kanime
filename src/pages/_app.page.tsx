@@ -2,12 +2,12 @@ import React, { useMemo } from 'react';
 import Head from 'next/head';
 
 import { AppProps } from 'next/app';
-
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
 import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
+import DefaultLayout from 'components/layouts/Layout';
 
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
@@ -28,7 +28,10 @@ const AllDialog: Component<ContextProviderProps> = ({ children }) => (
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const Layout: Component = useMemo(() => Component.layout || Layout, [Component.layout]);
+  const Layout: Component = useMemo(
+    () => Component.layout || DefaultLayout,
+    [Component.layout]
+  );
 
   return (
     <AllContextProvider>

@@ -12,15 +12,13 @@ async function run() {
     const anime = await prisma.anime.findUnique({ where: { id: imp.import_id } });
     const ids: number[] = details.map((d) => +d.kitsu_id);
 
-    console.log(anime.kitsu_id, anime.slug);
-
     const animes = await prisma.anime.findMany({
       where: { kitsu_id: { in: ids } },
     });
 
     const sagaAlreadyExist = animes.some((anime) => anime.saga_id);
 
-    console.log('SagaAlreadyExist', sagaAlreadyExist);
+    console.log(anime.kitsu_id, anime.slug, sagaAlreadyExist);
 
     if (sagaAlreadyExist) {
       const sagaId = animes.find((a) => a.saga_id)?.saga_id;
@@ -54,6 +52,11 @@ async function run() {
         });
       }
     }
+
+    await prisma.sagaImport.update({
+      where: { id: imp.id },
+      data: { treat: true },
+    });
   }
 }
 

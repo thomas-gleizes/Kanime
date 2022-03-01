@@ -1,4 +1,4 @@
-import random from '../src/lib/helpers/random';
+import random from '../src/utils/random';
 import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
 

@@ -1,7 +1,9 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import LocalStorageService from 'services/localStorage.service';
+import { ApiService } from 'services/api.service';
 import { useContextFactory } from 'hooks';
+import { routes } from 'ressources/routes';
 import toast from 'utils/toastr';
 
 export declare type UserContext = {
@@ -46,7 +48,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   const refreshUser = useCallback(async (): Promise<void> => {
     try {
-      const { data } = await appAxios.get(routes.users.api.current);
+      const { data } = await ApiService.get(routes.users.api.current);
       setUser(data.user);
     } catch (e) {
       await signOut();

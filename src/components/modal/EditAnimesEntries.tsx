@@ -2,9 +2,8 @@ import React from 'react';
 import { EntryStatus } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
 
-import { Anime, Entry } from '@types';
-import Modal, { ModalBody, ModalHeader, ModalTitle } from '@layouts/modal';
-import { Field, Select } from '@components/common/formik';
+import Modal, { ModalBody, ModalHeader, ModalTitle } from 'components/layouts/modal';
+import { Field, Select } from 'components/common/formik';
 
 interface Props {
   anime: Anime;
@@ -18,12 +17,7 @@ type values = {
   progress: number;
 };
 
-const EditAnimesEntries: React.FunctionComponent<Props> = ({
-  isOpen,
-  toggle,
-  anime,
-  animeUser,
-}) => {
+const EditAnimesEntries: Component<Props> = ({ isOpen, toggle, anime, animeUser }) => {
   const initialValues: values = {
     status: animeUser?.status || null,
     progress: 0,
@@ -43,7 +37,7 @@ const EditAnimesEntries: React.FunctionComponent<Props> = ({
   );
 };
 
-const FormContent: React.FunctionComponent<FormikProps<values>> = ({
+const FormContent: Component<FormikProps<values>> = ({
   values,
   handleChange,
   handleBlur,

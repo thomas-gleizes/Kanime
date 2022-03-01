@@ -1,4 +1,4 @@
-import appAxios from '@lib/axios/appAxios';
-import { routes } from '../ressources/constants';
+import { ApiService } from 'services/api.service';
+import { routes } from 'ressources/routes';
 
-export const get = (id: number) => appAxios.get(routes.animes.api.entries(id));
+export const get = (id: number) => ApiService.get(routes.animes.api.entries(id));
