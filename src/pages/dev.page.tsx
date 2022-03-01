@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { useLayoutContext } from 'context/layout.context';
 import { Input } from 'components/common/inputs';
 

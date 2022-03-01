@@ -1,7 +1,7 @@
-import { Category as CategoryModel } from '@prisma/client';
+import { PrismaCategories, PrismaCategory } from 'prisma/app';
 
-class CategoriesMapper implements Mapper<CategoryModel, Category> {
-  one(resource: CategoryModel): Category {
+class CategoriesMapper implements Mapper<PrismaCategory, Category> {
+  one(resource: PrismaCategory): Category {
     if (!resource) return null;
 
     return {
@@ -13,7 +13,7 @@ class CategoriesMapper implements Mapper<CategoryModel, Category> {
     };
   }
 
-  many(resources: Array<CategoryModel>): Categories {
+  many(resources: PrismaCategories): Categories {
     return resources.map(this.one);
   }
 }

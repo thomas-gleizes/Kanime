@@ -6,11 +6,13 @@ type Images = {
   original?: string;
 };
 
-type Titles = {
-  en: string;
-  en_jp: string;
-  ja_jp: string;
-};
+type Titles =
+  | {
+      en: string;
+      en_jp: string;
+      ja_jp: string;
+    }
+  | {};
 
 type Rating = {
   average: number;
@@ -79,3 +81,16 @@ type Entry = {
 };
 
 type Entries = Array<Entry>;
+
+type Saga = {
+  id: number;
+  slug: string;
+  canonical_title: string;
+  titles?: Titles;
+  description?: string;
+  animes: Animes;
+  created_at: Date | string;
+  updated_at: Date | string;
+};
+
+type Sagas = Array<Saga>;

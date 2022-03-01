@@ -1,15 +1,14 @@
-import * as Prisma from '@prisma/client';
-
+import { PrismaLog, PrismaUser } from 'prisma/app';
 import MomentFr from 'utils/momentFr';
 import JsonParser from 'utils/jsonParser';
 import UsersMapper from './users';
 
-interface DbLog extends Prisma.Log {
-  user?: Prisma.User;
+interface PLog extends PrismaLog {
+  user?: PrismaUser;
 }
 
-class LogsMapper implements Mapper<DbLog, Log> {
-  one(resource: DbLog): Log {
+class LogsMapper implements Mapper<PLog, Log> {
+  one(resource: PLog): Log {
     const [user] = UsersMapper.one(resource.user);
 
     return {
@@ -24,7 +23,7 @@ class LogsMapper implements Mapper<DbLog, Log> {
     };
   }
 
-  many(resources: Array<DbLog>): Logs {
+  many(resources: PLog[]): Logs {
     return resources.map(this.one);
   }
 }

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Head from 'next/head';
 
-import { AppProps } from 'next/app';
+import { AppProps } from 'app/next';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import Header from 'components/layouts/Header';

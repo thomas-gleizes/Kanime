@@ -1,5 +1,4 @@
-import { Prisma } from '@prisma/client';
-
+import { PrismaLogDelegate, PrismaLog, PrismaLogs } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from './model';
 
@@ -12,22 +11,22 @@ type crateData = {
   userId?: number;
 };
 
-class LogModel extends Model<Prisma.LogDelegate<unknown>> {
+class LogModel extends Model<PrismaLogDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion.log);
   }
 
-  public show = (params: modelParams) =>
+  public show = (params: modelParams): Promise<PrismaLogs> =>
     this.model.findMany({
       orderBy: [{ id: 'desc' }],
       include: { user: true },
       ...this.getKeyParams(params),
     });
 
-  public showUserLog = (userId: number, params: modelParams) =>
+  public showUserLog = (userId: number, params: modelParams): Promise<PrismaLogs> =>
     this.model.findMany({ where: { user_id: userId }, ...this.getKeyParams(params) });
 
-  public create = (data: crateData) =>
+  public create = (data: crateData): Promise<PrismaLog> =>
     this.model.create({
       data: {
         route: data.route,

@@ -1,4 +1,4 @@
-import type { Page, StaticProps } from 'next/app';
+import type { Page, StaticProps } from 'app/next';
 import Moment from 'moment';
 import Title from 'components/layouts/Title';
 import Layout from 'components/layouts/Layout';

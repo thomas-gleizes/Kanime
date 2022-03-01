@@ -2,18 +2,23 @@ import React, { useEffect } from 'react';
 import Error from 'next/error';
 import Image from 'next/image';
 
-import { Page, ServerSideProps } from 'next/app';
+import { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { useLayoutContext } from 'context/layout.context';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mapper';
 import Title from 'components/layouts/Title';
 
-interface Props {
+interface ValidProps {
   user: User;
   isCurrent: boolean;
-  error?: ErrorPage;
 }
+
+interface ErrorProps {
+  error: ErrorPage;
+}
+
+type Props = ValidProps | ErrorProps;
 
 // TODO remote ts-ignore
 // @ts-ignore
@@ -45,7 +50,7 @@ export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
   }
 );
 
-export const UserPage: Page<Props> = ({ user, isCurrent, error }) => {
+export const UserPage: Page<Props> = (props) => {
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
@@ -56,7 +61,10 @@ export const UserPage: Page<Props> = ({ user, isCurrent, error }) => {
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
 
-  if (error) return <Error statusCode={error.code} title={error.message} />;
+  if ('error' in props)
+    return <Error statusCode={props.error.code} title={props.error.message} />;
+
+  const { user, isCurrent } = props;
 
   return (
     <>

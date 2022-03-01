@@ -1,8 +1,8 @@
-import { User as UserModel } from '@prisma/client';
+import { PrismaUser, PrismaUsers } from 'prisma/app';
 import { formatForMapper } from 'utils/momentFr';
 
-class UsersMapper implements Mapper<UserModel, [user: User, password: string]> {
-  public one(resource: UserModel): [user: User, password: string] {
+class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> {
+  public one(resource: PrismaUser): [user: User, password: string] {
     if (resource) {
       const user: User = {
         bio: resource.bio,
@@ -25,7 +25,7 @@ class UsersMapper implements Mapper<UserModel, [user: User, password: string]> {
     } else return [null, null];
   }
 
-  public many(resources: Array<UserModel>): Array<[user: User, password: string]> {
+  public many(resources: PrismaUsers): Array<[user: User, password: string]> {
     return resources.map(this.one);
   }
 }

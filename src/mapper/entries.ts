@@ -1,9 +1,8 @@
-import { Entry as EntryModel } from '@prisma/client';
-
+import { PrismaEntries, PrismaEntry } from 'prisma/app';
 import { formatForMapper } from 'utils/momentFr';
 
-class EntriesMapper implements Mapper {
-  one(resource: EntryModel): Entry {
+class EntriesMapper implements Mapper<PrismaEntry, Entry> {
+  one(resource: PrismaEntry): Entry {
     if (!resource) return null;
 
     return {
@@ -20,7 +19,7 @@ class EntriesMapper implements Mapper {
     };
   }
 
-  many(resources: Array<EntryModel>): Entries {
+  many(resources: PrismaEntries): Entries {
     return resources.map(this.one);
   }
 }

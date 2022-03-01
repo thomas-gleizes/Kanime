@@ -1,26 +1,23 @@
-import { Anime, Prisma } from '@prisma/client';
-
+import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from './model';
 
-class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
+class AnimeModel extends Model<PrismaAnimeDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion.anime);
   }
 
-  public test = () => this.model;
-
-  public findById = (id: number): Promise<Anime> =>
+  public findById = (id: number): Promise<PrismaAnime> =>
     this.model.findUnique({
       where: { id },
     });
 
-  public findBySlug = (slug: string): Promise<Anime> =>
+  public findBySlug = (slug: string): Promise<PrismaAnime> =>
     this.model.findUnique({
       where: { slug },
     });
 
-  public all = (params?: modelParams, userId?: number): Promise<Array<Anime>> =>
+  public all = (params?: modelParams, userId?: number): Promise<PrismaAnimes> =>
     this.model.findMany({
       include: {
         users: {
@@ -30,7 +27,7 @@ class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
       ...this.getKeyParams(params),
     });
 
-  public findByUser = (userId: number, params?: modelParams): Promise<Array<Anime>> =>
+  public findByUser = (userId: number, params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
       where: {
         users: { some: { user_id: userId } },
@@ -38,7 +35,7 @@ class AnimeModel extends Model<Prisma.AnimeDelegate<unknown>> {
       ...this.getKeyParams(params),
     });
 
-  public search = (query: string, params?: modelParams): Promise<Array<Anime>> =>
+  public search = (query: string, params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
       where: {
         OR: [

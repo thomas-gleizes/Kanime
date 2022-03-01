@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page, ServerSideProps } from 'next/app';
+import { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { routes } from 'ressources/routes';
 import ListLogs from 'components/admin/ListLogs';

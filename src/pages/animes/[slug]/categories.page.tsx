@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Page, ServerSideProps } from 'next/app';
+import { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { AnimeModel, CategoryModel } from 'models';
 import { AnimesMapper, CategoriesMapper } from 'mapper';

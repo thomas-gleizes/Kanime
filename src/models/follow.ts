@@ -1,14 +1,13 @@
-import { Prisma, UserFollow } from '@prisma/client';
-
-import Model from './model';
+import { PrismaFollow, PrismaFollowDelegate } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
+import Model from './model';
 
-class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
+class FollowModel extends Model<PrismaFollowDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion.userFollow);
   }
 
-  public create = (followerId: number, followId: number): Promise<UserFollow> =>
+  public create = (followerId: number, followId: number): Promise<PrismaFollow> =>
     this.model.create({
       data: {
         follower_id: followerId,
@@ -16,7 +15,7 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
       },
     });
 
-  public delete = (followerId: number, followId: number): Promise<UserFollow> =>
+  public delete = (followerId: number, followId: number): Promise<PrismaFollow> =>
     this.model.delete({
       where: {
         follower_id_follow_id: {
@@ -27,4 +26,4 @@ class UserFollowModel extends Model<Prisma.UserFollowDelegate<unknown>> {
     });
 }
 
-export default new UserFollowModel(connexion);
+export default new FollowModel(connexion);

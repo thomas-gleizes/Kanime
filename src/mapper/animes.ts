@@ -1,10 +1,9 @@
-import { Anime as AnimeModel } from '@prisma/client';
-import Moment from 'moment';
+import { PrismaAnime, PrismaAnimes } from 'prisma/app';
+import { formatForMapper } from 'utils/momentFr';
+import jsonParser from 'utils/jsonParser';
 
-import JsonParser from 'utils/jsonParser';
-
-class AnimesMapper implements Mapper<AnimeModel, Anime> {
-  public one(resource: AnimeModel): Anime {
+class AnimesMapper implements Mapper<PrismaAnime, Anime> {
+  public one(resource: PrismaAnime): Anime {
     if (!resource) return null;
 
     return {
@@ -12,7 +11,7 @@ class AnimesMapper implements Mapper<AnimeModel, Anime> {
       kitsu_id: resource.kitsu_id,
       slug: resource.slug,
       canonicalTitle: resource.canonical_title,
-      titles: JsonParser(resource.titles),
+      titles: jsonParser<Titles>(resource.titles),
       season: resource.season,
       season_year: resource.season_year,
       status: resource.status,
@@ -30,16 +29,16 @@ class AnimesMapper implements Mapper<AnimeModel, Anime> {
         length: resource.episode_length,
         count: resource.episode_count,
       },
-      date_begin: Moment(resource.date_begin).format('YYYY-MM-DD'),
-      date_end: Moment(resource.date_end).format('YYYY-MM-DD'),
-      cover: JsonParser(resource.cover),
-      poster: JsonParser(resource.poster),
+      date_begin: formatForMapper(resource.date_begin),
+      date_end: formatForMapper(resource.date_end),
+      cover: jsonParser<Images>(resource.cover),
+      poster: jsonParser<Images>(resource.poster),
       synopsis: resource.synopsis,
       description: resource.description,
     };
   }
 
-  public many(resources: Array<AnimeModel>): Array<Anime> {
+  public many(resources: PrismaAnimes): Animes {
     return resources.map(this.one);
   }
 }

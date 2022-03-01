@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 
-import { Page, ServerSideProps } from 'next/app';
+import { Page, ServerSideProps } from 'app/next';
 import { AuthenticationApi } from 'api';
 import { UserModel } from 'models';
 import { resetPasswordSchema } from 'ressources/validations';

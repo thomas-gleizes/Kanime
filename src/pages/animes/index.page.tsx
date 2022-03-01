@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Page, ServerSideProps } from 'next/app';
+import { Page, ServerSideProps } from 'app/next';
 import { ApiService } from 'services/api.service';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';

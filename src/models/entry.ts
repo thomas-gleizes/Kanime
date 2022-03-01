@@ -1,5 +1,4 @@
-import { Entry, EntryStatus, Prisma, Visibility } from '@prisma/client';
-
+import { PrismaEntry, PrismaEntryDelegate } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from './model';
 
@@ -15,12 +14,12 @@ export type upsertData = {
   visibility: Visibility;
 };
 
-class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
+class EntryModel extends Model<PrismaEntryDelegate> {
   constructor(connexion: ConnexionType) {
     super(connexion.entry);
   }
 
-  public unique = (userId: number, animeId: number): Promise<Entry> =>
+  public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.findUnique({
       where: {
         anime_id_user_id: {
@@ -30,7 +29,7 @@ class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
       },
     });
 
-  public upsert = ({ userId, animeId, ...data }: upsertData): Promise<Entry> =>
+  public upsert = ({ userId, animeId, ...data }: upsertData): Promise<PrismaEntry> =>
     this.model.upsert({
       where: {
         anime_id_user_id: {
@@ -60,7 +59,7 @@ class EntryModel extends Model<Prisma.EntryDelegate<unknown>> {
       },
     });
 
-  public delete = (userId: number, animeId: number): Promise<Entry> =>
+  public delete = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.delete({
       where: {
         anime_id_user_id: {
