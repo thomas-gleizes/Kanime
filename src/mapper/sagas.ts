@@ -7,9 +7,13 @@ interface PSaga extends PrismaSaga {
   animes?: PrismaAnimes;
 }
 
-class SagasMapper implements Mapper<PSaga, Saga> {
-  one(resource: PSaga): Saga {
-    const animes = AnimesMapper.many(resource.animes);
+interface Options {
+  withAnimes: boolean;
+}
+
+class SagasMapper implements Mapper<PSaga, Saga, Options> {
+  one(resource: PSaga, { withAnimes }: Options): Saga {
+    if (!resource) return null;
 
     return {
       id: resource.id,
@@ -17,14 +21,14 @@ class SagasMapper implements Mapper<PSaga, Saga> {
       canonical_title: '',
       titles: jsonParser<Titles>(resource.titles),
       description: resource.description,
-      animes,
+      animes: (withAnimes && AnimesMapper.many(resource.animes || [])) || null,
       created_at: formatForMapper(resource.created_at),
       updated_at: formatForMapper(resource.updated_at),
     };
   }
 
-  many(resources: PSaga[]): Sagas {
-    return resources.map(this.one);
+  many(resources: PSaga[], options: Options): Sagas {
+    return resources.map((resource) => this.one(resource, options));
   }
 }
 

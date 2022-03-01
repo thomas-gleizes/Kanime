@@ -18,9 +18,9 @@ interface ErrorPage {
   message: string;
 }
 
-interface Mapper<E = any, S = any> {
-  one: (resource: E) => S;
-  many: (resources: Array<E>) => Array<S>;
+interface Mapper<E = any, S = any, O = {}> {
+  one: (resource: E, options?: O) => S;
+  many: (resources: Array<E>, options?: O) => Array<S>;
 }
 
 type Middleware = (req: NextApiRequest, res: NextApiResponse) => Promise<void> | void;

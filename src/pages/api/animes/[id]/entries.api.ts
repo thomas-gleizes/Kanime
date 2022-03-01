@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { AnimeModel, EntryModel } from 'models';
+import { AnimeModel, SagaModel } from 'models';
 import { EntriesMapper } from 'mapper';
 import { verifyUser } from 'ressources/middleware';
 import { errorMessage } from 'ressources/constants';
@@ -25,7 +25,7 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Response
     ...req.body,
   };
 
-  const entry = EntriesMapper.one(await EntryModel.upsert(data));
+  const entry = EntriesMapper.one(await SagaModel.upsert(data));
 
   res.send({ success: true, entry });
 };
@@ -36,9 +36,7 @@ handler.patch(verifyUser, createOrUpdate);
 handler.get(verifyUser, async (req: NextApiRequest, res: NextApiResponse<Response>) => {
   const { id: animeId } = req.query;
 
-  const entry = EntriesMapper.one(
-    await EntryModel.unique(+req.session.user.id, +animeId)
-  );
+  const entry = EntriesMapper.one(await SagaModel.unique(+req.session.user.id, +animeId));
 
   res.send({ success: true, entry });
 });
@@ -52,7 +50,7 @@ handler.delete(
     const anime = await AnimeModel.findById(+animeId);
     if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-    const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
+    const entry = EntriesMapper.one(await SagaModel.delete(userId, +animeId));
 
     res.status(204).send({ success: true, entry });
   }

@@ -24,10 +24,12 @@ const handler = nc<NextApiRequest, NextApiResponse>({
   onNoMatch: (req, res) => {
     res.status(405).send({ error: errorMessage.METHOD_NOT_ALLOWED });
   },
-}).use((req, res, next) => {
+}).use(async (req, res, next) => {
   loggerService(req).catch((e) => console.log('log failed :', e));
 
-  next();
+  const test = await next();
+
+  console.log('Test', test);
 });
 
 export default handler;

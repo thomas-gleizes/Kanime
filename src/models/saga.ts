@@ -25,6 +25,7 @@ class SagaModel extends Model<PrismaSagaDelegate> {
           { titles: { contains: query } },
         ],
       },
+      include: { animes: true },
       ...this.getKeyParams(params),
     });
 }
