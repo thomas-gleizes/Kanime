@@ -6,13 +6,11 @@ type Images = {
   original?: string;
 };
 
-type Titles =
-  | {
-      en: string;
-      en_jp: string;
-      ja_jp: string;
-    }
-  | {};
+type Titles = {
+  en?: string;
+  en_jp?: string;
+  ja_jp?: string;
+};
 
 type Rating = {
   average: number;
