@@ -8,6 +8,7 @@ import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {
   anime: Anime;
+  error?: ErrorPage;
 }
 
 export const getServerSideProps = withSessionSsr(async ({ params }) => {
@@ -18,8 +19,12 @@ export const getServerSideProps = withSessionSsr(async ({ params }) => {
   return { props: { anime } };
 });
 
-const SagaPage: NextPage<Props> = (props) => {
-  return <h1 className="text-xl font-black text-center">Saga</h1>;
+const SagaPage: Page<Props> = (props) => {
+  return (
+    <div>
+      <h1 className="text-xl font-black text-center">Saga</h1>
+    </div>
+  );
 };
 
 // @ts-ignore

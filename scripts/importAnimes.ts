@@ -84,5 +84,3 @@ run()
   .then(() => console.log('\x1b[32m', 'Script success', '\x1b[0m'))
   .catch((e) => console.log('Scripts crash :, \n', e))
   .finally(() => process.exit(0));
-
-export {};

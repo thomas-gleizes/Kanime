@@ -29,9 +29,11 @@ model Anime {
   episode_count    Int?            @db.UnsignedInt
   episode_length   Int?            @db.UnsignedInt
   status           AnimeStatus     @default(unreleased)
+  saga_id          Int?
   created_at       DateTime        @default(now()) @db.Timestamp(0)
   updated_at       DateTime        @default(now()) @db.Timestamp(0)
   users            Entry[]
+  saga             Saga?           @relation(fields: [saga_id], references: [id])
   categories       AnimeCategory[]
   import           AnimeImport?
 
@@ -39,31 +41,17 @@ model Anime {
   @@map("animes")
 }
 
-model AnimeImport {
-  id               Int       @id @default(autoincrement())
-  anime_id         Int?      @unique
-  kitsu_id         Int
-  slug             String
-  canonical_title  String
-  titles           String?   @db.LongText
-  synopsis         String?   @db.Text
-  description      String?   @db.Text
-  date_begin       DateTime? @db.Date
-  date_end         DateTime? @db.Date
-  rating_average   Float?
-  rating_rank      Int?      @db.UnsignedInt
-  popularity_count Float?
-  popularity_rank  Int?      @db.UnsignedInt
-  type             String?
-  poster           String?   @db.LongText
-  cover            String?   @db.LongText
-  episode_count    Int?      @db.UnsignedInt
-  episode_length   Int?      @db.UnsignedInt
-  status           String?
-  import_at        DateTime  @default(now()) @db.Timestamp(0)
-  anime            Anime?    @relation(fields: [anime_id], references: [id])
+model Saga {
+  id              Int      @id @default(autoincrement())
+  slug            String   @unique
+  canonical_title String
+  titles          String?  @db.LongText
+  description     String?  @db.Text
+  created_at      DateTime @default(now()) @db.Timestamp(0)
+  updated_at      DateTime @default(now()) @db.Timestamp(0)
+  animes          Anime[]
 
-  @@map("animes_import")
+  @@map("sagas")
 }
 
 model Category {
@@ -160,6 +148,45 @@ model Country {
   User     User[]
 
   @@map("countries")
+}
+
+model AnimeImport {
+  id               Int         @id @default(autoincrement())
+  anime_id         Int?        @unique
+  kitsu_id         Int
+  slug             String
+  canonical_title  String
+  titles           String?     @db.LongText
+  synopsis         String?     @db.Text
+  description      String?     @db.Text
+  date_begin       DateTime?   @db.Date
+  date_end         DateTime?   @db.Date
+  rating_average   Float?
+  rating_rank      Int?        @db.UnsignedInt
+  popularity_count Float?
+  popularity_rank  Int?        @db.UnsignedInt
+  type             String?
+  poster           String?     @db.LongText
+  cover            String?     @db.LongText
+  episode_count    Int?        @db.UnsignedInt
+  episode_length   Int?        @db.UnsignedInt
+  status           String?
+  import_at        DateTime    @default(now()) @db.Timestamp(0)
+  anime            Anime?      @relation(fields: [anime_id], references: [id])
+  saga_import      SagaImport?
+
+  @@map("animes_import")
+}
+
+model SagaImport {
+  id        Int         @id @default(autoincrement())
+  import_id Int         @unique
+  details   String      @db.LongText
+  treat     Boolean
+  import_at DateTime    @default(now()) @db.Timestamp(0)
+  import    AnimeImport @relation(fields: [import_id], references: [id])
+
+  @@map("sagas_import")
 }
 
 model Log {
