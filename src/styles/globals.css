@@ -73,7 +73,7 @@ textarea {
 .input-invalid {
   background: url('/icons/svg/times-danger.svg') no-repeat right 0.5rem center;
   background-size: 1.2em 1.2em;
-  @apply bg-gray-50
+  @apply bg-gray-50;
 }
 
 .input-valid {

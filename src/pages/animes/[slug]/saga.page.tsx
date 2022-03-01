@@ -1,6 +1,6 @@
 import React from 'react';
-import { NextPage } from 'next';
 
+import { Page, ServerSideProps } from 'next/app';
 import { withSessionSsr } from 'services/session.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
@@ -8,16 +8,17 @@ import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {
   anime: Anime;
-  error?: ErrorPage;
 }
 
-export const getServerSideProps = withSessionSsr(async ({ params }) => {
-  const { slug } = params;
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+  async ({ params }) => {
+    const { slug } = params;
 
-  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  return { props: { anime } };
-});
+    return { props: { anime } };
+  }
+);
 
 const SagaPage: Page<Props> = (props) => {
   return (
@@ -27,7 +28,6 @@ const SagaPage: Page<Props> = (props) => {
   );
 };
 
-// @ts-ignore
-SagaPage.Layout = AnimeLayout;
+SagaPage.layout = AnimeLayout;
 
 export default SagaPage;
