@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
-import { NextPage } from 'next';
-import Head from 'next/head';
 
-import { useLayoutContext } from '@context/layout.context';
-import Layout from '@layouts/Layout';
-import { Input } from '@components/common/inputs';
+import { Page } from 'next/app';
+import { useLayoutContext } from 'context/layout.context';
+import { Input } from 'components/common/inputs';
 
-const DevPage: NextPage = () => {
+const DevPage: Page = () => {
   const { header } = useLayoutContext();
 
   useEffect(() => {
     header.hideHeader();
 
     return () => header.showHeader();
-  }, []);
+  }, [header]);
 
   const options = (
     <>
@@ -25,10 +23,7 @@ const DevPage: NextPage = () => {
   );
 
   return (
-    <Layout>
-      <Head>
-        <title>ATB - Input</title>
-      </Head>
+    <>
       <div className="border flex flex-col space-y-2.5 mx-auto w-550 py-4 px-5 shadow-lg shadow-amber-100 bg-amber-50 rounded">
         <div>
           <h1 className="text-center text-lg">Input</h1>
@@ -78,8 +73,12 @@ const DevPage: NextPage = () => {
           </Input>
         </div>
       </div>
-    </Layout>
+    </>
   );
+};
+
+DevPage.layout = ({ children }) => {
+  return <div className="m-5 p-2 border bg-teal-50 shadow">{children}</div>;
 };
 
 export default DevPage;

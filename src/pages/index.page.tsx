@@ -1,20 +1,19 @@
-import type { GetStaticProps, NextPage } from 'next';
+import type { Page, StaticProps } from 'next/app';
 import Moment from 'moment';
-
-import Title from '@layouts/Title';
-import Layout from '@layouts/Layout';
+import Title from 'components/layouts/Title';
+import Layout from 'components/layouts/Layout';
 
 interface Props {
   time: string;
 }
 
-export const getStaticProps: GetStaticProps<Props> = () => {
+export const getStaticProps: StaticProps<Props> = async () => {
   return { props: { time: Moment().format('DD/MM/YYYY HH:mm:ss') }, revalidate: 60 };
 };
 
-const Home: NextPage<Props> = ({ time }) => {
+const HomePage: Page<Props> = ({ time }) => {
   return (
-    <Layout>
+    <>
       <Title>Accueil</Title>
       <div className="flex flex-col-2 items-center justify-center h-[80vh] py-2">
         <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
@@ -74,8 +73,10 @@ const Home: NextPage<Props> = ({ time }) => {
           </div>
         </div>
       </div>
-    </Layout>
+    </>
   );
 };
 
-export default Home;
+HomePage.layout = Layout;
+
+export default HomePage;

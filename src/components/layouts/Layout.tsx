@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface Props {
-  children: JSX.Element | React.ReactNode;
+  children: NodeR;
 }
 
-const Layout: React.FunctionComponent<Props> = ({ children }) => {
+const Layout: Component<Props> = ({ children }) => {
   return <main className="mt-header">{children}</main>;
 };
 

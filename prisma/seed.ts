@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
 import faker from 'faker';
 
-import { defaultUsersMedia } from '../src/lib/constants';
-import SecurityService from '@services/security.service';
+import { defaultUsersMedia } from '../src/ressources/constants';
+import Security from '../src/services/security.service';
 
 const prisma = new PrismaClient();
 
@@ -16,7 +16,7 @@ async function main() {
       id: 1,
       username: 'kalat',
       email: 'kalat@kanime.fr',
-      password: SecurityService.sha256(password + 'kalat'),
+      password: Security.sha256(password + 'kalat'),
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
@@ -32,7 +32,7 @@ async function main() {
       data: {
         email: faker.internet.email(),
         username: username,
-        password: SecurityService.sha256(password + username),
+        password: Security.sha256(password + username),
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
         bio: faker.lorem.sentence(),

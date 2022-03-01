@@ -1,16 +1,16 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultResponseData, User } from '@types';
-import handler from '@lib/routing';
-import SecurityService from '@services/security.service';
-import { withSessionApi } from '@services/session.service';
-import { UserModel } from '@models';
-import { UsersMapper } from '@mapper';
-import { ApiError, SchemaError } from '@errors';
-import { errorMessage } from '@lib/constants';
-import { signInSchema } from '@validations/users';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
+import Security from 'services/security.service';
+import { UserModel } from 'models';
+import { UsersMapper } from 'mapper';
+import { signInSchema } from 'ressources/validations';
+import { errorMessage } from 'ressources/constants';
+import ApiError from 'class/error/ApiError';
+import SchemaError from 'class/error/SchemaError';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   user: User;
   token: string;
 }
@@ -30,18 +30,18 @@ handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     await UserModel.findByEmail(body.email)
   );
 
-  if (!user || !SecurityService.compare(body.password + user.username, hash)) {
+  if (!user || !Security.compare(body.password + user.username, hash)) {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
-  const token = SecurityService.sign(user);
+  const token = Security.sign(user);
 
   session.user = user;
   session.token = token;
 
   await session.save();
 
-  res.send({ success: true, user: user, token: token });
+  res.send({ success: true, user, token });
 });
 
 export default withSessionApi(handler);

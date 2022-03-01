@@ -1,14 +1,13 @@
 import React from 'react';
-import { GetServerSideProps, NextPage } from 'next';
 
-import { withSessionSsr } from '@services/session.service';
-import { routes } from '@lib/constants';
-import Layout from '@layouts/Layout';
-import EditGeneralData from '@components/user/EditGeneralData';
+import type { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { routes } from 'ressources/routes';
+import EditGeneralData from 'components/user/EditGeneralData';
 
 interface Props {}
 
-export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
   ({ req, query }) => {
     if (req.session.user.username !== query.username) {
       return {
@@ -23,12 +22,8 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
   }
 );
 
-const SettingsPage: NextPage<Props> = () => {
-  return (
-    <Layout>
-      <EditGeneralData />
-    </Layout>
-  );
+const SettingsPage: Page<Props> = () => {
+  return <EditGeneralData />;
 };
 
 export default SettingsPage;

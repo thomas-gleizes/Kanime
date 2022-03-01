@@ -1,5 +1,4 @@
-import React, { FunctionComponent } from 'react';
-import { TailwindcssColors } from '@types';
+import React from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
@@ -10,7 +9,7 @@ interface Props {
   options: Array<any>;
 }
 
-const ListGroup: FunctionComponent<Props> = ({ color, value, handleChange, options }) => {
+const ListGroup: Component<Props> = ({ color, value, handleChange, options }) => {
   return (
     <Listbox value={value} onChange={handleChange}>
       <div className="relative mt-1">

@@ -4,8 +4,7 @@ import Image from 'next/image';
 import { StarIcon, HeartIcon } from '@heroicons/react/solid';
 import { Transition } from '@headlessui/react';
 
-import { Anime } from '@types';
-import { routes } from '@lib/constants';
+import { routes } from 'ressources/routes';
 
 interface Props {
   anime: Anime;
@@ -18,11 +17,7 @@ interface AnimePopupProps {
   position: 'left' | 'right';
 }
 
-const AnimePopup: React.FunctionComponent<AnimePopupProps> = ({
-  anime,
-  isOpen,
-  position,
-}) => {
+const AnimePopup: Component<AnimePopupProps> = ({ anime, isOpen, position }) => {
   const { synopsis, canonicalTitle, season_year, rating, popularity, type } = anime;
 
   const styles = useMemo(() => ({ [position]: '100%' }), [position]);
@@ -107,7 +102,7 @@ const AnimePopup: React.FunctionComponent<AnimePopupProps> = ({
   );
 };
 
-const AnimeCard: React.FunctionComponent<Props> = ({ anime, index }) => {
+const AnimeCard: Component<Props> = ({ anime, index }) => {
   const { slug, poster, canonicalTitle } = anime;
 
   const [open, setOpen] = useState<boolean>(false);

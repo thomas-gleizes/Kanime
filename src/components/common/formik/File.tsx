@@ -1,6 +1,6 @@
 import React from 'react';
 import { useField } from 'formik';
-import base64 from '@helpers/base64';
+import base64 from 'utils/base64';
 
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
   innerRef: any;
@@ -8,7 +8,7 @@ interface Props extends React.HTMLAttributes<HTMLInputElement> {
   disabled?: boolean;
 }
 
-const File: React.FunctionComponent<Props> = ({ innerRef, name, disabled }) => {
+const File: Component<Props> = ({ innerRef, name, disabled }) => {
   const [__, _, { setValue }] = useField(name);
 
   const handleChange = ({ target }) => {

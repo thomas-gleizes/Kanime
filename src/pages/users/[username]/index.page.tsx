@@ -1,28 +1,29 @@
-import { GetServerSideProps, NextPage } from 'next';
+import React, { useEffect } from 'react';
 import Error from 'next/error';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
 
-import { User } from '@types';
-import { UserModel } from '@models';
-import { withSessionSsr } from '@services/session.service';
-import { useLayoutContext } from '@context/layout.context';
-import { UsersMapper } from '@mapper';
-import Layout from '@layouts/Layout';
-import Title from '@layouts/Title';
+import { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { useLayoutContext } from 'context/layout.context';
+import { UserModel } from 'models';
+import { UsersMapper } from 'mapper';
+import Title from 'components/layouts/Title';
 
 interface Props {
-  user?: User;
-  isCurrent?: boolean;
-  error?: any;
+  user: User;
+  isCurrent: boolean;
 }
 
-export const getServerSideProps: GetServerSideProps = withSessionSsr(
+interface ErrorProps {
+  error: ErrorPage;
+}
+
+export const getServerSideProps: ServerSideProps<Props | ErrorProps> = withSessionSsr(
   async ({ query, req }) => {
     const { username } = query;
     const { user: sessionUser } = req.session;
 
-    const [user] = UsersMapper.one(await UserModel.findByUsername(username));
+    const [user] = UsersMapper.one(await UserModel.findByUsername(username as string));
 
     if (user) {
       return {
@@ -44,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = withSessionSsr(
   }
 );
 
-export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
+export const UserPage: Page<Props> = ({ user, isCurrent, error }) => {
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
@@ -58,7 +59,7 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
   if (error) return <Error statusCode={error.code} title={error.message} />;
 
   return (
-    <Layout>
+    <>
       <Title>{user.username}</Title>
       <div className="w-full">
         <div
@@ -80,7 +81,7 @@ export const UserPage: NextPage<Props> = ({ user, isCurrent, error }) => {
         </div>
       </div>
       <div className="text-center mt-5 h-screen"> Coming soon...</div>
-    </Layout>
+    </>
   );
 };
 

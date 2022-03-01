@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react';
 
-import { Logs } from '@types';
-import { useClockFromDate } from '@hooks';
-import { routes } from '@lib/constants';
-import appAxios from '@lib/axios/appAxios';
-import toast from '@helpers/toastr';
+import { ApiService } from 'services/api.service';
+import { useClockFromDate } from 'hooks';
+import { routes } from 'ressources/routes';
+import toast from 'utils/toastr';
 
 const fetchLogs = (limit: number, start: number) =>
-  appAxios.get(routes.logs.api.list, { params: { limit, start } });
+  ApiService.get(routes.logs.api.list, { params: { limit, start } });
 
 interface TimeCellProps {
   date: Date | string;
 }
 
-const TimeCell: React.FunctionComponent<TimeCellProps> = ({ date }) => {
+const TimeCell: Component<TimeCellProps> = ({ date }) => {
   const time = useClockFromDate(new Date(date));
 
   return <>{time}</>;
 };
 
-const ListLogs: React.FunctionComponent = () => {
+const ListLogs: Component = () => {
   const [logs, setLogs] = useState<Logs>([]);
 
   useEffect(() => {

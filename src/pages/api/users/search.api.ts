@@ -1,13 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultResponseData, Users } from '@types';
-import handler from '@lib/routing';
-import { ApiError } from '@errors';
-import { UsersMapper } from '@mapper';
-import { UserModel } from '@models';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
+import ApiError from 'class/error/ApiError';
+import { UsersMapper } from 'mapper/index';
+import { UserModel } from 'models/index';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   users: Users;
 }
 

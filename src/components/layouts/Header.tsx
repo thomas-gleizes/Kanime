@@ -5,19 +5,22 @@ import { FaBars } from 'react-icons/fa';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 
-import { useUserContext } from '@context/user.context';
-import { useLayoutContext } from '@context/layout.context';
-import { routes } from '@lib/constants';
-import DropDownByRef from '@layouts/DropDownByRef';
-import SearchBar from '@components/common/SearchBar';
+import { useUserContext } from 'context/user.context';
+import { useLayoutContext } from 'context/layout.context';
+import { routes } from 'ressources/routes';
+import DropDownByRef from 'components/layouts/DropDownByRef';
+import SearchBar from 'components/common/SearchBar';
 
-const DropDownItem = ({ href, children }) => (
+const DropDownItem: Component<{ href: string; children: NodeR }> = ({
+  href,
+  children,
+}) => (
   <Link href={href}>
     <a className="block w-full py-1.5 px-2 hover:bg-gray-100">{children}</a>
   </Link>
 );
 
-const DropDownExplore = () => {
+const DropDownExplore: Component = () => {
   const button = useRef<HTMLButtonElement>();
 
   return (
@@ -41,7 +44,7 @@ const DropDownExplore = () => {
   );
 };
 
-const Header: React.FunctionComponent = () => {
+const Header: Component = () => {
   const { user, isLogin, signOut } = useUserContext();
   const {
     scrollHeight,

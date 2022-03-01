@@ -3,17 +3,15 @@ import Error from 'next/error';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-
-import { Anime } from '@types';
-import { ErrorPage } from '@errors';
-import { useLayoutContext } from '@context/layout.context';
-import { routes } from '@lib/constants';
-import Title from '@layouts/Title';
 import classnames from 'classnames';
-import KitsuButton from '@components/common/KitsuButton';
-import Button from '@components/common/Button';
-import EditAnimesEntries from '@components/modal/EditAnimesEntries';
-import { useToggle } from '@hooks';
+
+import { useLayoutContext } from 'context/layout.context';
+import { useToggle } from 'hooks';
+import { routes } from 'ressources/routes';
+import Title from 'components/layouts/Title';
+import KitsuButton from 'components/common/KitsuButton';
+import Button from 'components/common/Button';
+import EditAnimesEntries from 'components/modal/EditAnimesEntries';
 
 interface Props {
   children: any;
@@ -32,10 +30,7 @@ const TABS: Array<tab> = [
   { label: 'Personnages', path: '/characters' },
 ];
 
-const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
-  href,
-  children,
-}) => {
+const NavLink: Component<{ href: string; children: string }> = ({ href, children }) => {
   const router = useRouter();
   const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href]);
 
@@ -53,7 +48,7 @@ const NavLink: React.FunctionComponent<{ href: string; children: string }> = ({
   );
 };
 
-const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error }) => {
+const AnimeLayout: Component<Props> = ({ children, anime, error }) => {
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
@@ -66,8 +61,8 @@ const AnimeLayout: React.FunctionComponent<Props> = ({ children, anime, error })
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
 
-  if (error) return <Error statusCode={error.statusCode} title={error.title} />;
-  if (!anime) return null;
+  if (error) return <Error statusCode={error.code} title={error.message} />;
+  if (!anime) return <></>;
 
   return (
     <>

@@ -1,12 +1,7 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -19,52 +14,24 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "baseUrl": "./src",
     "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@layouts/*": [
-        "src/components/layouts/*"
-      ],
-      "@types": [
-        "types"
-      ],
-      "@hooks": [
-        "src/hooks"
-      ],
-      "@context/*": [
-        "src/context/*"
-      ],
-      "@lib/*": [
-        "src/lib/*"
-      ],
-      "@services/*": [
-        "src/lib/services/*"
-      ],
-      "@mapper": [
-        "src/lib/mapper"
-      ],
-      "@errors": [
-        "src/lib/errors"
-      ],
-      "@models": [
-        "src/lib/models"
-      ],
-      "@helpers/*": [
-        "src/lib/helpers/*"
-      ],
-      "@validations/*": [
-        "src/lib/validations/*"
-      ],
-      "@api": ["src/api"]
+      "api": ["api"],
+      "class/*": ["class/*"],
+      "components/*": ["components/*"],
+      "context/*": ["context/*"],
+      "hooks": ["hooks"],
+      "mapper": ["mapper"],
+      "models": ["models"],
+      "pages/*": ["pages/*"],
+      "ressources/*": ["ressources/*"],
+      "services/*": ["services/*"],
+      "styles/*": ["styles/*"],
+      "utils/*": ["utils/*"],
+      "public/*": ["../public"],
+      "types": ["../types"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src", "types"],
+  "exclude": ["node_modules"]
 }

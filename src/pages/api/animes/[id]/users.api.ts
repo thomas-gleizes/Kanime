@@ -1,14 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Users, DefaultResponseData } from '@types';
-import handler from '@lib/routing';
-import { AnimeModel, UserModel } from '@models';
-import { UsersMapper } from '@mapper';
-import { ApiError } from '@errors';
-import { errorMessage } from '@lib/constants';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
+import { AnimeModel, UserModel } from 'models';
+import { UsersMapper } from 'mapper';
+import { errorMessage } from 'ressources/constants';
+import ApiError from 'class/error/ApiError';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   users: Users;
 }
 

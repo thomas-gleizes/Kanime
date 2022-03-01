@@ -6,18 +6,17 @@ import { BeatLoader } from 'react-spinners';
 import SimpleBar from 'simplebar-react';
 import classnames from 'classnames';
 
-import { Animes, Users } from '@types';
-import { routes } from '@lib/constants';
-import { AnimesApi } from '@api';
-import { useKeyPress } from '@hooks';
-import toast from '@helpers/toastr';
-import timeout from '@helpers/timeout';
+import { AnimesApi } from 'api';
+import { useKeyPress } from 'hooks';
+import { routes } from 'ressources/routes';
+import toast from 'utils/toastr';
+import timeout from 'utils/timeout';
 
 interface Props {
   transparent: boolean;
 }
 
-const SearchBar: React.FunctionComponent<Props> = ({ transparent }) => {
+const SearchBar: Component<Props> = ({ transparent }) => {
   const [query, setQuery] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [animes, setAnimes] = useState<Animes>([]);

@@ -2,10 +2,10 @@ import React from 'react';
 import Head from 'next/head';
 
 interface Props {
-  children: string;
+  children: string | NodeR;
 }
 
-const Title: React.FunctionComponent<Props> = ({ children }) => {
+const Title: Component<Props> = ({ children }) => {
   return (
     <Head>
       <title>

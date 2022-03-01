@@ -1,11 +1,8 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import { User } from '@types';
-import { useContextFactory } from '@hooks';
-import LocalStorageService from '@services/localStorage.service';
-import appAxios from '@lib/axios/appAxios';
-import { routes } from '@lib/constants';
-import toast from '@helpers/toastr';
+import LocalStorageService from 'services/localStorage.service';
+import { useContextFactory } from 'hooks';
+import toast from 'utils/toastr';
 
 export declare type UserContext = {
   isLogin: boolean;
@@ -39,7 +36,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async (): Promise<void> => {
-    await appAxios.get(routes.authentication.api.logout);
+    // await appAxios.get(routes.authentication.api.logout);
+
     LocalStorageService.clearUser();
     setIsLogin(false);
     setUser(null);

@@ -1,12 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { Category, DefaultResponseData } from '@types';
-import handler from '@lib/routing';
-import { CategoryModel } from '@models';
-import { CategoriesMapper } from '@mapper';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
+import { CategoriesMapper } from 'mapper';
+import { CategoryModel } from 'models';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   categories: Category[];
 }
 

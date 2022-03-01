@@ -1,5 +1,3 @@
-import { EntryStatus } from '@prisma/client';
-
 type Images = {
   tiny?: string;
   small?: string;
@@ -39,11 +37,9 @@ type Category = {
   totalMediaCount: number;
 };
 
-type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
-
 type Categories = Array<Category>;
 
-type Anime = {
+interface Anime {
   id: number;
   kitsu_id: number;
   slug: string;
@@ -62,9 +58,11 @@ type Anime = {
   episode: Episode;
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
-};
+}
 
 type Animes = Array<Anime>;
+
+type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
 
 type Entry = {
   animeId: number;

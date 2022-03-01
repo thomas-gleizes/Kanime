@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import handler from '@lib/routing';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
 
 handler.all(async (req: NextApiRequest, res: NextApiResponse) => {
   req.session.destroy();

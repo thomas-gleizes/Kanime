@@ -1,17 +1,15 @@
 import React from 'react';
-import { GetServerSideProps, NextPage } from 'next';
 
-import { User } from '@types';
-import { withSessionSsr } from '@services/session.service';
-import { routes } from '@lib/constants';
-import Layout from '@layouts/Layout';
-import ListLogs from '@components/admin/ListLogs';
+import { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { routes } from 'ressources/routes';
+import ListLogs from 'components/admin/ListLogs';
 
 interface Props {
   user?: User;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
   async ({ req }) => {
     const user: User = req.session.user;
 
@@ -24,20 +22,20 @@ export const getServerSideProps: GetServerSideProps<Props> = withSessionSsr(
       };
     } else {
       return {
-        props: { user: user },
+        props: { user },
       };
     }
   }
 );
 
-const Admin: NextPage<Props> = ({ user }) => {
+const Admin: Page<Props> = ({ user }) => {
   return (
-    <Layout>
+    <>
       <h1>{user?.username}: You are an admin</h1>
       <div className="w-1000">
         <ListLogs />
       </div>
-    </Layout>
+    </>
   );
 };
 

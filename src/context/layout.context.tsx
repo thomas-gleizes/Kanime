@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { useContextFactory, useScrollHeight, useScrollPercent } from '@hooks';
+import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 
 type Dialog<T = any> = {
   type: string;
@@ -8,8 +8,8 @@ type Dialog<T = any> = {
 };
 
 export declare type LayoutContext = {
-  activeTransparentState: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
-  dialogState: [Dialog, React.Dispatch<React.SetStateAction<Dialog>>];
+  activeTransparentState: State<boolean>;
+  dialogState: State<Dialog>;
   scrollPercent: number;
   scrollHeight: number;
   header: {

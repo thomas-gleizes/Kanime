@@ -1,32 +1,29 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { ResAnimesSearch, ResDefaultError } from '@types';
-import handler from '@lib/routing';
-import { AnimeModel } from '@models';
-import { AnimesMapper } from '@mapper';
-import { ApiError } from '@errors';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import ApiError from 'class/error/ApiError';
+import { AnimesMapper } from 'mapper';
+import { AnimeModel } from 'models';
+import { withSessionApi } from 'services/session.service';
 
-handler.get(
-  async (
-    req: NextApiRequest,
-    res: NextApiResponse<ResAnimesSearch | ResDefaultError>
-  ) => {
-    const { limit, skip, query } = req.query;
+interface Response extends DefaultResponse {
+  animes: Animes;
+}
 
-    if (!query) throw new ApiError(400, 'query is required');
+handler.get(async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+  const { limit, skip, query } = req.query;
 
-    const animes = AnimesMapper.many(
-      await AnimeModel.search(query as string, { limit, skip })
-    );
+  if (!query) throw new ApiError(400, 'query is required');
 
-    res.status(200).send({
-      success: true,
-      animes,
-      count: animes.length,
-      debug: { limit, skip, query },
-    });
-  }
-);
+  const animes = AnimesMapper.many(
+    await AnimeModel.search(query as string, { limit, skip })
+  );
+
+  res.status(200).send({
+    success: true,
+    animes,
+    debug: { limit, skip, query },
+  });
+});
 
 export default withSessionApi(handler);

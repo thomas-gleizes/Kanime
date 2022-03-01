@@ -1,33 +1,24 @@
-import type { NextComponentType, NextPageContext } from 'next';
-import React from 'react';
+import React, { useMemo } from 'react';
 import Head from 'next/head';
 
-import '../styles/globals.css';
+import { AppProps } from 'next/app';
+
+import LayoutContextProvider from 'context/layout.context';
+import UserContextProvider from 'context/user.context';
+import Header from 'components/layouts/Header';
+import Footer from 'components/layouts/Footer';
+import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
+
+import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
 
-import LayoutContextProvider from '@context/layout.context';
-import UserContextProvider from '@context/user.context';
-import Header from '@layouts/Header';
-import Footer from '@layouts/Footer';
-import EmptyLayout from '@layouts/EmptyLayout';
-import { AlertDialog, ConfirmDialog, PromptDialog } from '@components/dialog';
-
-type AppProps = {
-  pageProps: any;
-  Component: NextComponentType<NextPageContext, any, {}> & { Layout?: any };
-};
-
-const AllContextProvider: React.FunctionComponent<{ children: React.ReactNode }> = ({
-  children,
-}) => (
+const AllContextProvider: Component<ContextProviderProps> = ({ children }) => (
   <LayoutContextProvider>
     <UserContextProvider>{children}</UserContextProvider>
   </LayoutContextProvider>
 );
 
-const AllDialog: React.FunctionComponent<{ children: React.ReactNode }> = ({
-  children,
-}) => (
+const AllDialog: Component<ContextProviderProps> = ({ children }) => (
   <>
     {children}
     <ConfirmDialog />
@@ -37,8 +28,7 @@ const AllDialog: React.FunctionComponent<{ children: React.ReactNode }> = ({
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
-  // TODO refactor this (pas bo)
-  const Layout = Component.Layout || EmptyLayout;
+  const Layout: Component = useMemo(() => Component.layout || Layout, [Component.layout]);
 
   return (
     <AllContextProvider>

@@ -1,11 +1,10 @@
-import appAxios from '@lib/axios/appAxios';
-import { routes } from '@lib/constants';
-import { AxiosRes, modelParams, ResAnimes, ResAnimesSearch } from '@types';
+import { ApiService } from 'services/api.service';
+import { routes } from 'ressources/routes';
 
-export const search = (query: string, params?: modelParams): AxiosRes<ResAnimesSearch> =>
-  appAxios.get(routes.animes.api.search, {
+export const search = (query: string, params?: modelParams) =>
+  ApiService.get(routes.animes.api.search, {
     params: { query, ...params },
   });
 
-export const all = (params?: modelParams): AxiosRes<ResAnimes> =>
-  appAxios.get(routes.animes.api.list, { params });
+export const all = (params?: modelParams) =>
+  ApiService.get(routes.animes.api.list, { params });

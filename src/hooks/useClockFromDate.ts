@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Moment from '@helpers/momentFr';
+import Moment from '../utils/momentFr';
 
 const format = (date: Date): string => Moment(date).fromNow();
 

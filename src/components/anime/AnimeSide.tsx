@@ -1,5 +1,4 @@
 import React from 'react';
-import { Anime } from '@types';
 
 interface Props {
   anime: Anime;
@@ -10,7 +9,7 @@ interface ItemProps {
   content: string;
 }
 
-const AnimeSide: React.FunctionComponent<Props> = ({ anime }) => {
+const AnimeSide: Component<Props> = ({ anime }) => {
   return (
     <div className="w-1/3 h-100">
       <div className="bg-white border shadow px-4 py-8">

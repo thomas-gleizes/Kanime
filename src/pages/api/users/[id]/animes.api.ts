@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 import { DefaultResponseData, Animes } from '@types';
-import handler from '@lib/routing';
-import { UserModel, AnimeModel } from '@models';
-import { AnimesMapper } from '@mapper';
-import { ApiError } from '@errors';
-import { errorMessage } from '@lib/constants';
-import { withSessionApi } from '@services/session.service';
+import handler from '../../../../services/handler.service';
+import { UserModel, AnimeModel } from '../../../../models';
+import { AnimesMapper } from '../../../../mapper';
+import { ApiError } from '../../../../class';
+import { errorMessage } from '../../../../ressources/constants';
+import { withSessionApi } from '../../../../services/session.service';
 
 interface Data extends DefaultResponseData {
   animes: Animes;

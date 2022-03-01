@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 
 import { Size } from '@types';
-import domUuid from '@helpers/domUuid';
-import isBrowser from '@helpers/isBrowser';
+import domUuid from '../../../utils/domUuid';
+import isBrowser from '../../../utils/isBrowser';
 
 interface ModalProps {
   isOpen: boolean;

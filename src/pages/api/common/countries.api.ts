@@ -1,12 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Country } from '@prisma/client';
 
-import handler from '@lib/routing';
-import { CountryModel } from '@models';
-import { DefaultResponseData } from '@types';
-import { withSessionApi } from '@services/session.service';
+import handler from 'services/handler.service';
+import { CountryModel } from 'models';
+import { withSessionApi } from 'services/session.service';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   countries: Array<Country>;
 }
 

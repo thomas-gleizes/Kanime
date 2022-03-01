@@ -1,32 +1,24 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import * as fs from 'fs';
 
-import { DefaultResponseData, User } from '@types';
-import { withSessionApi } from '@services/session.service';
-import handler, { verifyUser } from '@lib/routing';
-import { UserModel } from '@models';
-import { defaultUsersMedia, publicPath } from '@lib/constants';
-import { UsersMapper } from '@mapper';
-import SecurityService from '@services/security.service';
+import handler from 'services/handler.service';
+import Security from 'services/security.service';
+import { verifyUser } from 'ressources/middleware';
+import { UsersMapper } from 'mapper';
+import { UserModel } from 'models';
+import { defaultUsersMedia, publicPath } from 'ressources/constants';
+import { withSessionApi } from 'services/session.service';
 
-interface GetData extends DefaultResponseData {
+interface GetData extends DefaultResponse {
   user: User;
 }
 
-interface PatchData extends DefaultResponseData {
+interface PatchData extends DefaultResponse {
   user: User;
   token: string;
 }
 
 // var matches = string.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
 
 handler.get(verifyUser, async (req, res: NextApiResponse<GetData>) => {
   const { session } = req;
@@ -74,7 +66,7 @@ handler.patch(
 
     const [updatedUser] = UsersMapper.one(await UserModel.update(user.id, body));
 
-    const token = SecurityService.sign(updatedUser);
+    const token = Security.sign(updatedUser);
 
     session.user = updatedUser;
     session.token = token;
@@ -86,3 +78,11 @@ handler.patch(
 );
 
 export default withSessionApi(handler);
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb',
+    },
+  },
+};

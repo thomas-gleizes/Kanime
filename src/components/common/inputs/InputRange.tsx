@@ -9,7 +9,7 @@ interface Props {
   onChange: (values: minmax) => void;
 }
 
-const InputRange: React.FunctionComponent<Props> = ({ min, max, step, onChange }) => {
+const InputRange: Component<Props> = ({ min, max, step, onChange }) => {
   const [minValue, setMinValue] = useState<number>(min);
   const [maxValue, setMaxValue] = useState<number>(max);
 

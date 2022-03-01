@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props extends React.HTMLAttributes<HTMLHeadingElement> {}
 
-const Footer: React.FunctionComponent<Props> = (props) => {
+const Footer: Component<Props> = (props) => {
   return <footer {...props} />;
 };
 

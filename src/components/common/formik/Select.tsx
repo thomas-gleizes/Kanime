@@ -1,6 +1,5 @@
 import React from 'react';
 import { useField } from 'formik';
-import { TailwindcssColors } from '../../../../types/global';
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   name: string;
@@ -9,7 +8,7 @@ interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   required?: boolean;
 }
 
-const Select: React.FunctionComponent<SelectProps> = ({
+const Select: Component<SelectProps> = ({
   name,
   label,
   required,

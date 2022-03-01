@@ -1,13 +1,14 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import handler from '@lib/routing';
-import { withSessionApi } from '@services/session.service';
-import { UserModel } from '@models';
-import SecurityService from '@services/security.service';
-import { ApiError, SchemaError } from '@errors';
-import { resetPasswordSchema } from '@validations/users';
+import handler from 'services/handler.service';
+import Security from 'services/security.service';
+import { withSessionApi } from 'services/session.service';
+import SchemaError from 'class/error/SchemaError';
+import ApiError from 'class/error/ApiError';
+import { resetPasswordSchema } from 'ressources/validations';
+import { UserModel } from 'models';
 
-handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.patch(async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>) => {
   const { body } = req;
 
   try {
@@ -19,7 +20,7 @@ handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const user = await UserModel.checkResetPasswordToken(body.token);
   if (!user) throw new ApiError(404, 'token not found');
 
-  const hash = SecurityService.sha256(body.newPassword + user.username);
+  const hash = Security.sha256(body.newPassword + user.username);
 
   await UserModel.resetPassword(user.id, hash);
 

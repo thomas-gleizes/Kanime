@@ -6,11 +6,11 @@ import { UserMediaHandling } from '@types';
 import { useUserContext } from '@context/user.context';
 import { useFetch } from '@hooks';
 import appAxios from '@lib/axios/appAxios';
-import toast from '@helpers/toastr';
+import toast from '../../utils/toastr';
 import Button from '@components/common/Button';
 import { Field, File, Select, Textarea } from '@components/common/formik';
 import { CardBody, CardFooter } from '@layouts/card';
-import { routes } from '@lib/constants';
+import { routes } from '../../ressources/constants';
 
 declare type values = {
   city: string;

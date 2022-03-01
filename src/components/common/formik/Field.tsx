@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { useField } from 'formik';
 import classnames from 'classnames';
-import { Input } from '@components/common/inputs';
-import { InputProps } from '@components/common/inputs/Input';
+
+import { Input } from 'components/common/inputs';
+import type { InputProps } from 'components/common/inputs/Input';
 
 interface FieldProps extends InputProps {
   label?: string;
@@ -10,7 +11,7 @@ interface FieldProps extends InputProps {
   required?: boolean;
 }
 
-const Field: React.FC<FieldProps> = ({ name, label, required, className, ...props }) => {
+const Field: Component<FieldProps> = ({ name, label, required, className, ...props }) => {
   const [field, meta] = useField(name);
 
   const error = useMemo<string>(

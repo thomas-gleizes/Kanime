@@ -1,8 +1,6 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames';
 
-import { InputType, Size, TailwindcssColors } from '@types';
-
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: InputType;
   iSize?: Size;
@@ -11,7 +9,7 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   color?: TailwindcssColors;
 }
 
-const Input: React.FunctionComponent<InputProps> = ({
+const Input: Component<InputProps> = ({
   type,
   color,
   className,

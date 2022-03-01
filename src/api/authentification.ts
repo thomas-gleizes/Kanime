@@ -1,20 +1,21 @@
 import * as Yup from 'yup';
 
-import appAxios from '@lib/axios/appAxios';
-import { AxiosRes, ResRegister } from '@types';
-import { registerSchema, resetPasswordSchema, signInSchema } from '@validations/users';
-import { routes } from '@lib/constants';
+import { ApiService } from 'services/api.service';
+import { routes } from 'ressources/routes';
+import {
+  registerSchema,
+  resetPasswordSchema,
+  signInSchema,
+} from 'ressources/validations';
 
-export const login = (payload: Yup.TypeOf<typeof signInSchema>): AxiosRes<any> =>
-  appAxios.post(routes.authentication.api.signIn, payload);
+export const login = (payload: Yup.TypeOf<typeof signInSchema>) =>
+  ApiService.post(routes.authentication.api.signIn, payload);
 
-export const register = (
-  payload: Yup.TypeOf<typeof registerSchema>
-): AxiosRes<ResRegister> => appAxios.post(routes.authentication.api.register, payload);
+export const register = (payload: Yup.TypeOf<typeof registerSchema>): any =>
+  ApiService.post(routes.authentication.api.register, payload);
 
-export const forgotPassword = (email: string): AxiosRes<any> =>
-  appAxios.patch(routes.authentication.api.forgotPassword, { email });
+export const forgotPassword = (email: string): any =>
+  ApiService.patch(routes.authentication.api.forgotPassword, { email });
 
-export const resetPassword = (
-  values: Yup.TypeOf<typeof resetPasswordSchema>
-): AxiosRes<any> => appAxios.patch(routes.authentication.api.resetPassword, values);
+export const resetPassword = (values: Yup.TypeOf<typeof resetPasswordSchema>): any =>
+  ApiService.patch(routes.authentication.api.resetPassword, values);

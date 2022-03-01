@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const DropDownByRef: React.FC<Props> = ({ innerRef, children }) => {
+const DropDownByRef: Component<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const identifier = useMemo<string>(

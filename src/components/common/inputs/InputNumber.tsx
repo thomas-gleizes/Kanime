@@ -10,14 +10,7 @@ interface Props extends React.InputHTMLAttributes<any> {
   step: number;
 }
 
-const InputNumber: React.FunctionComponent<Props> = ({
-  value,
-  onChange,
-  min,
-  max,
-  step,
-  ...props
-}) => {
+const InputNumber: Component<Props> = ({ value, onChange, min, max, step, ...props }) => {
   const handleKey = ({ keyCode }) => {
     if (keyCode === 40) handleMinus();
     else if (keyCode === 38) handlePlus();

@@ -1,15 +1,13 @@
 import React, { useMemo } from 'react';
 import classnames from 'classnames';
 
-import { TailwindcssColors } from '@types';
-
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   color?: TailwindcssColors;
   outline?: boolean;
   gradiant?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button: Component<ButtonProps> = ({
   color,
   className,
   outline,

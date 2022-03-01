@@ -1,36 +1,30 @@
 import React from 'react';
-import { NextPage } from 'next';
 
-import { Anime, Entry } from '@types';
-import { withSessionSsr } from '@services/session.service';
-import { ErrorPage } from '@errors';
-import { errorMessage } from '@lib/constants';
-import { AnimeModel } from '@models';
-import { AnimesMapper } from '@mapper';
-import { useToggle } from '@hooks';
-import AnimeSide from '@components/anime/AnimeSide';
-import AnimeLayout from '@layouts/pages/AnimeLayout';
+import { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { useToggle } from 'hooks';
+import { AnimeModel } from 'models';
+import { AnimesMapper } from 'mapper';
+import AnimeSide from 'components/anime/AnimeSide';
+import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {
   anime: Anime;
-  animeUser: Entry;
-  error?: ErrorPage;
 }
 
 const DESCRIPTION_LENGTH = 400;
 
-export const getServerSideProps = withSessionSsr(async ({ params }) => {
-  const { slug } = params;
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+  async ({ params }) => {
+    const { slug } = params;
 
-  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  if (!anime)
-    return { props: { error: ErrorPage.create(404, errorMessage.ANIME_NOT_FOUND) } };
+    return { props: { anime } };
+  }
+);
 
-  return { props: { anime: anime } };
-});
-
-const AnimeHome: NextPage<Props> = ({ anime }) => {
+const AnimeHome: Page<Props> = ({ anime }) => {
   const [extendParagraph, toggleParagraph] = useToggle(true);
 
   return (
@@ -71,8 +65,6 @@ const AnimeHome: NextPage<Props> = ({ anime }) => {
   );
 };
 
-// TODO fix types
-// @ts-ignore
-AnimeHome.Layout = AnimeLayout;
+AnimeHome.layout = AnimeLayout;
 
 export default AnimeHome;

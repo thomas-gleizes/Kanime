@@ -1,18 +1,18 @@
-import { NextPage } from 'next';
 import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import * as Yup from 'yup';
+import { useRouter } from 'next/router';
 import { Formik, Form } from 'formik';
 
-import { AuthenticationApi } from '@api';
-import { routes } from '@lib/constants';
-import { signInSchema } from '@validations/users';
-import { useUserContext } from '@context/user.context';
-import toast from '@helpers/toastr';
-import Layout from '@layouts/Layout';
-import { Field } from '@components/common/formik';
-import Button from '@components/common/Button';
+import { Page } from 'next/app';
+import { AuthenticationApi } from 'api';
+import { useUserContext } from 'context/user.context';
+import { signInSchema } from 'ressources/validations';
+import { routes } from 'ressources/routes';
+import toast from 'utils/toastr';
+import { Field } from 'components/common/formik';
+import Layout from 'components/layouts/Layout';
+import Button from 'components/common/Button';
 
 type loginType = Yup.TypeOf<typeof signInSchema>;
 
@@ -21,7 +21,7 @@ const initialValues: loginType = {
   password: '',
 };
 
-const SignInPage: NextPage = () => {
+const SignInPage: Page = () => {
   const { signIn } = useUserContext();
   const router = useRouter();
 

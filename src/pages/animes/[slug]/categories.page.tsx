@@ -1,36 +1,33 @@
 import React from 'react';
-import { NextPage } from 'next';
 import Link from 'next/link';
 
-import { withSessionSsr } from '@services/session.service';
-import { Anime, Categories } from '@types';
-import { AnimesMapper, CategoriesMapper } from '@mapper';
-import { AnimeModel, CategoryModel } from '@models';
-import { ErrorPage } from '@errors';
-import { errorMessage, routes } from '@lib/constants';
-import AnimeLayout from '@layouts/pages/AnimeLayout';
-
-export const getServerSideProps = withSessionSsr(async ({ params }) => {
-  const { slug } = params;
-
-  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
-
-  if (!anime)
-    return { props: { error: ErrorPage.create(404, errorMessage.ANIME_NOT_FOUND) } };
-
-  const categories: Categories = CategoriesMapper.many(
-    await CategoryModel.findByAnimeId(anime.id)
-  );
-
-  return { props: { anime, categories } };
-});
+import { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { AnimeModel, CategoryModel } from 'models';
+import { AnimesMapper, CategoriesMapper } from 'mapper';
+import { routes } from 'ressources/routes';
+import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {
   anime: Anime;
   categories: Categories;
 }
 
-const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+  async ({ params }) => {
+    const { slug } = params;
+
+    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+
+    const categories: Categories = CategoriesMapper.many(
+      await CategoryModel.findByAnimeId(anime.id)
+    );
+
+    return { props: { anime, categories, test: 'ok' } };
+  }
+);
+
+const AnimeCategories: Page<Props> = ({ anime, categories }) => {
   return (
     <div>
       <h1 className="text-xl font-black text-center">Categories</h1>
@@ -47,8 +44,6 @@ const AnimeCategories: NextPage<Props> = ({ anime, categories }) => {
   );
 };
 
-// TODO fix types
-// @ts-ignore
-AnimeCategories.Layout = AnimeLayout;
+AnimeCategories.layout = AnimeLayout;
 
 export default AnimeCategories;

@@ -1,18 +1,17 @@
 import React from 'react';
-import Layout from '@layouts/Layout';
-import { Input } from '@components/common/inputs';
-import Button from '@components/common/Button';
-import { Form, Formik } from 'formik';
-import { GetServerSideProps, NextPage } from 'next';
-import { withSessionSsr } from '@services/session.service';
-import { routes } from '@lib/constants';
-import { Field } from '@components/common/formik';
-import { UserModel } from '@models';
-import { resetPasswordSchema } from '@validations/users';
-import * as Yup from 'yup';
-import { AuthenticationApi } from '@api';
 import { useRouter } from 'next/router';
-import toast from '@helpers/toastr';
+import * as Yup from 'yup';
+import { Form, Formik } from 'formik';
+
+import { Page, ServerSideProps } from 'next/app';
+import { AuthenticationApi } from 'api';
+import { UserModel } from 'models';
+import { resetPasswordSchema } from 'ressources/validations';
+import { routes } from 'ressources/routes';
+import toast from 'utils/toastr';
+import { Field } from 'components/common/formik';
+import Layout from 'components/layouts/Layout';
+import Button from 'components/common/Button';
 
 interface Props {
   token: string;
@@ -26,10 +25,10 @@ const initialValues: resetPasswordPayload = {
   token: '',
 };
 
-export const getServerSideProps = async (context) => {
+export const getServerSideProps: ServerSideProps<any> = async (context) => {
   const { token } = context.query;
 
-  const user = await UserModel.checkResetPasswordToken(token);
+  const user = await UserModel.checkResetPasswordToken(token as string);
   if (!user)
     return {
       props: {},
@@ -42,7 +41,7 @@ export const getServerSideProps = async (context) => {
   return { props: { token } };
 };
 
-const ResetPasswordPage: NextPage<Props> = ({ token }) => {
+const ResetPasswordPage: Page<Props> = ({ token }) => {
   const router = useRouter();
 
   const handleSubmit = async (values: resetPasswordPayload) => {

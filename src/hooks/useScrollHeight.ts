@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import isBrowser from '@helpers/isBrowser';
+import isBrowser from '../utils/isBrowser';
 
 function getHeight(): number {
   if (isBrowser()) return document.documentElement.scrollTop;

@@ -1,19 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { Entry } from '@prisma/client';
 
-import { DefaultResponseData } from '@types';
-import handler, { verifyUser } from '@lib/routing';
-import { AnimeModel, EntryModel } from '@models';
-import { ApiError } from '@errors';
-import { withSessionApi } from '@services/session.service';
-import { errorMessage } from '@lib/constants';
-import { EntriesMapper } from '@mapper';
+import handler from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
+import { AnimeModel, EntryModel } from 'models';
+import { EntriesMapper } from 'mapper';
+import { verifyUser } from 'ressources/middleware';
+import { errorMessage } from 'ressources/constants';
+import ApiError from 'class/error/ApiError';
 
-interface Data extends DefaultResponseData {
-  animeUser: Entry;
+interface Response extends DefaultResponse {
+  entry: Entry;
 }
 
-const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Response>) => {
   const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
 
@@ -26,15 +25,15 @@ const createOrUpdate = async (req: NextApiRequest, res: NextApiResponse<Data>) =
     ...req.body,
   };
 
-  const animeUser = await EntryModel.upsert(data);
+  const entry = EntriesMapper.one(await EntryModel.upsert(data));
 
-  res.send({ success: true, animeUser });
+  res.send({ success: true, entry });
 };
 
 handler.post(verifyUser, createOrUpdate);
 handler.patch(verifyUser, createOrUpdate);
 
-handler.get(verifyUser, async (req, res) => {
+handler.get(verifyUser, async (req: NextApiRequest, res: NextApiResponse<Response>) => {
   const { id: animeId } = req.query;
 
   const entry = EntriesMapper.one(
@@ -44,16 +43,19 @@ handler.get(verifyUser, async (req, res) => {
   res.send({ success: true, entry });
 });
 
-handler.delete(verifyUser, async (req, res) => {
-  const { id: animeId } = req.query;
-  const { id: userId } = req.session.user;
+handler.delete(
+  verifyUser,
+  async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+    const { id: animeId } = req.query;
+    const { id: userId } = req.session.user;
 
-  const anime = await AnimeModel.findById(+animeId);
-  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
+    const anime = await AnimeModel.findById(+animeId);
+    if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-  const animeUser = await EntryModel.delete(userId, +animeId);
+    const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
 
-  res.status(204).send({ success: true, animeUser });
-});
+    res.status(204).send({ success: true, entry });
+  }
+);
 
 export default withSessionApi(handler);

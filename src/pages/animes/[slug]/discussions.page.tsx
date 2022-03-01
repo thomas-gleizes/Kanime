@@ -1,35 +1,29 @@
 import React from 'react';
-import { NextPage } from 'next';
 
-import AnimeLayout from '@layouts/pages/AnimeLayout';
-import { withSessionSsr } from '@services/session.service';
-import { Anime } from '@types';
-import { AnimesMapper } from '@mapper';
-import { AnimeModel } from '@models';
-import { ErrorPage } from '@errors';
-import { errorMessage } from '@lib/constants';
+import { Page, ServerSideProps } from 'next/app';
+import { withSessionSsr } from 'services/session.service';
+import { AnimeModel } from 'models';
+import { AnimesMapper } from 'mapper';
+import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {
   anime: Anime;
-  error?: ErrorPage;
 }
 
-export const getServerSideProps = withSessionSsr(async ({ params }) => {
-  const { slug } = params;
+export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+  async ({ params }) => {
+    const { slug } = params;
 
-  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  if (!anime)
-    return { props: { error: ErrorPage.create(404, errorMessage.ANIME_NOT_FOUND) } };
+    return { props: { anime } };
+  }
+);
 
-  return { props: { anime } };
-});
-
-const DiscussionsPage: NextPage<Props> = (props) => {
+const DiscussionsPage: Page<Props> = (props) => {
   return <h1 className="text-xl font-black text-center">Discussions</h1>;
 };
 
-// @ts-ignore
-DiscussionsPage.Layout = AnimeLayout;
+DiscussionsPage.layout = AnimeLayout;
 
 export default DiscussionsPage;

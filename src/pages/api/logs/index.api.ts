@@ -1,12 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { DefaultResponseData, Logs } from '@types';
-import { withSessionApi } from '@services/session.service';
-import handler, { verifyAdmin } from '@lib/routing';
-import { LogModel } from '@models';
-import { LogsMapper } from '@mapper';
+import handler from 'services/handler.service';
+import { LogsMapper } from 'mapper';
+import { LogModel } from 'models';
+import { verifyAdmin } from 'ressources/middleware';
+import { withSessionApi } from 'services/session.service';
 
-interface Data extends DefaultResponseData {
+interface Data extends DefaultResponse {
   logs: Logs;
   query?: any;
 }

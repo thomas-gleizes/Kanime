@@ -1,5 +1,3 @@
-import { Gender } from '@prisma/client';
-
 interface UserMediaHandling {
   raw: string;
   content: string;
@@ -12,7 +10,7 @@ declare type User = {
   id: number;
   username: string;
   email: string;
-  gender?: Gender;
+  gender: 'Male' | 'Female' | 'Secret';
   bio?: string;
   birthday?: string;
   city?: string;

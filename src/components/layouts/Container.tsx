@@ -1,10 +1,10 @@
 import React from 'react';
 
 interface Props {
-  children: React.ReactNode;
+  children: NodeR;
 }
 
-const Container: React.FunctionComponent<Props> = ({ children }) => {
+const Container: Component<Props> = ({ children }) => {
   return <div className="px-2 py-4">{children}</div>;
 };
 

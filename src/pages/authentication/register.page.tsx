@@ -1,16 +1,15 @@
 import React from 'react';
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 
-import { useUserContext } from '@context/user.context';
-import { routes } from '@lib/constants';
-import { registerSchema } from '@validations/users';
-import { AuthenticationApi } from '@api';
-import { Field } from '@components/common/formik';
-import Button from '@components/common/Button';
-import Layout from '@layouts/Layout';
+import type { Page } from 'next/app';
+import { AuthenticationApi } from 'api';
+import { useUserContext } from 'context/user.context';
+import { registerSchema } from 'ressources/validations';
+import { routes } from 'ressources/routes';
+import { Field } from 'components/common/formik';
+import Button from 'components/common/Button';
 
 type registerPayload = Yup.TypeOf<typeof registerSchema>;
 
@@ -21,7 +20,7 @@ const initialValues: registerPayload = {
   confirmPassword: '',
 };
 
-const RegisterPage: NextPage = () => {
+const RegisterPage: Page = () => {
   const { signIn } = useUserContext();
   const router = useRouter();
 
@@ -38,7 +37,7 @@ const RegisterPage: NextPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
         <Formik
           initialValues={initialValues}
@@ -109,7 +108,7 @@ const RegisterPage: NextPage = () => {
           </Form>
         </Formik>
       </div>
-    </Layout>
+    </>
   );
 };
 

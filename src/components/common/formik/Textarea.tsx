@@ -8,7 +8,7 @@ interface FieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   required?: boolean;
 }
 
-const TextArea: React.FC<FieldProps> = ({ name, label, required, ...rest }) => {
+const TextArea: Component<FieldProps> = ({ name, label, required, ...rest }) => {
   const input = useRef<HTMLTextAreaElement>();
 
   const [field, meta] = useField(name);

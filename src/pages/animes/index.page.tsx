@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { GetServerSideProps, NextPage } from 'next';
 
-import { Animes, DefaultResponseData } from '@types';
-import appAxios from '@lib/axios/appAxios';
-import { AnimeModel } from '@models';
-import { AnimesMapper } from '@mapper';
-import { useScrollPercent } from '@hooks';
-import toast from '@helpers/toastr';
-import AnimeCard from '@components/common/AnimeCard';
-import Title from '@layouts/Title';
-import Layout from '@layouts/Layout';
-import { routes } from '@lib/constants';
+import { Page, ServerSideProps } from 'next/app';
+import { ApiService } from 'services/api.service';
+import { AnimesMapper } from 'mapper';
+import { AnimeModel } from 'models';
+import { useScrollPercent } from 'hooks';
+import { routes } from 'ressources/routes';
+import toast from 'utils/toastr';
+import Title from 'components/layouts/Title';
+import AnimeCard from 'components/common/AnimeCard';
 
-interface Props extends DefaultResponseData {
+interface Props {
   animes: Animes;
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) => {
+export const getServerSideProps: ServerSideProps<Props> = async ({ query }) => {
   const { skip, limit } = query;
 
   const animes = AnimesMapper.many(
@@ -31,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ query }) =
   };
 };
 
-const ExploreAnimes: NextPage<Props> = (props) => {
+const ExploreAnimes: Page<Props> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [animes, setAnimes] = useState<Animes>(props.animes);
 
@@ -43,7 +41,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
         setLoading(true);
 
         try {
-          const response = await appAxios.get(routes.animes.api.list, {
+          const response = await ApiService.get(routes.animes.api.list, {
             params: { limit: 40, skip: animes.length },
           });
 
@@ -58,7 +56,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
   }, [percent]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Layout>
+    <>
       <Title>Animes</Title>
       <div className="grid grid-cols-4 max-w-1100 mx-auto">
         {animes.map((anime, index) => (
@@ -67,7 +65,7 @@ const ExploreAnimes: NextPage<Props> = (props) => {
           </div>
         ))}
       </div>
-    </Layout>
+    </>
   );
 };
 

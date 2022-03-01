@@ -1,5 +1,12 @@
-import { User } from './users';
-import { Method } from './server';
+declare type Component<P = {}> = React.FC<P>;
+
+declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>];
+
+declare type NodeR = React.ReactNode | string;
+
+interface ContextProviderProps {
+  children: React.ReactNode;
+}
 
 type Log = {
   id: number;
