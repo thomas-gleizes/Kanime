@@ -1,8 +1,9 @@
+import { ApiRequest, ApiResponse } from 'app/next';
 import ApiError from 'class/error/ApiError';
 import Security from 'services/security.service';
 import { errorMessage } from 'ressources/constants';
 
-export const verifyUser = async (req, res, next) => {
+export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const tokenPayload = Security.getTokenPayload(token);

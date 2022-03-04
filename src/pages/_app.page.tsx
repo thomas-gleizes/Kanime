@@ -4,8 +4,6 @@ import Head from 'next/head';
 import { AppProps } from 'app/next';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
-import Header from 'components/layouts/Header';
-import Footer from 'components/layouts/Footer';
 import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
 import DefaultLayout from 'components/layouts/Layout';
 
@@ -45,11 +43,9 @@ const App = ({ Component, pageProps }: AppProps) => {
             as="font"
           />
         </Head>
-        <Header />
         <Layout {...pageProps}>
           <Component {...pageProps} />
         </Layout>
-        <Footer />
       </AllDialog>
     </AllContextProvider>
   );

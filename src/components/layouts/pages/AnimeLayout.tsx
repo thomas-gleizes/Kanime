@@ -12,9 +12,9 @@ import Title from 'components/layouts/Title';
 import KitsuButton from 'components/common/KitsuButton';
 import Button from 'components/common/Button';
 import EditAnimesEntries from 'components/modal/EditAnimesEntries';
+import Layout from 'components/layouts/Layout';
 
-interface Props {
-  children: any;
+export interface AnimeLayoutProps {
   anime: Anime;
   error?: ErrorPage;
 }
@@ -48,7 +48,11 @@ const NavLink: Component<{ href: string; children: string }> = ({ href, children
   );
 };
 
-const AnimeLayout: Component<Props> = ({ children, anime, error }) => {
+const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
+  children,
+  anime,
+  error,
+}) => {
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
@@ -62,10 +66,9 @@ const AnimeLayout: Component<Props> = ({ children, anime, error }) => {
   }, [setHeaderTransparent]);
 
   if (error) return <Error statusCode={error.code} title={error.message} />;
-  if (!anime) return <></>;
 
   return (
-    <>
+    <Layout>
       <Title>{anime.canonicalTitle}</Title>
       <div className="min-h-screen pb-16">
         <div className="w-full">
@@ -127,7 +130,7 @@ const AnimeLayout: Component<Props> = ({ children, anime, error }) => {
         </div>
       </div>
       <EditAnimesEntries anime={anime} isOpen={openModal} toggle={toggleModal} />
-    </>
+    </Layout>
   );
 };
 

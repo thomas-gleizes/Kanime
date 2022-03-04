@@ -8,7 +8,7 @@ interface Props {
 const KitsuButton: Component<Props> = ({ slug }) => {
   return (
     <a
-      href="https://kitsu.io/anime/${slug}"
+      href={`https://kitsu.io/anime/${slug}`}
       target="_blank"
       className="bg-kitsu w-full py-1.5 rounded flex justify-center transition h"
       rel="noreferrer"

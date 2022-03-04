@@ -1,17 +1,16 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { LogsMapper } from 'mapper';
 import { LogModel } from 'models';
 import { verifyAdmin } from 'ressources/middleware';
 import { withSessionApi } from 'services/session.service';
 
-interface Data extends DefaultResponse {
+interface Data extends DefaultResponseData {
   logs: Logs;
   query?: any;
 }
 
-handler.get(verifyAdmin, async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(verifyAdmin, async (req: ApiRequest, res: ApiResponse<Data>) => {
   const { start, limit } = req.query;
 
   const logs: Logs = LogsMapper.many(

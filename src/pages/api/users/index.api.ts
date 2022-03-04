@@ -1,6 +1,6 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import * as fs from 'fs';
 
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import Security from 'services/security.service';
 import { verifyUser } from 'ressources/middleware';
@@ -9,18 +9,18 @@ import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'ressources/constants';
 import { withSessionApi } from 'services/session.service';
 
-interface GetData extends DefaultResponse {
+interface ResponseGetData extends DefaultResponseData {
   user: User;
 }
 
-interface PatchData extends DefaultResponse {
+interface ResponsePatchData extends DefaultResponseData {
   user: User;
   token: string;
 }
 
 // var matches = string.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
 
-handler.get(verifyUser, async (req, res: NextApiResponse<GetData>) => {
+handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseGetData>) => {
   const { session } = req;
 
   const [user] = UsersMapper.one(await UserModel.findById(session.user.id));
@@ -30,7 +30,7 @@ handler.get(verifyUser, async (req, res: NextApiResponse<GetData>) => {
 
 handler.patch(
   verifyUser,
-  async (req: NextApiRequest, res: NextApiResponse<PatchData>) => {
+  async (req: ApiRequest, res: ApiResponse<ResponsePatchData>) => {
     const { body, session } = req;
     const { user } = session;
 

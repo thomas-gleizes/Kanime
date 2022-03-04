@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import Security from 'services/security.service';
 import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
@@ -7,7 +6,7 @@ import { UserModel } from 'models';
 import ApiError from 'class/error/ApiError';
 import { DAY } from 'ressources/constants';
 
-handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   const { email } = req.body;
 
   const user = await UserModel.findByEmail(email);
@@ -23,7 +22,7 @@ handler.patch(async (req: NextApiRequest, res: NextApiResponse) => {
   const hash = Security.sha256(user.password + user.username);
   await UserModel.updateResetPasswordToken(user.id, hash);
 
-  //TODO SEND email with new services for email
+  //TODO SEND email with a new services for email
 
   res.send({ success: true });
 });

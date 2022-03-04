@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { registerSchema } from 'ressources/validations';
 import SchemaError from 'class/error/SchemaError';
@@ -9,12 +8,12 @@ import { UsersMapper } from 'mapper';
 import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
 
-interface Response extends DefaultResponse {
+interface Response extends DefaultResponseData {
   user: User;
   token: string;
 }
 
-handler.post(async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+handler.post(async (req: ApiRequest, res: ApiResponse<Response>) => {
   const { body: userData, session } = req;
 
   try {

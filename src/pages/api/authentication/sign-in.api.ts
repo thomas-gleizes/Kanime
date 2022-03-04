@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
@@ -10,12 +9,12 @@ import { errorMessage } from 'ressources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 
-interface Data extends DefaultResponse {
+interface ResponseData extends DefaultResponseData {
   user: User;
   token: string;
 }
 
-handler.post(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.post(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { body, session } = req;
 
   try {

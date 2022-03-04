@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import handler from '../../services/handler.service';
+import { ApiRequest, ApiResponse } from 'app/next';
+import handler from 'services/handler.service';
 
-handler.all(async (req: NextApiRequest, res: NextApiResponse) => {
+handler.all(async (req: ApiRequest, res: ApiResponse<any>) => {
   const routes = {
     '/': {
       GET: {

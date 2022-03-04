@@ -3,6 +3,8 @@ declare module 'app/next' {
     GetServerSideProps,
     GetStaticPaths,
     GetStaticProps,
+    NextApiRequest,
+    NextApiResponse,
     NextPage,
   } from 'next';
 
@@ -14,6 +16,11 @@ declare module 'app/next' {
   declare type StaticProps<T> = GetStaticProps<T>;
   declare type StaticPaths<T> = GetStaticPaths<T>;
 
+  declare type ApiResponse<D = DefaultResponseData> = NextApiResponse<
+    D | ApiResponseError | ApiResponseSchemaError
+  >;
+  declare type ApiRequest = NextApiRequest;
+
   interface AppProps {
     pageProps: any;
     Component: Page;
@@ -23,15 +30,15 @@ declare module 'app/next' {
 declare module 'prisma/app' {
   import {
     Anime,
-    User,
     Category,
-    Entry,
-    Saga,
-    Log,
-    UserFollow,
     Country,
-    Prisma,
+    Entry,
     Gender,
+    Log,
+    Prisma,
+    Saga,
+    User,
+    UserFollow,
   } from '@prisma/client';
 
   declare type PrismaUser = User;

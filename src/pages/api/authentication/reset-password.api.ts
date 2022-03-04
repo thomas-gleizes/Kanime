@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
@@ -8,7 +7,7 @@ import ApiError from 'class/error/ApiError';
 import { resetPasswordSchema } from 'ressources/validations';
 import { UserModel } from 'models';
 
-handler.patch(async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>) => {
+handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   const { body } = req;
 
   try {

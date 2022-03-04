@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
 import nc from 'next-connect';
 
+import { ApiRequest, ApiResponse } from 'app/next';
 import { errorMessage } from 'ressources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 import loggerService from './logger.service';
 
-const handler = nc<NextApiRequest, NextApiResponse>({
+const handler = nc<ApiRequest, ApiResponse>({
   onError: (err, req, res) => {
     if (err instanceof ApiError) {
       res.status(err.code).send({ error: err.message });
@@ -18,7 +18,7 @@ const handler = nc<NextApiRequest, NextApiResponse>({
     } else {
       console.error(err.stack);
 
-      res.status(500).send(errorMessage.INTERNAL_ERROR);
+      res.status(500).send({ error: errorMessage.INTERNAL_ERROR });
     }
   },
   onNoMatch: (req, res) => {

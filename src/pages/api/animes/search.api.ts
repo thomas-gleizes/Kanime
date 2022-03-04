@@ -1,16 +1,15 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import ApiError from 'class/error/ApiError';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
 import { withSessionApi } from 'services/session.service';
 
-interface Response extends DefaultResponse {
+interface Response extends DefaultResponseData {
   animes: Animes;
 }
 
-handler.get(async (req: NextApiRequest, res: NextApiResponse<Response>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<Response>) => {
   const { limit, skip, query } = req.query;
 
   if (!query) throw new ApiError(400, 'query is required');
@@ -19,7 +18,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Response>) => {
     await AnimeModel.search(query as string, { limit, skip })
   );
 
-  res.status(200).send({
+  res.send({
     success: true,
     animes,
     debug: { limit, skip, query },

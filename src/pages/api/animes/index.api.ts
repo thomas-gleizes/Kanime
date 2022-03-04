@@ -1,11 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { withSessionApi } from 'services/session.service';
 
-handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
+interface ResponseData extends DefaultResponseData {
+  animes: Animes;
+}
+
+handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { limit, skip } = req.query;
   const { user } = req.session;
 
@@ -13,7 +16,7 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse) => {
     await AnimeModel.all({ limit, skip }, user?.id)
   );
 
-  res.send({ success: true, animes, count: animes.length, debug: { limit, skip } });
+  res.send({ success: true, animes, debug: { limit, skip } });
 });
 
 export default withSessionApi(handler);

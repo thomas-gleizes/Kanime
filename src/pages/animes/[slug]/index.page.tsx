@@ -6,11 +6,9 @@ import { useToggle } from 'hooks';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import AnimeSide from 'components/anime/AnimeSide';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
+import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 
-interface Props {
-  anime: Anime;
-}
+interface Props extends AnimeLayoutProps {}
 
 const DESCRIPTION_LENGTH = 400;
 

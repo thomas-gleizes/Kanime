@@ -26,8 +26,6 @@ type modelParams = {
   skip?: number | string | string[];
 };
 
-declare type CustomDate = Date | string;
-
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 type InputType =

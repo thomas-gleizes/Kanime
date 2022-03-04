@@ -1,5 +1,4 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-
+import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'ressources/middleware';
@@ -8,12 +7,12 @@ import { UserFollowModel, UserModel } from 'models';
 import { UsersMapper } from 'mapper';
 import ApiError from 'class/error/ApiError';
 
-interface Data extends DefaultResponse {
+interface ResponseData extends DefaultResponseData {
   users: Users;
   length: number;
 }
 
-handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
@@ -24,34 +23,28 @@ handler.get(async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   res.send({ success: true, users, length: users.length });
 });
 
-handler.post(
-  verifyUser,
-  async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>) => {
-    const { query, session } = req;
+handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
+  const { query, session } = req;
 
-    try {
-      await UserFollowModel.create(+session.user.id, +query.id);
+  try {
+    await UserFollowModel.create(+session.user.id, +query.id);
 
-      res.status(201).send({ success: true });
-    } catch (e) {
-      throw new ApiError(400, errorMessage.FOLLOW);
-    }
+    res.status(201).send({ success: true });
+  } catch (e) {
+    throw new ApiError(400, errorMessage.FOLLOW);
   }
-);
+});
 
-handler.delete(
-  verifyUser,
-  async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>) => {
-    const { query, session } = req;
+handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
+  const { query, session } = req;
 
-    try {
-      const result = await UserFollowModel.delete(+session.user.id, +query.id);
+  try {
+    const result = await UserFollowModel.delete(+session.user.id, +query.id);
 
-      res.status(200).send({ success: true, debug: result });
-    } catch (e) {
-      throw new ApiError(400, errorMessage.UNFOLLOW);
-    }
+    res.status(200).send({ success: true, debug: result });
+  } catch (e) {
+    throw new ApiError(400, errorMessage.UNFOLLOW);
   }
-);
+});
 
 export default withSessionApi(handler);
