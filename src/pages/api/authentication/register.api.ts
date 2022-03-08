@@ -8,12 +8,7 @@ import { UsersMapper } from 'mapper';
 import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
 
-interface Response extends DefaultResponseData {
-  user: User;
-  token: string;
-}
-
-handler.post(async (req: ApiRequest, res: ApiResponse<Response>) => {
+handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
   const { body: userData, session } = req;
 
   try {

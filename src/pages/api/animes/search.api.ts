@@ -5,11 +5,7 @@ import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
 import { withSessionApi } from 'services/session.service';
 
-interface Response extends DefaultResponseData {
-  animes: Animes;
-}
-
-handler.get(async (req: ApiRequest, res: ApiResponse<Response>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimesSearchResponse>) => {
   const { limit, skip, query } = req.query;
 
   if (!query) throw new ApiError(400, 'query is required');

@@ -27,9 +27,7 @@ const SignInPage: Page = () => {
 
   const handleSubmit = async (values: loginType) => {
     try {
-      const {
-        data: { user, token },
-      } = await AuthenticationApi.login(values);
+      const { user, token } = await AuthenticationApi.signIn(values);
 
       if (!user || !token) window.location.reload();
       else {

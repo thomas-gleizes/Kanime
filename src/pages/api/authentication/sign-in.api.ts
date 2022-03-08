@@ -9,12 +9,7 @@ import { errorMessage } from 'ressources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 
-interface ResponseData extends DefaultResponseData {
-  user: User;
-  token: string;
-}
-
-handler.post(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
   const { body, session } = req;
 
   try {

@@ -26,9 +26,7 @@ const RegisterPage: Page = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const {
-        data: { user, token },
-      } = await AuthenticationApi.register(values);
+      const { user, token } = await AuthenticationApi.register(values);
 
       signIn(user, token);
 

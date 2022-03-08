@@ -8,7 +8,7 @@ declare module 'app/next' {
     NextPage,
   } from 'next';
 
-  declare type Page<P = {}> = NextPage<P> & {
+  declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: NodeR } & P>;
   };
 

@@ -1,5 +1,4 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-
 import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, EntryModel } from 'models';

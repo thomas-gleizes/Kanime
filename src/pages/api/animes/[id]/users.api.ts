@@ -6,11 +6,7 @@ import { UsersMapper } from 'mapper';
 import { errorMessage } from 'ressources/constants';
 import ApiError from 'class/error/ApiError';
 
-interface ResponseData extends DefaultResponseData {
-  users: Users;
-}
-
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimeUserResponse>) => {
   const { id } = req.query;
 
   const anime = await AnimeModel.findById(+id);

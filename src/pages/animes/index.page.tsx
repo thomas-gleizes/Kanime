@@ -9,6 +9,7 @@ import { routes } from 'ressources/routes';
 import toast from 'utils/toastr';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/AnimeCard';
+import { AnimesApi } from 'api';
 
 interface Props {
   animes: Animes;
@@ -41,11 +42,9 @@ const ExploreAnimes: Page<Props> = (props) => {
         setLoading(true);
 
         try {
-          const response = await ApiService.get(routes.animes.api.list, {
-            params: { limit: 40, skip: animes.length },
-          });
+          const response = await AnimesApi.showAll({ limit: 40, skip: animes.length });
 
-          setAnimes([...animes, ...response.data.animes]);
+          setAnimes([...animes, ...response.animes]);
         } catch (e) {
           toast(e.error, 'error');
         } finally {

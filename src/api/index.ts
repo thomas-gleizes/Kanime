@@ -1,2 +1,2 @@
-export * as AnimesApi from './animes';
-export * as AuthenticationApi from './authentification';
+export { default as AnimesApi } from './animes';
+export { default as AuthenticationApi } from './authentication';

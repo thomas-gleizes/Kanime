@@ -1,10 +1,20 @@
+import { AxiosInstance } from 'axios';
+
+import Api from 'class/Api';
 import { ApiService } from 'services/api.service';
-import { routes } from 'ressources/routes';
 
-export const search = (query: string, params?: modelParams) =>
-  ApiService.get(routes.animes.api.search, {
-    params: { query, ...params },
-  });
+class AnimesApi extends Api {
+  constructor(apiService: AxiosInstance) {
+    super(apiService, 'animes');
+  }
 
-export const all = (params?: modelParams) =>
-  ApiService.get(routes.animes.api.list, { params });
+  public showAll(params?: modelParams) {
+    return this.get<AnimesListResponse>('/', { ...params });
+  }
+
+  public search(query, params?: modelParams) {
+    return this.get<AnimesSearchResponse>('/search', { query, ...params });
+  }
+}
+
+export default new AnimesApi(ApiService);

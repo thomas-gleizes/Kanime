@@ -53,7 +53,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
       setLoading(true);
 
       const animesPromises = AnimesApi.search(value, { limit: 50, skip: 0 })
-        .then(({ data }) => setAnimes(data.animes))
+        .then((response) => setAnimes(response.animes))
         .catch((e) => toast(e.error, 'error'));
 
       Promise.all([animesPromises]).finally(() => setLoading(false));

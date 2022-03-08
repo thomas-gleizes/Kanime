@@ -4,11 +4,7 @@ import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { withSessionApi } from 'services/session.service';
 
-interface ResponseData extends DefaultResponseData {
-  animes: Animes;
-}
-
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
   const { limit, skip } = req.query;
   const { user } = req.session;
 

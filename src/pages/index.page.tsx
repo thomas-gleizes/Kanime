@@ -1,7 +1,7 @@
-import type { Page, StaticProps } from 'app/next';
 import Moment from 'moment';
+
+import type { Page, StaticProps } from 'app/next';
 import Title from 'components/layouts/Title';
-import Layout from 'components/layouts/Layout';
 
 interface Props {
   time: string;
@@ -76,7 +76,5 @@ const HomePage: Page<Props> = ({ time }) => {
     </>
   );
 };
-
-HomePage.layout = Layout;
 
 export default HomePage;

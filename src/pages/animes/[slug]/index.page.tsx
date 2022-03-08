@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Page, ServerSideProps } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
 import { useToggle } from 'hooks';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
@@ -12,15 +11,13 @@ interface Props extends AnimeLayoutProps {}
 
 const DESCRIPTION_LENGTH = 400;
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  async ({ params }) => {
-    const { slug } = params;
+export const getServerSideProps: ServerSideProps<Props> = async ({ params }) => {
+  const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-    return { props: { anime } };
-  }
-);
+  return { props: { anime } };
+};
 
 const AnimeHome: Page<Props> = ({ anime }) => {
   const [extendParagraph, toggleParagraph] = useToggle(true);

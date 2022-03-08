@@ -4,11 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { CategoriesMapper } from 'mapper';
 import { CategoryModel } from 'models';
 
-interface ResponseData extends DefaultResponseData {
-  categories: Categories;
-}
-
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimeCategories>) => {
   const { id } = req.query;
 
   const categories = CategoriesMapper.many(await CategoryModel.findByAnimeId(+id));

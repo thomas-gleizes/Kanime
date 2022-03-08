@@ -6,11 +6,7 @@ import { AnimeModel } from 'models';
 import { errorMessage } from 'ressources/constants';
 import ApiError from 'class/error/ApiError';
 
-interface ResponseData extends DefaultResponseData {
-  anime: Anime;
-}
-
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimeSlugResponse>) => {
   const { slug } = req.query;
 
   const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
