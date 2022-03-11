@@ -27,9 +27,7 @@ const handler = nc<ApiRequest, ApiResponse>({
 }).use(async (req, res, next) => {
   loggerService(req).catch((e) => console.log('log failed :', e));
 
-  const test = await next();
-
-  console.log('Test', test);
+  next();
 });
 
 export default handler;
