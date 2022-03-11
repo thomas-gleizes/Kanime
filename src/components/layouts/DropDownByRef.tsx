@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Transition } from '@headlessui/react';
-import { v4 as uuidv4 } from 'uuid';
+import domUuid from 'utils/domUuid';
 
 interface Props {
   innerRef: { current: HTMLElement };
@@ -10,10 +10,7 @@ interface Props {
 const DropDownByRef: Component<Props> = ({ innerRef, children }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  const identifier = useMemo<string>(
-    () => `dropdown-${uuidv4().split('-').join('')}`,
-    []
-  );
+  const identifier = useMemo<string>(() => `dropdown-${domUuid()}`, []);
 
   useEffect(() => {
     if (innerRef?.current) {

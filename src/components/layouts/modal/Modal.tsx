@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import classnames from 'classnames';
 
 import domUuid from 'utils/domUuid';
-import isBrowser from 'utils/isBrowser';
+import { useBrowser } from 'hooks';
 
 interface ModalProps {
   isOpen: boolean;
@@ -15,10 +15,11 @@ interface ModalProps {
 
 const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
   const backgroundId = useMemo<string>(() => `modal-${domUuid()}`, []);
+  const isBrowser = useBrowser();
 
   const modalNode = useMemo<HTMLDivElement>(
-    () => process.browser && document.createElement('div'),
-    [process.browser]
+    () => isBrowser && document.createElement('div'),
+    [isBrowser]
   );
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
         document.body.removeChild(modalNode);
       };
     }
-  }, [isOpen]);
+  }, [isOpen, modalNode]);
 
   useEffect(() => {
     if (isOpen) {
@@ -53,13 +54,13 @@ const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
       default:
         return 'w-1/2';
     }
-  }, []);
+  }, [size]);
 
   const handleClick = (event) => {
     if (event.target.id === backgroundId) toggle();
   };
 
-  if (!isBrowser()) return null;
+  if (!isBrowser) return null;
 
   const component = (
     <div
