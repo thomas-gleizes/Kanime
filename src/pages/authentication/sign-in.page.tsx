@@ -17,8 +17,8 @@ import Button from 'components/common/Button';
 type loginType = Yup.TypeOf<typeof signInSchema>;
 
 const initialValues: loginType = {
-  email: '',
-  password: '',
+  email: 'kalat@kanime.fr ',
+  password: 'azerty',
 };
 
 const SignInPage: Page = () => {
@@ -45,8 +45,8 @@ const SignInPage: Page = () => {
     <Layout>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
         <Formik
-          initialValues={initialValues}
           onSubmit={handleSubmit}
+          initialValues={initialValues}
           validationSchema={signInSchema}
         >
           <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6">

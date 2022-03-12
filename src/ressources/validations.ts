@@ -17,7 +17,7 @@ export const registerSchema = Yup.object({
 
 export const signInSchema = Yup.object({
   email: Yup.string()
-    .email('Veuillez saisir un email valide')
+    // .email('Veuillez saisir un email valide')
     .required('Veuillez saisir un email'),
   password: Yup.string()
     .required('Veuillez saisir un mot de passe')

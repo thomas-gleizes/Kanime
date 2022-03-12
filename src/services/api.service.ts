@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 
 const ApiService = axios.create({
-  baseURL: `/`,
+  baseURL: `/api/`,
   responseType: 'json',
 });
 
