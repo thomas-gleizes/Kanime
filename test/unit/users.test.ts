@@ -1,7 +1,7 @@
 import { Gender } from '@prisma/client';
 import { UserModel } from '../../src/models';
 import Security from '../../src/services/security.service';
-import { defaultUsersMedia } from '../../src/ressources/constants';
+import { defaultUsersMedia } from 'resources/constants';
 
 describe('users model', () => {
   let userId: number = null;

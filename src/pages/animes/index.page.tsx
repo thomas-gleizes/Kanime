@@ -5,7 +5,7 @@ import { ApiService } from 'services/api.service';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
 import { useScrollPercent } from 'hooks';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/AnimeCard';

@@ -8,7 +8,7 @@ import classnames from 'classnames';
 
 import { AnimesApi } from 'api';
 import { useKeyPress } from 'hooks';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import timeout from 'utils/timeout';
 

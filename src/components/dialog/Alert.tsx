@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 
 import { useLayoutContext } from 'context/layout.context';
-import { dialogTypes } from 'ressources/constants';
+import { dialogTypes } from 'resources/constants';
 import Modal, { ModalBody, ModalFooter, ModalHeader } from 'components/layouts/modal';
 import Button from 'components/common/Button';
 

@@ -1,7 +1,7 @@
 import nc from 'next-connect';
 
 import { ApiRequest, ApiResponse } from 'app/next';
-import { errorMessage } from 'ressources/constants';
+import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 import loggerService from './logger.service';

@@ -6,8 +6,8 @@ import { Form, Formik } from 'formik';
 import type { Page } from 'app/next';
 import { AuthenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
-import { registerSchema } from 'ressources/validations';
-import { routes } from 'ressources/routes';
+import { registerSchema } from 'resources/validations';
+import { routes } from 'resources/routes';
 import { Field } from 'components/common/formik';
 import Button from 'components/common/Button';
 

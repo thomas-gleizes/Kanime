@@ -1,5 +1,5 @@
 import { useLayoutContext } from 'context/layout.context';
-import { dialogTypes } from 'ressources/constants';
+import { dialogTypes } from 'resources/constants';
 
 type result = {
   alert: (text: string) => Promise<void>;

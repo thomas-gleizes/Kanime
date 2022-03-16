@@ -3,10 +3,10 @@ import * as fs from 'fs';
 import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import Security from 'services/security.service';
-import { verifyUser } from 'ressources/middleware';
+import { verifyUser } from 'resources/middleware';
 import { UsersMapper } from 'mapper';
 import { UserModel } from 'models';
-import { defaultUsersMedia, publicPath } from 'ressources/constants';
+import { defaultUsersMedia, publicPath } from 'resources/constants';
 import { withSessionApi } from 'services/session.service';
 
 interface ResponseGetData extends DefaultResponseData {

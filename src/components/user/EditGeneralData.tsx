@@ -6,7 +6,7 @@ import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { useFetch } from 'hooks';
 import toast from 'utils/toastr';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import Button from 'components/common/Button';
 import { Field, File, Select, Textarea } from 'components/common/formik';
 import { CardBody, CardFooter } from 'components/layouts/card';

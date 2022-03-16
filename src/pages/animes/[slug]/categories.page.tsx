@@ -5,7 +5,7 @@ import { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { AnimeModel, CategoryModel } from 'models';
 import { AnimesMapper, CategoriesMapper } from 'mapper';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
 interface Props {

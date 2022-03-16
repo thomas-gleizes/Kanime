@@ -3,8 +3,8 @@ import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mapper';
-import { verifyUser } from 'ressources/middleware';
-import { errorMessage } from 'ressources/constants';
+import { verifyUser } from 'resources/middleware';
+import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 
 interface ResponseData extends DefaultResponseData {

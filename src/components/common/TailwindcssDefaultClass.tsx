@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { tailwindcssColors, tailwindcssGradiant } from 'ressources/constants';
+import { tailwindcssColors, tailwindcssGradiant } from 'resources/constants';
 
 const TailwindcssDefaultClass: Component = () => {
   useEffect(() => {

@@ -4,8 +4,8 @@ import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mapper';
-import { signInSchema } from 'ressources/validations';
-import { errorMessage } from 'ressources/constants';
+import { signInSchema } from 'resources/validations';
+import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 

@@ -24,7 +24,7 @@
       "mapper": ["mapper"],
       "models": ["models"],
       "pages/*": ["pages/*"],
-      "ressources/*": ["ressources/*"],
+      "resources/*": ["resources/*"],
       "services/*": ["services/*"],
       "styles/*": ["styles/*"],
       "utils/*": ["utils/*"],

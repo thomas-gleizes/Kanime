@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ApiService } from 'services/api.service';
 import { useClockFromDate } from 'hooks';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 
 const fetchLogs = (limit: number, start: number) =>

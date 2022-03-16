@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import { useLayoutContext } from 'context/layout.context';
 import { useToggle } from 'hooks';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import Title from 'components/layouts/Title';
 import KitsuButton from 'components/common/KitsuButton';
 import Button from 'components/common/Button';

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { StarIcon, HeartIcon } from '@heroicons/react/solid';
 import { Transition } from '@headlessui/react';
 
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 
 interface Props {
   anime: Anime;

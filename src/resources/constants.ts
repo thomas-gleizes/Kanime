@@ -22,7 +22,7 @@ export const errorMessage = {
   ACCESS_DENIED: 'Access denied',
   INTERNAL_ERROR: 'Internal error',
   METHOD_NOT_ALLOWED: 'Method not allowed',
-  NOT_FOUND: 'resource not found [404-00]',
+  NOT_FOUND: 'resources not found [404-00]',
   USER_NOT_FOUND: 'user not found [404-01]',
   ANIME_NOT_FOUND: 'anime not found [404-02]',
   FOLLOW: 'you already follow this user [400-10]',

@@ -4,7 +4,7 @@ import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { UserModel } from 'models';
 import ApiError from 'class/error/ApiError';
-import { DAY } from 'ressources/constants';
+import { DAY } from 'resources/constants';
 
 handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   const { email } = req.body;

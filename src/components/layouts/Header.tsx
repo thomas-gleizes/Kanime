@@ -7,7 +7,7 @@ import classnames from 'classnames';
 
 import { useUserContext } from 'context/user.context';
 import { useLayoutContext } from 'context/layout.context';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
 

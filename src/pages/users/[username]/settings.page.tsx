@@ -2,7 +2,7 @@ import React from 'react';
 
 import type { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import EditGeneralData from 'components/user/EditGeneralData';
 
 interface Props {}

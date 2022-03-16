@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
 import { LogsMapper } from 'mapper';
 import { LogModel } from 'models';
-import { verifyAdmin } from 'ressources/middleware';
+import { verifyAdmin } from 'resources/middleware';
 import { withSessionApi } from 'services/session.service';
 
 interface Data extends DefaultResponseData {

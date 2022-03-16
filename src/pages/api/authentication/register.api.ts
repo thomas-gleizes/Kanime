@@ -1,6 +1,6 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import handler from 'services/handler.service';
-import { registerSchema } from 'ressources/validations';
+import { registerSchema } from 'resources/validations';
 import SchemaError from 'class/error/SchemaError';
 import { UserModel } from 'models';
 import ApiError from 'class/error/ApiError';

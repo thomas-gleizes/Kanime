@@ -3,7 +3,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import LocalStorageService from 'services/localStorage.service';
 import { ApiService } from 'services/api.service';
 import { useContextFactory } from 'hooks';
-import { routes } from 'ressources/routes';
+import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 
 export declare type UserContext = {

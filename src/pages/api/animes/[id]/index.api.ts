@@ -3,7 +3,7 @@ import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
-import { errorMessage } from 'ressources/constants';
+import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 
 handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {

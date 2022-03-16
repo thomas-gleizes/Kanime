@@ -4,7 +4,7 @@ import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
 import SchemaError from 'class/error/SchemaError';
 import ApiError from 'class/error/ApiError';
-import { resetPasswordSchema } from 'ressources/validations';
+import { resetPasswordSchema } from 'resources/validations';
 import { UserModel } from 'models';
 
 handler.patch(async (req: ApiRequest, res: ApiResponse) => {

@@ -3,7 +3,7 @@ import handler from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, UserModel } from 'models';
 import { AnimesMapper } from 'mapper';
-import { errorMessage } from 'ressources/constants';
+import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 
 interface ResponseData extends DefaultResponseData {
