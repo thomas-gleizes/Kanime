@@ -24,7 +24,7 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
 
   //TODO SEND email with a new services for email
 
-  res.send({ success: true });
+  res.json({ success: true });
 });
 
 export default withSessionApi(handler);

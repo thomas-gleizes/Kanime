@@ -21,6 +21,6 @@ declare type User = {
   followerCount: number;
   createdAt: string;
   updatedAt: string;
-};
+} & { entries?: Entries; reactions?: Reactions };
 
 declare type Users = Array<User>;

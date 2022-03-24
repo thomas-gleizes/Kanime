@@ -12,7 +12,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
     await AnimeModel.all({ limit, skip }, user?.id)
   );
 
-  res.send({ success: true, animes, debug: { limit, skip } });
+  res.json({ success: true, animes, debug: { limit, skip } });
 });
 
 export default withSessionApi(handler);

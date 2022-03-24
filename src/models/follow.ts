@@ -1,6 +1,6 @@
 import { PrismaFollow, PrismaFollowDelegate } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
-import Model from './model';
+import Model from 'class/Model';
 
 class FollowModel extends Model<PrismaFollowDelegate> {
   public constructor(connexion: ConnexionType) {

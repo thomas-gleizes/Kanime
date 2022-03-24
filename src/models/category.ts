@@ -1,6 +1,6 @@
 import { PrismaCategoryDelegate, PrismaCategories, PrismaCategory } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
-import Model from './model';
+import Model from 'class/Model';
 
 class CategoryModel extends Model<PrismaCategoryDelegate> {
   public constructor(connexion: ConnexionType) {

@@ -1,12 +1,14 @@
 import { PrismaAnime, PrismaAnimes } from 'prisma/app';
 import { formatForMapper } from 'utils/momentFr';
 import jsonParser from 'utils/jsonParser';
+import { CategoriesMapper, EntriesMapper, ReactionsMapper, SagasMapper } from './index';
+import animes from '../api/animes';
 
 class AnimesMapper implements Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
     if (!resource) return null;
 
-    return {
+    const anime: Anime = {
       id: resource.id,
       kitsu_id: resource.kitsu_id,
       slug: resource.slug,
@@ -36,6 +38,14 @@ class AnimesMapper implements Mapper<PrismaAnime, Anime> {
       synopsis: resource.synopsis,
       description: resource.description,
     };
+
+    if (resource.saga) anime.saga = SagasMapper.one(resource.saga);
+    if (resource.entries) anime.entries = EntriesMapper.many(resource.entries);
+    if (resource.reactions) anime.reactions = ReactionsMapper.many(resource.reactions);
+    if (resource.categories)
+      anime.categories = CategoriesMapper.many(resource.categories);
+
+    return anime;
   }
 
   public many(resources: PrismaAnimes): Animes {

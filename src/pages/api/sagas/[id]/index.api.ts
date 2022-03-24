@@ -12,11 +12,11 @@ interface ResponseData extends DefaultResponseData {
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id } = req.query;
 
-  const saga = SagasMapper.one(await SagaModel.findById(+id), { withAnimes: true });
+  const saga = SagasMapper.one(await SagaModel.findById(+id));
 
   if (!saga) throw new ApiError(404, 'Saga not found');
 
-  res.send({ success: true, saga });
+  res.json({ success: true, saga });
 });
 
 export default withSessionApi(handler);

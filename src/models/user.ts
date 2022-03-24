@@ -1,7 +1,7 @@
 import { PrismaUserDelegate, PrismaGender, PrismaUser, PrismaUsers } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import { defaultUsersMedia } from 'resources/constants';
-import Model from './model';
+import Model from 'class/Model';
 
 type createData = {
   username: string;

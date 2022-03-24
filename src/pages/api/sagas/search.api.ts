@@ -15,11 +15,10 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   if (!query) throw new ApiError(400, 'query is required');
 
   const sagas = SagasMapper.many(
-    await SagaModel.search(query as string, { limit, skip }),
-    { withAnimes: false }
+    await SagaModel.search(query as string, { limit, skip })
   );
 
-  res.send({ success: true, sagas });
+  res.json({ success: true, sagas });
 });
 
 export default withSessionApi(handler);

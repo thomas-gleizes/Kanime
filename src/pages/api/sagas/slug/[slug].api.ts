@@ -11,11 +11,9 @@ interface ResponseData extends DefaultResponseData {
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { slug } = req.query;
 
-  const saga = SagasMapper.one(await SagaModel.findBySlug(slug as string), {
-    withAnimes: true,
-  });
+  const saga = SagasMapper.one(await SagaModel.findBySlug(slug as string));
 
-  res.send({ success: true, saga });
+  res.json({ success: true, saga });
 });
 
 export default withSessionApi(handler);

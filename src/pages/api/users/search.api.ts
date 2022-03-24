@@ -18,7 +18,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
     await UserModel.search(query as string, { limit: +limit, skip: +skip })
   ).map(([user]) => user);
 
-  res.send({ success: true, users: users });
+  res.json({ success: true, users: users });
 });
 
 export default withSessionApi(handler);

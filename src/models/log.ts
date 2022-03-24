@@ -1,6 +1,6 @@
 import { PrismaLogDelegate, PrismaLog, PrismaLogs } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
-import Model from './model';
+import Model from 'class/Model';
 
 type crateData = {
   route: string;

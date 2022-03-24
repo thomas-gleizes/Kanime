@@ -14,7 +14,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimesSearchResponse>) => {
     await AnimeModel.search(query as string, { limit, skip })
   );
 
-  res.send({
+  res.json({
     success: true,
     animes,
     debug: { limit, skip, query },

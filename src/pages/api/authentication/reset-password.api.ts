@@ -23,7 +23,7 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
 
   await UserModel.resetPassword(user.id, hash);
 
-  res.send({ success: true });
+  res.json({ success: true });
 });
 
 export default withSessionApi(handler);

@@ -12,7 +12,7 @@ interface Data extends DefaultResponseData {
 handler.get(async (req: ApiRequest, res: ApiResponse<Data>) => {
   const countries = await CountryModel.all();
 
-  res.send({ success: true, countries });
+  res.json({ success: true, countries });
 });
 
 export default withSessionApi(handler);

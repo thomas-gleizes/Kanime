@@ -17,9 +17,7 @@ export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
 
     const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-    const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId), {
-      withAnimes: true,
-    });
+    const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId));
 
     return { props: { anime, saga } };
   }

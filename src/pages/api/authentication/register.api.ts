@@ -42,7 +42,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
   session.token = token;
   await session.save();
 
-  res.status(201).send({ success: true, user: user, token: token });
+  res.status(201).json({ success: true, user: user, token: token });
 });
 
 export default withSessionApi(handler);

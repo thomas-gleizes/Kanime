@@ -17,7 +17,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
 
   if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
 
-  res.send({ success: true, user });
+  res.json({ success: true, user });
 });
 
 export default withSessionApi(handler);

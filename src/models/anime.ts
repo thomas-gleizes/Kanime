@@ -1,6 +1,6 @@
 import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
-import Model from './model';
+import Model from 'class/Model';
 
 class AnimeModel extends Model<PrismaAnimeDelegate> {
   public constructor(connexion: ConnexionType) {
@@ -20,7 +20,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
   public all = (params?: modelParams, userId?: number): Promise<PrismaAnimes> =>
     this.model.findMany({
       include: {
-        users: {
+        entries: {
           where: { user_id: userId || 0 },
         },
       },
@@ -30,7 +30,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
   public findByUser = (userId: number, params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
       where: {
-        users: { some: { user_id: userId } },
+        entries: { some: { user_id: userId } },
       },
       ...this.getKeyParams(params),
     });

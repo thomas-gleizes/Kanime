@@ -1,5 +1,6 @@
 import { PrismaUser, PrismaUsers } from 'prisma/app';
 import { formatForMapper } from 'utils/momentFr';
+import { EntriesMapper, ReactionsMapper } from './index';
 
 class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> {
   public one(resource: PrismaUser): [user: User, password: string] {
@@ -20,6 +21,9 @@ class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> 
         createdAt: formatForMapper(resource.created_at),
         updatedAt: formatForMapper(resource.updated_at),
       };
+
+      if (resource.entries) user.entries = EntriesMapper.many(resource.entries);
+      if (resource.reactions) user.reactions = ReactionsMapper.many(resource.reactions);
 
       return [user, resource.password];
     } else return [null, null];

@@ -35,7 +35,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
 
   await session.save();
 
-  res.send({ success: true, user, token });
+  res.json({ success: true, user, token });
 });
 
 export default withSessionApi(handler);

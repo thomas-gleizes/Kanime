@@ -39,7 +39,7 @@ type Category = {
 
 type Categories = Array<Category>;
 
-interface Anime {
+type Anime = {
   id: number;
   kitsu_id: number;
   slug: string;
@@ -59,7 +59,7 @@ interface Anime {
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
   sagaId?: number;
-}
+} & { saga?: Saga; categories?: Categories; reactions?: Reactions; entries?: Entries };
 
 type Animes = Array<Anime>;
 
@@ -76,7 +76,7 @@ type Entry = {
   note: string;
   createAt: Date | string;
   updateAt: Date | string;
-};
+} & { user?: User; anime?: Anime };
 
 type Entries = Array<Entry>;
 
@@ -86,9 +86,25 @@ type Saga = {
   canonical_title: string;
   titles?: Titles;
   description?: string;
-  animes: Animes;
   created_at: Date | string;
   updated_at: Date | string;
-};
+} & { animes?: Animes };
 
 type Sagas = Array<Saga>;
+
+declare type Reaction = {
+  id: number;
+  animeId: number;
+  userId: number;
+  content: string;
+  idParent: number;
+  createdAt: string;
+  updateAt: string;
+} & {
+  user?: User;
+  anime?: Anime;
+  replyTo?: Reaction;
+  replies?: Reactions;
+};
+
+declare type Reactions = Reaction[];

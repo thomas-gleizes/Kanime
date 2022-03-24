@@ -32,7 +32,7 @@ model Anime {
   saga_id          Int?
   created_at       DateTime        @default(now()) @db.Timestamp(0)
   updated_at       DateTime        @default(now()) @db.Timestamp(0)
-  users            Entry[]
+  entries          Entry[]
   reactions        Reaction[]
   saga             Saga?           @relation(fields: [saga_id], references: [id])
   categories       AnimeCategory[]
@@ -135,13 +135,13 @@ model Reaction {
   anime_id    Int
   user_id     Int
   content     String     @db.Text
-  id_reaction Int?
+  parent_id   Int?
   created_at  DateTime   @default(now())
   updated_at  DateTime   @default(now())
   anime       Anime      @relation(fields: [anime_id], references: [id])
   user        User       @relation(fields: [user_id], references: [id])
-  reaction    Reaction?  @relation("parent", fields: [id_reaction], references: [id])
-  reactions   Reaction[] @relation("parent")
+  replyTo     Reaction?  @relation("parent", fields: [parent_id], references: [id])
+  replies     Reaction[] @relation("parent")
 
   @@map("reactions")
 }
@@ -150,8 +150,8 @@ model UserFollow {
   follower_id Int
   follow_id   Int
   created_at  DateTime @default(now()) @db.Timestamp(0)
-  followers   User     @relation("follows", fields: [follower_id], references: [id])
-  follows     User     @relation("followers", fields: [follow_id], references: [id])
+  follower    User     @relation("follows", fields: [follower_id], references: [id])
+  follow      User     @relation("followers", fields: [follow_id], references: [id])
 
   @@id([follower_id, follow_id])
   @@map("users_follows")
@@ -163,7 +163,7 @@ model Country {
   iso3     String? @db.VarChar(3)
   name     String  @db.VarChar(80)
   nicename String  @db.VarChar(80)
-  User     User[]
+  users    User[]
 
   @@map("countries")
 }

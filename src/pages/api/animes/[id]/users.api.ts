@@ -14,7 +14,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeUserResponse>) => {
 
   const users = UsersMapper.many(await UserModel.findByAnime(+id)).map(([user]) => user);
 
-  res.send({ success: true, users, params: req.query });
+  res.json({ success: true, users, params: req.query });
 });
 
 export default withSessionApi(handler);

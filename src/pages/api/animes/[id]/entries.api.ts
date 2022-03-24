@@ -26,7 +26,7 @@ const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) =
 
   const entry = EntriesMapper.one(await EntryModel.upsert(data));
 
-  res.send({ success: true, entry });
+  res.json({ success: true, entry });
 };
 
 handler.post(verifyUser, createOrUpdate);
@@ -39,7 +39,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) 
     await EntryModel.unique(+req.session.user.id, +animeId)
   );
 
-  res.send({ success: true, entry });
+  res.json({ success: true, entry });
 });
 
 handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
@@ -51,7 +51,7 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData
 
   const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
 
-  res.status(204).send({ success: true, entry });
+  res.status(204).json({ success: true, entry });
 });
 
 export default withSessionApi(handler);

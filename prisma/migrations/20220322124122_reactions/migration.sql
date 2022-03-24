@@ -4,7 +4,7 @@ CREATE TABLE `reactions` (
     `anime_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `content` TEXT NOT NULL,
-    `id_reaction` INTEGER NULL,
+    `parent_id` INTEGER NULL,
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
@@ -18,4 +18,4 @@ ALTER TABLE `reactions` ADD CONSTRAINT `reactions_anime_id_fkey` FOREIGN KEY (`a
 ALTER TABLE `reactions` ADD CONSTRAINT `reactions_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `reactions` ADD CONSTRAINT `reactions_id_reaction_fkey` FOREIGN KEY (`id_reaction`) REFERENCES `reactions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `reactions` ADD CONSTRAINT `reactions_parent_id_fkey` FOREIGN KEY (`parent_id`) REFERENCES `reactions`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

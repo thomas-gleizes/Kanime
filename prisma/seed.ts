@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import faker from '@faker-js/faker';
 
-import { defaultUsersMedia } from 'resources/constants';
+import { defaultUsersMedia } from '../src/resources/constants';
 import Security from '../src/services/security.service';
 
 const prisma = new PrismaClient();

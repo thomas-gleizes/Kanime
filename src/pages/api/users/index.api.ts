@@ -25,7 +25,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseGetData
 
   const [user] = UsersMapper.one(await UserModel.findById(session.user.id));
 
-  res.send({ success: true, user: user });
+  res.json({ success: true, user: user });
 });
 
 handler.patch(
@@ -73,7 +73,7 @@ handler.patch(
 
     await session.save();
 
-    res.status(200).send({ success: true, user: updatedUser, token: token });
+    res.json({ success: true, user: updatedUser, token: token });
   }
 );
 

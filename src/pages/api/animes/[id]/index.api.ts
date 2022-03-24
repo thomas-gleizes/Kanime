@@ -13,7 +13,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {
 
   if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-  res.send({ success: true, anime, params: req.query });
+  res.json({ success: true, anime, params: req.query });
 });
 
 export default withSessionApi(handler);

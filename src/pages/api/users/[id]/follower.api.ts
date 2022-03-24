@@ -21,7 +21,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<Data>) => {
     ([user]) => user
   );
 
-  res.send({ success: true, users, length: users.length });
+  res.json({ success: true, users, length: users.length });
 });
 
 export default withSessionApi(handler);

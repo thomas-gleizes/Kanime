@@ -9,20 +9,20 @@ import loggerService from './logger.service';
 const handler = nc<ApiRequest, ApiResponse>({
   onError: (err, req, res) => {
     if (err instanceof ApiError) {
-      res.status(err.code).send({ error: err.message });
+      res.status(err.code).json({ error: err.message });
     } else if (err instanceof SchemaError) {
-      res.status(err.code).send({ error: err.message, schemaError: err.data });
+      res.status(err.code).json({ error: err.message, schemaError: err.data });
     } else if (process.env.NODE_ENV !== 'production') {
       console.error(err.stack);
       res.status(500).send(err.message);
     } else {
       console.error(err.stack);
 
-      res.status(500).send({ error: errorMessage.INTERNAL_ERROR });
+      res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
     }
   },
   onNoMatch: (req, res) => {
-    res.status(405).send({ error: errorMessage.METHOD_NOT_ALLOWED });
+    res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
   },
 }).use(async (req, res, next) => {
   loggerService(req).catch((e) => console.log('log failed :', e));

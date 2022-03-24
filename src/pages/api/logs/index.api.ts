@@ -17,7 +17,7 @@ handler.get(verifyAdmin, async (req: ApiRequest, res: ApiResponse<Data>) => {
     await LogModel.show({ limit: +limit || 20, skip: +start })
   );
 
-  res.send({ success: true, query: req.query, logs });
+  res.json({ success: true, query: req.query, logs });
 });
 
 export default withSessionApi(handler);
