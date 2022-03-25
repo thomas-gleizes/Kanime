@@ -39,3 +39,9 @@ export const resetPasswordSchema = Yup.object({
     .oneOf([Yup.ref('newPassword')], 'Les mot de passe ne correspondent pas'),
   token: Yup.string().required(),
 });
+
+export const createReactionSchema = Yup.object({
+  userId: Yup.number().required('missing userId'),
+  content: Yup.string().required('Veuillez saisir un message'),
+  parentId: Yup.number(),
+});

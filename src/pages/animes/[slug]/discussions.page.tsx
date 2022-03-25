@@ -1,12 +1,14 @@
 import React from 'react';
+import { Form, Formik } from 'formik';
 
 import { Page, ServerSideProps } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { AnimeModel, ReactionModel } from 'models';
 import { AnimesMapper, ReactionsMapper } from 'mapper';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 import random from 'utils/random';
+import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 import RecursiveTag from 'components/common/RecursiveTag';
+import { Field } from 'components/common/formik';
 
 interface Props {
   anime: Anime;
@@ -37,6 +39,13 @@ const DiscussionsPage: Page<Props> = ({ anime, reactions }) => {
           </div>
         ))}
       </RecursiveTag>
+      <div>
+        <Formik initialValues={{ content: '' }} onSubmit={() => null}>
+          <Form>
+            <Field name="content" label="Message" />
+          </Form>
+        </Formik>
+      </div>
     </div>
   );
 };

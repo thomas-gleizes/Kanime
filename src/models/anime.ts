@@ -12,6 +12,13 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       where: { id },
     });
 
+  public isExist = (id: number): Promise<boolean> =>
+    this.model
+      .findUnique({
+        where: { id },
+      })
+      .then((res) => res !== null);
+
   public findBySlug = (slug: string): Promise<PrismaAnime> =>
     this.model.findUnique({
       where: { slug },
