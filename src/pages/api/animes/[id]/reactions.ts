@@ -44,4 +44,23 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseDa
   res.json({ success: true, reaction: ReactionsMapper.one(reaction) });
 });
 
+handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
+  const {
+    query: { id: animeId },
+    session: { user },
+  } = req;
+
+  const reaction = await ReactionModel.findByAnimeIdAndUserId(+animeId, user.id);
+
+  if (!reaction) throw new ApiError(404, 'Reaction not found');
+
+  if (reaction.user_id !== user.id)
+    throw new ApiError(403, 'You are not allowed to delete this reaction');
+
+  await ReactionModel.deleteParent(reaction.id);
+  await ReactionModel.delete(reaction.id);
+
+  res.status(204).json({ success: true });
+});
+
 export default withSessionApi(handler);

@@ -23,8 +23,11 @@ class ReactionModal extends Model<PrismaReactionDelegate> {
       include: { replyTo: true, replies: true, user: true, anime: true },
     });
 
-  public findByAnimeIdAndUserId = (animeId: number, userId: number) =>
-    this.model.findMany({
+  public findByAnimeIdAndUserId = (
+    animeId: number,
+    userId: number
+  ): Promise<PrismaReaction> =>
+    this.model.findFirst({
       where: { anime_id: animeId, user_id: userId },
     });
 
