@@ -40,7 +40,7 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
                 <div className="flex">
                   <Image
                     className="rounded-lg"
-                    src={anime.poster.small}
+                    src={anime.poster.small as string}
                     width={158}
                     height={224}
                     alt={anime.slug}

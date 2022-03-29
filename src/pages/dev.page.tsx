@@ -12,8 +12,6 @@ const DevPage: Page = () => {
   useEffect(() => {
     header.hideHeader();
 
-    document.title = 'boxi-extranet';
-
     return () => header.showHeader();
   }, [header]);
 
@@ -38,8 +36,6 @@ const DevPage: Page = () => {
 
     setSocket(null);
   };
-
-  useEffect(() => console.log('Socket', socket), [socket]);
 
   const handleSend = () => {
     socket.emit('join', { user: '3', content: random(11, 99) });
