@@ -29,17 +29,19 @@ type Episode = {
 
 type Episodes = Array<Episode>;
 
-type Category = {
-  id: number;
-  slug: string;
-  name: string;
-  description?: string;
-  totalMediaCount: number;
-};
+type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
 
-type Categories = Array<Category>;
+declare type Reactions = Reaction[];
 
-type Anime = {
+interface UserMediaHandling {
+  raw: string;
+  content: string;
+  type: string;
+}
+
+type Visibility = 'private' | 'public' | 'limited';
+
+declare type Anime = {
   id: number;
   kitsu_id: number;
   slug: string;
@@ -63,9 +65,7 @@ type Anime = {
 
 type Animes = Array<Anime>;
 
-type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
-
-type Entry = {
+declare type Entry = {
   animeId: number;
   userId: number;
   status: EntryStatus;
@@ -78,19 +78,7 @@ type Entry = {
   updateAt: Date | string;
 } & { user?: User; anime?: Anime };
 
-type Entries = Array<Entry>;
-
-type Saga = {
-  id: number;
-  slug: string;
-  canonical_title: string;
-  titles?: Titles;
-  description?: string;
-  created_at: Date | string;
-  updated_at: Date | string;
-} & { animes?: Animes };
-
-type Sagas = Array<Saga>;
+declare type Entries = Array<Entry>;
 
 declare type Reaction = {
   id: number;
@@ -107,4 +95,56 @@ declare type Reaction = {
   replies?: Reactions;
 };
 
-declare type Reactions = Reaction[];
+declare type User = {
+  id: number;
+  username: string;
+  email: string;
+  gender: 'Male' | 'Female' | 'Secret';
+  bio?: string;
+  birthday?: string;
+  city?: string;
+  isAdmin: boolean;
+  avatarPath: string;
+  backgroundPath: string;
+  followCount: number;
+  followerCount: number;
+  createdAt: string;
+  updatedAt: string;
+} & { entries?: Entries; reactions?: Reactions };
+
+declare type Users = Array<User>;
+
+declare type Log = {
+  id: number;
+  route: Method;
+  ip: string;
+  method: Method;
+  body: any;
+  query: any;
+  user?: User | null;
+  createAt: string;
+} & { user?: User };
+
+declare type Logs = Array<Log>;
+
+declare type Saga = {
+  id: number;
+  slug: string;
+  canonical_title: string;
+  titles?: Titles;
+  description?: string;
+  created_at: Date | string;
+  updated_at: Date | string;
+} & { animes?: Animes };
+
+declare type Sagas = Array<Saga>;
+
+declare type Category = {
+  id: number;
+  slug: string;
+  name: string;
+  description?: string;
+  totalMediaCount: number;
+};
+
+declare type Categories = Array<Category>;

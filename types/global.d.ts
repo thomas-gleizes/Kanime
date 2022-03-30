@@ -13,19 +13,6 @@ type ErrorPage = {
   message: string;
 };
 
-type Log = {
-  id: number;
-  route: Method;
-  ip: string;
-  method: Method;
-  body: any;
-  query: any;
-  user?: User | null;
-  createAt: string;
-};
-
-type Logs = Array<Log>;
-
 type modelParams = {
   limit?: number | string | string[];
   skip?: number | string | string[];
