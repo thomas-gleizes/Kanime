@@ -8,6 +8,11 @@ interface ContextProviderProps {
   children: React.ReactNode;
 }
 
+type ErrorPage = {
+  statusCode: number;
+  message: string;
+};
+
 type Log = {
   id: number;
   route: Method;

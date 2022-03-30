@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
 import SchemaError from 'class/error/SchemaError';

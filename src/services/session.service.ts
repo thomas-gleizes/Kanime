@@ -5,8 +5,9 @@ import type {
   NextApiHandler,
 } from 'next';
 import type { IronSessionOptions } from 'iron-session';
-
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
+
+import { ServerSideProps } from 'app/next';
 
 const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_TOKEN as string,
@@ -26,7 +27,7 @@ export function withSessionSsr<
   handler: (
     context: GetServerSidePropsContext
   ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
-) {
+): ServerSideProps<P> {
   return withIronSessionSsr(handler, sessionOptions);
 }
 

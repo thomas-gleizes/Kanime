@@ -5,7 +5,6 @@ import { AuthenticationApi } from 'api';
 import toast from 'utils/toastr';
 import { Input } from 'components/common/inputs';
 import Button from 'components/common/Button';
-import Title from 'components/layouts/Title';
 
 const ForgotPasswordPage: Page = () => {
   const [email, setEmail] = useState<string>('kalat@kanime.fr');

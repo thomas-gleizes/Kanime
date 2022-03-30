@@ -12,7 +12,7 @@ declare module 'app/next' {
     layout?: Component<{ children: NodeR } & P>;
   };
 
-  declare type ServerSideProps<T> = GetServerSideProps<T>;
+  declare type ServerSideProps<P = {}> = GetServerSideProps<T>;
   declare type StaticProps<T> = GetStaticProps<T>;
   declare type StaticPaths<T> = GetStaticPaths<T>;
 

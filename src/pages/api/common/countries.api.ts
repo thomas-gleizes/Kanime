@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { Country } from '@prisma/client';
 
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import { CountryModel } from 'models';
 import { withSessionApi } from 'services/session.service';
 

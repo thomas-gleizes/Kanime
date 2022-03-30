@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import { LogsMapper } from 'mapper';
 import { LogModel } from 'models';
 import { verifyAdmin } from 'resources/middleware';

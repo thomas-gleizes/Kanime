@@ -1,12 +1,15 @@
 import nc from 'next-connect';
 
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 import loggerService from './logger.service';
+import { SsrError } from 'class/error';
+import { GetServerSidePropsContext } from 'next';
+import { GetServerSidePropsResult } from 'next/types';
 
-const handler = nc<ApiRequest, ApiResponse>({
+export const apiHandler = nc<ApiRequest, ApiResponse>({
   onError: (err, req, res) => {
     if (err instanceof ApiError) {
       res.status(err.code).json({ error: err.message });
@@ -30,4 +33,27 @@ const handler = nc<ApiRequest, ApiResponse>({
   next();
 });
 
-export default handler;
+export default function ssrHandler<P = {}>(
+  handler: (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<P>>
+): ServerSideProps<P> {
+  return (context) => {
+    return handler(context).catch((error) => {
+      if (error instanceof SsrError) {
+        return {
+          props: {
+            error: error.parse(),
+          },
+        };
+      } else {
+        return {
+          props: {
+            error: {
+              statusCode: 500,
+              message: errorMessage.INTERNAL_ERROR,
+            },
+          },
+        };
+      }
+    });
+  };
+}

@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'resources/middleware';
 import { errorMessage } from 'resources/constants';

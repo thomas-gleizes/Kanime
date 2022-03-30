@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { withSessionApi } from 'services/session.service';

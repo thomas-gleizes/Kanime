@@ -5,6 +5,8 @@ import { ApiService } from 'services/api.service';
 import { useContextFactory } from 'hooks';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
+import usersApi from 'pages/api/animes/[id]/users.api';
+import { AuthenticationApi } from 'api';
 
 export declare type UserContext = {
   isLogin: boolean;
@@ -38,7 +40,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async (): Promise<void> => {
-    // await appAxios.get(routes.authentication.api.logout);
+    await AuthenticationApi.logout();
 
     LocalStorageService.clearUser();
     setIsLogin(false);

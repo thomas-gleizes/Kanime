@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import ApiError from 'class/error/ApiError';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';

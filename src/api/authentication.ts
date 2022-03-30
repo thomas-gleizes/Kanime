@@ -16,8 +16,8 @@ class AuthenticationApi extends Api {
     return this.post<RegisterResponse>('/register', payload);
   }
 
-  public logout(payload: any) {
-    return this.post('/logout', payload);
+  public logout() {
+    return this.get('/logout');
   }
 
   public forgotPassword(payload: any) {

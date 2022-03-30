@@ -115,7 +115,6 @@ module.exports = {
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
-    require('tailwind-children'),
     require('@tailwindcss/typography'),
     require('@tailwindcss/forms')({
       strategy: 'class',

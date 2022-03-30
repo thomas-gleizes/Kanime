@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 import { ApiRequest, ApiResponse } from 'app/next';
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import Security from 'services/security.service';
 import { verifyUser } from 'resources/middleware';
 import { UsersMapper } from 'mapper';

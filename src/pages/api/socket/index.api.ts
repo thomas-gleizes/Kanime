@@ -1,12 +1,14 @@
 import { Server } from 'socket.io';
 
-import handler from 'services/handler.service';
+import { apiHandler as handler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 
 handler.get((req, res) => {
+  // @ts-ignore
   if (!res.socket.server.io) {
     console.log('*First use, starting socket.io');
 
+    // @ts-ignore
     const io = new Server(res.socket.server);
 
     io.on('connection', (socket) => {
@@ -23,6 +25,7 @@ handler.get((req, res) => {
       });
     });
 
+    // @ts-ignore
     res.socket.server.io = io;
   } else {
     console.log('socket.io already running');
