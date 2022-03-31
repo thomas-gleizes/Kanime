@@ -23,7 +23,11 @@ class Security {
   }
 
   static verifyToken(token): boolean {
-    return !!jwt.verify(token, this.SECRET_TOKEN);
+    try {
+      return !!jwt.verify(token, this.SECRET_TOKEN);
+    } catch (e) {
+      return false;
+    }
   }
 
   static getTokenPayload(token): any {

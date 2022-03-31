@@ -38,10 +38,21 @@ export default function ssrHandler<P = {}>(
 ): ServerSideProps<P> {
   return (context) => {
     return handler(context).catch((error) => {
+      console.log('ssr error: ', error);
+
       if (error instanceof SsrError) {
         return {
           props: {
             error: error.parse(),
+          },
+        };
+      } else if (process.env.NODE_ENV !== 'production') {
+        return {
+          props: {
+            error: {
+              statusCode: 500,
+              message: error.message || errorMessage.INTERNAL_ERROR,
+            },
           },
         };
       } else {
