@@ -7,7 +7,7 @@ import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
-import AnimeSide from 'components/anime/AnimeSide';
+import AnimeSide from 'components/common/anime/AnimeSide';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 
 interface Props extends AnimeLayoutProps {}

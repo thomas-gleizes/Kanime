@@ -9,11 +9,11 @@ class AnimesApi extends Api {
   }
 
   public showAll(params?: modelParams) {
-    return this.get<AnimesListResponse>('/', { ...params });
+    return this.get<AnimesListResponse>('/', { params });
   }
 
   public search(query, params?: modelParams) {
-    return this.get<AnimesSearchResponse>('/search', { query, ...params });
+    return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } });
   }
 }
 

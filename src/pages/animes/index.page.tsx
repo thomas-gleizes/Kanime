@@ -8,7 +8,7 @@ import { AnimeModel } from 'models';
 import { useScrollPercent } from 'hooks';
 import toast from 'utils/toastr';
 import Title from 'components/layouts/Title';
-import AnimeCard from 'components/common/AnimeCard';
+import AnimeCard from 'components/common/anime/AnimeCard';
 
 interface Props {
   animes: Animes;
