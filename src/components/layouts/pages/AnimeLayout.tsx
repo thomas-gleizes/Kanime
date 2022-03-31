@@ -65,7 +65,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
 
-  if (error) return <Error statusCode={error.code} title={error.message} />;
+  if (error) return <Error statusCode={error.statusCode} title={error.message} />;
 
   return (
     <>

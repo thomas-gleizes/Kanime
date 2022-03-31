@@ -1,8 +1,10 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { withSessionApi } from 'services/session.service';
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
   const { limit, skip } = req.query;

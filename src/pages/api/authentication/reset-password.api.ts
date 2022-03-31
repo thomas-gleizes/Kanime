@@ -1,11 +1,13 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
 import { withSessionApi } from 'services/session.service';
 import SchemaError from 'class/error/SchemaError';
 import ApiError from 'class/error/ApiError';
 import { resetPasswordSchema } from 'resources/validations';
 import { UserModel } from 'models';
+
+const handler = apiHandler();
 
 handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   const { body } = req;

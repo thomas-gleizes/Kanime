@@ -2,7 +2,7 @@ class SsrError {
   private readonly _message: string;
   private readonly _statusCode: number;
 
-  constructor(message: string, statusCode: number) {
+  constructor(statusCode: number, message: string) {
     this._message = message;
     this._statusCode = statusCode;
   }

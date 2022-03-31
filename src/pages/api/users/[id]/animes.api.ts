@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, UserModel } from 'models';
 import { AnimesMapper } from 'mapper';
@@ -10,6 +10,8 @@ interface ResponseData extends DefaultResponseData {
   animes: Animes;
   length: number;
 }
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id } = req.query;

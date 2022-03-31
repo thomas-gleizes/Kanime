@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, ReactionModel } from 'models';
 import { ReactionsMapper } from 'mapper';
@@ -14,6 +14,8 @@ interface GetResponseData extends DefaultResponseData {
 interface PostResponseData extends DefaultResponseData {
   reaction: Reaction;
 }
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<GetResponseData>) => {
   const { id } = req.query;

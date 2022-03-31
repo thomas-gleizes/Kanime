@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mapper';
@@ -10,6 +10,8 @@ import ApiError from 'class/error/ApiError';
 interface ResponseData extends DefaultResponseData {
   entry: Entry;
 }
+
+const handler = apiHandler();
 
 const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id: animeId } = req.query;

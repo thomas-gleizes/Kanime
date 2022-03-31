@@ -1,32 +1,35 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { Page, ServerSideProps } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
+import { Page } from 'app/next';
+import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, ReactionModel } from 'models';
 import { AnimesMapper, ReactionsMapper } from 'mapper';
+import { SsrError } from 'class/error';
+import { errorMessage } from 'resources/constants';
 import random from 'utils/random';
+import { Field } from 'components/common/formik';
 import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 import RecursiveTag from 'components/common/RecursiveTag';
-import { Field } from 'components/common/formik';
 
 interface Props {
   anime: Anime;
   reactions: Reactions;
 }
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  async ({ params }) => {
-    const { slug } = params;
+export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
+  const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
-    const reactions: Reactions = ReactionsMapper.many(
-      await ReactionModel.findByAnimes(anime.id)
-    );
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-    return { props: { anime, reactions } };
-  }
-);
+  if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
+
+  const reactions: Reactions = ReactionsMapper.many(
+    await ReactionModel.findByAnimes(anime.id)
+  );
+
+  return { props: { anime, reactions } };
+});
 
 const DiscussionsPage: Page<Props> = ({ anime, reactions }) => {
   return (

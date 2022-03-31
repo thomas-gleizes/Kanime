@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'resources/middleware';
 import { errorMessage } from 'resources/constants';
@@ -11,6 +11,8 @@ interface ResponseData extends DefaultResponseData {
   users: Users;
   length: number;
 }
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id } = req.query;

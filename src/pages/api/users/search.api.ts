@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import ApiError from 'class/error/ApiError';
 import { UsersMapper } from 'mapper/index';
@@ -8,6 +8,8 @@ import { UserModel } from 'models/index';
 interface ResponseData extends DefaultResponseData {
   users: Users;
 }
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { query, limit, skip } = req.query;

@@ -62,7 +62,7 @@ export const UserPage: Page<Props> = (props) => {
   }, [setHeaderTransparent]);
 
   if ('error' in props)
-    return <Error statusCode={props.error.code} title={props.error.message} />;
+    return <Error statusCode={props.error.statusCode} title={props.error.message} />;
 
   const { user, isCurrent } = props;
 

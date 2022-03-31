@@ -1,27 +1,29 @@
 import React from 'react';
 import Image from 'next/image';
 
-import { Page, ServerSideProps } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
+import { Page } from 'app/next';
+import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, SagaModel } from 'models';
 import { AnimesMapper, SagasMapper } from 'mapper';
+import { SsrError } from 'class/error';
+import { errorMessage } from 'resources/constants';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 
 interface Props extends AnimeLayoutProps {
   saga: Saga;
 }
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  async ({ params }) => {
-    const { slug } = params;
+export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
+  const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-    const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId));
+  if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
-    return { props: { anime, saga } };
-  }
-);
+  const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId));
+
+  return { props: { anime, saga } };
+});
 
 const SagaPage: Page<Props> = ({ saga, anime }) => {
   return (

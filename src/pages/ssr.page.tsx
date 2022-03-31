@@ -2,7 +2,7 @@ import Error from 'next/error';
 
 import { Page, ServerSideProps } from 'app/next';
 import Security from 'services/security.service';
-import ssrHandler from 'services/handler.service';
+import { ssrHandler } from 'services/handler.service';
 import { withSessionSsr } from 'services/session.service';
 import { SsrError } from 'class/error';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
@@ -14,7 +14,7 @@ type Props = { message: string } & {
 export const getServerSideProps: ServerSideProps<Props> = ssrHandler(
   withSessionSsr((context) => {
     if (context.query.hasOwnProperty('error'))
-      throw new SsrError('This is an error', 404);
+      throw new SsrError(404, 'This is an error');
 
     if (!Security.verifyToken(context.req.session.token))
       return {

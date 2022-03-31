@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
 import { verifyUser } from 'resources/middleware';
 import { UsersMapper } from 'mapper';
@@ -18,7 +18,7 @@ interface ResponsePatchData extends DefaultResponseData {
   token: string;
 }
 
-// var matches = string.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
+const handler = apiHandler();
 
 handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseGetData>) => {
   const { session } = req;

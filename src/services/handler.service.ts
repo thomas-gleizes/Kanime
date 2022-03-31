@@ -9,31 +9,32 @@ import { SsrError } from 'class/error';
 import { GetServerSidePropsContext } from 'next';
 import { GetServerSidePropsResult } from 'next/types';
 
-export const apiHandler = nc<ApiRequest, ApiResponse>({
-  onError: (err, req, res) => {
-    if (err instanceof ApiError) {
-      res.status(err.code).json({ error: err.message });
-    } else if (err instanceof SchemaError) {
-      res.status(err.code).json({ error: err.message, schemaError: err.data });
-    } else if (process.env.NODE_ENV !== 'production') {
-      console.error(err.stack);
-      res.status(500).send(err.message);
-    } else {
-      console.error(err.stack);
+export const apiHandler = () =>
+  nc<ApiRequest, ApiResponse>({
+    onError: (err, req, res) => {
+      if (err instanceof ApiError) {
+        res.status(err.code).json({ error: err.message });
+      } else if (err instanceof SchemaError) {
+        res.status(err.code).json({ error: err.message, schemaError: err.data });
+      } else if (process.env.NODE_ENV !== 'production') {
+        console.error(err.stack);
+        res.status(500).send(err.message);
+      } else {
+        console.error(err.stack);
 
-      res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
-    }
-  },
-  onNoMatch: (req, res) => {
-    res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
-  },
-}).use(async (req, res, next) => {
-  loggerService(req).catch((e) => console.log('log failed :', e));
+        res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
+      }
+    },
+    onNoMatch: (req, res) => {
+      res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
+    },
+  }).use(async (req, res, next) => {
+    loggerService(req).catch((e) => console.log('log failed :', e));
 
-  next();
-});
+    next();
+  });
 
-export default function ssrHandler<P = {}>(
+export function ssrHandler<P = {}>(
   handler: (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<P>>
 ): ServerSideProps<P> {
   return (context) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { Page, ServerSideProps } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
+import { Page } from 'app/next';
+import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, CategoryModel } from 'models';
 import { AnimesMapper, CategoriesMapper } from 'mapper';
 import { routes } from 'resources/routes';
@@ -13,19 +13,17 @@ interface Props {
   categories: Categories;
 }
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  async ({ params }) => {
-    const { slug } = params;
+export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
+  const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-    const categories: Categories = CategoriesMapper.many(
-      await CategoryModel.findByAnimeId(anime.id)
-    );
+  const categories: Categories = CategoriesMapper.many(
+    await CategoryModel.findByAnimeId(anime.id)
+  );
 
-    return { props: { anime, categories, test: 'ok' } };
-  }
-);
+  return { props: { anime, categories, test: 'ok' } };
+});
 
 const AnimeCategories: Page<Props> = ({ anime, categories }) => {
   return (

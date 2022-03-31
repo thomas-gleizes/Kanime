@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { SagaModel } from 'models';
 import { SagasMapper } from 'mapper';
@@ -8,6 +8,8 @@ import ApiError from 'class/error/ApiError';
 interface ResponseData extends DefaultResponseData {
   saga: Saga;
 }
+
+const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const { id } = req.query;

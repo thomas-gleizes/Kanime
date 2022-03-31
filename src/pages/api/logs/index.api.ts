@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { LogsMapper } from 'mapper';
 import { LogModel } from 'models';
 import { verifyAdmin } from 'resources/middleware';
@@ -9,6 +9,8 @@ interface Data extends DefaultResponseData {
   logs: Logs;
   query?: any;
 }
+
+const handler = apiHandler();
 
 handler.get(verifyAdmin, async (req: ApiRequest, res: ApiResponse<Data>) => {
   const { start, limit } = req.query;

@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
-import { Page, ServerSideProps } from 'app/next';
-import { ApiService } from 'services/api.service';
+import { Page } from 'app/next';
+import { ssrHandler } from 'services/handler.service';
+import { AnimesApi } from 'api';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
 import { useScrollPercent } from 'hooks';
-import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/AnimeCard';
-import { AnimesApi } from 'api';
 
 interface Props {
   animes: Animes;
 }
 
-export const getServerSideProps: ServerSideProps<Props> = async ({ query }) => {
+export const getServerSideProps = ssrHandler<Props>(async ({ query }) => {
   const { skip, limit } = query;
 
   const animes = AnimesMapper.many(
@@ -28,7 +27,7 @@ export const getServerSideProps: ServerSideProps<Props> = async ({ query }) => {
   return {
     props: { animes },
   };
-};
+});
 
 const ExploreAnimes: Page<Props> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(false);

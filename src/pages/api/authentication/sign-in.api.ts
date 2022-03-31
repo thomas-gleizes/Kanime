@@ -1,5 +1,5 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
 import { UserModel } from 'models';
@@ -8,6 +8,8 @@ import { signInSchema } from 'resources/validations';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
+
+const handler = apiHandler();
 
 handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
   const { body, session } = req;

@@ -1,16 +1,17 @@
 import React from 'react';
 
-import { Page, ServerSideProps } from 'app/next';
+import { Page } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { routes } from 'resources/routes';
 import ListLogs from 'components/admin/ListLogs';
+import { ssrHandler } from 'services/handler.service';
 
 interface Props {
   user?: User;
 }
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  async ({ req }) => {
+export const getServerSideProps = ssrHandler<Props>(
+  withSessionSsr(async ({ req }) => {
     const user: User = req.session.user;
 
     if (!user || !user.isAdmin) {
@@ -25,7 +26,7 @@ export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
         props: { user },
       };
     }
-  }
+  })
 );
 
 const Admin: Page<Props> = ({ user }) => {

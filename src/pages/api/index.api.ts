@@ -1,5 +1,7 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler as handler } from 'services/handler.service';
+import { apiHandler } from 'services/handler.service';
+
+const handler = apiHandler();
 
 handler.all(async (req: ApiRequest, res: ApiResponse<any>) => {
   const routes = {
