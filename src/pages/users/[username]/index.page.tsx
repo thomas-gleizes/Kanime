@@ -8,46 +8,31 @@ import { useLayoutContext } from 'context/layout.context';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mapper';
 import Title from 'components/layouts/Title';
+import { ssrHandler } from 'services/handler.service';
+import { SsrError } from 'class/error';
+import { errorMessage } from 'resources/constants';
 
-interface ValidProps {
+interface Props {
   user: User;
   isCurrent: boolean;
+  error?: ErrorPage;
 }
 
-interface ErrorProps {
-  error: ErrorPage;
-}
-
-type Props = ValidProps | ErrorProps;
-
-// TODO remote ts-ignore
-// @ts-ignore
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
-  // @ts-ignore
-  async ({ query, req }) => {
+export const getServerSideProps = ssrHandler<Props>(
+  withSessionSsr(async ({ query, req }) => {
     const { username } = query;
     const { user: sessionUser } = req.session;
 
     const [user] = UsersMapper.one(await UserModel.findByUsername(username as string));
+    if (!user) throw new SsrError(404, errorMessage.USER_NOT_FOUND);
 
-    if (user) {
-      return {
-        props: {
-          user,
-          isCurrent: user.id === sessionUser?.id,
-        },
-      };
-    } else {
-      return {
-        props: {
-          error: {
-            code: 404,
-            message: 'user not found',
-          },
-        },
-      };
-    }
-  }
+    return {
+      props: {
+        user,
+        isCurrent: user.id === sessionUser?.id,
+      },
+    };
+  })
 );
 
 export const UserPage: Page<Props> = (props) => {

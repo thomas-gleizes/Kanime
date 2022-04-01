@@ -59,8 +59,10 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
   if (reaction.user_id !== user.id)
     throw new ApiError(403, 'You are not allowed to delete this reaction');
 
-  await ReactionModel.deleteParent(reaction.id);
-  await ReactionModel.delete(reaction.id);
+  await Promise.all([
+    ReactionModel.deleteParent(reaction.id),
+    ReactionModel.delete(reaction.id),
+  ]);
 
   res.status(204).json({ success: true });
 });

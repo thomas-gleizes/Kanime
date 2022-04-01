@@ -9,11 +9,10 @@ import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
 import random from 'utils/random';
 import { Field } from 'components/common/formik';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
+import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 import RecursiveTag from 'components/common/RecursiveTag';
 
-interface Props {
-  anime: Anime;
+interface Props extends AnimeLayoutProps {
   reactions: Reactions;
 }
 
@@ -31,7 +30,7 @@ export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
   return { props: { anime, reactions } };
 });
 
-const DiscussionsPage: Page<Props> = ({ anime, reactions }) => {
+const DiscussionsPage: Page<Props> = ({ reactions }) => {
   return (
     <div>
       <h1 className="text-xl font-black text-center">Discussions</h1>

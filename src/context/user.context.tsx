@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import LocalStorageService from 'services/localStorage.service';
 import { ApiService } from 'services/api.service';
-import { useContextFactory } from 'hooks';
+import { useBrowser, useContextFactory } from 'hooks';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { AuthenticationApi } from 'api';
@@ -29,6 +29,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   const [token, setToken] = useState<string>(LocalStorageService.getToken());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
+  const isBrowser = useBrowser();
+
   const signIn = useCallback((user: User, token: string): void => {
     LocalStorageService.saveUser(user);
     LocalStorageService.saveToken(token);
@@ -47,7 +49,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
     setToken(null);
   }, []);
 
-  const refreshUser = useCallback(async (): Promise<void> => {
+  const refreshUser = async (): Promise<void> => {
     try {
       const { data } = await ApiService.get(routes.users.api.current);
       setUser(data.user);
@@ -55,15 +57,15 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
       await signOut();
       toast('Veuillez vous reconnecter', 'warning');
     }
-  }, [user]);
+  };
 
   useEffect(() => {
-    if (process.browser && isLogin) {
+    if (isBrowser && isLogin) {
       const interval = window.setTimeout(refreshUser, 1000 * 60 * 30);
 
       return () => clearInterval(interval);
     }
-  }, [process.browser, isLogin]);
+  }, [isLogin]);
 
   return (
     <UserContext.Provider value={{ user, token, isLogin, signIn, signOut }}>

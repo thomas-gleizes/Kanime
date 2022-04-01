@@ -1,3 +1,4 @@
+import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next/types';
 import nc from 'next-connect';
 
 import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
@@ -6,8 +7,6 @@ import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
 import loggerService from './logger.service';
 import { SsrError } from 'class/error';
-import { GetServerSidePropsContext } from 'next';
-import { GetServerSidePropsResult } from 'next/types';
 
 export const apiHandler = () =>
   nc<ApiRequest, ApiResponse>({
