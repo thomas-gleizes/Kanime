@@ -8,7 +8,7 @@ class Security {
     const hash = createHash('sha512');
 
     hash.update(stringToHash);
-    const hashedString: string = hash.digest().toString('base64url');
+    const hashedString: string = hash.digest().toString('hex');
     hash.end();
 
     return hashedString;
