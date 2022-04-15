@@ -18,7 +18,7 @@ export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
 
   const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
+  if (!anime || !anime.sagaId) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
   const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId));
 

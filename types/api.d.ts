@@ -29,7 +29,8 @@ interface AnimeUserResponse extends DefaultResponseData {
 }
 
 interface AnimeResponse extends DefaultResponseData {
-  anime: Anime;
+  anime?: Anime;
+  animes?: Animes;
 }
 
 interface AnimeCategories extends DefaultResponseData {

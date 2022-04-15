@@ -12,6 +12,11 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       where: { id },
     });
 
+  public findByIds = (ids: number[]): Promise<PrismaAnimes> =>
+    this.model.findMany({
+      where: { id: { in: ids } },
+    });
+
   public isExist = (id: number): Promise<boolean> =>
     this.model
       .findUnique({
