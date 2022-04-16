@@ -49,7 +49,7 @@ export const routes = {
   },
   logs: {
     api: {
-      list: 'api/logs',
+      list: 'logs',
     },
   },
   feedback: '/feedback',

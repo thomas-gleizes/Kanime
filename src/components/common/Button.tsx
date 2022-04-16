@@ -9,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 const Button: Component<ButtonProps> = ({ color, className, outline, ...rest }) => {
   const customColor = useMemo<string>(() => {
     if (outline)
-      return `text-black hover:text-white border-[2.8px] bg-gray-50 border-${color}-500 hover:bg-${color}-500 rounded-md`;
+      return `hover:text-white border-[2.8px] bg-gray-100 border-${color}-500 text-${color}-500 hover:bg-${color}-500 rounded-md`;
     else
       return `text-white bg-${color}-500 hover:bg-${color}-600 focus:ring ring-offset-2 ring-${color}-600 rounded-sm`;
   }, [color, outline]);
@@ -19,7 +19,7 @@ const Button: Component<ButtonProps> = ({ color, className, outline, ...rest }) 
       className={classnames(
         customColor,
         className,
-        'shadow-lg hover:shadow-xl focus:shadow-sm select-none w-full text-lg font-bold transition text-white'
+        'shadow-lg hover:shadow-xl focus:shadow-sm select-none w-full text-lg font-bold transition'
       )}
       {...rest}
     />

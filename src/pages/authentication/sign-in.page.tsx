@@ -11,7 +11,7 @@ import { signInSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { Field } from 'components/common/formik';
-import Layout from 'components/layouts/Layout';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
 
 type loginType = Yup.TypeOf<typeof signInSchema>;
@@ -42,7 +42,7 @@ const SignInPage: Page = () => {
   };
 
   return (
-    <Layout>
+    <DefaultLayout>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
         <Formik
           onSubmit={handleSubmit}
@@ -103,7 +103,7 @@ const SignInPage: Page = () => {
           </Form>
         </Formik>
       </div>
-    </Layout>
+    </DefaultLayout>
   );
 };
 

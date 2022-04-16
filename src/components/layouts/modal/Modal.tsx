@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import domUuid from 'utils/domUuid';
 import { useBrowser } from 'hooks';
 
-interface ModalProps {
+interface Props {
   isOpen: boolean;
   toggle: () => void;
   size?: Size;
@@ -13,7 +13,7 @@ interface ModalProps {
   className?: string;
 }
 
-const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
+const Modal: Component<Props> = ({ isOpen, toggle, children, size }) => {
   const backgroundId = useMemo<string>(() => `modal-${domUuid()}`, []);
   const isBrowser = useBrowser();
 
@@ -44,9 +44,9 @@ const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
   const classname = useMemo<string>(() => {
     switch (size) {
       case 'xs':
-        return 'w-1/4';
+        return 'w-[350px]';
       case 'sm':
-        return 'w-1/3';
+        return 'w-[450px]';
       case 'lg':
         return 'w-2/3';
       case 'xl':
@@ -56,19 +56,17 @@ const Modal: Component<ModalProps> = ({ isOpen, toggle, children, size }) => {
     }
   }, [size]);
 
-  const handleClick = (event) => {
-    if (event.target.id === backgroundId) toggle();
-  };
+  const handleClick = (event) => event.target.id === backgroundId && toggle();
 
   if (!isBrowser) return null;
 
   const component = (
-    <div
-      id={backgroundId}
-      onClick={handleClick}
-      className="z-100 fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-gray-800"
-    >
-      <div className="fixed flex justify-items-center backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4">
+    <div className="z-100 fixed top-0 left-0 w-screen h-screen bg-opacity-50 bg-gray-800">
+      <div
+        id={backgroundId}
+        onClick={handleClick}
+        className="fixed flex justify-items-center backdrop-filter backdrop-blur-sm bg-gray-600 bg-opacity-40 h-screen w-screen overflow-hidden top-0 left-0 z-100 px-4"
+      >
         <div className={classnames(classname, 'bg-white m-auto max-h-[90%]')}>
           {children}
         </div>

@@ -24,7 +24,7 @@ const EditAnimesEntries: Component<Props> = ({ isOpen, toggle, anime, animeUser 
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="xs">
+    <Modal isOpen={isOpen} toggle={toggle} size="sm">
       <ModalHeader>
         <ModalTitle>{anime.canonicalTitle}</ModalTitle>
       </ModalHeader>

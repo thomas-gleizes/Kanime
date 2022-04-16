@@ -5,6 +5,7 @@ import { withSessionSsr } from 'services/session.service';
 import { routes } from 'resources/routes';
 import ListLogs from 'components/admin/ListLogs';
 import { ssrHandler } from 'services/handler.service';
+import AdminLayout from 'components/layouts/pages/AdminLayout';
 
 interface Props {
   user?: User;
@@ -29,15 +30,17 @@ export const getServerSideProps = ssrHandler<Props>(
   })
 );
 
-const Admin: Page<Props> = ({ user }) => {
+const AdminHomePage: Page<Props> = ({ user }) => {
   return (
     <>
       <h1>{user?.username}: You are an admin</h1>
-      <div className="w-1000">
+      <div>
         <ListLogs />
       </div>
     </>
   );
 };
 
-export default Admin;
+AdminHomePage.layout = AdminLayout;
+
+export default AdminHomePage;

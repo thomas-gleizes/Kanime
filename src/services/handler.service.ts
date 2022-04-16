@@ -5,7 +5,7 @@ import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
-import loggerService from './logger.service';
+import { apiLogger } from './apiLogger';
 import { SsrError } from 'class/error';
 
 export const apiHandler = () =>
@@ -28,7 +28,7 @@ export const apiHandler = () =>
       res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
     },
   }).use(async (req, res, next) => {
-    loggerService(req).catch((e) => console.log('log failed :', e));
+    apiLogger(req).catch((e) => console.log('log failed :', e));
 
     next();
   });

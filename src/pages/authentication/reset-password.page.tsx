@@ -10,7 +10,7 @@ import { resetPasswordSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { Field } from 'components/common/formik';
-import Layout from 'components/layouts/Layout';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
 
 interface Props {
@@ -56,7 +56,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
   };
 
   return (
-    <Layout>
+    <DefaultLayout>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
         <Formik
           initialValues={{ ...initialValues, token }}
@@ -89,7 +89,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
           </Form>
         </Formik>
       </div>
-    </Layout>
+    </DefaultLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import { NextApiRequest } from 'next';
+import { GetServerSidePropsContext, NextApiRequest } from 'next';
 import requestIp from 'request-ip';
 
 import { LogModel } from 'models';
@@ -24,7 +24,7 @@ function ip(req): string {
   return arr[arr.length - 1];
 }
 
-export default async function loggerService(req: NextApiRequest) {
+export async function apiLogger(req: NextApiRequest) {
   const userId = req.session?.user?.id || null;
 
   await LogModel.create({
@@ -33,6 +33,22 @@ export default async function loggerService(req: NextApiRequest) {
     ip: ip(req),
     body: replaceKey(req.body),
     query: replaceKey(req.query),
+    userId: userId,
+  });
+}
+
+export async function ssrLogger(context: GetServerSidePropsContext) {
+  const userId = context.req?.session?.user?.id || null;
+
+  console.log(context);
+  console.log('ssrLogger');
+
+  await LogModel.create({
+    route: '',
+    method: 'GET',
+    ip: '',
+    body: {},
+    query: replaceKey(context.req.query),
     userId: userId,
   });
 }

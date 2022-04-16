@@ -5,7 +5,7 @@ import { AppProps } from 'app/next';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
-import DefaultLayout from 'components/layouts/Layout';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';

@@ -5,9 +5,6 @@ import { useClockFromDate } from 'hooks';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 
-const fetchLogs = (limit: number, start: number) =>
-  ApiService.get(routes.logs.api.list, { params: { limit, start } });
-
 interface TimeCellProps {
   date: Date | string;
 }
@@ -17,6 +14,9 @@ const TimeCell: Component<TimeCellProps> = ({ date }) => {
 
   return <>{time}</>;
 };
+
+const fetchLogs = (limit: number, start: number) =>
+  ApiService.get(routes.logs.api.list, { params: { limit, start } });
 
 const ListLogs: Component = () => {
   const [logs, setLogs] = useState<Logs>([]);

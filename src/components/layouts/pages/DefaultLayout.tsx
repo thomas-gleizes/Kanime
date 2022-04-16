@@ -6,7 +6,7 @@ interface Props {
   children: NodeR;
 }
 
-const Layout: Component<Props> = ({ children }) => {
+const DefaultLayout: Component<Props> = ({ children }) => {
   return (
     <>
       <Header />
@@ -16,4 +16,4 @@ const Layout: Component<Props> = ({ children }) => {
   );
 };
 
-export default Layout;
+export default DefaultLayout;
