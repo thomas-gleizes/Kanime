@@ -5,7 +5,7 @@ import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
 import SchemaError from 'class/error/SchemaError';
-import { apiLoggerService } from './apiLogger.service';
+import { loggerService, ssrLogger } from './logger.service';
 import { SsrError } from 'class/error';
 
 export const apiHandler = () =>
@@ -30,7 +30,7 @@ export const apiHandler = () =>
       res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
     },
   }).use(async (req, res, next) => {
-    apiLoggerService(req).catch((e) => console.log('log failed :', e));
+    loggerService(req).catch((e) => console.log('log failed :', e));
 
     next();
   });
@@ -39,6 +39,8 @@ export function ssrHandler<P = {}>(
   handler: (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<P>>
 ): ServerSideProps<P> {
   return (context) => {
+    ssrLogger(context).catch((e) => console.log('ssr log failed :', e));
+
     return handler(context).catch((error) => {
       console.log('ssr error: ', error);
 

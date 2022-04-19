@@ -24,7 +24,7 @@ function ip(req): string {
   return arr[arr.length - 1];
 }
 
-export async function apiLoggerService(req: NextApiRequest) {
+export async function loggerService(req: NextApiRequest) {
   const userId = req.session?.user?.id || null;
 
   await LogModel.create({
@@ -48,6 +48,7 @@ export async function ssrLogger(context: GetServerSidePropsContext) {
     method: 'GET',
     ip: '',
     body: {},
+    // @ts-ignore
     query: replaceKey(context.req?.query || {}),
     userId: userId,
   });
