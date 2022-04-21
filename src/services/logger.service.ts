@@ -44,12 +44,12 @@ export async function ssrLogger(context: GetServerSidePropsContext) {
   console.log('ssrLogger');
 
   await LogModel.create({
-    route: '',
+    route: context.resolvedUrl,
     method: 'GET',
     ip: '',
     body: {},
     // @ts-ignore
-    query: replaceKey(context.req?.query || {}),
+    query: replaceKey(context.query || {}),
     userId: userId,
   });
 }
