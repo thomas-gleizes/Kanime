@@ -32,6 +32,7 @@ model Anime {
   saga_id          Int?
   created_at       DateTime        @default(now()) @db.Timestamp(0)
   updated_at       DateTime        @default(now()) @db.Timestamp(0)
+
   entries          Entry[]
   reactions        Reaction[]
   saga             Saga?           @relation(fields: [saga_id], references: [id])
@@ -50,6 +51,7 @@ model Saga {
   description     String?  @db.Text
   created_at      DateTime @default(now()) @db.Timestamp(0)
   updated_at      DateTime @default(now()) @db.Timestamp(0)
+
   animes          Anime[]
 
   @@map("sagas")
@@ -63,6 +65,7 @@ model Category {
   total_media_count Int             @default(0) @db.SmallInt
   created_at        DateTime        @default(now()) @db.Timestamp(0)
   updated_at        DateTime        @default(now()) @db.Timestamp(0)
+
   animes            AnimeCategory[]
 
   @@map("categories")
@@ -73,6 +76,7 @@ model AnimeCategory {
   category_id Int
   created_at  DateTime @default(now()) @db.Timestamp(0)
   updated_at  DateTime @default(now()) @db.Timestamp(0)
+
   animes      Anime    @relation(fields: [anime_id], references: [id])
   category    Category @relation(fields: [category_id], references: [id])
 
@@ -101,6 +105,7 @@ model User {
   is_admin                Boolean      @default(false)
   created_at              DateTime     @default(now()) @db.Timestamp(0)
   updated_at              DateTime     @default(now()) @db.Timestamp(0)
+
   animes                  Entry[]
   reactions               Reaction[]
   follows                 UserFollow[] @relation("follows")
@@ -121,8 +126,9 @@ model Entry {
   finish_at  DateTime?
   note       String?     @db.MediumText
   visibility Visibility  @default(public)
-  created_at DateTime    @default(now())
-  updated_at DateTime    @default(now())
+  created_at              DateTime     @default(now()) @db.Timestamp(0)
+  updated_at              DateTime     @default(now()) @db.Timestamp(0)
+
   anime      Anime       @relation(fields: [anime_id], references: [id])
   user       User        @relation(fields: [user_id], references: [id])
 
@@ -136,8 +142,9 @@ model Reaction {
   user_id     Int
   content     String     @db.Text
   parent_id   Int?
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @default(now())
+  created_at              DateTime     @default(now()) @db.Timestamp(0)
+  updated_at              DateTime     @default(now()) @db.Timestamp(0)
+
   anime       Anime      @relation(fields: [anime_id], references: [id])
   user        User       @relation(fields: [user_id], references: [id])
   replyTo     Reaction?  @relation("parent", fields: [parent_id], references: [id])
@@ -150,6 +157,7 @@ model UserFollow {
   follower_id Int
   follow_id   Int
   created_at  DateTime @default(now()) @db.Timestamp(0)
+
   follower    User     @relation("follows", fields: [follower_id], references: [id])
   follow      User     @relation("followers", fields: [follow_id], references: [id])
 
@@ -190,6 +198,7 @@ model AnimeImport {
   episode_length   Int?        @db.UnsignedInt
   status           String?
   import_at        DateTime    @default(now()) @db.Timestamp(0)
+
   anime            Anime?      @relation(fields: [anime_id], references: [id])
   saga_import      SagaImport?
 
@@ -202,6 +211,7 @@ model SagaImport {
   details   String      @db.LongText
   treat     Boolean
   import_at DateTime    @default(now()) @db.Timestamp(0)
+
   import    AnimeImport @relation(fields: [import_id], references: [id])
 
   @@map("sagas_import")
@@ -216,6 +226,7 @@ model Log {
   query      String?  @db.Text
   body       String?  @db.Text
   created_at DateTime @default(now()) @db.Timestamp(0)
+
   user       User?    @relation(fields: [user_id], references: [id])
 
   @@map("logs")
