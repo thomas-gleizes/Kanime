@@ -3,11 +3,11 @@ import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
 type crateData = {
-  route: string;
+  path: string;
   method: Method;
   ip: string;
   body: any;
-  query: any;
+  params: any;
   userId?: number;
 };
 
@@ -29,12 +29,12 @@ class LogModel extends Model<PrismaLogDelegate> {
   public create = (data: crateData): Promise<PrismaLog> =>
     this.model.create({
       data: {
-        route: data.route,
+        path: data.path,
         method: data.method,
         ip: data.ip,
         body: data.body ? JSON.stringify(data.body) : null,
-        query: data.query ? JSON.stringify(data.query) : null,
-        user_id: data.userId,
+        params: data.params ? JSON.stringify(data.params) : null,
+        user_id: data.userId || null,
       },
     });
 }

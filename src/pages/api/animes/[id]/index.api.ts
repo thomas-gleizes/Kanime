@@ -5,7 +5,6 @@ import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
-import logs from '../../../../mapper/logs';
 
 const handler = apiHandler();
 
@@ -13,13 +12,10 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {
   const id = req.query.id as string;
   const ids = id.split(',');
 
-  console.log('Ids', ids);
-
   if (ids.length > 1) {
     const animes: Animes = AnimesMapper.many(
       await AnimeModel.findByIds(ids.map((id) => +id))
     );
-    console.log('Ani', animes);
 
     if (!animes) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 

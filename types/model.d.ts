@@ -116,11 +116,11 @@ declare type Users = Array<User>;
 
 declare type Log = {
   id: number;
-  route: Method;
+  path: string;
   ip: string;
   method: Method;
   body: any;
-  query: any;
+  params: any;
   user?: User | null;
   createAt: string;
 } & { user?: User };

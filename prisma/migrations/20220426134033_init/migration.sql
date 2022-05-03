@@ -190,11 +190,11 @@ CREATE TABLE `sagas_import` (
 -- CreateTable
 CREATE TABLE `logs` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `route` VARCHAR(191) NOT NULL,
+    `path` VARCHAR(191) NOT NULL,
     `method` ENUM('GET', 'POST', 'PUT', 'PATCH', 'DELETE') NOT NULL,
     `user_id` INTEGER NULL,
     `ip` VARCHAR(64) NOT NULL,
-    `query` TEXT NULL,
+    `params` TEXT NULL,
     `body` TEXT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 

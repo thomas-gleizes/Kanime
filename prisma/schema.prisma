@@ -219,11 +219,11 @@ model SagaImport {
 
 model Log {
   id         Int      @id @default(autoincrement())
-  route      String
+  path      String
   method     Method
   user_id    Int?
   ip         String   @db.VarChar(64)
-  query      String?  @db.Text
+  params      String?  @db.Text
   body       String?  @db.Text
   created_at DateTime @default(now()) @db.Timestamp(0)
 

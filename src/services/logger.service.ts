@@ -27,29 +27,30 @@ function ip(req): string {
 export async function loggerService(req: NextApiRequest) {
   const userId = req.session?.user?.id || null;
 
+  const [path, params] = req.url.split('?');
+
   await LogModel.create({
-    route: req.url.split('?')[0],
+    path: path,
     method: req.method as Method,
     ip: ip(req),
     body: replaceKey(req.body),
-    query: replaceKey(req.query),
+    params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
     userId: userId,
   });
 }
 
 export async function ssrLogger(context: GetServerSidePropsContext) {
+  // TODO: not working: session is undefined
   const userId = context.req?.session?.user?.id || null;
 
-  console.log(context);
-  console.log('ssrLogger');
+  const [path, params] = context.resolvedUrl.split('?');
 
   await LogModel.create({
-    route: context.resolvedUrl,
-    method: 'GET',
-    ip: '',
+    path: path,
+    method: context.req.method as Method,
+    ip: ip(context.req),
     body: {},
-    // @ts-ignore
-    query: replaceKey(context.query || {}),
+    params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
     userId: userId,
   });
 }

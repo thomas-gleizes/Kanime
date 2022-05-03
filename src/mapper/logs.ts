@@ -7,11 +7,11 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
   one(resource: PrismaLog): Log {
     const log: Log = {
       id: resource.id,
-      route: resource.route as Method,
+      path: resource.path,
       method: resource.method,
       ip: resource.ip,
       body: JsonParser(resource.body),
-      query: JsonParser(resource.query),
+      params: JsonParser(resource.params),
       createAt: MomentFr(resource.created_at).format('YYYY/MM/DD HH:mm:ss'),
     };
 

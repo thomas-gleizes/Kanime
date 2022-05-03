@@ -44,7 +44,7 @@ const ListLogs: Component = () => {
           <tr key={log.id}>
             <td>{log.id}</td>
             <td>{log.method}</td>
-            <td>{log.route}</td>
+            <td>{log.path}</td>
             <td>{log.ip}</td>
             <td>{log.user?.id}</td>
             <td>
