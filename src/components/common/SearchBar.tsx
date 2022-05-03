@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
-import { BeatLoader } from 'react-spinners';
 import SimpleBar from 'simplebar-react';
 import classnames from 'classnames';
 
@@ -95,9 +94,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">
                 <div className="py-1 bg-primary rounded-t text-white">
-                  <h3 className="text-center text-xl">
-                    Animes {loading && <BeatLoader size={12} color="#F59509" />}
-                  </h3>
+                  <h3 className="text-center text-xl">Animes</h3>
                 </div>
                 {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>

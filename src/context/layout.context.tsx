@@ -20,7 +20,7 @@ export declare type LayoutContext = {
 };
 
 interface Props {
-  children: React.ReactNode;
+  children: NodeR;
 }
 
 const LayoutContext = createContext<LayoutContext>(null);

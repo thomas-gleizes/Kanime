@@ -21,29 +21,6 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
-  user-select: none;
-}
-
-p,
-span,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p > *,
-h1 > *,
-h2 > *,
-h3 > *,
-h4 > *,
-h5 > *,
-h6 > * {
-  user-select: text;
-}
-
 .p-truncate-9 {
   display: -webkit-box;
   -webkit-line-clamp: 9;

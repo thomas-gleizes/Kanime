@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 import { ApiService } from 'services/api.service';
 import { useClockFromDate } from 'hooks';
@@ -28,32 +30,15 @@ const ListLogs: Component = () => {
   }, []);
 
   return (
-    <table className='custom-table'>
-      <thead>
-      <tr className='bg-gray-800'>
-        <th />
-        <th>Method</th>
-        <th>Route</th>
-        <th>Ip</th>
-        <th>Utilisateur</th>
-        <th>Il y a</th>
-      </tr>
-      </thead>
-      <tbody>
-      {logs.map((log) => (
-        <tr key={log.id}>
-          <td>{log.id}</td>
-          <td>{log.method}</td>
-          <td>{log.path}</td>
-          <td>{log.ip}</td>
-          <td>{log.user?.id}</td>
-          <td>
-            <TimeCell date={log.createAt} />
-          </td>
-        </tr>
-      ))}
-      </tbody>
-    </table>
+    <div className="card">
+      <DataTable value={logs} header="Logs" size="small" responsiveLayout="scroll">
+        <Column field="createAt" header="Date" />
+        <Column field="path" header="Path" />
+        <Column field="method" header="Method" />
+        <Column field="ip" header="Host" />
+        <Column field="user.username" header="User" />
+      </DataTable>
+    </div>
   );
 };
 
