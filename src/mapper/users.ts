@@ -1,5 +1,5 @@
 import { PrismaUser, PrismaUsers } from 'prisma/app';
-import { formatForMapper } from 'utils/momentFr';
+import { formatDate, formatDateTime } from 'utils/momentFr';
 import { EntriesMapper, ReactionsMapper } from './index';
 
 class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> {
@@ -7,7 +7,7 @@ class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> 
     if (resource) {
       const user: User = {
         bio: resource.bio,
-        birthday: formatForMapper(resource.birthday),
+        birthday: formatDate(resource.birthday),
         city: resource.city,
         gender: resource.gender,
         id: resource.id,
@@ -18,8 +18,8 @@ class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> 
         followerCount: resource.follower_count,
         avatarPath: resource.avatar_path,
         backgroundPath: resource.background_path,
-        createdAt: formatForMapper(resource.created_at),
-        updatedAt: formatForMapper(resource.updated_at),
+        createdAt: formatDateTime(resource.created_at),
+        updatedAt: formatDateTime(resource.updated_at),
       };
 
       if (resource.entries) user.entries = EntriesMapper.many(resource.entries);

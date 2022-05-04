@@ -1,5 +1,5 @@
 import { PrismaLog, PrismaLogs } from 'prisma/app';
-import MomentFr, { formatForMapper } from 'utils/momentFr';
+import MomentFr, { formatDateTime } from 'utils/momentFr';
 import JsonParser from 'utils/jsonParser';
 import UsersMapper from './users';
 
@@ -12,7 +12,7 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
       ip: resource.ip,
       body: JsonParser(resource.body),
       params: JsonParser(resource.params),
-      createAt: formatForMapper(resource.created_at),
+      createAt: formatDateTime(resource.created_at),
     };
 
     if (resource.user) {

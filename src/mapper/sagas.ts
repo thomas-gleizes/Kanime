@@ -1,5 +1,5 @@
 import { PrismaSaga, PrismaSagas } from 'prisma/app';
-import { formatForMapper } from 'utils/momentFr';
+import { formatDateTime } from 'utils/momentFr';
 import jsonParser from 'utils/jsonParser';
 import { AnimesMapper } from './index';
 
@@ -13,8 +13,8 @@ class SagasMapper implements Mapper<PrismaSaga, Saga> {
       canonical_title: '',
       titles: jsonParser<Titles>(resource.titles),
       description: resource.description,
-      created_at: formatForMapper(resource.created_at),
-      updated_at: formatForMapper(resource.updated_at),
+      created_at: formatDateTime(resource.created_at),
+      updated_at: formatDateTime(resource.updated_at),
     };
 
     if (resource.animes) saga.animes = AnimesMapper.many(resource.animes);

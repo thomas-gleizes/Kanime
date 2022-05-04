@@ -1,5 +1,5 @@
 import { PrismaReaction, PrismaReactions } from 'prisma/app';
-import { formatForMapper } from 'utils/momentFr';
+import { formatDateTime } from 'utils/momentFr';
 import AnimesMapper from './animes';
 import UsersMapper from './users';
 
@@ -13,8 +13,8 @@ class LogsMapper implements Mapper<PrismaReaction, Reaction> {
       userId: resource.user_id,
       content: resource.content,
       idParent: resource.parent_id,
-      createdAt: formatForMapper(resource.created_at),
-      updateAt: formatForMapper(resource.updated_at),
+      createdAt: formatDateTime(resource.created_at),
+      updateAt: formatDateTime(resource.updated_at),
     };
 
     if (resource.anime) reaction.anime = AnimesMapper.one(resource.anime);

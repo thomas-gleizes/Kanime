@@ -3,7 +3,7 @@ import random from 'utils/random';
 import domUuid from 'utils/domUuid';
 
 interface Props {
-  children: any;
+  children: JSX.Element | NodeR;
   n: number;
   tags: React.ElementType[];
 }

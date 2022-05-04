@@ -1,5 +1,5 @@
 import { PrismaEntries, PrismaEntry } from 'prisma/app';
-import { formatForMapper } from 'utils/momentFr';
+import { formatDateTime } from 'utils/momentFr';
 import { AnimesMapper, UsersMapper } from './index';
 
 class EntriesMapper implements Mapper<PrismaEntry, Entry> {
@@ -12,11 +12,11 @@ class EntriesMapper implements Mapper<PrismaEntry, Entry> {
       status: resource.status,
       rating: resource.rating,
       progress: resource.progress,
-      startedAt: formatForMapper(resource.started_at),
-      finishAt: formatForMapper(resource.finish_at),
+      startedAt: formatDateTime(resource.started_at),
+      finishAt: formatDateTime(resource.finish_at),
       note: resource.note,
-      createAt: formatForMapper(resource.created_at),
-      updateAt: formatForMapper(resource.updated_at),
+      createAt: formatDateTime(resource.created_at),
+      updateAt: formatDateTime(resource.updated_at),
     };
 
     if (resource.anime) entry.anime = AnimesMapper.one(resource.anime);

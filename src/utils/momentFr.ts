@@ -66,12 +66,19 @@ moment.updateLocale('fr', {
   },
 });
 
-export function formatToFullTime(date?: Date | string) {
-  return moment(date).format('DD/MM/YYYY HH:mm:ss');
+export function formatDateTime(date: Date) {
+  if (moment(date).isValid()) moment(date).format('DD/MM/YYYY HH:mm');
+  return null;
 }
 
-export function formatForMapper(date: Date) {
-  return moment(date).format('YYYY-MM-DD HH:mm:ss');
+export function formatDate(date: Date) {
+  if (moment(date).isValid()) moment(date).format('YYYY-MM-DD');
+  return null;
+}
+
+export function formatTime(date: Date) {
+  if (moment(date).isValid()) moment(date).format('HH:mm:ss');
+  return null;
 }
 
 export default moment;
