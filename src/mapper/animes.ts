@@ -1,8 +1,7 @@
 import { PrismaAnime, PrismaAnimes } from 'prisma/app';
-import { formatDateTime } from 'utils/momentFr';
+import { formatDateTime } from 'utils/date';
 import jsonParser from 'utils/jsonParser';
 import { CategoriesMapper, EntriesMapper, ReactionsMapper, SagasMapper } from './index';
-import animes from '../api/animes';
 
 class AnimesMapper implements Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {

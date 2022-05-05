@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Error from 'next/error';
 import Image from 'next/image';
 
-import { Page, ServerSideProps } from 'app/next';
+import { Page } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { useLayoutContext } from 'context/layout.context';
 import { UserModel } from 'models';

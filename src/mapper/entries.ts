@@ -1,5 +1,5 @@
 import { PrismaEntries, PrismaEntry } from 'prisma/app';
-import { formatDateTime } from 'utils/momentFr';
+import { formatDateTime } from 'utils/date';
 import { AnimesMapper, UsersMapper } from './index';
 
 class EntriesMapper implements Mapper<PrismaEntry, Entry> {

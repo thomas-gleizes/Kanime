@@ -1,4 +1,4 @@
-abstract class Model<D = any> {
+abstract class Model<D = unknown> {
   protected model: D;
 
   protected constructor(connexionModule: D) {

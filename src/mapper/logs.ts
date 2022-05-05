@@ -1,7 +1,7 @@
 import { PrismaLog, PrismaLogs } from 'prisma/app';
-import MomentFr, { formatDateTime } from 'utils/momentFr';
 import JsonParser from 'utils/jsonParser';
 import UsersMapper from './users';
+import { formatDateTime } from 'utils/date';
 
 class LogsMapper implements Mapper<PrismaLog, Log> {
   one(resource: PrismaLog): Log {

@@ -23,7 +23,11 @@ export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
 );
 
 const SettingsPage: Page<Props> = () => {
-  return <EditGeneralData />;
+  return (
+    <div className="p-10">
+      <EditGeneralData />
+    </div>
+  );
 };
 
 export default SettingsPage;

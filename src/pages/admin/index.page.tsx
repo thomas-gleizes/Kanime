@@ -34,7 +34,7 @@ const AdminHomePage: Page<Props> = ({ user }) => {
   return (
     <>
       <h1>{user?.username}: You are an admin</h1>
-      <div>
+      <div className="p-5">
         <ListLogs />
       </div>
     </>

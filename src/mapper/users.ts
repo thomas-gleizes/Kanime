@@ -1,5 +1,5 @@
 import { PrismaUser, PrismaUsers } from 'prisma/app';
-import { formatDate, formatDateTime } from 'utils/momentFr';
+import { formatDate, formatDateTime } from 'utils/date';
 import { EntriesMapper, ReactionsMapper } from './index';
 
 class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> {

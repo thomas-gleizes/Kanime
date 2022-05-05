@@ -1,15 +1,14 @@
 import React, { useRef } from 'react';
-import { Form, Formik, FormikHelpers, FormikProps } from 'formik';
-import { Country, Gender } from '@prisma/client';
+import { Gender } from '@prisma/client';
+import { Form, Formik, FormikProps } from 'formik';
 
+import { PrismaCountries } from 'prisma/app';
 import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { useFetch } from 'hooks';
 import toast from 'utils/toastr';
 import { routes } from 'resources/routes';
-import Button from 'components/common/Button';
-import { Field, File, Select, Textarea } from 'components/common/formik';
-import { CardBody, CardFooter } from 'components/layouts/card';
+import { File } from 'components/common/formik';
 
 declare type values = {
   city: string;
@@ -20,7 +19,7 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountry = () => ApiService.get<Country[]>(routes.common.countries.list);
+const fetchCountry = () => ApiService.get<PrismaCountries>(routes.common.countries.list);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
@@ -62,7 +61,7 @@ const EditUserModal: React.FunctionComponent = () => {
   };
 
   return (
-    <div>
+    <div className="p-10">
       <Formik innerRef={formRef} initialValues={initialValues} onSubmit={handleSubmit}>
         {({ values }) => (
           <Form>
@@ -80,38 +79,6 @@ const EditUserModal: React.FunctionComponent = () => {
               />
               <File innerRef={avatarRef} name="avatar" />
             </div>
-
-            <CardBody className="p-8">
-              <div className="flex">
-                <Select name="country" label="Pays">
-                  <option value="">Secret</option>
-                  {countries?.map((country: Country) => (
-                    <option key={country.id} value={country.id}>
-                      {country.iso} - {country.name}
-                    </option>
-                  ))}
-                </Select>
-                <Field type="text" name="city" label="Ville" />
-              </div>
-              <div className="flex">
-                <Field type="date" name="birthday" label="Date de naissance" />
-                <Select name="gender" label="Genre">
-                  {Object.values(Gender).map((gender, index) => (
-                    <option key={index} value={gender}>
-                      {gender}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-              <div>
-                <Textarea name="bio" label="Bio" />
-              </div>
-            </CardBody>
-            <CardFooter className="flex justify-between bg-gray-200 py-3 px-4 rounded-b">
-              <Button color="amber" type="submit">
-                Enregistrer
-              </Button>
-            </CardFooter>
           </Form>
         )}
       </Formik>
