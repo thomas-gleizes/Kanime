@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ReactJson from 'react-json-view';
 import { Button } from 'primereact/button';
+
 import { useToggle } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
-import ReactJson from 'react-json-view';
 
 const DevPage = () => {
   const [dep, toggleDep] = useToggle();

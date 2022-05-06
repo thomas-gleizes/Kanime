@@ -2,9 +2,8 @@ import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next/types'
 import nc from 'next-connect';
 
 import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
+import { SsrError, SchemaError, ApiError } from 'class/error';
 import { errorMessage } from 'resources/constants';
-import ApiError from 'class/error/ApiError';
-import { SsrError, SchemaError } from 'class/error';
 import { ssrLogger } from 'services/logger.service';
 import { apiLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';
