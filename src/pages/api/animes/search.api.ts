@@ -1,9 +1,9 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
-import ApiError from 'class/error/ApiError';
+import { withSessionApi } from 'services/session.service';
 import { AnimesMapper } from 'mapper';
 import { AnimeModel } from 'models';
-import { withSessionApi } from 'services/session.service';
+import { ApiError } from 'class/error';
 
 const handler = apiHandler();
 

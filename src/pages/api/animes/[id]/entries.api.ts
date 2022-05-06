@@ -1,11 +1,11 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
+import { verifyUser } from 'middlewares/auth.middleware';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mapper';
-import { verifyUser } from 'resources/middleware';
+import { ApiError } from 'class/error';
 import { errorMessage } from 'resources/constants';
-import ApiError from 'class/error/ApiError';
 
 interface ResponseData extends DefaultResponseData {
   entry: Entry;

@@ -6,8 +6,7 @@ import { UserModel } from 'models';
 import { UsersMapper } from 'mapper';
 import { signInSchema } from 'resources/validations';
 import { errorMessage } from 'resources/constants';
-import ApiError from 'class/error/ApiError';
-import SchemaError from 'class/error/SchemaError';
+import { ApiError, SchemaError } from 'class/error';
 
 const handler = apiHandler();
 

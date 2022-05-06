@@ -20,6 +20,7 @@ export const apiHandler = () =>
         return res.status(err.code).json({ error: err.message, schemaError: err.data });
       } else if (process.env.NODE_ENV !== 'production') {
         trace('Dev Error', err.stack);
+        console.log('API ERROR :', err.stack);
 
         return res.status(500).send(err.message);
       } else {

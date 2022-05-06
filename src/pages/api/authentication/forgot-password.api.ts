@@ -3,7 +3,7 @@ import Security from 'services/security.service';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { UserModel } from 'models';
-import ApiError from 'class/error/ApiError';
+import { ApiError } from 'class/error';
 import { DAY } from 'resources/constants';
 
 const handler = apiHandler();

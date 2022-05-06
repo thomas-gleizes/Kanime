@@ -4,7 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { AnimeModel, UserModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { errorMessage } from 'resources/constants';
-import ApiError from 'class/error/ApiError';
+import { ApiError } from 'class/error';
 
 interface ResponseData extends DefaultResponseData {
   animes: Animes;

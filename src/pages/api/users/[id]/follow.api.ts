@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { verifyUser } from 'resources/middleware';
+import { verifyUser } from 'middlewares/auth.middleware';
 import { errorMessage } from 'resources/constants';
 import { UserFollowModel, UserModel } from 'models';
 import { UsersMapper } from 'mapper';

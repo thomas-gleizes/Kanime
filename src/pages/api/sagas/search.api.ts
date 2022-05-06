@@ -3,7 +3,7 @@ import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { SagasMapper } from 'mapper';
 import { SagaModel } from 'models';
-import ApiError from 'class/error/ApiError';
+import { ApiError } from 'class/error';
 
 interface ResponseData extends DefaultResponseData {
   sagas: Sagas;

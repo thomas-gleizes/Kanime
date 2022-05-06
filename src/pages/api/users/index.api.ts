@@ -2,12 +2,12 @@ import * as fs from 'fs';
 
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
-import { verifyUser } from 'resources/middleware';
+import { verifyUser } from 'middlewares/auth.middleware';
 import { UsersMapper } from 'mapper';
 import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
-import { withSessionApi } from 'services/session.service';
 
 interface ResponseGetData extends DefaultResponseData {
   user: User;

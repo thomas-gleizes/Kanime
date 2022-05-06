@@ -1,12 +1,11 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler } from 'services/handler.service';
-import { registerSchema } from 'resources/validations';
-import SchemaError from 'class/error/SchemaError';
-import { UserModel } from 'models';
-import ApiError from 'class/error/ApiError';
-import { UsersMapper } from 'mapper';
 import Security from 'services/security.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
+import { registerSchema } from 'resources/validations';
+import { ApiError, SchemaError } from 'class/error';
+import { UserModel } from 'models';
+import { UsersMapper } from 'mapper';
 
 const handler = apiHandler();
 

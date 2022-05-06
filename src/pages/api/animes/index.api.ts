@@ -1,9 +1,8 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
+import { withSessionApi } from 'services/session.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
-import { withSessionApi } from 'services/session.service';
-import trace from 'utils/trace';
 
 const handler = apiHandler();
 

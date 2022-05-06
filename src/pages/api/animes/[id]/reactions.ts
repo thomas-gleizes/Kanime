@@ -1,10 +1,10 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
+import { verifyUser } from 'middlewares/auth.middleware';
+import { ApiError } from 'class/error';
 import { AnimeModel, PostModel } from 'models';
 import { PostsMapper } from 'mapper';
-import ApiError from 'class/error/ApiError';
-import { verifyUser } from 'resources/middleware';
 
 interface GetResponseData extends DefaultResponseData {
   posts: Posts;

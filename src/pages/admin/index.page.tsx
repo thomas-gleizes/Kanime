@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { Page } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
 import { routes } from 'resources/routes';
-import ListLogs from 'components/admin/ListLogs';
 import { ssrHandler } from 'services/handler.service';
+import { withSessionSsr } from 'services/session.service';
+import ListLogs from 'components/admin/ListLogs';
 import AdminLayout from 'components/layouts/pages/AdminLayout';
 
 interface Props {

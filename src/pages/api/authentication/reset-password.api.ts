@@ -1,9 +1,8 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import SchemaError from 'class/error/SchemaError';
-import ApiError from 'class/error/ApiError';
+import { ApiError, SchemaError } from 'class/error';
 import { resetPasswordSchema } from 'resources/validations';
 import { UserModel } from 'models';
 
