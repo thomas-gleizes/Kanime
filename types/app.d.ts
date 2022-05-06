@@ -36,15 +36,16 @@ declare module 'prisma/app' {
     Gender,
     Log,
     Prisma,
-    Reaction,
+    Post,
     Saga,
     User,
     UserFollow,
+    EntryStatus,
   } from '@prisma/client';
 
   declare type PrismaUser = User & {
     entries?: PrismaEntries;
-    reactions?: PrismaReactions;
+    posts?: PrismaPosts;
     follows?: PrismaFollows;
     followers?: PrismaFollows;
     country?: PrismaCountry;
@@ -54,7 +55,7 @@ declare module 'prisma/app' {
 
   declare type PrismaAnime = Anime & {
     entries?: PrismaEntries;
-    reactions?: PrismaReactions;
+    posts?: PrismaPosts;
     saga?: PrismaSaga;
     categories?: PrismaCategories;
   };
@@ -85,14 +86,15 @@ declare module 'prisma/app' {
   declare type PrismaCountries = PrismaCountry[];
   declare type PrismaCountryDelegate = Prisma.CountryDelegate<unknown>;
 
-  declare type PrismaReaction = Reaction & {
+  declare type PrismaPost = Post & {
     user?: PrismaUser;
     anime?: PrismaAnime;
-    replyTo?: Reaction;
-    replies?: PrismaReactions;
+    replyTo?: Post;
+    replies?: PrismaPosts;
   };
-  declare type PrismaReactions = PrismaReaction[];
-  declare type PrismaReactionDelegate = Prisma.ReactionDelegate<unknown>;
+  declare type PrismaPosts = PrismaPost[];
+  declare type PrismaPostsDelegate = Prisma.ReactionDelegate<unknown>;
 
   declare type PrismaGender = Gender;
+  declare type PrismaEntryStatus = EntryStatus;
 }

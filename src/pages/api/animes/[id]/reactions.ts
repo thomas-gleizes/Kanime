@@ -1,18 +1,18 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { AnimeModel, ReactionModel } from 'models';
-import { ReactionsMapper } from 'mapper';
+import { AnimeModel, PostModel } from 'models';
+import { PostsMapper } from 'mapper';
 import ApiError from 'class/error/ApiError';
 import { verifyUser } from 'resources/middleware';
 
 interface GetResponseData extends DefaultResponseData {
-  reactions: Reactions;
+  posts: Posts;
   total: number;
 }
 
 interface PostResponseData extends DefaultResponseData {
-  reaction: Reaction;
+  post: Post;
 }
 
 const handler = apiHandler();
@@ -20,9 +20,9 @@ const handler = apiHandler();
 handler.get(async (req: ApiRequest, res: ApiResponse<GetResponseData>) => {
   const { id } = req.query;
 
-  const reactions = ReactionsMapper.many(await ReactionModel.findByAnimes(+id));
+  const posts = PostsMapper.many(await PostModel.findByAnimes(+id));
 
-  res.json({ success: true, total: reactions.length, reactions });
+  res.json({ success: true, total: posts.length, posts });
 });
 
 handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseData>) => {
@@ -36,14 +36,14 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseDa
 
   if (!(await AnimeModel.isExist(+animeId))) throw new ApiError(404, 'Anime not found');
 
-  const reaction = await ReactionModel.create({
+  const post = await PostModel.create({
     userId: user.id,
     animeId: +animeId,
     content: body.content,
     parentId: body.parentId,
   });
 
-  res.json({ success: true, reaction: ReactionsMapper.one(reaction) });
+  res.json({ success: true, post: PostsMapper.one(post) });
 });
 
 handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
@@ -52,17 +52,14 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
     session: { user },
   } = req;
 
-  const reaction = await ReactionModel.findByAnimeIdAndUserId(+animeId, user.id);
+  const post = await PostModel.findByAnimeIdAndUserId(+animeId, user.id);
 
-  if (!reaction) throw new ApiError(404, 'Reaction not found');
+  if (!post) throw new ApiError(404, 'Post not found');
 
-  if (reaction.user_id !== user.id)
-    throw new ApiError(403, 'You are not allowed to delete this reaction');
+  if (post.user_id !== user.id)
+    throw new ApiError(403, 'You are not allowed to delete this post');
 
-  await Promise.all([
-    ReactionModel.deleteParent(reaction.id),
-    ReactionModel.delete(reaction.id),
-  ]);
+  await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
 
   res.status(204).json({ success: true });
 });

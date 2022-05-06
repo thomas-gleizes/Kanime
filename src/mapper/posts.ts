@@ -1,13 +1,13 @@
-import { PrismaReaction, PrismaReactions } from 'prisma/app';
+import { PrismaPost, PrismaPosts } from 'prisma/app';
 import { formatDateTime } from 'utils/date';
 import AnimesMapper from './animes';
 import UsersMapper from './users';
 
-class LogsMapper implements Mapper<PrismaReaction, Reaction> {
-  one(resource: PrismaReaction): Reaction {
+class LogsMapper implements Mapper<PrismaPost, Post> {
+  one(resource: PrismaPost): Post {
     if (!resource) return null;
 
-    const reaction: Reaction = {
+    const post: Post = {
       id: resource.id,
       animeId: resource.anime_id,
       userId: resource.user_id,
@@ -17,19 +17,19 @@ class LogsMapper implements Mapper<PrismaReaction, Reaction> {
       updateAt: formatDateTime(resource.updated_at),
     };
 
-    if (resource.anime) reaction.anime = AnimesMapper.one(resource.anime);
-    if (resource.replyTo) reaction.replyTo = this.one(resource.replyTo);
-    if (resource.replies) reaction.replies = this.many(resource.replies);
+    if (resource.anime) post.anime = AnimesMapper.one(resource.anime);
+    if (resource.replyTo) post.replyTo = this.one(resource.replyTo);
+    if (resource.replies) post.replies = this.many(resource.replies);
 
     if (resource.user) {
       const [user] = UsersMapper.one(resource.user);
-      reaction.user = user;
+      post.user = user;
     }
 
-    return reaction;
+    return post;
   }
 
-  many(resources: PrismaReactions): Reactions {
+  many(resources: PrismaPosts): Posts {
     return resources.map((ressource) => this.one(ressource));
   }
 }

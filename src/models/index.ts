@@ -4,6 +4,6 @@ export { default as CountryModel } from './country';
 export { default as EntryModel } from './entry';
 export { default as UserFollowModel } from './follow';
 export { default as LogModel } from './log';
-export { default as ReactionModel } from './reaction';
+export { default as PostModel } from './post';
 export { default as SagaModel } from './saga';
 export { default as UserModel } from './user';

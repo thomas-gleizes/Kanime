@@ -1,7 +1,8 @@
 import React from 'react';
-import { EntryStatus } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
+import { EntryStatus } from '@prisma/client';
 
+import type { PrismaEntryStatus } from 'prisma/app';
 import Modal, { ModalBody, ModalHeader, ModalTitle } from 'components/layouts/modal';
 import { Field, Select } from 'components/common/formik';
 
@@ -13,7 +14,7 @@ interface Props {
 }
 
 type values = {
-  status: EntryStatus | null;
+  status: PrismaEntryStatus | null;
   progress: number;
 };
 

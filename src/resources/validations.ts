@@ -41,7 +41,7 @@ export const resetPasswordSchema = Yup.object({
   token: Yup.string().required(),
 });
 
-export const createReactionSchema = Yup.object({
+export const createPostSchema = Yup.object({
   userId: Yup.number().required('missing userId'),
   content: Yup.string().required('Veuillez saisir un message'),
   parentId: Yup.number(),

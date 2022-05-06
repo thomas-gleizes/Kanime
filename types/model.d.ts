@@ -31,8 +31,6 @@ type Episodes = Array<Episode>;
 
 type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
 
-declare type Reactions = Reaction[];
-
 interface UserMediaHandling {
   raw: string;
   content: string;
@@ -61,7 +59,7 @@ declare type Anime = {
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
   sagaId?: number;
-} & { saga?: Saga; categories?: Categories; reactions?: Reactions; entries?: Entries };
+} & { saga?: Saga; categories?: Categories; posts?: Posts; entries?: Entries };
 
 type Animes = Array<Anime>;
 
@@ -80,7 +78,7 @@ declare type Entry = {
 
 declare type Entries = Array<Entry>;
 
-declare type Reaction = {
+declare type Post = {
   id: number;
   animeId: number;
   userId: number;
@@ -91,9 +89,10 @@ declare type Reaction = {
 } & {
   user?: User;
   anime?: Anime;
-  replyTo?: Reaction;
-  replies?: Reactions;
+  replyTo?: Post;
+  replies?: Posts;
 };
+declare type Posts = Post[];
 
 declare type User = {
   id: number;
@@ -110,7 +109,7 @@ declare type User = {
   followerCount: number;
   createdAt: string;
   updatedAt: string;
-} & { entries?: Entries; reactions?: Reactions };
+} & { entries?: Entries; posts?: Posts };
 
 declare type Users = Array<User>;
 

@@ -1,7 +1,7 @@
 import { PrismaAnime, PrismaAnimes } from 'prisma/app';
 import { formatDateTime } from 'utils/date';
 import jsonParser from 'utils/jsonParser';
-import { CategoriesMapper, EntriesMapper, ReactionsMapper, SagasMapper } from './index';
+import { CategoriesMapper, EntriesMapper, PostsMapper, SagasMapper } from './index';
 
 class AnimesMapper implements Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
@@ -40,7 +40,7 @@ class AnimesMapper implements Mapper<PrismaAnime, Anime> {
 
     if (resource.saga) anime.saga = SagasMapper.one(resource.saga);
     if (resource.entries) anime.entries = EntriesMapper.many(resource.entries);
-    if (resource.reactions) anime.reactions = ReactionsMapper.many(resource.reactions);
+    if (resource.posts) anime.posts = PostsMapper.many(resource.posts);
     if (resource.categories)
       anime.categories = CategoriesMapper.many(resource.categories);
 

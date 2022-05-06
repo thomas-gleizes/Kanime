@@ -3,8 +3,8 @@ import { Form, Formik } from 'formik';
 
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
-import { AnimeModel, ReactionModel } from 'models';
-import { AnimesMapper, ReactionsMapper } from 'mapper';
+import { AnimeModel, PostModel } from 'models';
+import { AnimesMapper, PostsMapper } from 'mapper';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
 import random from 'utils/random';
@@ -13,7 +13,7 @@ import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLay
 import RecursiveTag from 'components/common/RecursiveTag';
 
 interface Props extends AnimeLayoutProps {
-  reactions: Reactions;
+  posts: Posts;
 }
 
 export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
@@ -23,21 +23,19 @@ export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
 
   if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
-  const reactions: Reactions = ReactionsMapper.many(
-    await ReactionModel.findByAnimes(anime.id)
-  );
+  const posts: Posts = PostsMapper.many(await PostModel.findByAnimes(anime.id));
 
-  return { props: { anime, reactions } };
+  return { props: { anime, posts } };
 });
 
-const DiscussionsPage: Page<Props> = ({ reactions }) => {
+const DiscussionsPage: Page<Props> = ({ posts }) => {
   return (
     <div>
       <h1 className="text-xl font-black text-center">Discussions</h1>
       <RecursiveTag tags={['div', 'span', 'section']} n={random(1, 20)}>
-        {reactions.map((reaction) => (
-          <div key={reaction.id}>
-            {reaction.user.username} say: {reaction.content}
+        {posts.map((post) => (
+          <div key={post.id}>
+            {post.user.username} say: {post.content}
           </div>
         ))}
       </RecursiveTag>
