@@ -4,36 +4,40 @@ import nc from 'next-connect';
 import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
 import { errorMessage } from 'resources/constants';
 import ApiError from 'class/error/ApiError';
-import SchemaError from 'class/error/SchemaError';
-import { loggerService, ssrLogger } from './logger.service';
-import { SsrError } from 'class/error';
+import { SsrError, SchemaError } from 'class/error';
+import { ssrLogger } from 'services/logger.service';
+import { apiLogger } from 'middlewares/logger.middleware';
+import queryParser from 'middlewares/queryParser.middleware';
+import trace from 'utils/trace';
 
 export const apiHandler = () =>
   nc<ApiRequest, ApiResponse>({
     onError: (err, req, res) => {
       if (err instanceof ApiError) {
-        res.status(err.code).json({ error: err.message });
+        trace('ApiError', err.message);
+        return res.status(err.code).json({ error: err.message });
       } else if (err instanceof SchemaError) {
-        res.status(err.code).json({ error: err.message, schemaError: err.data });
+        trace('SchemaError', err.message);
+        return res.status(err.code).json({ error: err.message, schemaError: err.data });
       } else if (process.env.NODE_ENV !== 'production') {
-        console.error(err.stack);
-        res.status(500).send(err.message);
-      } else {
-        console.error(err.stack);
+        trace('Dev Error', err.stack);
 
-        res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
+        return res.status(500).send(err.message);
+      } else {
+        trace('ProductionError', err.stack);
+
+        return res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
       }
     },
     onNoMatch: (req, res) => {
       console.log('No match');
+      trace('No match route', req.url);
 
       res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
     },
-  }).use(async (req, res, next) => {
-    loggerService(req).catch((e) => console.log('log failed :', e));
-
-    next();
-  });
+  })
+    .use(apiLogger)
+    .use(queryParser);
 
 export function ssrHandler<P = {}>(
   handler: (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<P>>

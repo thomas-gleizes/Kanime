@@ -29,13 +29,8 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       where: { slug },
     });
 
-  public all = (params?: modelParams, userId?: number): Promise<PrismaAnimes> =>
+  public all = (params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
-      include: {
-        entries: {
-          where: { user_id: userId || 0 },
-        },
-      },
       ...this.getKeyParams(params),
     });
 

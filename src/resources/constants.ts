@@ -3,7 +3,8 @@ export const defaultUsersMedia = {
   avatar: '/media/default/users/avatar.png',
 };
 
-export const publicPath = `${process.cwd()}/public`;
+export const rootPath = process.cwd();
+export const publicPath = `${rootPath}/public`;
 
 export const dialogTypes = {
   confirm: 'confirm',

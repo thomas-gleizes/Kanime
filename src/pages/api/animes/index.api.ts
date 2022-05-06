@@ -3,18 +3,16 @@ import { apiHandler } from 'services/handler.service';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mapper';
 import { withSessionApi } from 'services/session.service';
+import trace from 'utils/trace';
 
 const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
-  const { limit, skip } = req.query;
-  const { user } = req.session;
+  const query = req.query;
 
-  const animes: Array<Anime> = AnimesMapper.many(
-    await AnimeModel.all({ limit, skip }, user?.id)
-  );
+  const animes: Animes = AnimesMapper.many(await AnimeModel.all(req.query));
 
-  res.json({ success: true, animes, debug: { limit, skip } });
+  res.json({ success: true, animes, debug: query });
 });
 
 export default withSessionApi(handler);

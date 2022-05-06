@@ -45,3 +45,6 @@ yarn-error.log*
 /public/media/users/*
 !/public/media/users/.gitkeep
 !/public/media/default
+
+# trace
+/trace.log

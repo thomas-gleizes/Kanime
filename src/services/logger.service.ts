@@ -24,19 +24,19 @@ function ip(req): string {
   return arr[arr.length - 1];
 }
 
-export async function loggerService(req: NextApiRequest) {
+export function loggerService(req: NextApiRequest): any {
   const userId = req.session?.user?.id || null;
 
   const [path, params] = req.url.split('?');
 
-  await LogModel.create({
+  return LogModel.create({
     path: path,
     method: req.method as Method,
     ip: ip(req),
     body: replaceKey(req.body),
     params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
     userId: userId,
-  });
+  }).catch((err) => console.log('ERROR LOGGER : ', err));
 }
 
 export async function ssrLogger(context: GetServerSidePropsContext) {

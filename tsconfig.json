@@ -22,6 +22,7 @@
       "context/*": ["context/*"],
       "hooks": ["hooks"],
       "mapper": ["mapper"],
+      "middlewares/*": ["middlewares/*"],
       "models": ["models"],
       "pages/*": ["pages/*"],
       "resources/*": ["resources/*"],

@@ -1,8 +1,8 @@
 import { ApiRequest, ApiResponse } from 'app/next';
-import { apiHandler } from 'services/handler.service';
 import { LogsMapper } from 'mapper';
 import { LogModel } from 'models';
-import { verifyAdmin } from 'resources/middleware';
+import { verifyAdmin } from 'middlewares/auth.middleware';
+import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 
 interface Data extends DefaultResponseData {

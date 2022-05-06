@@ -1,30 +1,35 @@
-import React, { useEffect } from 'react';
-import useSWR, { SWRConfig } from 'swr';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Button } from 'primereact/button';
+import { useToggle } from 'hooks';
+import EmptyLayout from 'components/layouts/pages/EmptyLayout';
+import ReactJson from 'react-json-view';
 
-const DevPage = ({ ...props }) => {
-  const { data } = useSWR('/api/animes/2');
+const DevPage = () => {
+  const [dep, toggleDep] = useToggle();
+  const [json, setJson] = useState<any>();
 
-  useEffect(() => console.log('Data', data), [data]);
+  useEffect(() => {
+    axios
+      .get('/api/animes', { params: { limit: 5, includes: ['entries', 'saga'] } })
+      .then((response) => setJson(response.data.animes))
+      .catch((err) => console.log('err', err));
+  }, [dep]);
 
-  return <></>;
-};
+  useEffect(() => {
+    const interval = setInterval(toggleDep, 5000);
 
-DevPage.layout = ({ children }) => {
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <SWRConfig
-      value={{
-        refreshInterval: 3000,
-        fetcher: (resource, init) => {
-          console.log('Resource', resource);
-          console.log('Init', init);
-
-          return fetch(resource, init).then((res) => res.json());
-        },
-      }}
-    >
-      {children}
-    </SWRConfig>
+    <div className="p-10">
+      <Button onClick={toggleDep}>Trigger</Button>
+      <div className="border p-2 m-3">{json && <ReactJson src={json}></ReactJson>}</div>
+    </div>
   );
 };
+
+DevPage.layout = EmptyLayout;
 
 export default DevPage;

@@ -16,6 +16,7 @@ type ErrorPage = {
 type modelParams = {
   limit?: number | string | string[];
   skip?: number | string | string[];
+  includes?: string | string[];
 };
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
