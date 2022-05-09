@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import ReactJson from 'react-json-view';
 import { Button } from 'primereact/button';
 
 import { useToggle } from 'hooks';
@@ -23,10 +22,11 @@ const DevPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => console.log('Json', json), [json]);
+
   return (
     <div className="p-10">
       <Button onClick={toggleDep}>Trigger</Button>
-      <div className="border p-2 m-3">{json && <ReactJson src={json}></ReactJson>}</div>
     </div>
   );
 };
