@@ -40,7 +40,9 @@ export const apiHandler = () =>
     .use(queryParser);
 
 export function ssrHandler<P = {}>(
-  handler: (context: GetServerSidePropsContext) => Promise<GetServerSidePropsResult<P>>
+  handler: (
+    context: GetServerSidePropsContext<any, any>
+  ) => Promise<GetServerSidePropsResult<P>>
 ): ServerSideProps<P> {
   return (context) => {
     ssrLogger(context).catch((e) => console.log('ssr log failed :', e));

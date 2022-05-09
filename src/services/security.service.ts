@@ -3,11 +3,12 @@ import createHash from 'create-hash';
 
 class Security {
   private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN;
+  private static readonly SECRET_SEED: string = process.env.SECRET_SEED;
 
   static sha256(stringToHash: string): string {
     const hash = createHash('sha512');
 
-    hash.update(stringToHash);
+    hash.update(stringToHash + this.SECRET_SEED);
     const hashedString: string = hash.digest().toString('hex');
     hash.end();
 

@@ -22,7 +22,7 @@ export const getServerSideProps = ssrHandler<Props>(async (context) => {
   return { props: { animes } };
 });
 
-const LouisPage: Page<Props> = ({ animes }) => {
+const AnimesList: Page<Props> = ({ animes }) => {
   return (
     <div className="grid grid-cols-4 w-1000 mx-auto">
       {animes?.map((anime, index) => (
@@ -34,5 +34,5 @@ const LouisPage: Page<Props> = ({ animes }) => {
   );
 };
 
-export default LouisPage;
+export default AnimesList;
 // 16256,15779,15846,15656,16115,15197,10819,7269,13227,11766,7322,7533,11640,7155,12185,2850,179,767,13612
