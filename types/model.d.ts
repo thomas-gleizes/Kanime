@@ -51,8 +51,8 @@ declare type Anime = {
   season_year: string;
   rating: Rating;
   popularity: Popularity;
-  date_begin: string;
-  date_end: string;
+  dateBegin: string;
+  dateEnd: string;
   poster: Images | string;
   cover: Images | string;
   episode: Episode;

@@ -9,7 +9,8 @@ import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+
+import 'primereact/resources/themes/tailwind-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
