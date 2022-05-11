@@ -1,8 +1,8 @@
 import { GetServerSidePropsContext, NextApiRequest } from 'next';
-import requestIp from 'request-ip';
 
 import { LogModel } from 'models';
 import { loggerReplaceKey } from 'resources/constants';
+import ip from 'utils/ip';
 
 function replaceKey(data: any) {
   const keys = Object.keys({ ...data });
@@ -17,14 +17,7 @@ function replaceKey(data: any) {
   return { ...data, ...result };
 }
 
-function ip(req): string {
-  const str: string = requestIp.getClientIp(req);
-  const arr = str.split(':');
-
-  return arr[arr.length - 1];
-}
-
-export function loggerService(req: NextApiRequest): any {
+export function apiLogger(req: NextApiRequest): any {
   const userId = req.session?.user?.id || null;
 
   const [path, params] = req.url.split('?');

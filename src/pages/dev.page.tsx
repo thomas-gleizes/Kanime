@@ -1,32 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
 
-import { useToggle } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
 const DevPage = () => {
-  const [dep, toggleDep] = useToggle();
-  const [json, setJson] = useState<any>();
-
-  useEffect(() => {
-    axios
-      .get('/api/animes', { params: { limit: 5, includes: ['entries', 'saga'] } })
-      .then((response) => setJson(response.data.animes))
-      .catch((err) => console.log('err', err));
-  }, [dep]);
-
-  useEffect(() => {
-    const interval = setInterval(toggleDep, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => console.log('Json', json), [json]);
-
   return (
-    <div className="p-10">
-      <Button onClick={toggleDep}>Trigger</Button>
+    <div className="p-10 space-y-1">
+      <div>
+        <Button type="button">Click me</Button>
+      </div>
+
+      <div>
+        <InputText
+          onInput={(event, validatePattern) => console.log(event, validatePattern)}
+        />
+      </div>
     </div>
   );
 };

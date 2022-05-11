@@ -4,8 +4,7 @@ import nc from 'next-connect';
 import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
 import { SsrError, SchemaError, ApiError } from 'class/error';
 import { errorMessage } from 'resources/constants';
-import { ssrLogger } from 'services/logger.service';
-import { apiLogger } from 'middlewares/logger.middleware';
+import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';
 import trace from 'utils/trace';
 
@@ -45,7 +44,7 @@ export function ssrHandler<P = {}>(
   ) => Promise<GetServerSidePropsResult<P>>
 ): ServerSideProps<P> {
   return (context) => {
-    ssrLogger(context).catch((e) => console.log('ssr log failed :', e));
+    ssrLogger(context);
 
     return handler(context).catch((error) => {
       console.log('ssr error: ', error);
