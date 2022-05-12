@@ -3,46 +3,51 @@ import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 
-import { Page, ServerSideProps } from 'app/next';
+import { Page } from 'app/next';
 import { AuthenticationApi } from 'api';
-import { UserModel } from 'models';
+import { ssrHandler } from 'services/handler.service';
 import { resetPasswordSchema } from 'resources/validations';
+import { UserModel } from 'models';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { Field } from 'components/common/formik';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
 
+type resetPasswordPayload = Yup.TypeOf<typeof resetPasswordSchema>;
+
 interface Props {
   token: string;
 }
 
-type resetPasswordPayload = Yup.TypeOf<typeof resetPasswordSchema>;
+export const getServerSideProps = ssrHandler<Props, { token: string }>(
+  async (context) => {
+    const { token } = context.query;
 
-const initialValues: resetPasswordPayload = {
-  newPassword: 'azerty',
-  confirmPassword: 'azerty',
-  token: '',
-};
+    const user = await UserModel.checkResetPasswordToken(token as string);
 
-export const getServerSideProps: ServerSideProps<any> = async (context) => {
-  const { token } = context.query;
-
-  const user = await UserModel.checkResetPasswordToken(token as string);
-  if (!user)
-    return {
-      props: {},
-      redirect: {
-        permanent: false,
-        destination: routes.authentication.signIn,
-      },
-    };
-
-  return { props: { token } };
-};
+    if (!user) {
+      return {
+        redirect: {
+          permanent: false,
+          destination: routes.authentication.signIn,
+        },
+      };
+    } else
+      return {
+        props: { token: token as string },
+      };
+  }
+);
 
 const ResetPasswordPage: Page<Props> = ({ token }) => {
   const router = useRouter();
+
+  const initialValues: resetPasswordPayload = {
+    newPassword: 'azerty',
+    confirmPassword: 'azerty',
+    token: '',
+  };
 
   const handleSubmit = async (values: resetPasswordPayload) => {
     try {

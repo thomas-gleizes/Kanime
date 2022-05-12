@@ -7,9 +7,7 @@ import ListLogs from 'components/admin/ListLogs';
 import AdminLayout from 'components/layouts/pages/AdminLayout';
 import { useUserContext } from 'context/user.context';
 
-interface Props {}
-
-export const getServerSideProps = ssrHandler(({ req }) => {
+export const getServerSideProps = ssrHandler(async ({ req }) => {
   const user: User = req.session.user;
 
   if (!user || !user.isAdmin) {
@@ -26,7 +24,7 @@ export const getServerSideProps = ssrHandler(({ req }) => {
   }
 });
 
-const AdminHomePage: Page<Props> = () => {
+const AdminHomePage: Page = () => {
   const { user } = useUserContext();
 
   return (
