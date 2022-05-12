@@ -36,6 +36,8 @@ export async function ssrLogger(context: GetServerSidePropsContext) {
   // TODO: not working: session is undefined
   const userId = context.req?.session?.user?.id || null;
 
+  console.log('SSR session', context.req.session);
+
   const [path, params] = context.resolvedUrl.split('?');
 
   await LogModel.create({

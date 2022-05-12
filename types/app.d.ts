@@ -6,15 +6,24 @@ declare module 'app/next' {
     NextApiRequest,
     NextApiResponse,
     NextPage,
+    GetServerSidePropsContext,
+    GetServerSidePropsResult,
+    NextApiHandler,
   } from 'next';
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: NodeR } & P>;
+    // error?: Component<P>;
   };
 
-  declare type ServerSideProps<P = {}> = GetServerSideProps<T>;
+  declare type ApiHandler<T> = NextApiHandler<T>;
+
+  declare type ServerSideProps<P = {}, Q = any, D = any> = GetServerSideProps<P, Q, D>;
   declare type StaticProps<T> = GetStaticProps<T>;
   declare type StaticPaths<T> = GetStaticPaths<T>;
+
+  declare type ServerSidePropsContext<Q = {}, D = any> = GetServerSidePropsContext<Q, D>;
+  declare type ServerSidePropsResult<P = {}> = GetServerSidePropsResult<P>;
 
   declare type ApiResponse<D = DefaultResponseData> = NextApiResponse<
     D | ApiResponseError | ApiResponseSchemaError
@@ -25,6 +34,12 @@ declare module 'app/next' {
     pageProps: any;
     Component: Page;
   }
+
+  declare type SsrHandlerType<P = {}, Q = any> = (
+    handler: (
+      context: ServerSidePropsContext<Q>
+    ) => OptionalPromise<GetServerSidePropsResult<P>>
+  ) => ServerSideProps<P, Q>;
 }
 
 declare module 'prisma/app' {

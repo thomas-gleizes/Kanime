@@ -14,20 +14,22 @@ interface Props {
   animes: Animes;
 }
 
-export const getServerSideProps = ssrHandler<Props>(async ({ query }) => {
-  const { skip, limit } = query;
+export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: string }>(
+  async ({ query }) => {
+    const { skip, limit } = query;
 
-  const animes = AnimesMapper.many(
-    await AnimeModel.all({
-      limit: +limit || 40,
-      skip: +skip,
-    })
-  );
+    const animes = AnimesMapper.many(
+      await AnimeModel.all({
+        limit: +limit || 40,
+        skip: +skip,
+      })
+    );
 
-  return {
-    props: { animes },
-  };
-});
+    return {
+      props: { animes },
+    };
+  }
+);
 
 const ExploreAnimes: Page<Props> = (props) => {
   const [isLoading, setLoading] = useState<boolean>(false);

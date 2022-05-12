@@ -9,7 +9,7 @@ type result = {
 
 export default function useDialog(): result {
   const {
-    dialogState: [_unused, setDialog],
+    dialogState: { 1: setDialog },
   } = useLayoutContext();
 
   const generateDialog = <T>(text: string, type): Promise<T> =>

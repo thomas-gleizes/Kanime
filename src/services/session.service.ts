@@ -1,13 +1,18 @@
-// this file is a wrapper with defaults to be used in both API routes and `getServerSideProps` functions
-import type {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  NextApiHandler,
-} from 'next';
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-
-import { ServerSideProps } from 'app/next';
+import {
+  ApiHandler,
+  ServerSideProps,
+  ServerSidePropsContext,
+  ServerSidePropsResult,
+} from 'app/next';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  PreviewData,
+} from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
 const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_TOKEN as string,
@@ -18,16 +23,18 @@ const sessionOptions: IronSessionOptions = {
   },
 };
 
-export const withSessionApi = (handler: NextApiHandler) =>
+export const withSessionApi = (handler: ApiHandler<any>) =>
   withIronSessionApiRoute(handler, sessionOptions);
 
 export function withSessionSsr<
-  P extends { [key: string]: unknown } = { [key: string]: unknown }
+  P extends { [key: string]: any } = { [key: string]: any },
+  Q extends ParsedUrlQuery = ParsedUrlQuery,
+  D extends PreviewData = PreviewData
 >(
   handler: (
-    context: GetServerSidePropsContext
-  ) => GetServerSidePropsResult<P> | Promise<GetServerSidePropsResult<P>>
-): ServerSideProps<P> {
+    context: GetServerSidePropsContext<Q, D>
+  ) => Promise<GetServerSidePropsResult<P>>
+): GetServerSideProps<P, Q, D> {
   return withIronSessionSsr(handler, sessionOptions);
 }
 

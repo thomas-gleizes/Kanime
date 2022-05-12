@@ -1,8 +1,10 @@
-class SsrError {
+class SsrError extends Error {
   private readonly _message: string;
   private readonly _statusCode: number;
 
   constructor(statusCode: number, message: string) {
+    super();
+
     this._message = message;
     this._statusCode = statusCode;
   }
@@ -12,6 +14,14 @@ class SsrError {
       statusCode: this._statusCode,
       message: this._message,
     };
+  }
+
+  public get message(): string {
+    return this._message;
+  }
+
+  public get statusCode(): number {
+    return this._statusCode;
   }
 }
 

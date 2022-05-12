@@ -13,17 +13,19 @@ interface Props {
   categories: Categories;
 }
 
-export const getServerSideProps = ssrHandler<Props>(async ({ params }) => {
-  const { slug } = params;
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(
+  async ({ params }) => {
+    const { slug } = params;
 
-  const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
 
-  const categories: Categories = CategoriesMapper.many(
-    await CategoryModel.findByAnimeId(anime.id)
-  );
+    const categories: Categories = CategoriesMapper.many(
+      await CategoryModel.findByAnimeId(anime.id)
+    );
 
-  return { props: { anime, categories, test: 'ok' } };
-});
+    return { props: { anime, categories, test: 'ok' } };
+  }
+);
 
 const AnimeCategories: Page<Props> = ({ anime, categories }) => {
   return (

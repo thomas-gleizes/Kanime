@@ -1,40 +1,28 @@
 import Error from 'next/error';
 
-import { Page, ServerSideProps } from 'app/next';
-import Security from 'services/security.service';
+import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
-import { withSessionSsr } from 'services/session.service';
-import { SsrError } from 'class/error';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
+import ssrError from 'class/error/SsrError';
 
 type Props = { message: string } & {
   error?: ErrorPage;
 };
 
-export const getServerSideProps: ServerSideProps<Props> = ssrHandler(
-  withSessionSsr((context) => {
-    if (context.query.hasOwnProperty('error'))
-      throw new SsrError(404, 'This is an error');
+export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
+  if (context.query.hasOwnProperty('error')) throw new ssrError(400, 'ssr handler error');
 
-    if (!Security.verifyToken(context.req.session.token))
-      return {
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      };
+  const name = context.req.session?.user?.username || 'anonymous';
 
-    return {
-      props: {
-        message: 'ssr page rendering with success with handler',
-      },
-    };
-  })
-);
+  return {
+    props: {
+      message: `Hello, ${name}`,
+    },
+  };
+});
 
-const Page: Page<Props> = ({ message, ...props }) => {
-  if (props.hasOwnProperty('error'))
-    return <Error statusCode={props.error.statusCode} title={props.error.message} />;
+const Page: Page<Props> = ({ message, error }) => {
+  if (error) return <Error statusCode={error.statusCode} title={error.message} />;
 
   return (
     <div>

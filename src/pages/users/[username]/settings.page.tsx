@@ -1,13 +1,13 @@
 import React from 'react';
 
-import type { Page, ServerSideProps } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
+import type { Page } from 'app/next';
 import { routes } from 'resources/routes';
 import EditGeneralData from 'components/user/EditGeneralData';
+import { ssrHandler } from 'services/handler.service';
 
 interface Props {}
 
-export const getServerSideProps: ServerSideProps<Props> = withSessionSsr(
+export const getServerSideProps = ssrHandler<Props, { username: string }>(
   ({ req, query }) => {
     if (req.session.user.username !== query.username) {
       return {

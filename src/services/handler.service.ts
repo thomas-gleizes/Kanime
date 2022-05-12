@@ -1,12 +1,25 @@
-import { GetServerSidePropsResult, GetServerSidePropsContext } from 'next/types';
 import nc from 'next-connect';
 
-import { ApiRequest, ApiResponse, ServerSideProps } from 'app/next';
+import {
+  ApiRequest,
+  ApiResponse,
+  ServerSideProps,
+  ServerSidePropsContext,
+  ServerSidePropsResult,
+} from 'app/next';
 import { SsrError, SchemaError, ApiError } from 'class/error';
-import { errorMessage } from 'resources/constants';
 import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';
+import { withSessionSsr } from 'services/session.service';
+import { errorMessage } from 'resources/constants';
 import trace from 'utils/trace';
+import {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  PreviewData,
+} from 'next';
+import { ParsedUrlQuery } from 'querystring';
 
 export const apiHandler = () =>
   nc<ApiRequest, ApiResponse>({
@@ -38,18 +51,25 @@ export const apiHandler = () =>
     .use(apiLogger)
     .use(queryParser);
 
-export function ssrHandler<P = {}>(
+export function ssrHandler<
+  P extends { [key: string]: any } = { [key: string]: any },
+  Q extends ParsedUrlQuery = ParsedUrlQuery,
+  D extends PreviewData = PreviewData
+>(
   handler: (
-    context: GetServerSidePropsContext<any, any>
-  ) => Promise<GetServerSidePropsResult<P>>
-): ServerSideProps<P> {
-  return (context) => {
-    ssrLogger(context);
+    context: GetServerSidePropsContext<Q>
+  ) => OptionalPromise<GetServerSidePropsResult<P>>
+): GetServerSideProps<P, Q, D> {
+  // @ts-ignore
+  return withSessionSsr<P, Q, D>(async (context) => {
+    try {
+      ssrLogger(context);
 
-    return handler(context).catch((error) => {
-      console.log('ssr error: ', error);
-
+      return await handler(context);
+    } catch (error) {
       if (error instanceof SsrError) {
+        trace('SsrError', error.stack);
+
         return {
           props: {
             error: error.parse(),
@@ -74,6 +94,6 @@ export function ssrHandler<P = {}>(
           },
         };
       }
-    });
-  };
+    }
+  });
 }

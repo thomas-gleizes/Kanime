@@ -3,34 +3,32 @@ import React from 'react';
 import { Page } from 'app/next';
 import { routes } from 'resources/routes';
 import { ssrHandler } from 'services/handler.service';
-import { withSessionSsr } from 'services/session.service';
 import ListLogs from 'components/admin/ListLogs';
 import AdminLayout from 'components/layouts/pages/AdminLayout';
+import { useUserContext } from 'context/user.context';
 
-interface Props {
-  user?: User;
-}
+interface Props {}
 
-export const getServerSideProps = ssrHandler<Props>(
-  withSessionSsr(async ({ req }) => {
-    const user: User = req.session.user;
+export const getServerSideProps = ssrHandler(({ req }) => {
+  const user: User = req.session.user;
 
-    if (!user || !user.isAdmin) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: routes.home,
-        },
-      };
-    } else {
-      return {
-        props: { user },
-      };
-    }
-  })
-);
+  if (!user || !user.isAdmin) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: routes.home,
+      },
+    };
+  } else {
+    return {
+      props: {},
+    };
+  }
+});
 
-const AdminHomePage: Page<Props> = ({ user }) => {
+const AdminHomePage: Page<Props> = () => {
+  const { user } = useUserContext();
+
   return (
     <>
       <h1>{user?.username}: You are an admin</h1>

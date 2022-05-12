@@ -4,6 +4,8 @@ declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>];
 
 declare type NodeR = React.ReactNode | string;
 
+declare type OptionalPromise<T> = T | Promise<T>;
+
 interface ContextProviderProps {
   children: React.ReactNode;
 }

@@ -3,14 +3,13 @@ import Error from 'next/error';
 import Image from 'next/image';
 
 import { Page } from 'app/next';
-import { withSessionSsr } from 'services/session.service';
 import { useLayoutContext } from 'context/layout.context';
+import { ssrHandler } from 'services/handler.service';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-import Title from 'components/layouts/Title';
-import { ssrHandler } from 'services/handler.service';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
+import Title from 'components/layouts/Title';
 
 interface Props {
   user: User;
@@ -18,8 +17,8 @@ interface Props {
   error?: ErrorPage;
 }
 
-export const getServerSideProps = ssrHandler<Props>(
-  withSessionSsr(async ({ query, req }) => {
+export const getServerSideProps = ssrHandler<Props, { username: string }>(
+  async ({ query, req }) => {
     const { username } = query;
     const { user: sessionUser } = req.session;
 
@@ -32,7 +31,7 @@ export const getServerSideProps = ssrHandler<Props>(
         isCurrent: user.id === sessionUser?.id,
       },
     };
-  })
+  }
 );
 
 export const UserPage: Page<Props> = (props) => {
