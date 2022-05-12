@@ -3,7 +3,7 @@ import React from 'react';
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { AnimeModel } from 'models';
-import { AnimesMapper } from 'mapper';
+import { AnimesMapper } from '../../../mappers';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
 import AnimeLayout from 'components/layouts/pages/AnimeLayout';

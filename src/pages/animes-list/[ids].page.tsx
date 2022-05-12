@@ -1,6 +1,6 @@
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
-import { AnimesMapper } from 'mapper';
+import { AnimesMapper } from '../../mappers';
 import { AnimeModel } from 'models';
 import { SsrError } from 'class/error';
 import AnimeCard from 'components/common/anime/AnimeCard';

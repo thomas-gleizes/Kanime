@@ -4,7 +4,7 @@ import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { useToggle } from 'hooks';
 import { AnimeModel } from 'models';
-import { AnimesMapper } from 'mapper';
+import { AnimesMapper } from '../../../mappers';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';
 import AnimeSide from 'components/common/anime/AnimeSide';

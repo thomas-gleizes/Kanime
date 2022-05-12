@@ -4,7 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import { ApiError } from 'class/error';
 import { AnimeModel, UserModel } from 'models';
-import { UsersMapper } from 'mapper';
+import { UsersMapper } from '../../../../mappers';
 
 const handler = apiHandler();
 

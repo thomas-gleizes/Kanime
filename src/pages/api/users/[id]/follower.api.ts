@@ -3,7 +3,7 @@ import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import { UserModel } from 'models';
-import { UsersMapper } from 'mapper';
+import { UsersMapper } from '../../../../mappers';
 import { ApiError } from 'class/error';
 
 interface Data extends DefaultResponseData {

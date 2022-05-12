@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { ApiError } from 'class/error';
-import { UsersMapper } from 'mapper';
+import { UsersMapper } from '../../../mappers';
 import { UserModel } from 'models';
 
 interface ResponseData extends DefaultResponseData {

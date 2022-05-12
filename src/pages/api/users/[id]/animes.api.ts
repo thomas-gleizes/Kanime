@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimeModel, UserModel } from 'models';
-import { AnimesMapper } from 'mapper';
+import { AnimesMapper } from '../../../../mappers';
 import { errorMessage } from 'resources/constants';
 import { ApiError } from 'class/error';
 
