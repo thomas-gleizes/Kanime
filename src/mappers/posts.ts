@@ -1,7 +1,6 @@
 import { PrismaPost, PrismaPosts } from 'prisma/app';
 import { formatDateTime } from 'utils/date';
-import AnimesMapper from './animes';
-import UsersMapper from './users';
+import { AnimesMapper, UsersMapper } from 'mappers';
 
 class LogsMapper implements Mapper<PrismaPost, Post> {
   one(resource: PrismaPost): Post {

@@ -5,7 +5,7 @@ import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
 import { verifyUser } from 'middlewares/auth.middleware';
-import { UsersMapper } from '../../../mappers';
+import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
 

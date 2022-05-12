@@ -5,7 +5,7 @@ import { withSessionApi } from 'services/session.service';
 import { registerSchema } from 'resources/validations';
 import { ApiError, SchemaError } from 'class/error';
 import { UserModel } from 'models';
-import { UsersMapper } from '../../../mappers';
+import { UsersMapper } from 'mappers';
 
 const handler = apiHandler();
 

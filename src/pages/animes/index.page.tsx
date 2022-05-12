@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { AnimesApi } from 'api';
-import { AnimesMapper } from '../../mappers';
+import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';
 import { useScrollPercent } from 'hooks';
 import toast from 'utils/toastr';

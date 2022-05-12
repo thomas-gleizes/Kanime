@@ -6,7 +6,7 @@ import { Page } from 'app/next';
 import { withSessionSsr } from 'services/session.service';
 import { useLayoutContext } from 'context/layout.context';
 import { UserModel } from 'models';
-import { UsersMapper } from '../../../mappers';
+import { UsersMapper } from 'mappers';
 import Title from 'components/layouts/Title';
 import { ssrHandler } from 'services/handler.service';
 import { SsrError } from 'class/error';

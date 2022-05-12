@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { CategoriesMapper } from '../../../../mappers';
+import { CategoriesMapper } from 'mappers';
 import { CategoryModel } from 'models';
 
 const handler = apiHandler();

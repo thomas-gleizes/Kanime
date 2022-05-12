@@ -21,7 +21,7 @@
       "components/*": ["components/*"],
       "context/*": ["context/*"],
       "hooks": ["hooks"],
-      "mapper": ["mapper"],
+      "mappers": ["mappers"],
       "middlewares/*": ["middlewares/*"],
       "models": ["models"],
       "pages/*": ["pages/*"],

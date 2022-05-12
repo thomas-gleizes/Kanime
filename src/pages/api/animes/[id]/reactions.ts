@@ -4,7 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'middlewares/auth.middleware';
 import { ApiError } from 'class/error';
 import { AnimeModel, PostModel } from 'models';
-import { PostsMapper } from '../../../../mappers';
+import { PostsMapper } from 'mappers';
 
 interface GetResponseData extends DefaultResponseData {
   posts: Posts;

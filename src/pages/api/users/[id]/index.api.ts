@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'app/next';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { UsersMapper } from '../../../../mappers';
+import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { errorMessage } from 'resources/constants';
 import { ApiError } from 'class/error';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
-import { AnimesMapper } from '../../../mappers';
+import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';
 import { SsrError } from 'class/error';
 import { errorMessage } from 'resources/constants';

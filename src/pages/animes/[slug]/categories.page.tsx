@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, CategoryModel } from 'models';
-import { AnimesMapper, CategoriesMapper } from '../../../mappers';
+import { AnimesMapper, CategoriesMapper } from 'mappers';
 import { routes } from 'resources/routes';
 import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 

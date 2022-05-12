@@ -1,7 +1,7 @@
 import { PrismaSaga, PrismaSagas } from 'prisma/app';
 import { formatDateTime } from 'utils/date';
 import jsonParser from 'utils/jsonParser';
-import { AnimesMapper } from './index';
+import { AnimesMapper } from 'mappers';
 
 class SagasMapper implements Mapper<PrismaSaga, Saga> {
   one(resource: PrismaSaga): Saga {
