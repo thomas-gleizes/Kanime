@@ -19,6 +19,7 @@ class LogModel extends Model<PrismaLogDelegate> {
   public show = (params: modelParams): Promise<PrismaLogs> =>
     this.model.findMany({
       orderBy: [{ id: 'desc' }],
+      include: { user: true },
       ...this.getKeyParams(params),
     });
 
