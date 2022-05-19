@@ -10,6 +10,8 @@ interface ContextProviderProps {
   children: React.ReactNode;
 }
 
+declare type Id = string | number;
+
 type ErrorPage = {
   statusCode: number;
   message: string;

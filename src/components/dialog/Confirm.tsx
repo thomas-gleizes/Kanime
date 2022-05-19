@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
+import { Dialog } from '@headlessui/react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
-import Modal, { ModalBody, ModalFooter, ModalHeader } from 'components/layouts/modal';
+import Modal from 'components/layouts/Modal';
 import Button from 'components/common/Button';
 
 const ConfirmDialog: Component = () => {
@@ -36,21 +37,23 @@ const ConfirmDialog: Component = () => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      toggle={() => handleClose(false)}
-      className="max-w-500 mx-auto my-auto h-auto bg-white"
-    >
-      <ModalHeader>Veuillez confirmer</ModalHeader>
-      <ModalBody>{dialog.text}</ModalBody>
-      <ModalFooter>
-        <Button color="blue" onClick={() => handleClose(false)}>
-          Annuler
-        </Button>
-        <Button color="green" onClick={() => handleClose(true)}>
-          Confirmer
-        </Button>
-      </ModalFooter>
+    <Modal isOpen={isOpen} toggle={() => handleClose(false)} externalToggleDisabled>
+      <Dialog.Title>
+        <h3 className="text-xl font-bold px-3">Veuillez confirmer !</h3>
+      </Dialog.Title>
+      <Dialog.Description>
+        <div className="my-8">
+          <p className="text-center">{dialog.text}</p>
+        </div>
+        <div className="w-full flex justify-between space-x-5">
+          <Button color="sky" onClick={() => handleClose(false)}>
+            Annuler
+          </Button>
+          <Button color="emerald" onClick={() => handleClose(true)}>
+            Confirmer
+          </Button>
+        </div>
+      </Dialog.Description>
     </Modal>
   );
 };

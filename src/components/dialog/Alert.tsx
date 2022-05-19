@@ -2,8 +2,9 @@ import React, { useEffect, useMemo } from 'react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
-import Modal, { ModalBody, ModalFooter, ModalHeader } from 'components/layouts/modal';
+import Modal from 'components/layouts/Modal';
 import Button from 'components/common/Button';
+import { Dialog } from '@headlessui/react';
 
 const AlertDialog: Component = () => {
   const {
@@ -32,22 +33,20 @@ const AlertDialog: Component = () => {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      toggle={handleClose}
-      className="max-w-500 mx-auto my-auto h-auto bg-white"
-    >
-      <ModalHeader>
-        <h3 className="text-lg px-3">Attention</h3>
-      </ModalHeader>
-      <ModalBody>{dialog.text}</ModalBody>
-      <ModalFooter>
-        <div className="flex justify-between">
+    <Modal isOpen={isOpen} toggle={handleClose}>
+      <Dialog.Title>
+        <h3 className="text-xl font-bold px-3">Attention</h3>
+      </Dialog.Title>
+      <Dialog.Description>
+        <div className="my-8">
+          <p className="text-center">{dialog.text}</p>
+        </div>
+        <div className="flex justify-end">
           <Button color="blue" onClick={handleClose}>
             Ok
           </Button>
         </div>
-      </ModalFooter>
+      </Dialog.Description>
     </Modal>
   );
 };

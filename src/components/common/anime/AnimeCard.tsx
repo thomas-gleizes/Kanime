@@ -5,6 +5,7 @@ import { StarIcon, HeartIcon } from '@heroicons/react/solid';
 import { Transition } from '@headlessui/react';
 
 import { routes } from 'resources/routes';
+import classnames from 'classnames';
 
 interface Props {
   anime: Anime;
@@ -22,83 +23,84 @@ const AnimePopup: Component<AnimePopupProps> = ({ anime, isOpen, position }) => 
 
   const styles = useMemo(() => ({ [position]: '100%' }), [position]);
 
+  const zIndex = useMemo<string>(() => (isOpen ? 'z-10' : '-z-10'), [isOpen]);
+
   return (
-    <Transition
-      show={isOpen}
-      enter="transition ease-out duration-200"
-      enterFrom="transform opacity-0 scale-0"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
-    >
-      <div
-        className="absolute flex flex-col w-400 top-0 h-[103%] z-50 bg-primary-dark rounded shadow-lg p-4"
-        style={styles}
+    <div className={classnames('absolute w-[140%] h-full top-0', zIndex)} style={styles}>
+      <Transition
+        show={isOpen}
+        enter="transition ease-out duration-200"
+        enterFrom="transform opacity-0 scale-0"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
       >
-        <div className="h-1/3">
-          <div className="flex justify-between flex-wrap mb-2">
-            <h3 className="text-white text-lg font-medium">
-              {canonicalTitle}
-              <span className="text-gray-400 text-sm"> ({type}) </span>
-            </h3>
-            <span className="text-gray-400 text-xl mx-2 my-auto">{season_year}</span>
+        <div className="relative flex flex-col bg-primary-dark w-full rounded shadow-lg p-4">
+          <div className="h-1/3">
+            <div className="flex justify-between flex-wrap mb-2">
+              <h3 className="text-white text-lg truncate font-medium">
+                {canonicalTitle}
+                <span className="text-gray-400 text-sm"> ({type}) </span>
+              </h3>
+              <span className="text-gray-400 text-xl mx-2 my-auto">{season_year}</span>
+            </div>
+            <div className="flex justify-between text-md mb-2">
+              {rating.average ? (
+                <div
+                  className={`w-1/2 ${
+                    rating.average >= 75
+                      ? 'text-green-500'
+                      : rating.average >= 50
+                      ? 'text-yellow-500'
+                      : 'text-red-400'
+                  }`}
+                >
+                  Note moyenne : {rating.average}%
+                </div>
+              ) : (
+                <div className="w-1/12" />
+              )}
+              {popularity.count && (
+                <div className="text-lg w-1/2 text-right text-gray-300">
+                  {popularity.count} utilisateur
+                </div>
+              )}
+            </div>
+            <div className="flex justify-between text-sm mb-2">
+              {rating.rank ? (
+                <div className="flex justify-start w-1/2">
+                  <StarIcon className="text-yellow-500 h-5 w-5" />
+                  <span className="text-white mx-2 truncate">
+                    #{rating.rank} le mieux noté
+                  </span>
+                </div>
+              ) : (
+                <div className="w-1/12" />
+              )}
+              {popularity.rank ? (
+                <div className="flex justify-end w-1/2">
+                  <span className="text-white mx-2 truncate">
+                    #{popularity.rank} le plus populaire
+                  </span>
+                  <HeartIcon className="text-red-500 h-5 w-5" />
+                </div>
+              ) : (
+                <div className="w-1/12" />
+              )}
+            </div>
           </div>
-          <div className="flex justify-between text-md mb-2">
-            {rating.average ? (
-              <div
-                className={`w-1/2 ${
-                  rating.average >= 75
-                    ? 'text-green-500'
-                    : rating.average >= 50
-                    ? 'text-yellow-500'
-                    : 'text-red-400'
-                }`}
-              >
-                Note moyenne : {rating.average}%
-              </div>
-            ) : (
-              <div className="w-1/12" />
-            )}
-            {popularity.count && (
-              <div className="text-lg w-1/2 text-right text-gray-300">
-                {popularity.count} utilisateur
-              </div>
-            )}
-          </div>
-          <div className="flex justify-between text-sm mb-2">
-            {rating.rank ? (
-              <div className="flex justify-start w-1/2">
-                <StarIcon className="text-yellow-500 h-5 w-5" />
-                <span className="text-white mx-2 truncate">
-                  #{rating.rank} le mieux noté
-                </span>
-              </div>
-            ) : (
-              <div className="w-1/12" />
-            )}
-            {popularity.rank ? (
-              <div className="flex justify-end w-1/2">
-                <span className="text-white mx-2 truncate">
-                  #{popularity.rank} le plus populaire
-                </span>
-                <HeartIcon className="text-red-500 h-5 w-5" />
-              </div>
-            ) : (
-              <div className="w-1/12" />
-            )}
+          <div className="h-2/3 overflow-hidden bg-transparent">
+            <p className="relative bottom-0 text-gray-300 text-light text-sm text-justify line-clamp-10 overflow-hidden">
+              {synopsis}
+              {synopsis.length > 500 && (
+                <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-b from-transparent to-primary-dark" />
+              )}
+            </p>
           </div>
         </div>
-        <div className="h-2/3 overflow-hidden bg-transparent">
-          <p className="relative bottom-0 text-gray-300 text-light text-sm text-justify line-clamp-10 overflow-hidden">
-            {synopsis}
-            {synopsis.length > 500 && (
-              <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-b from-transparent to-primary-dark" />
-            )}
-          </p>
-        </div>
-      </div>
-    </Transition>
+      </Transition>
+    </div>
   );
 };
 
@@ -136,13 +138,11 @@ const AnimeCard: Component<Props> = ({ anime, index }) => {
           </a>
         </Link>
       </div>
-      <div>
-        <AnimePopup
-          anime={anime}
-          isOpen={open}
-          position={[0, 1].includes(index % 4) ? 'left' : 'right'}
-        />
-      </div>
+      <AnimePopup
+        anime={anime}
+        isOpen={open}
+        position={[0, 1].includes(index % 4) ? 'left' : 'right'}
+      />
     </div>
   );
 };

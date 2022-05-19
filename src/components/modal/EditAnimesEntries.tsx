@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik, FormikProps } from 'formik';
 import { EntryStatus } from '@prisma/client';
+import { Dialog } from '@headlessui/react';
 
 import type { PrismaEntryStatus } from 'prisma/app';
-import Modal, { ModalBody, ModalHeader, ModalTitle } from 'components/layouts/modal';
-import { Field, Select } from 'components/common/formik';
+import Modal from 'components/layouts/Modal';
+import { Select } from 'components/common/inputs';
 
 interface Props {
   anime: Anime;
@@ -18,45 +19,45 @@ type values = {
   progress: number;
 };
 
+const status = Object.values(EntryStatus);
+
 const EditAnimesEntries: Component<Props> = ({ isOpen, toggle, anime, animeUser }) => {
   const initialValues: values = {
-    status: animeUser?.status || null,
+    status: animeUser?.status || status[0],
     progress: 0,
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle} size="sm">
-      <ModalHeader>
-        <ModalTitle>{anime.canonicalTitle}</ModalTitle>
-      </ModalHeader>
-      <ModalBody>
+    <Modal isOpen={isOpen} toggle={toggle} externalToggleDisabled={false}>
+      <Dialog.Title>
+        <h3 className="text-xl font-bold">{anime.canonicalTitle}</h3>
+      </Dialog.Title>
+      <Dialog.Description className="h-500">
         <Formik initialValues={initialValues} onSubmit={console.log}>
           {(props) => <FormContent {...props} />}
         </Formik>
-      </ModalBody>
+      </Dialog.Description>
     </Modal>
   );
 };
 
-const FormContent: Component<FormikProps<values>> = ({
-  values,
-  handleChange,
-  handleBlur,
-}) => {
+const FormContent: Component<FormikProps<values>> = ({ values, setFieldValue }) => {
   return (
-    <Form className="p-3">
-      <div className="mb-1">
-        <Select name="status" label="Status">
-          {Object.values(EntryStatus).map((status, index) => (
-            <option key={index} value={status}>
-              {status}
-            </option>
+    <Form className="py-16">
+      <div className="w-full">
+        <Select
+          value={values.status}
+          onChange={(value) => setFieldValue('status', value)}
+          color="red"
+        >
+          {status.map((option, index) => (
+            <Select.Option key={index} value={option}>
+              {option}
+            </Select.Option>
           ))}
         </Select>
       </div>
-      <div>
-        <Field type="number" name="progress" label="Progression" />
-      </div>
+      <div></div>
     </Form>
   );
 };
