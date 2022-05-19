@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
@@ -30,8 +30,6 @@ const Select: Component<Props> & { Option?: OptionsComponent } = ({
       };
     else return null;
   }, [children, value]);
-
-  console.log(currentValue);
 
   return (
     <Listbox value={value} onChange={onChange}>
