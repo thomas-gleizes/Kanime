@@ -53,3 +53,13 @@ export function isNullOrEmpty(str: string): boolean {
 export function isNullOrBlank(str: string): boolean {
   return str === null || str.trim().length === 0;
 }
+
+export function replaceCamelCaseWithSpace(str: string): string {
+  return capitalize(
+    str
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .split(' ')
+      .map((word) => word.toLowerCase())
+      .join(' ')
+  );
+}

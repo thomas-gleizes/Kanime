@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useBrowser } from 'hooks';
 import { Dialog, Transition } from '@headlessui/react';
@@ -18,11 +18,19 @@ const Modal: Component<Props> = ({
 }) => {
   const isBrowser = useBrowser();
 
+  useEffect(() => console.log('IsOpen', isOpen), [isOpen]);
+
   if (!isBrowser) return null;
 
   return (
     <Transition appear show={isOpen} as={React.Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={toggle}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => {
+          if (isOpen && !externalToggleDisabled) toggle();
+        }}
+      >
         <Transition.Child
           as={React.Fragment}
           enter="ease-out duration-300"
