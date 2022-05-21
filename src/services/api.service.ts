@@ -8,6 +8,8 @@ const ApiService = axios.create({
 ApiService.interceptors.response.use(
   (response: AxiosResponse): any => response.data,
   (error: any) => {
+    console.log(error);
+
     throw error;
   }
 );

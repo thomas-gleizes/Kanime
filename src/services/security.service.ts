@@ -19,8 +19,10 @@ class Security {
     return this.sha256(str) === encrypted;
   }
 
-  static sign(payload: any): string {
-    return jwt.sign({ user: payload }, this.SECRET_TOKEN, { expiresIn: '1d' });
+  static sign(payload: any, remember: boolean = false): string {
+    return jwt.sign({ user: payload }, this.SECRET_TOKEN, {
+      expiresIn: remember ? '30s' : '1d',
+    });
   }
 
   static verifyToken(token): boolean {

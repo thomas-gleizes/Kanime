@@ -33,7 +33,7 @@ const ListLogs: Component = () => {
   return (
     <div className="shadow">
       <DataTable value={logs} header={Header} size="small" responsiveLayout="scroll">
-        <Column field="createAt" header="Date" body={CellDateTime('createAt')} />
+        <Column field="createAt" header="Date" />
         <Column field="path" header="Path" />
         <Column field="method" header="Method" />
         <Column field="ip" header="Host" />
@@ -41,10 +41,6 @@ const ListLogs: Component = () => {
       </DataTable>
     </div>
   );
-};
-
-const CellDateTime = (field) => {
-  return (column) => new Date(column[field]).toLocaleString();
 };
 
 export default ListLogs;

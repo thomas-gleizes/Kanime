@@ -29,7 +29,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
     throw new ApiError(400, errorMessage.AUTH_LOGIN);
   }
 
-  const token = Security.sign(user);
+  const token = Security.sign(user, body.rememberMe);
 
   session.user = user;
   session.token = token;

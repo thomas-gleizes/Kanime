@@ -41,7 +41,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   const signOut = useCallback(async (): Promise<void> => {
-    await AuthenticationApi.logout();
+    await AuthenticationApi.signOut();
 
     LocalStorageService.clearUser();
     setIsLogin(false);
@@ -49,23 +49,11 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
     setToken(null);
   }, []);
 
-  const refreshUser = async (): Promise<void> => {
-    try {
-      const { data } = await ApiService.get(routes.users.api.current);
-      setUser(data.user);
-    } catch (e) {
-      await signOut();
-      toast('Veuillez vous reconnecter', 'warning');
-    }
-  };
-
   useEffect(() => {
-    if (isBrowser && isLogin) {
-      const interval = window.setTimeout(refreshUser, 1000 * 60 * 30);
-
-      return () => clearInterval(interval);
+    if (isBrowser) {
+      const refresh = () => AuthenticationApi.refresh();
     }
-  }, [isLogin]);
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, token, isLogin, signIn, signOut }}>

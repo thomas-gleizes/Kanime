@@ -23,6 +23,7 @@ export const signInSchema = Yup.object({
   password: Yup.string()
     .required('Veuillez saisir un mot de passe')
     .min(6, 'Votre mot de passe contiens au moins 6 caractère'),
+  rememberMe: Yup.boolean(),
 });
 
 export const forgotPasswordSchema = Yup.object({
