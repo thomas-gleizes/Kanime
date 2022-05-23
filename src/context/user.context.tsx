@@ -1,11 +1,9 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import LocalStorageService from 'services/localStorage.service';
-import { ApiService } from 'services/api.service';
-import { useBrowser, useContextFactory } from 'hooks';
-import { routes } from 'resources/routes';
-import toast from 'utils/toastr';
 import { AuthenticationApi } from 'api';
+import { useBrowser, useContextFactory } from 'hooks';
+import LocalStorageService from 'services/localStorage.service';
+import { MINUTE } from 'resources/constants';
 
 export declare type UserContext = {
   isLogin: boolean;
@@ -50,10 +48,21 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (isBrowser) {
-      const refresh = () => AuthenticationApi.refresh();
+    if (isBrowser && isLogin) {
+      AuthenticationApi.refresh().then(console.log).catch(console.error);
     }
-  }, []);
+  }, [isBrowser]);
+
+  useEffect(() => {
+    if (isLogin && isBrowser) {
+      const interval = setInterval(
+        () => AuthenticationApi.refresh().then(console.log).catch(console.error),
+        MINUTE * 15
+      );
+
+      return () => clearInterval(interval);
+    }
+  }, [isLogin, isBrowser]);
 
   return (
     <UserContext.Provider value={{ user, token, isLogin, signIn, signOut }}>

@@ -1,4 +1,7 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import LocalStorageService from 'services/localStorage.service';
+import toast from 'utils/toastr';
+import { routes } from 'resources/routes';
 
 const ApiService = axios.create({
   baseURL: `/api/`,
@@ -7,10 +10,19 @@ const ApiService = axios.create({
 
 ApiService.interceptors.response.use(
   (response: AxiosResponse): any => response.data,
-  (error: any) => {
-    console.log(error);
+  (error: AxiosError) => {
+    if (error.isAxiosError) {
+      if (error.response.status === 401) {
+        toast('Veuillez vous reconner', 'warning');
+        LocalStorageService.clearUser();
 
-    throw error;
+        setTimeout(() => {
+          window.location.href = routes.authentication.signIn;
+        }, 1000);
+      } else {
+        throw error;
+      }
+    } else throw error;
   }
 );
 
