@@ -53,12 +53,14 @@ const AnimeHome: Page<Props> = ({ anime }) => {
                     ' ...'
                   : anime?.description}
               </p>
-              <div
-                className="text-lg text-orange-500 cursor-pointer text-center w-full"
-                onClick={toggleParagraph}
-              >
-                <span>read {extendParagraph ? 'more' : 'less'}</span>
-              </div>
+              {anime.description.length > DESCRIPTION_LENGTH && (
+                <div
+                  className="text-lg text-orange-500 cursor-pointer text-center w-full"
+                  onClick={toggleParagraph}
+                >
+                  <span>read {extendParagraph ? 'more' : 'less'}</span>
+                </div>
+              )}
             </div>
           )}
         </div>
