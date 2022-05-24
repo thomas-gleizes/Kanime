@@ -2,6 +2,7 @@ import { PrismaUserDelegate, PrismaGender, PrismaUser, PrismaUsers } from 'prism
 import connexion, { ConnexionType } from 'services/connexion.service';
 import { defaultUsersMedia } from 'resources/constants';
 import Model from 'class/Model';
+import * as emailHelpers from 'utils/emailHelpers';
 
 type createData = {
   username: string;
@@ -35,6 +36,7 @@ class UserModel extends Model<PrismaUserDelegate> {
       data: {
         username: data.username,
         email: data.email,
+        real_email: emailHelpers.removeDot(data.email),
         password: data.password,
         avatar_path: defaultUsersMedia.avatar,
         background_path: defaultUsersMedia.background,
@@ -85,8 +87,10 @@ class UserModel extends Model<PrismaUserDelegate> {
     });
 
   public findByEmail = (email: string): Promise<PrismaUser> =>
-    this.model.findUnique({
-      where: { email },
+    this.model.findFirst({
+      where: {
+        OR: [{ real_email: emailHelpers.removeDot(email) }, { email: email }],
+      },
     });
 
   public findByEmailOrUsername = (
@@ -95,7 +99,7 @@ class UserModel extends Model<PrismaUserDelegate> {
   ): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
-        OR: [{ email }, { username }],
+        OR: [{ real_email: emailHelpers.removeDot(email) }, { username }],
       },
     });
 

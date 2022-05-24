@@ -96,6 +96,8 @@ model User {
   gender                  Gender     @default(Secret)
   city                    String?
   country_id              Int?
+  real_email              String     @unique
+  email_verified          Boolean    @default(false)
   reset_password_token    String?    @db.VarChar(255)
   last_ask_reset_password DateTime?
   last_reset_password     DateTime   @default(now())

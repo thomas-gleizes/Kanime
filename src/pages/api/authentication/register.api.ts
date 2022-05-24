@@ -23,9 +23,8 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
   const users = await UserModel.findByEmailOrUsername(userData.email, userData.username);
 
   if (users.length) {
-    let key = 'username';
-    if (users[0].email === userData.email) key = 'email';
-
+    let key = 'email';
+    if (users[0].username === userData.username) key = 'username';
     throw new ApiError(409, `${key} already exist`);
   }
 
