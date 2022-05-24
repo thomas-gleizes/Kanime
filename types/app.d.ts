@@ -58,56 +58,64 @@ declare module 'prisma/app' {
     EntryStatus,
   } from '@prisma/client';
 
-  declare type PrismaUser = User & {
+  declare type PrismaUser = User & PrismaUserRelations;
+  declare type PrismaUsers = PrismaUser[];
+  declare type PrismaUserRelations = {
     entries?: PrismaEntries;
     posts?: PrismaPosts;
     follows?: PrismaFollows;
     followers?: PrismaFollows;
     country?: PrismaCountry;
   };
-  declare type PrismaUsers = PrismaUser[];
   declare type PrismaUserDelegate = Prisma.UserDelegate<unknown>;
 
-  declare type PrismaAnime = Anime & {
+  declare type PrismaAnime = Anime & PrismaAnimeRelations;
+  declare type PrismaAnimes = PrismaAnime[];
+  declare type PrismaAnimeRelations = {
     entries?: PrismaEntries;
     posts?: PrismaPosts;
     saga?: PrismaSaga;
     categories?: PrismaCategories;
   };
-  declare type PrismaAnimes = PrismaAnime[];
   declare type PrismaAnimeDelegate = Prisma.AnimeDelegate<unknown>;
 
   declare type PrismaCategory = Category;
   declare type PrismaCategories = PrismaCategory[];
   declare type PrismaCategoryDelegate = Prisma.CategoryDelegate<unknown>;
 
-  declare type PrismaEntry = Entry & { anime?: PrismaAnime; user?: PrismaUser };
+  declare type PrismaEntry = Entry & PrismaEntryRelations;
   declare type PrismaEntries = PrismaEntry[];
+  declare type PrismaEntryRelations = { anime?: PrismaAnime; user?: PrismaUser };
   declare type PrismaEntryDelegate = Prisma.EntryDelegate<unknown>;
 
-  declare type PrismaSaga = Saga & { animes?: PrismaAnimes };
+  declare type PrismaSaga = Saga & PrismaSagaRelations;
   declare type PrismaSagas = PrismaSaga[];
+  declare type PrismaSagaRelations = { animes?: PrismaAnimes };
   declare type PrismaSagaDelegate = Prisma.SagaDelegate<unknown>;
 
-  declare type PrismaLog = Log & { user?: PrismaUser };
+  declare type PrismaLog = Log & PrismaLogRelation;
   declare type PrismaLogs = PrismaLog[];
+  declare type PrismaLogRelation = { user?: PrismaUser };
   declare type PrismaLogDelegate = Prisma.LogDelegate<unknown>;
 
-  declare type PrismaFollow = UserFollow & { follower?: PrismaUser; follow?: PrismaUser };
+  declare type PrismaFollow = UserFollow & PrismaFollowRelations;
   declare type PrismaFollows = PrismaFollow[];
+  declare type PrismaFollowRelations = { follower?: PrismaUser; follow?: PrismaUser };
   declare type PrismaFollowDelegate = Prisma.UserFollowDelegate<unknown>;
 
-  declare type PrismaCountry = Country & { users?: PrismaUsers };
+  declare type PrismaCountry = Country & PrismaCountryRelations;
   declare type PrismaCountries = PrismaCountry[];
+  declare type PrismaCountryRelations = { users?: PrismaUsers };
   declare type PrismaCountryDelegate = Prisma.CountryDelegate<unknown>;
 
-  declare type PrismaPost = Post & {
+  declare type PrismaPost = Post & PrismaPostRelations;
+  declare type PrismaPosts = PrismaPost[];
+  declare type PrismaPostRelations = {
     user?: PrismaUser;
     anime?: PrismaAnime;
     replyTo?: Post;
     replies?: PrismaPosts;
   };
-  declare type PrismaPosts = PrismaPost[];
   declare type PrismaPostsDelegate = Prisma.ReactionDelegate<unknown>;
 
   declare type PrismaGender = Gender;
