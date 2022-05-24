@@ -16,9 +16,7 @@ ApiService.interceptors.response.use(
         toast('Veuillez vous reconner', 'warning');
         LocalStorageService.clearUser();
 
-        setTimeout(() => {
-          window.location.href = routes.authentication.signIn;
-        }, 1000);
+        setTimeout(() => window.postMessage({ content: 'unconnected' }), 100);
       } else {
         throw error;
       }
