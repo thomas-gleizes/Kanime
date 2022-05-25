@@ -1,3 +1,9 @@
+type Result = {
+  include?: { [key: string]: true };
+  take?: number;
+  skip?: number;
+};
+
 abstract class Model<D = unknown> {
   protected model: D;
 
@@ -9,16 +15,21 @@ abstract class Model<D = unknown> {
     return { skip: +params?.skip || 0, take: +params?.limit || 50 };
   }
 
-  protected parseOptions(options?: { includes: { [key: string]: any } }): {
-    include: { [key: string]: true };
-  } {
-    const includes = {};
+  protected parseOptions(options?: {
+    includes: { [key: string]: any };
+    limit?: string;
+    skip?: string;
+  }): Result {
+    const result: Result = {};
 
-    for (const key of Object.keys(options.includes)) includes[key] = true;
+    for (const key of Object.keys(options.includes)) {
+      result.include[key] = true;
+    }
 
-    return {
-      include: includes,
-    };
+    if (options.limit) result.take = +options.limit;
+    if (options.skip) result.skip = +options.skip;
+
+    return result;
   }
 }
 
