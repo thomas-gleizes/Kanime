@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse } from 'next/app';
 
 export default function queryParser(req: ApiRequest, res: ApiResponse, next): void {
   Object.entries(req.query).forEach(([key, value]) => {

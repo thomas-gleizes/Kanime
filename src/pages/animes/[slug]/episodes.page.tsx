@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';

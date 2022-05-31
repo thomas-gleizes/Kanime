@@ -1,4 +1,4 @@
-declare module 'app/next' {
+declare module 'next/app' {
   import type {
     GetServerSideProps,
     GetStaticPaths,
@@ -48,14 +48,19 @@ declare module 'prisma/app' {
     Category,
     Country,
     Entry,
-    Gender,
     Log,
     Prisma,
     Post,
     Saga,
     User,
     UserFollow,
+    AnimeSeason,
+    AnimeType,
+    AnimeStatus,
     EntryStatus,
+    Visibility,
+    Gender,
+    Method,
   } from '@prisma/client';
 
   declare type PrismaUser = User & PrismaUserRelations;
@@ -118,6 +123,11 @@ declare module 'prisma/app' {
   };
   declare type PrismaPostsDelegate = Prisma.ReactionDelegate<unknown>;
 
-  declare type PrismaGender = Gender;
+  declare type PrismaAnimeSeason = AnimeSeason;
+  declare type PrismaAnimeType = AnimeType;
+  declare type PrismaAnimeStatus = AnimeStatus;
   declare type PrismaEntryStatus = EntryStatus;
+  declare type PrismaVisibility = Visibility;
+  declare type PrismaGender = Gender;
+  declare type PrismaMethod = Method;
 }

@@ -5,7 +5,7 @@ import {
   ServerSideProps,
   ServerSidePropsContext,
   ServerSidePropsResult,
-} from 'app/next';
+} from 'next/app';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,

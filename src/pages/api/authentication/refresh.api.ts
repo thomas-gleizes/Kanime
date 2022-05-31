@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse } from 'next/app';
 import { verifyUser } from 'middlewares/auth.middleware';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';

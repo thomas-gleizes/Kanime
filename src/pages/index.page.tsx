@@ -1,6 +1,6 @@
 import Moment from 'moment';
 
-import type { Page, StaticProps } from 'app/next';
+import type { Page, StaticProps } from 'next/app';
 import Title from 'components/layouts/Title';
 
 interface Props {

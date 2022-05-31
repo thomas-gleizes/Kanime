@@ -104,6 +104,7 @@ CREATE TABLE `entries` (
     `status` ENUM('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
     `rating` DOUBLE NULL,
     `progress` SMALLINT NOT NULL DEFAULT 0,
+    `favorite` BOOLEAN NOT NULL DEFAULT FALSE,
     `started_at` DATETIME(3) NULL,
     `finish_at` DATETIME(3) NULL,
     `note` MEDIUMTEXT NULL,

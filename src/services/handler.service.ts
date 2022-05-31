@@ -7,7 +7,7 @@ import type {
 import type { ParsedUrlQuery } from 'querystring';
 import nc from 'next-connect';
 
-import type { ApiRequest, ApiResponse } from 'app/next';
+import type { ApiRequest, ApiResponse } from 'next/app';
 import { SsrError, SchemaError, ApiError } from 'class/error';
 import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';

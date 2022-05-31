@@ -15,6 +15,7 @@ class EntriesMapper implements Mapper<PrismaEntry, Entry> {
       startedAt: formatDateTime(resource.started_at),
       finishAt: formatDateTime(resource.finish_at),
       note: resource.note,
+      visibility: resource.visibility,
       createAt: formatDateTime(resource.created_at),
       updateAt: formatDateTime(resource.updated_at),
     };

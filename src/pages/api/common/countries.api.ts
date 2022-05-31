@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse } from 'next/app';
 import { Country } from '@prisma/client';
 
 import { apiHandler } from 'services/handler.service';

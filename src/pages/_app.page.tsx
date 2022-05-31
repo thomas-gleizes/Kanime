@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Head from 'next/head';
 
-import { AppProps } from 'app/next';
+import { AppProps } from 'next/app';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
