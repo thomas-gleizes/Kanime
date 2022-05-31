@@ -1,25 +1,19 @@
+import type {
+  GetServerSideProps,
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+  PreviewData,
+} from 'next';
+import type { ParsedUrlQuery } from 'querystring';
 import nc from 'next-connect';
 
-import {
-  ApiRequest,
-  ApiResponse,
-  ServerSideProps,
-  ServerSidePropsContext,
-  ServerSidePropsResult,
-} from 'app/next';
+import type { ApiRequest, ApiResponse } from 'app/next';
 import { SsrError, SchemaError, ApiError } from 'class/error';
 import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';
 import { withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import trace from 'utils/trace';
-import {
-  GetServerSideProps,
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-  PreviewData,
-} from 'next';
-import { ParsedUrlQuery } from 'querystring';
 
 export const apiHandler = () =>
   nc<ApiRequest, ApiResponse>({
@@ -42,7 +36,6 @@ export const apiHandler = () =>
       }
     },
     onNoMatch: (req, res) => {
-      console.log('No match');
       trace('No match route', req.url);
 
       res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });

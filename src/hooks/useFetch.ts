@@ -1,36 +1,34 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-export default function useFetch(
-  fetch: (params: any) => Promise<any>,
+export default function useFetch<Data>(
+  fetch: (params: any) => Promise<Data>,
   params: any = null,
   deps: Array<any> = [],
   errorCallBack: (error: any) => any = null,
   condition: boolean = true
-): [state: any, loading: boolean, crash: any] {
-  const [data, setData] = useState({});
+): [state: Data, loading: boolean, error: any] {
+  // @ts-ignore
+  const [data, setData] = useState<Data>({});
   const [loading, setLoading] = useState<boolean>(false);
-  const [crash, setCrash] = useState<any>(false);
+  const [error, setError] = useState<any>(false);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
 
-    (async () => {
-      if (condition) {
-        setLoading(true);
-        try {
-          const { data } = await fetch(params);
-          setData(data);
-        } catch (error) {
-          if (errorCallBack) setCrash(errorCallBack(error));
-          else setCrash(true);
-        }
-        setLoading(false);
-      }
-    })();
+    setLoading(true);
+
+    if (condition)
+      fetch(params)
+        .then((data) => setData(data))
+        .catch((err) => {
+          if (errorCallBack) setError(errorCallBack(err));
+          else setError(err);
+        })
+        .finally(() => setLoading(false));
 
     return () => source.cancel();
   }, [...deps]);
 
-  return [data, loading, crash];
+  return [data, loading, error];
 }

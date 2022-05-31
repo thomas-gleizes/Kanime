@@ -39,11 +39,11 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
       update: {
         status: data.status,
-        rating: data.rating,
-        progress: data.progress,
-        note: data.note,
-        started_at: data.startAt,
-        finish_at: data.finishAt,
+        rating: data.rating || null,
+        progress: data.progress || 0,
+        note: data.note || null,
+        started_at: data.startAt || null,
+        finish_at: data.finishAt || null,
         visibility: data.visibility,
       },
       create: {

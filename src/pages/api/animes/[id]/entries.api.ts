@@ -6,6 +6,7 @@ import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
 import { ApiError } from 'class/error';
 import { errorMessage } from 'resources/constants';
+import { EntryStatus } from '@prisma/client';
 
 interface ResponseData extends DefaultResponseData {
   entry: Entry;
@@ -25,6 +26,9 @@ const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) =
     animeId: +animeId,
     ...req.body,
   };
+
+  if (data.status === EntryStatus.Completed && anime.episode_count)
+    data.progress = anime.episode_count;
 
   const entry = EntriesMapper.one(await EntryModel.upsert(data));
 
