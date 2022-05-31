@@ -13,7 +13,7 @@ ApiService.interceptors.response.use(
   (error: AxiosError) => {
     if (error.isAxiosError) {
       if (error.response.status === 401) {
-        toast('Veuillez vous reconner', 'warning');
+        toast('Veuillez vous reconnecter', 'warning');
         LocalStorageService.clearUser();
 
         setTimeout(() => window.postMessage({ content: 'unconnected' }), 100);
