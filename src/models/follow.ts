@@ -24,6 +24,18 @@ class FollowModel extends Model<PrismaFollowDelegate> {
         },
       },
     });
+
+  public isFollow = (followerId: number, followId: number): Promise<boolean> =>
+    this.model
+      .findUnique({
+        where: {
+          follower_id_follow_id: {
+            follower_id: followerId,
+            follow_id: followId,
+          },
+        },
+      })
+      .then((result) => !!result);
 }
 
 export default new FollowModel(connexion);

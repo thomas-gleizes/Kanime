@@ -19,7 +19,8 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountry = () => ApiService.get<PrismaCountries>(routes.common.countries.list);
+const fetchCountry = (): any =>
+  ApiService.get<PrismaCountries>(routes.common.countries.list);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
@@ -28,7 +29,7 @@ const EditUserModal: React.FunctionComponent = () => {
   const avatarRef = useRef<HTMLInputElement>();
   const backgroundRef = useRef<HTMLInputElement>();
 
-  const [{ countries }] = useFetch(fetchCountry);
+  const [{ countries }] = useFetch<{ countries?: any[] }>(fetchCountry);
 
   if (!user) return null;
 

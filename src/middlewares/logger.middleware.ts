@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse, ServerSidePropsContext } from 'app/next';
+import { ApiRequest, ApiResponse, ServerSidePropsContext } from 'next/app';
 import {
   apiLogger as apiLoggerService,
   ssrLogger as ssrLoggerService,

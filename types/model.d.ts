@@ -1,3 +1,12 @@
+declare module 'app/model' {
+  import { PrismaVisibility } from 'resources/prisma';
+
+  declare type Visibility =
+    | PrismaVisibility.public
+    | PrismaVisibility.private
+    | PrismaVisibility.limited;
+}
+
 type Images = {
   tiny?: string;
   small?: string;
@@ -37,8 +46,6 @@ interface UserMediaHandling {
   type: string;
 }
 
-type Visibility = 'private' | 'public' | 'limited';
-
 declare type Anime = {
   id: number;
   kitsu_id: number;
@@ -72,6 +79,7 @@ declare type Entry = {
   startedAt: Date | string;
   finishAt: Date | string;
   note: string;
+  visibility: Visibility;
   createAt: Date | string;
   updateAt: Date | string;
 } & { user?: User; anime?: Anime };

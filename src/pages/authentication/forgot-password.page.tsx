@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
 import toast from 'utils/toastr';
 import { Input } from 'components/common/inputs';

@@ -1,7 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import LocalStorageService from 'services/localStorage.service';
 import toast from 'utils/toastr';
-import { routes } from 'resources/routes';
 
 const ApiService = axios.create({
   baseURL: `/api/`,

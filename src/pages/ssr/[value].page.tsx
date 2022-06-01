@@ -1,6 +1,6 @@
 import Error from 'next/error';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { SsrError } from 'class/error';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';

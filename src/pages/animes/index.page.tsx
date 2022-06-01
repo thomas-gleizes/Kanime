@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { AnimesApi } from 'api';
 import { AnimesMapper } from 'mappers';

@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse } from 'next/app';
 import { LogsMapper } from 'mappers';
 import { LogModel } from 'models';
 import { verifyAdmin } from 'middlewares/auth.middleware';

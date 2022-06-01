@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { routes } from 'resources/routes';
 import { ssrHandler } from 'services/handler.service';
 import ListLogs from 'components/admin/ListLogs';

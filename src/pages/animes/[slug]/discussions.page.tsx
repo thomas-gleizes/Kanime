@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, PostModel } from 'models';
 import { AnimesMapper, PostsMapper } from 'mappers';

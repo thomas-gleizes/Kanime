@@ -1,6 +1,6 @@
 import React from 'react';
 
-import type { Page } from 'app/next';
+import type { Page } from 'next/app';
 import { routes } from 'resources/routes';
 import EditGeneralData from 'components/user/EditGeneralData';
 import { ssrHandler } from 'services/handler.service';

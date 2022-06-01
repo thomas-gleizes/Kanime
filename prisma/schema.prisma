@@ -124,6 +124,7 @@ model Entry {
   status     EntryStatus @default(Wanted)
   rating     Float?
   progress   Int         @default(0) @db.SmallInt
+  favorite   Boolean     @default(false)
   started_at DateTime?
   finish_at  DateTime?
   note       String?     @db.MediumText

@@ -71,6 +71,14 @@ BEGIN
 INSERT INTO event_logs SET name = 'update_animes_ranking';
 
 UPDATE animes a
+SET popularity_count = (SELECT COUNT(*) FROM entries e WHERE a.id = e.anime_id),
+    rating_average   = (SELECT ROUND(AVG(rating) * 10, 2)
+                        FROM entries e
+                        WHERE rating IS NOT NULL
+                          AND a.id = e.anime_id)
+WHERE 1;
+
+UPDATE animes a
 SET popularity_rank = (SELECT ranking
                        FROM (SELECT id,
                                     DENSE_RANK() over (ORDER BY a2.popularity_count DESC, a2.created_at) as ranking
@@ -93,3 +101,5 @@ SET GLOBAL event_scheduler = ON;
 CREATE OR REPLACE EVENT event_update_animes_ranking
     ON SCHEDULE EVERY 1 HOUR STARTS NOW()
     DO CALL update_animes_ranking();
+
+

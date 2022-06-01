@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { useToggle } from 'hooks';
 import { AnimeModel } from 'models';

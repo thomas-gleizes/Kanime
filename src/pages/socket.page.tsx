@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { useLayoutContext } from 'context/layout.context';
 import Button from 'components/common/Button';
 import random from 'utils/random';

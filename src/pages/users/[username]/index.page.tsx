@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Error from 'next/error';
 import Image from 'next/image';
 
-import { Page } from 'app/next';
+import { Page } from 'next/app';
 import { useLayoutContext } from 'context/layout.context';
 import { ssrHandler } from 'services/handler.service';
 import { UserModel } from 'models';

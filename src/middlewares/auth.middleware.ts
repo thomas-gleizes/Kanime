@@ -1,4 +1,4 @@
-import { ApiRequest, ApiResponse } from 'app/next';
+import { ApiRequest, ApiResponse } from 'next/app';
 import Security from 'services/security.service';
 import ApiError from 'class/error/ApiError';
 import { errorMessage } from 'resources/constants';
