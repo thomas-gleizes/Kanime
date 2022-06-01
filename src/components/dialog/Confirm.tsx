@@ -43,7 +43,7 @@ const ConfirmDialog: Component = () => {
       </Dialog.Title>
       <Dialog.Description>
         <div className="my-8">
-          <p className="text-center">{dialog.text}</p>
+          <p className="text-center">{dialog.content}</p>
         </div>
         <div className="w-full flex justify-between space-x-5">
           <Button color="sky" onClick={() => handleClose(false)}>

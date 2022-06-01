@@ -6,13 +6,13 @@ import { useRouter } from 'next/router';
 import classnames from 'classnames';
 
 import { useLayoutContext } from 'context/layout.context';
-import { useToggle } from 'hooks';
+import { useDialog } from 'hooks';
 import { routes } from 'resources/routes';
 import Title from 'components/layouts/Title';
 import KitsuButton from 'components/common/KitsuButton';
-import Button from 'components/common/Button';
 import EditAnimesEntries from 'components/modal/EditAnimesEntries';
 import Header from 'components/layouts/Header';
+import MenuDropDown from 'components/common/inputs/Menu';
 
 export interface AnimeLayoutProps {
   anime: Anime;
@@ -57,13 +57,19 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
 
-  const [openModal, toggleModal] = useToggle();
+  const dialog = useDialog();
 
   useEffect(() => {
     setHeaderTransparent(true);
 
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
+
+  const handleModal = async () => {
+    const result = await dialog.custom(EditAnimesEntries, { anime });
+
+    console.log('Result', result);
+  };
 
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
 
@@ -111,15 +117,13 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
                       />
                     )}
                   </div>
-                  <div className="border w-full border-gray-200 p-2">
+                  <div className="w-full">
                     <div className="flex flex-col space-y-2">
                       <div>
                         <KitsuButton slug={anime.slug} />
                       </div>
                       <div>
-                        <Button outline color="amber" onClick={toggleModal}>
-                          Ajouter
-                        </Button>
+                        <MenuDropDown />
                       </div>
                     </div>
                   </div>
@@ -132,7 +136,6 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
           </div>
         </div>
       </main>
-      <EditAnimesEntries anime={anime} isOpen={openModal} toggle={toggleModal} />
     </>
   );
 };

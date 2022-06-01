@@ -25,6 +25,10 @@ type modelParams = {
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
+declare type ModalProps = {
+  close: (result: any) => void;
+};
+
 type InputType =
   | 'text'
   | 'email'

@@ -29,7 +29,7 @@ const AlertDialog: Component = () => {
 
   const handleClose = () => {
     dialog.resolve(null);
-    setDialog({ type: null, text: '', resolve: null });
+    setDialog({ type: null, content: '', resolve: null });
   };
 
   return (
@@ -39,7 +39,7 @@ const AlertDialog: Component = () => {
       </Dialog.Title>
       <Dialog.Description>
         <div className="my-8">
-          <p className="text-center">{dialog.text}</p>
+          <p className="text-center">{dialog.content}</p>
         </div>
         <div className="flex justify-end">
           <Button color="blue" onClick={handleClose}>

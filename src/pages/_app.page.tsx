@@ -4,8 +4,13 @@ import Head from 'next/head';
 import { AppProps } from 'next/app';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
-import { AlertDialog, ConfirmDialog, PromptDialog } from 'components/dialog';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
+import {
+  AlertDialog,
+  ConfirmDialog,
+  PromptDialog,
+  CustomDialog,
+} from 'components/dialog';
 
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
@@ -26,6 +31,7 @@ const AllDialog: Component<ContextProviderProps> = ({ children }) => (
     <ConfirmDialog />
     <PromptDialog />
     <AlertDialog />
+    <CustomDialog />
   </>
 );
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useBrowser } from 'hooks';
 import { Dialog, Transition } from '@headlessui/react';
@@ -17,8 +17,6 @@ const Modal: Component<Props> = ({
   externalToggleDisabled,
 }) => {
   const isBrowser = useBrowser();
-
-  useEffect(() => console.log('IsOpen', isOpen), [isOpen]);
 
   if (!isBrowser) return null;
 

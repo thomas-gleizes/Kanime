@@ -35,7 +35,7 @@ const PromptDialog: Component = () => {
 
   const handleClose = (value: string | false) => {
     dialog.resolve(value);
-    setDialog({ type: null, text: '', resolve: null });
+    setDialog({ type: null, content: '', resolve: null });
     setValue('');
   };
 
@@ -46,7 +46,7 @@ const PromptDialog: Component = () => {
       </Dialog.Title>
       <Dialog.Description>
         <div className="my-8">
-          <label>{dialog.text}</label>
+          <label>{dialog.content}</label>
           <Input
             type="text"
             value={value}
