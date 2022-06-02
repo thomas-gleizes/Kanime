@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { StarIcon, HeartIcon } from '@heroicons/react/solid';
@@ -23,16 +23,23 @@ const AnimePopup: Component<AnimePopupProps> = ({ anime, isOpen, position }) => 
 
   const styles = useMemo(() => ({ [position]: '100%' }), [position]);
 
-  const zIndex = useMemo<string>(() => (isOpen ? 'z-10' : '-z-10'), [isOpen]);
+  const [render, setRender] = useState<boolean>(isOpen);
+
+  useEffect(() => {
+    if (isOpen) setRender(true);
+    else setTimeout(() => setRender(true), 80);
+  }, [isOpen]);
+
+  if (!render) return null;
 
   return (
-    <div className={classnames('absolute w-[140%] h-full top-0', zIndex)} style={styles}>
+    <div className={classnames('absolute w-[140%] f-full z-10 top-0')} style={styles}>
       <Transition
         show={isOpen}
         enter="transition ease-out duration-200"
         enterFrom="transform opacity-0 scale-0"
         enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
+        leave="transition ease-in duration-100"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
