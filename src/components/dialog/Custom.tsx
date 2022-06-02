@@ -20,7 +20,7 @@ const CustomDialog: Component = () => {
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={() => handleClose}>
+    <Modal isOpen={isOpen} toggle={() => handleClose(null)}>
       {isOpen && dialog.content && (
         <dialog.content.component close={handleClose} {...dialog.content.props} />
       )}

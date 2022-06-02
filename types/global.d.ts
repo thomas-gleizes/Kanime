@@ -97,3 +97,5 @@ declare type TailwindcssColors =
   | 'fuchsia'
   | 'pink'
   | 'rose';
+
+declare type CustomColors = 'primary' | 'secondary' | 'tertiary';

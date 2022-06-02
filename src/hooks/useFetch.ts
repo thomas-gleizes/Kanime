@@ -30,5 +30,7 @@ export default function useFetch<Data>(
     return () => source.cancel();
   }, [...deps]);
 
+  console.log('Data', data);
+
   return [data, loading, error];
 }

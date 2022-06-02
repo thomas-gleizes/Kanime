@@ -8,7 +8,7 @@ const ApiService = axios.create({
 });
 
 ApiService.interceptors.response.use(
-  (response: AxiosResponse): any => response.data,
+  (response: any): any => response.data,
   (error: AxiosError) => {
     if (error.isAxiosError) {
       if (error.response.status === 401) {
