@@ -1,18 +1,26 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Error from 'next/error';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
+import {
+  EyeIcon,
+  PencilAltIcon,
+  CheckCircleIcon,
+  DatabaseIcon,
+} from '@heroicons/react/solid';
 
+import { ApiService } from 'services/api.service';
 import { useLayoutContext } from 'context/layout.context';
+import { useUserContext } from 'context/user.context';
 import { useDialog } from 'hooks';
 import { routes } from 'resources/routes';
 import Title from 'components/layouts/Title';
+import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu';
 import KitsuButton from 'components/common/KitsuButton';
 import EditAnimesEntries from 'components/modal/EditAnimesEntries';
 import Header from 'components/layouts/Header';
-import MenuDropDown from 'components/common/inputs/Menu';
 
 export interface AnimeLayoutProps {
   anime: Anime;
@@ -57,7 +65,20 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
 
+  const { isLogin } = useUserContext();
+
   const dialog = useDialog();
+
+  const [entry, setEntry] = useState<Entry>();
+
+  useEffect(() => {
+    ApiService.get('/animes/' + anime.id + '/entry')
+      .then((response) =>
+        // @ts-ignore
+        setEntry(response.entry)
+      )
+      .catch((err) => console.log("pas d'entrés"));
+  }, []);
 
   useEffect(() => {
     setHeaderTransparent(true);
@@ -69,6 +90,26 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
     const result = await dialog.custom(EditAnimesEntries, { anime });
 
     console.log('Result', result);
+  };
+
+  const handleSetupEntry = (status: EntryStatus) => {
+    let payload;
+
+    switch (status) {
+      case 'Completed':
+        payload = { status, startAt: new Date(), finishAt: new Date() };
+        break;
+      case 'Watching':
+        payload = { status, startAt: new Date() };
+        break;
+      default:
+        payload = { status };
+    }
+
+    ApiService.post<{ entry: Entry }>(`/animes/${anime.id}/entries`, payload).then(
+      // @ts-ignore
+      (response) => setEntry(response.entry)
+    );
   };
 
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
@@ -123,7 +164,38 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
                         <KitsuButton slug={anime.slug} />
                       </div>
                       <div>
-                        <MenuDropDown />
+                        <Menu label="Entries">
+                          {!entry && (
+                            <MenuGroup>
+                              <MenuItem
+                                onClick={() => handleSetupEntry('Completed')}
+                                icon={<CheckCircleIcon className="h-5 w-5" />}
+                              >
+                                Terminée
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleSetupEntry('Wanted')}
+                                icon={<EyeIcon className="h-5 w-5" />}
+                              >
+                                A voir
+                              </MenuItem>
+                              <MenuItem
+                                onClick={() => handleSetupEntry('Watching')}
+                                icon={<DatabaseIcon className="h-5 w-5" />}
+                              >
+                                A Commencé
+                              </MenuItem>
+                            </MenuGroup>
+                          )}
+                          <MenuGroup>
+                            <MenuItem
+                              onClick={handleModal}
+                              icon={<PencilAltIcon className="h-5 w-5" />}
+                            >
+                              Edit
+                            </MenuItem>
+                          </MenuGroup>
+                        </Menu>
                       </div>
                     </div>
                   </div>

@@ -70,6 +70,16 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
+  public get = (userId: number, animeId: number): Promise<PrismaEntry> =>
+    this.model.findUnique({
+      where: {
+        anime_id_user_id: {
+          anime_id: animeId,
+          user_id: userId,
+        },
+      },
+    });
+
   public getByUser = (userId: number, visibility: Visibility[]): Promise<PrismaEntry[]> =>
     this.model.findMany({
       where: {
