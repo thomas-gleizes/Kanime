@@ -33,7 +33,7 @@ const ConfirmDialog: Component = () => {
 
   const handleClose = (result: boolean) => {
     dialog.resolve(result);
-    setDialog({ type: null, text: '', resolve: null });
+    setDialog({ type: null, content: '', resolve: null });
   };
 
   return (
