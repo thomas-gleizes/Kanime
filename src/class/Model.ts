@@ -1,5 +1,5 @@
 type Result = {
-  include?: { [key: string]: true };
+  include?: { [key: string]: boolean };
   take?: number;
   skip?: number;
 };
@@ -15,15 +15,17 @@ abstract class Model<D = unknown> {
     return { skip: +params?.skip || 0, take: +params?.limit || 50 };
   }
 
-  protected parseOptions(options?: {
-    includes: { [key: string]: any };
-    limit?: string;
-    skip?: string;
-  }): Result {
+  protected parseOptions<IncludeOptions = any>(
+    options?: ModelOptions<IncludeOptions>
+  ): Result {
     const result: Result = {};
 
-    for (const key of Object.keys(options.includes)) {
-      result.include[key] = true;
+    if (Object.keys(options.include).length) {
+      result.include = {};
+
+      for (const key of Object.keys(options.include)) {
+        result.include[key] = true;
+      }
     }
 
     if (options.limit) result.take = +options.limit;

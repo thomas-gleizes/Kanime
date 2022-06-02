@@ -1,10 +1,11 @@
-import { Visibility } from '@prisma/client';
+import { Prisma, Visibility } from '@prisma/client';
 import { ApiRequest, ApiResponse } from 'next/app';
 
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { EntryModel, UserFollowModel } from 'models';
 import { EntriesMapper } from 'mappers';
+import { PrismaEntryInclude } from 'prisma/app';
 
 const handler = apiHandler();
 
@@ -24,7 +25,11 @@ handler.get(async (req: ApiRequest, res: ApiResponse<any>) => {
       if (one && two) visibility.push('limited');
     }
 
-  const entries = EntriesMapper.many(await EntryModel.getByUser(+id, visibility));
+  const entries = EntriesMapper.many(
+    await EntryModel.getByUser(+id, visibility, {
+      include: req.query.include as PrismaEntryInclude,
+    })
+  );
 
   res.send({ success: true, entries });
 });

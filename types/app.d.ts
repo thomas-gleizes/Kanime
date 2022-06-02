@@ -43,7 +43,7 @@ declare module 'next/app' {
 }
 
 declare module 'prisma/app' {
-  import {
+  import type {
     Anime,
     Category,
     Country,
@@ -72,6 +72,7 @@ declare module 'prisma/app' {
     followers?: PrismaFollows;
     country?: PrismaCountry;
   };
+  declare type PrismaUserInclude = Prisma.UserInclude;
   declare type PrismaUserDelegate = Prisma.UserDelegate<unknown>;
 
   declare type PrismaAnime = Anime & PrismaAnimeRelations;
@@ -82,35 +83,42 @@ declare module 'prisma/app' {
     saga?: PrismaSaga;
     categories?: PrismaCategories;
   };
+  declare type PrismaAnimeInclude = Prisma.AnimeInclude;
   declare type PrismaAnimeDelegate = Prisma.AnimeDelegate<unknown>;
 
   declare type PrismaCategory = Category;
   declare type PrismaCategories = PrismaCategory[];
+  declare type PrismaCategoryInclude = Prisma.CategoryInclude;
   declare type PrismaCategoryDelegate = Prisma.CategoryDelegate<unknown>;
 
   declare type PrismaEntry = Entry & PrismaEntryRelations;
   declare type PrismaEntries = PrismaEntry[];
   declare type PrismaEntryRelations = { anime?: PrismaAnime; user?: PrismaUser };
+  declare type PrismaEntryInclude = Prisma.EntryInclude;
   declare type PrismaEntryDelegate = Prisma.EntryDelegate<unknown>;
 
   declare type PrismaSaga = Saga & PrismaSagaRelations;
   declare type PrismaSagas = PrismaSaga[];
   declare type PrismaSagaRelations = { animes?: PrismaAnimes };
+  declare type PrismaSagaInclude = Prisma.SagaInclude;
   declare type PrismaSagaDelegate = Prisma.SagaDelegate<unknown>;
 
   declare type PrismaLog = Log & PrismaLogRelation;
   declare type PrismaLogs = PrismaLog[];
   declare type PrismaLogRelation = { user?: PrismaUser };
+  declare type PrismaLogInclude = Prisma.LogInclude;
   declare type PrismaLogDelegate = Prisma.LogDelegate<unknown>;
 
   declare type PrismaFollow = UserFollow & PrismaFollowRelations;
   declare type PrismaFollows = PrismaFollow[];
   declare type PrismaFollowRelations = { follower?: PrismaUser; follow?: PrismaUser };
+  declare type PrismaFollowInclude = Prisma.UserFollowInclude;
   declare type PrismaFollowDelegate = Prisma.UserFollowDelegate<unknown>;
 
   declare type PrismaCountry = Country & PrismaCountryRelations;
   declare type PrismaCountries = PrismaCountry[];
   declare type PrismaCountryRelations = { users?: PrismaUsers };
+  declare type PrismaCountryInclude = Prisma.CountryInclude;
   declare type PrismaCountryDelegate = Prisma.CountryDelegate<unknown>;
 
   declare type PrismaPost = Post & PrismaPostRelations;
@@ -121,6 +129,7 @@ declare module 'prisma/app' {
     replyTo?: Post;
     replies?: PrismaPosts;
   };
+  declare type PrismaPostInclude = Prisma.PostInclude;
   declare type PrismaPostsDelegate = Prisma.ReactionDelegate<unknown>;
 
   declare type PrismaAnimeSeason = AnimeSeason;

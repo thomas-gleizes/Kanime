@@ -23,6 +23,12 @@ type modelParams = {
   includes?: string | string[];
 };
 
+type ModelOptions<T> = {
+  include?: T;
+  limit?: string;
+  skip?: string;
+};
+
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 declare type ModalProps = {
