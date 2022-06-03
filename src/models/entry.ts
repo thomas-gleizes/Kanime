@@ -1,4 +1,4 @@
-import { PrismaEntry, PrismaEntryDelegate } from 'prisma/app';
+import { PrismaEntry, PrismaEntryDelegate, PrismaEntryInclude } from 'prisma/app';
 import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
@@ -70,15 +70,30 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
-  public getByUser = (userId: number, visibility: Visibility[]): Promise<PrismaEntry[]> =>
+  public get = (userId: number, animeId: number): Promise<PrismaEntry> =>
+    this.model.findUnique({
+      where: {
+        anime_id_user_id: {
+          anime_id: animeId,
+          user_id: userId,
+        },
+      },
+    });
+
+  public getByUser = (
+    userId: number,
+    visibility: Visibility[],
+    options?: ModelOptions<PrismaEntryInclude>
+  ): Promise<PrismaEntry[]> =>
     this.model.findMany({
       where: {
         user_id: userId,
         visibility: { in: visibility },
       },
-      include: {
-        anime: false,
+      orderBy: {
+        updated_at: 'desc',
       },
+      ...this.parseOptions(options),
     });
 }
 

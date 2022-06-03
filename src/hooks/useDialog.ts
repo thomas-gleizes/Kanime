@@ -2,9 +2,10 @@ import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
 
 type result = {
-  alert: (text: string) => Promise<void>;
-  confirm: (text: string) => Promise<boolean>;
-  prompt: (text: string) => Promise<string | false>;
+  alert: (message: string) => Promise<void>;
+  confirm: (message: string) => Promise<boolean>;
+  prompt: (message: string) => Promise<string | false>;
+  custom: (component: Component, props?: any) => Promise<any>;
 };
 
 export default function useDialog(): result {
@@ -12,12 +13,16 @@ export default function useDialog(): result {
     dialogState: { 1: setDialog },
   } = useLayoutContext();
 
-  const generateDialog = <T>(text: string, type): Promise<T> =>
-    new Promise((resolve) => setDialog({ type, text, resolve }));
+  const generateDialog = <Params, Content = string>(
+    content: Content,
+    type
+  ): Promise<Params> => new Promise((resolve) => setDialog({ type, content, resolve }));
 
   return {
-    alert: (text) => generateDialog<void>(text, dialogTypes.alert),
-    confirm: (text) => generateDialog<boolean>(text, dialogTypes.confirm),
-    prompt: (text) => generateDialog<string | false>(text, dialogTypes.prompt),
+    alert: (message) => generateDialog<void>(message, dialogTypes.alert),
+    confirm: (message) => generateDialog<boolean>(message, dialogTypes.confirm),
+    prompt: (message) => generateDialog<string | false>(message, dialogTypes.prompt),
+    custom: (component, props) =>
+      generateDialog({ component, props }, dialogTypes.custom),
   };
 }

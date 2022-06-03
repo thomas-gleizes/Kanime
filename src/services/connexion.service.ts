@@ -16,7 +16,7 @@ class ConnexionService extends PrismaClient {
     return this._instance;
   }
 }
-// todo fix it on test
-//export default ConnexionService.create();
 
-export default new PrismaClient();
+export default ConnexionService.create();
+
+// export default new PrismaClient();

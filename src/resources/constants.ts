@@ -10,6 +10,7 @@ export const dialogTypes = {
   confirm: 'confirm',
   alert: 'alert',
   prompt: 'prompt',
+  custom: 'custom',
 };
 
 export const loggerReplaceKey = {

@@ -10,11 +10,10 @@ import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 
 import { InputNumber } from 'primereact/inputnumber';
 
-interface Props {
+interface Props extends ModalProps {
   anime: Anime;
-  animeUser?: Entry;
+  entry?: Entry;
   isOpen: boolean;
-  toggle: () => void;
 }
 
 type values = {
@@ -27,14 +26,14 @@ const status = Object.entries(EntryStatus).map(([key, value]) => ({
   value: value,
 }));
 
-const EditAnimesEntries: Component<Props> = ({ isOpen, toggle, anime, animeUser }) => {
+const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
   const initialValues: values = {
-    status: animeUser?.status || EntryStatus.Wanted,
+    status: entry?.status || EntryStatus.Wanted,
     progress: 0,
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={toggle}>
+    <>
       <Dialog.Title className="border-b pb-5">
         <h3 className="text-xl font-bold">{anime.canonicalTitle}</h3>
       </Dialog.Title>
@@ -43,7 +42,7 @@ const EditAnimesEntries: Component<Props> = ({ isOpen, toggle, anime, animeUser 
           {(props) => <FormContent {...props} anime={anime} />}
         </Formik>
       </Dialog.Description>
-    </Modal>
+    </>
   );
 };
 
@@ -90,6 +89,7 @@ const FormContent: Component<FormikProps<values> & { anime: Anime }> = ({
           />
         </div>
       </div>
+      <div className="flex"></div>
     </Form>
   );
 };

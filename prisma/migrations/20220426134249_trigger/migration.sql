@@ -89,9 +89,9 @@ WHERE a.popularity_count IS NOT NULL;
 
 UPDATE animes a
 SET rating_rank = (SELECT ranking
-                   FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC, a2.created_at) as ranking
+                   FROM (SELECT id, DENSE_RANK() over (ORDER BY a2.rating_average DESC, a2.popularity_rank, a2.created_at) as ranking
                          FROM animes a2
-                         WHERE a2.rating_average IS NOT NULL) AS tab
+                         WHERE a2.rating_average IS NOT NULL AND a2.popularity_count > 5) AS tab
                    WHERE tab.id = a.id)
 WHERE a.popularity_count IS NOT NULL;
 END;

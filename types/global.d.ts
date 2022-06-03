@@ -23,7 +23,17 @@ type modelParams = {
   includes?: string | string[];
 };
 
+type ModelOptions<T> = {
+  include?: T;
+  limit?: number;
+  skip?: number;
+};
+
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+declare type ModalProps = {
+  close: (result: any) => void;
+};
 
 type InputType =
   | 'text'
@@ -87,3 +97,5 @@ declare type TailwindcssColors =
   | 'fuchsia'
   | 'pink'
   | 'rose';
+
+declare type CustomColors = 'primary' | 'secondary' | 'tertiary';

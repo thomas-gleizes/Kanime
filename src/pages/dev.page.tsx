@@ -1,41 +1,20 @@
-import React, { useState } from 'react';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
+import React, { useEffect } from 'react';
 
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
-import { Select } from 'components/common/inputs';
+import { ApiService } from 'services/api.service';
 
 const DevPage = () => {
-  const options = [
-    { id: 1, label: 'Montpellier' },
-    { id: 2, label: 'Paris' },
-    { id: 3, label: 'Toulouse' },
-  ];
+  useEffect(() => {
+    ApiService.get('/users/1/entries', {
+      params: {
+        include: { anime: true },
+      },
+    })
+      .then(console.log)
+      .catch(console.error);
+  }, []);
 
-  const [value, setValue] = useState(options[0]);
-
-  return (
-    <div className="p-10 space-y-1">
-      <div>
-        <Button type="button">Click me</Button>
-      </div>
-
-      <div>
-        <InputText
-          onInput={(event, validatePattern) => console.log(event, validatePattern)}
-        />
-      </div>
-      <div>
-        <Select value={value} onChange={(value) => setValue(value)}>
-          {options.map((option, index) => (
-            <Select.Option key={index} value={`${option.id}`}>
-              {option.label}
-            </Select.Option>
-          ))}
-        </Select>
-      </div>
-    </div>
-  );
+  return <div className="p-10 space-y-1"></div>;
 };
 
 DevPage.layout = EmptyLayout;
