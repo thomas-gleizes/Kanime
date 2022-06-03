@@ -90,6 +90,9 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         user_id: userId,
         visibility: { in: visibility },
       },
+      orderBy: {
+        updated_at: 'desc',
+      },
       ...this.parseOptions(options),
     });
 }

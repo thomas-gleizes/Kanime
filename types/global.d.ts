@@ -25,8 +25,8 @@ type modelParams = {
 
 type ModelOptions<T> = {
   include?: T;
-  limit?: string;
-  skip?: string;
+  limit?: number;
+  skip?: number;
 };
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
