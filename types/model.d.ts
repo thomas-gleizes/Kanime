@@ -52,8 +52,8 @@ declare type Anime = {
   slug: string;
   canonicalTitle: string;
   titles: Titles;
-  synopsis: string;
-  description: string;
+  synopsis?: string;
+  description?: string;
   season: 'Winter' | 'Springs' | 'Summer' | 'Fall' | string;
   season_year: string;
   rating: Rating;
