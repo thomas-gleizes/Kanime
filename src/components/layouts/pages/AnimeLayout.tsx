@@ -72,13 +72,14 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
   const [entry, setEntry] = useState<Entry>();
 
   useEffect(() => {
-    ApiService.get('/animes/' + anime.id + '/entry')
-      .then((response) =>
-        // @ts-ignore
-        setEntry(response.entry)
-      )
-      .catch((err) => console.log("pas d'entrés"));
-  }, []);
+    if (isLogin)
+      ApiService.get('/animes/' + anime.id + '/entry')
+        .then((response) =>
+          // @ts-ignore
+          setEntry(response.entry)
+        )
+        .catch(() => setEntry(null));
+  }, [anime, isLogin]);
 
   useEffect(() => {
     setHeaderTransparent(true);

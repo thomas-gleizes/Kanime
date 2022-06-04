@@ -1,5 +1,6 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState, useMemo, useCallback } from 'react';
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
+import { MINUTE, SECOND } from 'resources/constants';
 
 type Dialog<Params = any, Content = any> = {
   type: string;
@@ -17,6 +18,7 @@ export declare type LayoutContext = {
     hideHeader: () => void;
     showHeader: () => void;
   };
+  isInactive: boolean;
 };
 
 interface Props {
@@ -33,11 +35,46 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
   const dialogState = useState<Dialog>({ type: null, content: null, resolve: null });
   const [hiddenHeader, setHiddenHeader] = useState<boolean>(false);
 
+  const [lastEventTime, setLastEventTime] = useState<number>(Date.now());
+  const [isInactive, setIsInactive] = useState<boolean>(false);
+
   const scrollPercent = useScrollPercent();
   const scrollHeight = useScrollHeight();
 
   const hideHeader = () => setHiddenHeader(true);
   const showHeader = () => setHiddenHeader(true);
+
+  const activityListener = useCallback(() => {
+    const now = Date.now();
+
+    if (now - lastEventTime > SECOND * 20) {
+      setLastEventTime(now);
+    }
+
+    isInactive && setIsInactive(false);
+  }, [lastEventTime]);
+
+  useEffect(() => {
+    document.body.addEventListener('mousemove', activityListener);
+    document.body.addEventListener('keydown', activityListener);
+
+    return () => {
+      document.body.removeEventListener('mousemove', activityListener);
+      document.body.removeEventListener('keydown', activityListener);
+    };
+  }, [activityListener]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Date.now() - lastEventTime > MINUTE * 5) {
+        !isInactive && setIsInactive(true);
+      } else {
+        isInactive && setIsInactive(false);
+      }
+    }, MINUTE);
+
+    return () => clearInterval(interval);
+  }, [lastEventTime]);
 
   return (
     <LayoutContext.Provider
@@ -47,6 +84,7 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
         scrollPercent,
         scrollHeight,
         header: { hiddenHeader, hideHeader, showHeader },
+        isInactive,
       }}
     >
       {children}

@@ -63,7 +63,7 @@ const AnimePopup: Component<AnimePopupProps> = ({ anime, isOpen, position }) => 
                       : 'text-red-400'
                   }`}
                 >
-                  Note moyenne : {rating.average}%
+                  Note moy : {rating.average}%
                 </div>
               ) : (
                 <div className="w-1/12" />

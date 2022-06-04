@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { AuthenticationApi } from 'api';
 import { useBrowser, useContextFactory } from 'hooks';
+import { useLayoutContext } from 'context/layout.context';
 import LocalStorageService from 'services/localStorage.service';
 import { MINUTE } from 'resources/constants';
 
@@ -10,11 +11,11 @@ export declare type UserContext = {
   user: User;
   token: string;
   signIn: (user: User, token: string) => void;
-  signOut: () => Promise<void>;
+  signOut: () => void;
 };
 
 interface Props {
-  children: React.ReactNode;
+  children: NodeR;
 }
 
 const UserContext = createContext<UserContext>(null);
@@ -27,6 +28,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   const [token, setToken] = useState<string>(LocalStorageService.getToken());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
+  const { isInactive } = useLayoutContext();
+
   const isBrowser = useBrowser();
 
   const signIn = useCallback((user: User, token: string): void => {
@@ -38,8 +41,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
     setIsLogin(true);
   }, []);
 
-  const signOut = useCallback(async (fetching: boolean = true): Promise<void> => {
-    fetching && (await AuthenticationApi.signOut());
+  const signOut = useCallback((fetching: boolean = true): void => {
+    fetching && AuthenticationApi.signOut();
 
     LocalStorageService.clearUser();
     setIsLogin(false);
@@ -48,21 +51,23 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if (isBrowser && isLogin) {
-      AuthenticationApi.refresh().then(console.log).catch(console.error);
+    if (isBrowser && isLogin && !isInactive) {
+      AuthenticationApi.refresh()
+        .then(() => null)
+        .catch(() => null);
     }
   }, [isBrowser]);
 
   useEffect(() => {
-    if (isLogin && isBrowser) {
-      const interval = setInterval(
-        () => AuthenticationApi.refresh().then(console.log).catch(console.error),
-        MINUTE * 5
-      );
+    const interval = setInterval(() => {
+      if (isLogin && isBrowser && !isInactive)
+        AuthenticationApi.refresh()
+          .then(() => null)
+          .catch(() => null);
+    }, MINUTE * 15);
 
-      return () => clearInterval(interval);
-    }
-  }, [isLogin, isBrowser]);
+    return () => clearInterval(interval);
+  }, [isLogin, isBrowser, isInactive]);
 
   useEffect(() => {
     if (isBrowser && isLogin) {
