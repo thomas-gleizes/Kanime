@@ -76,7 +76,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
       ApiService.get('/animes/' + anime.id + '/entry')
         .then((response) =>
           // @ts-ignore
-          setEntry(response.entry)
+          setEntry(response?.entry)
         )
         .catch(() => setEntry(null));
   }, [anime, isLogin]);
@@ -88,13 +88,17 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
   }, [setHeaderTransparent]);
 
   const handleModal = async () => {
-    const result = await dialog.custom(EditAnimesEntries, { anime });
+    if (isLogin) {
+      const result = await dialog.custom(EditAnimesEntries, { anime });
 
-    console.log('Result', result);
+      console.log('Result', result);
+    }
   };
 
   const handleSetupEntry = (status: EntryStatus) => {
     let payload;
+
+    if (!isLogin) return null;
 
     switch (status) {
       case 'Completed':

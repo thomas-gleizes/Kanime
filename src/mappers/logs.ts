@@ -9,7 +9,7 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
       id: resource.id,
       path: resource.path,
       method: resource.method,
-      ip: resource.ip,
+      ip: '0.0.0.0',
       body: JsonParser(resource.body),
       params: JsonParser(resource.params),
       createAt: formatDateTime(resource.created_at),

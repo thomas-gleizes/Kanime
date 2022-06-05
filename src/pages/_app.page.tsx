@@ -15,10 +15,6 @@ import {
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
 
-import 'primereact/resources/themes/tailwind-light/theme.css';
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-
 const AllContextProvider: Component<ContextProviderProps> = ({ children }) => (
   <LayoutContextProvider>
     <UserContextProvider>{children}</UserContextProvider>

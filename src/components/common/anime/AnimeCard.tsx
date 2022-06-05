@@ -78,18 +78,14 @@ const AnimePopup: Component<AnimePopupProps> = ({ anime, isOpen, position }) => 
               {rating.rank ? (
                 <div className="flex justify-start w-1/2">
                   <StarIcon className="text-yellow-500 h-5 w-5" />
-                  <span className="text-white mx-2 truncate">
-                    #{rating.rank} le mieux noté
-                  </span>
+                  <span className="text-white mx-2 truncate">#{rating.rank}</span>
                 </div>
               ) : (
                 <div className="w-1/12" />
               )}
               {popularity.rank ? (
                 <div className="flex justify-end w-1/2">
-                  <span className="text-white mx-2 truncate">
-                    #{popularity.rank} le plus populaire
-                  </span>
+                  <span className="text-white mx-2 truncate">#{popularity.rank}</span>
                   <HeartIcon className="text-red-500 h-5 w-5" />
                 </div>
               ) : (

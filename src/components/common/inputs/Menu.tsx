@@ -10,7 +10,7 @@ interface Props {
 
 const Menu: Component<Props> = ({ label, children }) => {
   return (
-    <MenuDropDown as="div" className="relative w-full inline-block text-left">
+    <MenuDropDown as="div" className="select-none relative w-full inline-block text-left">
       <div>
         <MenuDropDown.Button className="inline-flex w-full justify-center rounded-md bg-primary bg-opacity-80 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
           {label}
