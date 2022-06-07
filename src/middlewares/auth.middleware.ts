@@ -1,6 +1,6 @@
 import { ApiRequest, ApiResponse } from 'next/app';
 import Security from 'services/security.service';
-import ApiError from 'class/error/ApiError';
+import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
 
 export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) => {

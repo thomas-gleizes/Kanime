@@ -2,7 +2,7 @@ import Error from 'next/error';
 
 import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
-import { SsrError } from 'class/error';
+import { SsrError } from 'errors';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
 type Props = { message: string } & {
@@ -10,7 +10,7 @@ type Props = { message: string } & {
 };
 
 export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
-  if (context.query.hasOwnProperty('error')) throw new SsrError(400, 'This is an error');
+  if (context.query.hasOwnProperty('error')) throw new SsrError(400, 'This is an errors');
 
   const name = context.query.value;
 

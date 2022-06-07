@@ -5,7 +5,7 @@ import { ssrHandler } from 'services/handler.service';
 import { useToggle } from 'hooks';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mappers';
-import { SsrError } from 'class/error';
+import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import AnimeSide from 'components/common/anime/AnimeSide';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';

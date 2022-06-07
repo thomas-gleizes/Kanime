@@ -3,7 +3,7 @@ import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';
-import { ApiError } from 'class/error';
+import { ApiError } from 'errors';
 
 const handler = apiHandler();
 

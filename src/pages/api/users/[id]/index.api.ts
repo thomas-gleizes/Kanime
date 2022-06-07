@@ -4,7 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { errorMessage } from 'resources/constants';
-import { ApiError } from 'class/error';
+import { ApiError } from 'errors';
 
 interface ResponseData extends DefaultResponseData {
   user: User;

@@ -5,7 +5,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, PostModel } from 'models';
 import { AnimesMapper, PostsMapper } from 'mappers';
-import { SsrError } from 'class/error';
+import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import random from 'utils/random';
 import { Field } from 'components/common/formik';

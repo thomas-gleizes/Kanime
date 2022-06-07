@@ -5,7 +5,7 @@ import { verifyUser } from 'middlewares/auth.middleware';
 import { errorMessage } from 'resources/constants';
 import { UserFollowModel, UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-import ApiError from 'class/error/ApiError';
+import { ApiError } from 'errors';
 
 interface ResponseData extends DefaultResponseData {
   users: Users;

@@ -8,7 +8,7 @@ import { useLayoutContext } from 'context/layout.context';
 import { ssrHandler } from 'services/handler.service';
 import { EntryModel, UserFollowModel, UserModel } from 'models';
 import { EntriesMapper, UsersMapper } from 'mappers';
-import { SsrError } from 'class/error';
+import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/anime/AnimeCard';

@@ -13,7 +13,7 @@ declare module 'next/app' {
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: NodeR } & P>;
-    // error?: Component<P>;
+    // errors?: Component<P>;
   };
 
   declare type ApiHandler<T> = NextApiHandler<T>;

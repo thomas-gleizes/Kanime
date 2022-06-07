@@ -1,16 +1,17 @@
 import Error from 'next/error';
 
 import { Page } from 'next/app';
+import { SsrError } from 'errors';
 import { ssrHandler } from 'services/handler.service';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
-import ssrError from 'class/error/SsrError';
 
 type Props = { message: string } & {
   error?: ErrorPage;
 };
 
 export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
-  if (context.query.hasOwnProperty('error')) throw new ssrError(400, 'ssr handler error');
+  if (context.query.hasOwnProperty('error'))
+    throw new SsrError(400, 'ssr handler errors');
 
   const name = context.req.session?.user?.username || 'anonymous';
 

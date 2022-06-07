@@ -3,7 +3,7 @@ import Security from 'services/security.service';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { registerSchema } from 'resources/validations';
-import { ApiError, SchemaError } from 'class/error';
+import { ApiError, SchemaError } from 'errors';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 

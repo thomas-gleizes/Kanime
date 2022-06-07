@@ -4,7 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'middlewares/auth.middleware';
 import { EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
-import { ApiError } from 'class/error';
+import { ApiError } from 'errors';
 
 const handler = apiHandler();
 

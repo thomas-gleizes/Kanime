@@ -1,12 +1,13 @@
+import { EntryStatus } from '@prisma/client';
+
 import { ApiRequest, ApiResponse } from 'next/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'middlewares/auth.middleware';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
-import { ApiError } from 'class/error';
+import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
-import { EntryStatus } from '@prisma/client';
 
 interface ResponseData extends DefaultResponseData {
   entry: Entry;

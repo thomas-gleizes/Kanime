@@ -8,7 +8,7 @@ import type { ParsedUrlQuery } from 'querystring';
 import nc from 'next-connect';
 
 import type { ApiRequest, ApiResponse } from 'next/app';
-import { SsrError, SchemaError, ApiError } from 'class/error';
+import { SsrError, SchemaError, ApiError } from 'errors';
 import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
 import queryParser from 'middlewares/queryParser.middleware';
 import { withSessionSsr } from 'services/session.service';

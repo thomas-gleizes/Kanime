@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from 'next/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'middlewares/auth.middleware';
-import { ApiError } from 'class/error';
+import { ApiError } from 'errors';
 import { AnimeModel, PostModel } from 'models';
 import { PostsMapper } from 'mappers';
 

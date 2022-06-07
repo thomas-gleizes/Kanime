@@ -2,7 +2,7 @@ import { ApiRequest, ApiResponse } from 'next/app';
 import Security from 'services/security.service';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { ApiError, SchemaError } from 'class/error';
+import { ApiError, SchemaError } from 'errors';
 import { resetPasswordSchema } from 'resources/validations';
 import { UserModel } from 'models';
 
