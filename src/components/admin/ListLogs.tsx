@@ -1,4 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { FaEye } from 'react-icons/fa';
+import {
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Tbody,
+  IconButton,
+} from '@chakra-ui/react';
 
 import { ApiService } from 'services/api.service';
 import { routes } from 'resources/routes';
@@ -18,7 +29,43 @@ const ListLogs: Component = () => {
       .catch((error) => toast(error.message, 'error'));
   }, [dep]);
 
-  return null;
+  return (
+    <TableContainer>
+      <Table variant="striped" size="xs">
+        <Thead>
+          <Tr>
+            <Th>Date</Th>
+            <Th>Method</Th>
+            <Th>Path</Th>
+            <Th>Ip</Th>
+            <Th>User</Th>
+            <Th>Params</Th>
+            <Th>Body</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {logs.map((log, index) => (
+            <Tr key={index}>
+              <Td>{log.createAt}</Td>
+              <Td>{log.method}</Td>
+              <Td>{log.path}</Td>
+              <Td>{log.ip}</Td>
+              <Td>{log.user && log.user.username}</Td>
+              <Td>
+                <IconButton
+                  color="teal"
+                  variant="outline"
+                  aria-label=""
+                  icon={<FaEye />}
+                />
+              </Td>
+              <Td></Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </TableContainer>
+  );
 };
 
 export default ListLogs;

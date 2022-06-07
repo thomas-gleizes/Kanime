@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaBars } from 'react-icons/fa';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';
 
 import { useUserContext } from 'context/user.context';
@@ -159,10 +158,7 @@ const Header: Component = () => {
               </div>
               <div className="w-1/3 m-auto px-5 flex justify-end">
                 <i onClick={() => setExtend(!extend)}>
-                  <FaBars
-                    className="text-white hover:text-gray-200 cursor-pointer"
-                    size={32}
-                  />
+                  <MenuIcon className="text-white hover:text-gray-200 cursor-pointer h-14 w-14" />
                 </i>
               </div>
             </div>

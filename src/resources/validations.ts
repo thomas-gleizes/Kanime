@@ -42,6 +42,14 @@ export const resetPasswordSchema = Yup.object({
   token: Yup.string().required(),
 });
 
+export const editEntrySchema = (max: number) =>
+  Yup.object({
+    status: Yup.string(),
+    progress: Yup.number()
+      .min(0, 'La valeur doit étre positif')
+      .max(max, `Le nombre d'épisode max est ${max}`),
+  });
+
 export const createPostSchema = Yup.object({
   userId: Yup.number().required('missing userId'),
   content: Yup.string().required('Veuillez saisir un message'),

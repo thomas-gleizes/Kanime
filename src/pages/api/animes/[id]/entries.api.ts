@@ -16,22 +16,22 @@ interface ResponseData extends DefaultResponseData {
 const handler = apiHandler();
 
 const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
-  const { id: animeId } = req.query;
-  const { id: userId } = req.session.user;
+  const { body, query, session } = req;
+  const { id: animeId } = query;
+  const { user } = session;
 
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-  const data = {
-    userId: +userId,
-    animeId: +animeId,
-    ...req.body,
-  };
+  const currentEntry = EntryModel.get(user.id, +animeId);
 
-  if (data.status === EntryStatus.Completed && anime.episode_count)
-    data.progress = anime.episode_count;
+  if (body.status === EntryStatus.Completed) {
+    if (anime.episode_count) body.progress = anime.episode_count;
+    if (currentEntry) {
+    }
+  }
 
-  const entry = EntriesMapper.one(await EntryModel.upsert(data));
+  const entry = EntriesMapper.one(await EntryModel.upsert({ ...body }));
 
   res.json({ success: true, entry });
 };

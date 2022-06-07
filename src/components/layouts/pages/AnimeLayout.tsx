@@ -9,6 +9,7 @@ import {
   PencilAltIcon,
   CheckCircleIcon,
   DatabaseIcon,
+  PlayIcon,
 } from '@heroicons/react/solid';
 
 import { ApiService } from 'services/api.service';
@@ -89,9 +90,20 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
 
   const handleModal = async () => {
     if (isLogin) {
-      const result = await dialog.custom(EditAnimesEntries, { anime });
+      const result = await dialog.custom(EditAnimesEntries, { anime, entry });
 
-      console.log('Result', result);
+      if (result?.action === 'submit') {
+        const response = await ApiService.post<{ entry: Entry }>(
+          `/animes/${anime.id}/entries`,
+          result.values
+        );
+
+        // @ts-ignore
+        setEntry(response.entry);
+      } else if (result?.action === 'delete') {
+        await ApiService.delete(`/animes/${anime.id}/entries`);
+        setEntry(null);
+      }
     }
   };
 
@@ -186,7 +198,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
                               </MenuItem>
                               <MenuItem
                                 onClick={() => handleSetupEntry('Watching')}
-                                icon={<DatabaseIcon className="h-5 w-5" />}
+                                icon={<PlayIcon className="h-5 w-5" />}
                               >
                                 A Commencé
                               </MenuItem>

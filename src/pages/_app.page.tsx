@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import Head from 'next/head';
+import { ChakraProvider } from '@chakra-ui/react';
 
 import { AppProps } from 'next/app';
 import LayoutContextProvider from 'context/layout.context';
@@ -15,13 +16,13 @@ import {
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
 
-const AllContextProvider: Component<ContextProviderProps> = ({ children }) => (
+const ContextsProvider: Component<ContextProviderProps> = ({ children }) => (
   <LayoutContextProvider>
     <UserContextProvider>{children}</UserContextProvider>
   </LayoutContextProvider>
 );
 
-const AllDialog: Component<ContextProviderProps> = ({ children }) => (
+const Dialogs: Component<ContextProviderProps> = ({ children }) => (
   <>
     {children}
     <ConfirmDialog />
@@ -38,22 +39,24 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <AllContextProvider>
-      <AllDialog>
-        <Head>
-          <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
-          <link
-            href="/fonts/asap/Asap-VariableFont_wght.ttf"
-            crossOrigin=""
-            rel="preload"
-            as="font"
-          />
-        </Head>
-        <Layout {...pageProps}>
-          <Component {...pageProps} />
-        </Layout>
-      </AllDialog>
-    </AllContextProvider>
+    <ChakraProvider>
+      <ContextsProvider>
+        <Dialogs>
+          <Head>
+            <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+            <link
+              href="/fonts/asap/Asap-VariableFont_wght.ttf"
+              crossOrigin=""
+              rel="preload"
+              as="font"
+            />
+          </Head>
+          <Layout {...pageProps}>
+            <Component {...pageProps} />
+          </Layout>
+        </Dialogs>
+      </ContextsProvider>
+    </ChakraProvider>
   );
 };
 

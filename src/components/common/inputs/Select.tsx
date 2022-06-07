@@ -41,7 +41,7 @@ const Select: Component<Props> & { Option?: OptionsComponent } = ({
       <Listbox value={value} onChange={onChange}>
         <div className="relative mt-1">
           <Listbox.Button
-            className={`relative w-full cursor-default rounded-lg bg-white ring-1 ring-${color}-200 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:ring-fuchsia-500 focus-visible:ring-offset-2 focus-visible:ring-offset-${color}-300 sm:text-sm`}
+            className={`relative w-full cursor-default rounded-lg bg-white ring-2 ring-gray-100 hover:ring-${color}-200 focus:ring-${color}-200 py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:ring-offset-2 focus-visible:ring-offset-${color}-300 sm:text-sm`}
           >
             <span className="block truncate">
               {currentValue?.label || placeholder || 'Veuillez sélectionner une valeur'}
@@ -56,7 +56,7 @@ const Select: Component<Props> & { Option?: OptionsComponent } = ({
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-50 py-1 text-base shadow-lg ring-1 ring-gray-500 ring-opacity-20 focus:outline-none sm:text-sm">
+            <Listbox.Options className="absolute mt-1 z-30 max-h-60 w-full overflow-auto rounded-md bg-gray-50 py-1 text-base shadow-lg ring-1 ring-gray-500 ring-opacity-20 focus:outline-none sm:text-sm">
               {children}
             </Listbox.Options>
           </Transition>

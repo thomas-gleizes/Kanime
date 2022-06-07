@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 import { ApiService } from 'services/api.service';
 
 const DevPage = () => {
+  const [value, setValue] = useState();
+
   useEffect(() => {
     ApiService.get('/users/1/entries', {
       params: {
@@ -20,3 +22,5 @@ const DevPage = () => {
 DevPage.layout = EmptyLayout;
 
 export default DevPage;
+
+class PromiseD {}

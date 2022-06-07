@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
@@ -9,6 +9,8 @@ const CustomDialog: Component = () => {
     dialogState: [dialog, setDialog],
   } = useLayoutContext();
 
+  const [content, setContent] = useState<JSX.Element>();
+
   const isOpen = useMemo<boolean>(
     () => dialog.type === dialogTypes.custom,
     [dialog.type]
@@ -16,14 +18,21 @@ const CustomDialog: Component = () => {
 
   const handleClose = (result: any) => {
     dialog.resolve(result);
-    setDialog({ type: null, content: null, resolve: null });
+
+    setTimeout(() => setDialog({ type: null, content: null, resolve: null }), 300);
   };
+
+  useEffect(() => {
+    if (isOpen)
+      setContent(
+        <dialog.content.component close={handleClose} {...dialog.content.props} />
+      );
+    else setTimeout(() => setContent(null), 300);
+  }, [isOpen]);
 
   return (
     <Modal isOpen={isOpen} toggle={() => handleClose(null)}>
-      {isOpen && dialog.content && (
-        <dialog.content.component close={handleClose} {...dialog.content.props} />
-      )}
+      {content}
     </Modal>
   );
 };

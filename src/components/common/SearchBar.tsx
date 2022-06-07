@@ -38,7 +38,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
   }, [arrowUp]);
 
   useEffect(() => {
-    if (enterPress) {
+    if (enterPress && open) {
       router.push(`/animes/${animes[iSelected].slug}`).then(() => setOpen(false));
     }
   }, [enterPress]);
