@@ -99,3 +99,15 @@ declare type TailwindcssColors =
   | 'rose';
 
 declare type CustomColors = 'primary' | 'secondary' | 'tertiary';
+
+declare type upsertEntries = {
+  userId: number;
+  animeId: number;
+  status: EntryStatus;
+  rating: number | null;
+  progress: number;
+  note: string;
+  startedAt: string;
+  finishAt: Date;
+  visibility: Visibility;
+};

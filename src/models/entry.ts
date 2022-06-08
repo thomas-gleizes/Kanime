@@ -3,18 +3,6 @@ import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
-export type upsertData = {
-  userId: number;
-  animeId: number;
-  status: EntryStatus;
-  rating: number | null;
-  progress: number;
-  note: string;
-  startAt: Date;
-  finishAt: Date;
-  visibility: Visibility;
-};
-
 class EntryModel extends Model<PrismaEntryDelegate> {
   constructor(connexion: ConnexionType) {
     super(connexion.entry);
@@ -30,7 +18,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
-  public upsert = ({ userId, animeId, ...data }: upsertData): Promise<PrismaEntry> =>
+  public upsert = ({ userId, animeId, ...data }: upsertEntries): Promise<PrismaEntry> =>
     this.model.upsert({
       where: {
         anime_id_user_id: {
@@ -43,8 +31,8 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        started_at: data.startAt,
-        finish_at: data.finishAt,
+        started_at: new Date(data.startedAt),
+        finish_at: new Date(data.finishAt),
         visibility: data.visibility,
       },
       create: {
@@ -54,8 +42,8 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        started_at: data.startAt,
-        finish_at: data.finishAt,
+        started_at: new Date(data.startedAt),
+        finish_at: new Date(data.finishAt),
         visibility: data.visibility,
       },
     });

@@ -20,18 +20,23 @@ const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) =
   const { id: animeId } = query;
   const { user } = session;
 
+  const payload: upsertEntries = body;
+
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-  const currentEntry = EntryModel.get(user.id, +animeId);
+  const currentEntry = await EntryModel.get(user.id, +animeId);
 
   if (body.status === EntryStatus.Completed) {
     if (anime.episode_count) body.progress = anime.episode_count;
-    if (currentEntry) {
-    }
   }
 
-  const entry = EntriesMapper.one(await EntryModel.upsert({ ...body }));
+  if (anime.episode_count && anime.episode_count === body.progress)
+    body.status = EntryStatus.Completed;
+
+  const entry = EntriesMapper.one(
+    await EntryModel.upsert({ ...body, animeId: anime.id, userId: user.id })
+  );
 
   res.json({ success: true, entry });
 };

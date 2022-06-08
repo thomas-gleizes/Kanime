@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Form, Formik, FormikProps, Field } from 'formik';
 import { EntryStatus, Visibility } from '@prisma/client';
 import { Dialog } from '@headlessui/react';
@@ -18,25 +18,18 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Box,
+  SliderMark,
 } from '@chakra-ui/react';
 
-import type { PrismaEntryStatus, PrismaVisibility } from 'prisma/app';
 import { Select } from 'components/common/inputs';
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
+import { useUserContext } from 'context/user.context';
 
 interface Props extends ModalProps {
   anime: Anime;
   entry?: Entry;
   isOpen: boolean;
-}
-
-interface Values {
-  status: PrismaEntryStatus | null;
-  progress: number;
-  visibility: PrismaVisibility | null;
-  rating: number;
-  note: string;
 }
 
 const status = Object.entries(EntryStatus).map(([key, value]) => ({
@@ -50,15 +43,21 @@ const visibilies = Object.entries(Visibility).map(([key, value]) => ({
 }));
 
 const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
-  const initialValues: Values = {
+  const { user } = useUserContext();
+
+  const initialValues: upsertEntries = {
+    animeId: anime.id,
+    userId: user.id,
     status: entry?.status || EntryStatus.Wanted,
     progress: entry?.progress || 0,
     visibility: entry?.visibility || 'public',
     rating: entry?.rating || null,
     note: entry?.note || '',
+    finishAt: undefined,
+    startedAt: undefined,
   };
 
-  const handleSubmit = (values: Values) => {
+  const handleSubmit = (values: upsertEntries) => {
     close({ action: 'submit', values });
   };
 
@@ -66,7 +65,7 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
     <Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={editEntrySchema(anime.episode.count)}
+      validationSchema={editEntrySchema(anime.episode.count || Infinity)}
     >
       {(props) => (
         <Form>
@@ -77,18 +76,24 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
   );
 };
 
-const FormContent: Component<FormikProps<Values> & { anime: Anime; close: Function }> = ({
+const FormContent: Component<
+  FormikProps<upsertEntries> & { anime: Anime; close: Function }
+> = ({
   values,
   setFieldValue,
-  handleChange,
-  errors,
-  touched,
+
   anime,
   close,
 }) => {
   const handleDelete = () => {
     close({ action: 'delete' });
   };
+
+  const sliderColor = useMemo<string>(() => {
+    if (values.rating >= 7.5) return 'yellow';
+    else if (values.rating >= 5) return 'orange';
+    else return 'red';
+  }, [values.rating]);
 
   return (
     <>
@@ -138,26 +143,38 @@ const FormContent: Component<FormikProps<Values> & { anime: Anime; close: Functi
                   min={0}
                   max={anime.episode.count}
                 />
-                <InputRightAddon>sur {anime.episode.count} épisodes</InputRightAddon>
+                <InputRightAddon>
+                  {anime.episode.count ? `sur ${anime.episode.count} épisodes` : '-'}
+                </InputRightAddon>
               </InputGroup>
               <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
           )}
         </Field>
-        <FormControl className="px-1">
+        <FormControl className="px-1 pt-6">
           <Slider
-            onChange={console.log}
-            aria-label="rating"
-            colorScheme="yellow.600"
-            defaultValue={10}
+            aria-label="slider-ex-4"
+            onChange={(value) => setFieldValue('rating', value)}
+            value={values.rating}
             step={0.1}
             max={10}
           >
-            <SliderTrack>
-              <SliderFilledTrack bgSize="xl" />
+            <SliderMark
+              value={values.rating}
+              textAlign="center"
+              bg="white"
+              color={`${sliderColor}.400`}
+              mt="-10"
+              ml="-5"
+              w="12"
+            >
+              {values.rating}
+            </SliderMark>
+            <SliderTrack bg={`${sliderColor}.100`}>
+              <SliderFilledTrack bg={`${sliderColor}.300`} />
             </SliderTrack>
-            <SliderThumb>
-              <Box color="yellow.400" as={FaStar} />
+            <SliderThumb boxSize={6}>
+              <Box color={`${sliderColor}.400`} as={FaStar} />
             </SliderThumb>
           </Slider>
         </FormControl>
@@ -171,6 +188,24 @@ const FormContent: Component<FormikProps<Values> & { anime: Anime; close: Functi
                 placeholder="Ajouter un commentaire"
                 size="sm"
               />
+            </FormControl>
+          )}
+        </Field>
+        <Field name="startedAt">
+          {({ field, meta }) => (
+            <FormControl isInvalid={meta.touched && meta.error}>
+              <FormLabel>Commencé le</FormLabel>
+              <Input type="date" {...field} />
+              <FormErrorMessage>{meta.error}</FormErrorMessage>
+            </FormControl>
+          )}
+        </Field>
+        <Field name="finishAt">
+          {({ field, meta }) => (
+            <FormControl isInvalid={meta.touched && meta.error}>
+              <FormLabel>Commencé le</FormLabel>
+              <Input type="date" {...field} />
+              <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
           )}
         </Field>

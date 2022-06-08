@@ -39,6 +39,7 @@ type Episode = {
 type Episodes = Array<Episode>;
 
 type EntryStatus = 'Wanted' | 'Watching' | 'Completed' | 'OnHold' | 'Dropped';
+type Visibility = 'public' | 'private' | 'limited';
 
 interface UserMediaHandling {
   raw: string;
