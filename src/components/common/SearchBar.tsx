@@ -10,6 +10,7 @@ import { useKeyPress } from 'hooks';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import timeout from 'utils/timeout';
+import { Spinner } from '@chakra-ui/react';
 
 interface Props {
   transparent: boolean;
@@ -68,18 +69,22 @@ const SearchBar: Component<Props> = ({ transparent }) => {
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
     >
-      <input
-        type="search"
+      <div
         className={classnames(
-          'w-full h-[35px] text-gray-100 px-3 rounded duration-500 ease-in-out transition-all',
+          'flex w-full h-[35px] px-3 rounded duration-500 ease-in-out transition-all items-center',
           {
             'bg-opacity-30 bg-black': transparent,
             'bg-primary-dark bg-opacity-100': !transparent,
           }
         )}
-        value={query}
-        onChange={handleChangeQuery}
-      />
+      >
+        <input
+          type="search"
+          value={query}
+          onChange={handleChangeQuery}
+          className="bg-transparent text-gray-100 w-full h-full my-auto"
+        />
+      </div>
       <div className="absolute top-[55px] w-[96%] right-[2%]">
         <Transition
           show={open}
@@ -93,8 +98,13 @@ const SearchBar: Component<Props> = ({ transparent }) => {
           <div className="w-full bg-gray-50 backdrop-blur rounded border border-gray-300 shadow-xl">
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">
-                <div className="py-1 bg-primary rounded-t text-white">
+                <div className="flex items-center justify-center space-x-3 py-1 bg-primary rounded-t text-white">
                   <h3 className="text-center text-xl">Animes</h3>
+                  <Spinner
+                    thickness="4px"
+                    color="red.300"
+                    className={classnames({ invisible: !loading })}
+                  />
                 </div>
                 {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>
