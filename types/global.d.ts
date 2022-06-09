@@ -107,7 +107,7 @@ declare type upsertEntries = {
   rating: number | null;
   progress: number;
   note: string;
-  startedAt: string;
-  finishAt: Date;
   visibility: Visibility;
+  startedAt: any;
+  finishAt: any;
 };

@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Form, Formik, FormikProps, Field } from 'formik';
 import { EntryStatus, Visibility } from '@prisma/client';
-import { Dialog } from '@headlessui/react';
 import { FaSave, FaStar, FaTrash } from 'react-icons/fa';
+import { Dialog } from '@headlessui/react';
+import dayjs from 'dayjs';
 import {
   IconButton,
   Button,
@@ -21,10 +22,10 @@ import {
   SliderMark,
 } from '@chakra-ui/react';
 
-import { Select } from 'components/common/inputs';
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
 import { useUserContext } from 'context/user.context';
+import { Select } from 'components/common/inputs';
 
 interface Props extends ModalProps {
   anime: Anime;
@@ -37,7 +38,7 @@ const status = Object.entries(EntryStatus).map(([key, value]) => ({
   value: value,
 }));
 
-const visibilies = Object.entries(Visibility).map(([key, value]) => ({
+const visibilities = Object.entries(Visibility).map(([key, value]) => ({
   label: replaceCamelCaseWithSpace(key),
   value,
 }));
@@ -45,17 +46,20 @@ const visibilies = Object.entries(Visibility).map(([key, value]) => ({
 const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
   const { user } = useUserContext();
 
-  const initialValues: upsertEntries = {
-    animeId: anime.id,
-    userId: user.id,
-    status: entry?.status || EntryStatus.Wanted,
-    progress: entry?.progress || 0,
-    visibility: entry?.visibility || 'public',
-    rating: entry?.rating || null,
-    note: entry?.note || '',
-    finishAt: undefined,
-    startedAt: undefined,
-  };
+  const initialValues = useMemo<upsertEntries>(
+    () => ({
+      animeId: anime.id,
+      userId: user.id,
+      status: entry?.status || EntryStatus.Wanted,
+      progress: entry?.progress || 0,
+      visibility: entry?.visibility || 'public',
+      rating: entry?.rating || null,
+      note: entry?.note || null,
+      startedAt: entry?.startedAt ? dayjs(entry.startedAt).format('YYYY-MM-DD') : null,
+      finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : null,
+    }),
+    [entry]
+  );
 
   const handleSubmit = (values: upsertEntries) => {
     close({ action: 'submit', values });
@@ -118,7 +122,7 @@ const FormContent: Component<
               onChange={(value) => setFieldValue('visibility', value)}
               color="blue"
             >
-              {visibilies.map((option, index) => (
+              {visibilities.map((option, index) => (
                 <Select.Option color="blue" key={index} value={option.value}>
                   {option.label}
                 </Select.Option>
