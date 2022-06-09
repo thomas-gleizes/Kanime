@@ -8,7 +8,6 @@ import {
   EyeIcon,
   PencilAltIcon,
   CheckCircleIcon,
-  DatabaseIcon,
   PlayIcon,
 } from '@heroicons/react/solid';
 
@@ -73,14 +72,14 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
   const [entry, setEntry] = useState<Entry>();
 
   useEffect(() => {
-    if (isLogin)
-      ApiService.get('/animes/' + anime.id + '/entry')
+    if (isLogin && anime?.id)
+      ApiService.get(`/animes/${anime.id}/entry`)
         .then((response) =>
           // @ts-ignore
           setEntry(response?.entry)
         )
         .catch(() => setEntry(null));
-  }, [anime, isLogin]);
+  }, [isLogin, anime?.id]);
 
   useEffect(() => {
     setHeaderTransparent(true);

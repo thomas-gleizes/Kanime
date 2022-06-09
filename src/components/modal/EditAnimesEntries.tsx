@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Form, Formik, FormikProps, Field } from 'formik';
 import { EntryStatus, Visibility } from '@prisma/client';
 import { Dialog } from '@headlessui/react';
@@ -61,6 +61,11 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
     close({ action: 'submit', values });
   };
 
+  const handleDelete = () => {
+    if (entry) close({ action: 'delete' });
+    else close(null);
+  };
+
   return (
     <Formik
       initialValues={initialValues}
@@ -69,7 +74,7 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
     >
       {(props) => (
         <Form>
-          <FormContent {...props} anime={anime} close={close} />
+          <FormContent {...props} anime={anime} handleDelete={handleDelete} />
         </Form>
       )}
     </Formik>
@@ -77,18 +82,8 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
 };
 
 const FormContent: Component<
-  FormikProps<upsertEntries> & { anime: Anime; close: Function }
-> = ({
-  values,
-  setFieldValue,
-
-  anime,
-  close,
-}) => {
-  const handleDelete = () => {
-    close({ action: 'delete' });
-  };
-
+  FormikProps<upsertEntries> & { anime: Anime; handleDelete: () => void }
+> = ({ values, setFieldValue, anime, handleDelete }) => {
   const sliderColor = useMemo<string>(() => {
     if (values.rating >= 7.5) return 'yellow';
     else if (values.rating >= 5) return 'orange';
