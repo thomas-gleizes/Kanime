@@ -180,7 +180,7 @@ const FormContent: Component<
         <Field name="note">
           {({ field, meta }) => (
             <FormControl isInvalid={meta.touched && meta.error}>
-              <FormLabel>Note</FormLabel>
+              <FormLabel>Commentaire</FormLabel>
               <Textarea
                 {...field}
                 resize="vertical"
@@ -194,7 +194,7 @@ const FormContent: Component<
           {({ field, meta }) => (
             <FormControl isInvalid={meta.touched && meta.error}>
               <FormLabel>Commencé le</FormLabel>
-              <Input type="date" {...field} />
+              <Input type="date" min={anime.dateBegin} max={values.finishAt} {...field} />
               <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
           )}
@@ -202,8 +202,13 @@ const FormContent: Component<
         <Field name="finishAt">
           {({ field, meta }) => (
             <FormControl isInvalid={meta.touched && meta.error}>
-              <FormLabel>Commencé le</FormLabel>
-              <Input type="date" {...field} />
+              <FormLabel>Fini le</FormLabel>
+              <Input
+                type="date"
+                min={values.startedAt}
+                max={dayjs().format('YYYY-MM-DD')}
+                {...field}
+              />
               <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
           )}
