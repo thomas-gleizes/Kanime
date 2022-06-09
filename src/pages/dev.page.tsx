@@ -2,21 +2,31 @@ import React, { useEffect, useState } from 'react';
 
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 import { ApiService } from 'services/api.service';
+import { Spinner } from '@chakra-ui/react';
+import dayjs from 'dayjs';
+import { ssrHandler } from 'services/handler.service';
+import { AnimeModel } from 'models';
+import { AnimesMapper } from 'mappers';
+import { Page } from 'next/app';
 
-const DevPage = () => {
-  const [value, setValue] = useState();
+export const getServerSideProps = ssrHandler(async (context) => {
+  const anime = await AnimeModel.findById(15484);
 
-  useEffect(() => {
-    ApiService.get('/users/1/entries', {
-      params: {
-        include: { anime: true },
-      },
-    })
-      .then(console.log)
-      .catch(console.error);
-  }, []);
+  return {
+    props: {
+      anime: AnimesMapper.one(anime),
+    },
+  };
+});
 
-  return <div className="p-10 space-y-1"></div>;
+const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
+  return (
+    <div className="p-10 space-y-1">
+      <div>{anime.slug}</div>
+      <div>{dayjs(anime.dateEnd).format()}</div>
+      <div>{dayjs(anime.dateBegin).toString()}</div>
+    </div>
+  );
 };
 
 DevPage.layout = EmptyLayout;

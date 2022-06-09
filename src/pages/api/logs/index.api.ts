@@ -15,11 +15,9 @@ const handler = apiHandler();
 handler.get(verifyAdmin, async (req: ApiRequest, res: ApiResponse<Data>) => {
   const { start, limit } = req.query;
 
-  const logs: Logs = LogsMapper.many(
-    await LogModel.show({ limit: +limit || 20, skip: +start })
-  );
+  const logs = await LogModel.show({ limit: +limit || 20, skip: +start });
 
-  res.json({ success: true, query: req.query, logs });
+  res.json({ success: true, query: req.query, logs: LogsMapper.many(logs) });
 });
 
 export default withSessionApi(handler);

@@ -10,22 +10,12 @@ const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {
   const id = req.query.id as string;
-  const ids = id.split(',');
 
-  if (ids.length > 1) {
-    const animes: Animes = AnimesMapper.many(
-      await AnimeModel.findByIds(ids.map((id) => +id))
-    );
+  const anime = await AnimeModel.findById(+id);
 
-    if (!animes) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
+  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
 
-    return res.json({ success: true, animes });
-  } else {
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findById(+id || 0));
-    if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
-
-    return res.json({ success: true, anime });
-  }
+  return res.json({ success: true, anime: AnimesMapper.one(anime) });
 });
 
 export default withSessionApi(handler);

@@ -1,7 +1,6 @@
 import { PrismaAnime, PrismaAnimes } from 'prisma/app';
-import { formatDateTime } from 'utils/date';
 import jsonParser from 'utils/jsonParser';
-import { CategoriesMapper, EntriesMapper, PostsMapper, SagasMapper } from './index';
+import { CategoriesMapper, EntriesMapper, PostsMapper, SagasMapper } from 'mappers';
 
 class AnimesMapper implements Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
@@ -30,8 +29,8 @@ class AnimesMapper implements Mapper<PrismaAnime, Anime> {
         length: resource.episode_length,
         count: resource.episode_count,
       },
-      dateBegin: formatDateTime(resource.date_begin),
-      dateEnd: formatDateTime(resource.date_end),
+      dateBegin: resource.date_begin && resource.date_begin.toISOString(),
+      dateEnd: resource.date_end && resource.date_end.toISOString(),
       cover: jsonParser<Images>(resource.cover),
       poster: jsonParser<Images>(resource.poster),
       synopsis: resource.synopsis,

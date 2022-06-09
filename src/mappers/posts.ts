@@ -1,5 +1,4 @@
 import { PrismaPost, PrismaPosts } from 'prisma/app';
-import { formatDateTime } from 'utils/date';
 import { AnimesMapper, UsersMapper } from 'mappers';
 
 class LogsMapper implements Mapper<PrismaPost, Post> {
@@ -12,8 +11,8 @@ class LogsMapper implements Mapper<PrismaPost, Post> {
       userId: resource.user_id,
       content: resource.content,
       idParent: resource.parent_id,
-      createdAt: formatDateTime(resource.created_at),
-      updateAt: formatDateTime(resource.updated_at),
+      createdAt: resource.created_at.toISOString(),
+      updateAt: resource.updated_at.toISOString(),
     };
 
     if (resource.anime) post.anime = AnimesMapper.one(resource.anime);

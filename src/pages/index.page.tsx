@@ -1,17 +1,25 @@
-import Moment from 'moment';
-
 import type { Page, StaticProps } from 'next/app';
+import dayjs from 'dayjs';
 import Title from 'components/layouts/Title';
+import { useEffect } from 'react';
 
 interface Props {
-  time: string;
+  time: number;
 }
 
 export const getStaticProps: StaticProps<Props> = async () => {
-  return { props: { time: Moment().format('DD/MM/YYYY HH:mm:ss') }, revalidate: 60 };
+  return { props: { time: Date.now() }, revalidate: 60 };
 };
 
 const HomePage: Page<Props> = ({ time }) => {
+  useEffect(() => {
+    const date = dayjs(time);
+
+    console.log('toString', date.toString());
+    console.log('toDate', date.toDate());
+    console.log('toISOString', date.toISOString());
+  }, [time]);
+
   return (
     <>
       <Title>Accueil</Title>

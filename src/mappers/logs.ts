@@ -1,7 +1,6 @@
 import { PrismaLog, PrismaLogs } from 'prisma/app';
 import JsonParser from 'utils/jsonParser';
 import { UsersMapper } from 'mappers';
-import { formatDateTime } from 'utils/date';
 
 class LogsMapper implements Mapper<PrismaLog, Log> {
   one(resource: PrismaLog): Log {
@@ -12,7 +11,7 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
       ip: '0.0.0.0',
       body: JsonParser(resource.body),
       params: JsonParser(resource.params),
-      createAt: formatDateTime(resource.created_at),
+      createAt: resource.created_at.toISOString(),
     };
 
     if (resource.user) {

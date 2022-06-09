@@ -1,13 +1,12 @@
 import { PrismaUser, PrismaUsers } from 'prisma/app';
-import { formatDate, formatDateTime } from 'utils/date';
-import { EntriesMapper, PostsMapper } from './index';
+import { EntriesMapper, PostsMapper } from 'mappers';
 
 class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> {
   public one(resource: PrismaUser): [user: User, password: string] {
     if (resource) {
       const user: User = {
         bio: resource.bio,
-        birthday: formatDate(resource.birthday),
+        birthday: resource.birthday && resource.birthday.toISOString(),
         city: resource.city,
         gender: resource.gender,
         id: resource.id,
@@ -18,8 +17,8 @@ class UsersMapper implements Mapper<PrismaUser, [user: User, password: string]> 
         followerCount: resource.follower_count,
         avatarPath: resource.avatar_path,
         backgroundPath: resource.background_path,
-        createdAt: formatDateTime(resource.created_at),
-        updatedAt: formatDateTime(resource.updated_at),
+        createdAt: resource.created_at.toISOString(),
+        updatedAt: resource.updated_at.toISOString(),
       };
 
       if (resource.entries) user.entries = EntriesMapper.many(resource.entries);

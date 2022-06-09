@@ -15,6 +15,7 @@ import { ApiService } from 'services/api.service';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { useToggle } from 'hooks';
+import dayjs from 'dayjs';
 
 const fetchLogs = (limit: number, start: number) =>
   ApiService.get<any, { logs: Logs }>(routes.logs.api.list, { params: { limit, start } });
@@ -46,7 +47,7 @@ const ListLogs: Component = () => {
         <Tbody>
           {logs.map((log, index) => (
             <Tr key={index}>
-              <Td>{log.createAt}</Td>
+              <Td>{dayjs(log.createAt).format('DD/MM/YYYY à HH:mm:s')}</Td>
               <Td>{log.method}</Td>
               <Td>{log.path}</Td>
               <Td>{log.ip}</Td>
