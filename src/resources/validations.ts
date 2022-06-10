@@ -48,6 +48,14 @@ export const editEntrySchema = (max: number) =>
     progress: Yup.number()
       .min(0, 'La valeur doit étre positif')
       .max(max, `Le nombre d'épisode max est ${max}`),
+    visibility: Yup.string(),
+    rating: Yup.number()
+      .min(0, 'La note minimal est 0.')
+      .max(10, 'La note maximal est 10')
+      .nullable(),
+    note: Yup.string().max(1000, 'Nombre de caractère max atteint: 1000').nullable(),
+    startedAt: Yup.string().nullable(),
+    finishAt: Yup.string().nullable(),
   });
 
 export const createPostSchema = Yup.object({

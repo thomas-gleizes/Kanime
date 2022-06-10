@@ -6,8 +6,9 @@ import { withSessionApi } from 'services/session.service';
 import { verifyUser } from 'middlewares/auth.middleware';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
-import { ApiError } from 'errors';
+import { ApiError, SchemaError } from 'errors';
 import { errorMessage } from 'resources/constants';
+import { editEntrySchema } from 'resources/validations';
 
 interface ResponseData extends DefaultResponseData {
   entry: Entry;
@@ -15,42 +16,14 @@ interface ResponseData extends DefaultResponseData {
 
 const handler = apiHandler();
 
-const createOrUpdate = async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
-  const { body, query, session } = req;
-  const { id: animeId } = query;
-  const { user } = session;
-
-  const anime = await AnimeModel.findById(+animeId);
-  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
-
-  const payload: upsertEntries = { ...body, animeId: animeId, userId: user.id };
-  const currentEntry = await EntryModel.get(user.id, +animeId);
-
-  if (body.status === EntryStatus.Completed) {
-    if (anime.episode_count) payload.progress = anime.episode_count;
-  }
-
-  if (anime.episode_count && anime.episode_count === body.progress)
-    payload.status = EntryStatus.Completed;
-
-  const entry = EntriesMapper.one(
-    await EntryModel.upsert({ ...payload, animeId: anime.id, userId: user.id })
-  );
-
-  res.json({ success: true, entry });
-};
-
-handler.post(verifyUser, createOrUpdate);
-handler.patch(verifyUser, createOrUpdate);
-
 handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
-  const { id: animeId } = req.query;
-
   const entry = EntriesMapper.one(
-    await EntryModel.unique(+req.session.user.id, +animeId)
+    await EntryModel.get(req.session.user.id, +req.query.id)
   );
 
-  res.json({ success: true, entry });
+  if (!entry) throw new ApiError(404, 'Entry not found');
+
+  res.send({ success: true, entry });
 });
 
 handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
@@ -64,5 +37,60 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData
 
   res.status(204).json({ success: true, entry });
 });
+
+const createOrUpdate = async (
+  req: ApiRequest<upsertEntries>,
+  res: ApiResponse<ResponseData>
+) => {
+  const { body, query, session } = req;
+  const { id: animeId } = query;
+  const { user } = session;
+
+  const anime = await AnimeModel.findById(+animeId);
+  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
+
+  try {
+    await editEntrySchema(anime.episode_count || Infinity).validate(body);
+  } catch (err) {
+    throw new SchemaError(err);
+  }
+
+  const payload: upsertEntries = { ...body, animeId: animeId, userId: user.id };
+
+  const currentEntry = await EntryModel.get(user.id, +animeId);
+
+  if (body.status === EntryStatus.Completed && anime.episode_count)
+    payload.progress = anime.episode_count;
+  else if (payload.progress === anime.episode_count)
+    payload.status = EntryStatus.Completed;
+
+  if (!payload.startedAt) {
+    if (currentEntry?.started_at) payload.startedAt = currentEntry.started_at;
+    else {
+      // @ts-ignore
+      if ([EntryStatus.Completed, EntryStatus.Watching].includes(payload.status))
+        payload.startedAt = new Date();
+    }
+  }
+
+  if (!payload.finishAt) {
+    if (currentEntry?.finish_at) payload.finishAt = currentEntry.finish_at;
+    else if (EntryStatus.Completed === payload.status) payload.finishAt = new Date();
+  }
+
+  console.log('[EntryStatus.Completed, EntryStatus.Watching]', [
+    EntryStatus.Completed,
+    EntryStatus.Watching,
+  ]);
+
+  const entry = EntriesMapper.one(
+    await EntryModel.upsert({ ...payload, animeId: anime.id, userId: user.id })
+  );
+
+  res.json({ success: true, entry });
+};
+
+handler.post(verifyUser, createOrUpdate);
+handler.patch(verifyUser, createOrUpdate);
 
 export default withSessionApi(handler);

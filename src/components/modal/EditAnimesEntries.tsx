@@ -55,8 +55,10 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
       visibility: entry?.visibility || 'public',
       rating: entry?.rating || null,
       note: entry?.note || null,
-      startedAt: entry?.startedAt ? dayjs(entry.startedAt).format('YYYY-MM-DD') : null,
-      finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : null,
+      startedAt: entry?.startedAt
+        ? dayjs(entry.startedAt).format('YYYY-MM-DD')
+        : undefined,
+      finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : undefined,
     }),
     [entry]
   );
@@ -87,12 +89,14 @@ const EditAnimesEntries: Component<Props> = ({ close, anime, entry }) => {
 
 const FormContent: Component<
   FormikProps<upsertEntries> & { anime: Anime; handleDelete: () => void }
-> = ({ values, setFieldValue, anime, handleDelete }) => {
+> = ({ values, setFieldValue, errors, anime, handleDelete }) => {
   const sliderColor = useMemo<string>(() => {
     if (values.rating >= 7.5) return 'yellow';
     else if (values.rating >= 5) return 'orange';
     else return 'red';
   }, [values.rating]);
+
+  console.log('Errors', errors);
 
   return (
     <>
@@ -187,6 +191,7 @@ const FormContent: Component<
                 placeholder="Ajouter un commentaire"
                 size="sm"
               />
+              <FormErrorMessage>{meta.error}</FormErrorMessage>
             </FormControl>
           )}
         </Field>

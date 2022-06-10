@@ -73,7 +73,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
 
   useEffect(() => {
     if (isLogin && anime?.id)
-      ApiService.get(`/animes/${anime.id}/entry`)
+      ApiService.get(`/animes/${anime.id}/entries`)
         .then((response) =>
           // @ts-ignore
           setEntry(response?.entry)
