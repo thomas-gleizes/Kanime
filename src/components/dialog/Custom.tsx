@@ -25,16 +25,16 @@ const CustomDialog: Component = () => {
   useEffect(() => {
     if (isOpen)
       setContent(
-        <dialog.content.component close={handleClose} {...dialog.content.props} />
+        <dialog.content.component
+          isOpen={isOpen}
+          close={handleClose}
+          {...dialog.content.props}
+        />
       );
-    else setTimeout(() => setContent(null), 300);
-  }, [isOpen]);
+    else setTimeout(() => setContent(undefined), 300);
+  }, [isOpen, dialog]);
 
-  return (
-    <Modal isOpen={isOpen} toggle={() => handleClose(null)}>
-      {content}
-    </Modal>
-  );
+  return content;
 };
 
 export default CustomDialog;

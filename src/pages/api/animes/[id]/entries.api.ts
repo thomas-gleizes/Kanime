@@ -78,11 +78,6 @@ const createOrUpdate = async (
     else if (EntryStatus.Completed === payload.status) payload.finishAt = new Date();
   }
 
-  console.log('[EntryStatus.Completed, EntryStatus.Watching]', [
-    EntryStatus.Completed,
-    EntryStatus.Watching,
-  ]);
-
   const entry = EntriesMapper.one(
     await EntryModel.upsert({ ...payload, animeId: anime.id, userId: user.id })
   );

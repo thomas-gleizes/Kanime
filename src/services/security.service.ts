@@ -21,7 +21,7 @@ class Security {
 
   static sign(payload: any, remember: boolean = false): string {
     return jwt.sign({ user: payload }, this.SECRET_TOKEN, {
-      expiresIn: remember ? '30s' : '1d',
+      expiresIn: remember ? '60d' : '7d',
     });
   }
 

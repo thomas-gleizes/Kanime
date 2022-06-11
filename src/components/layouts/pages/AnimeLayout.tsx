@@ -19,8 +19,11 @@ import { routes } from 'resources/routes';
 import Title from 'components/layouts/Title';
 import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu';
 import KitsuButton from 'components/common/KitsuButton';
-import EditAnimesEntries from 'components/modal/EditAnimesEntries';
 import Header from 'components/layouts/Header';
+import EditAnimesEntries, {
+  Props as EditAnimesEntriesProps,
+  Result as EditAnimesEntriesResult,
+} from 'components/modal/EditAnimesEntries';
 
 export interface AnimeLayoutProps {
   anime: Anime;
@@ -61,11 +64,10 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
   anime,
   error,
 }) => {
+  const { isLogin } = useUserContext();
   const {
     activeTransparentState: [_, setHeaderTransparent],
   } = useLayoutContext();
-
-  const { isLogin } = useUserContext();
 
   const dialog = useDialog();
 
@@ -78,7 +80,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
           // @ts-ignore
           setEntry(response?.entry)
         )
-        .catch(() => setEntry(null));
+        .catch(() => setEntry(undefined));
   }, [isLogin, anime?.id]);
 
   useEffect(() => {
@@ -89,7 +91,10 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
 
   const handleModal = async () => {
     if (isLogin) {
-      const result = await dialog.custom(EditAnimesEntries, { anime, entry });
+      const result = await dialog.custom<EditAnimesEntriesResult, EditAnimesEntriesProps>(
+        EditAnimesEntries,
+        { anime, entry }
+      );
 
       if (result?.action === 'submit') {
         const response = await ApiService.post<{ entry: Entry }>(
@@ -101,31 +106,17 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
         setEntry(response.entry);
       } else if (result?.action === 'delete') {
         await ApiService.delete(`/animes/${anime.id}/entries`);
-        setEntry(null);
+        setEntry(undefined);
       }
     }
   };
 
   const handleSetupEntry = (status: EntryStatus) => {
-    let payload;
-
-    if (!isLogin) return null;
-
-    switch (status) {
-      case 'Completed':
-        payload = { status, startAt: new Date(), finishAt: new Date() };
-        break;
-      case 'Watching':
-        payload = { status, startAt: new Date() };
-        break;
-      default:
-        payload = { status };
-    }
-
-    ApiService.post<{ entry: Entry }>(`/animes/${anime.id}/entries`, payload).then(
-      // @ts-ignore
-      (response) => setEntry(response.entry)
-    );
+    if (isLogin)
+      ApiService.post<{ entry: Entry }>(`/animes/${anime.id}/entries`, { status }).then(
+        // @ts-ignore
+        (response) => setEntry(response.entry)
+      );
   };
 
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;

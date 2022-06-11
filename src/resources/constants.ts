@@ -11,14 +11,14 @@ export const dialogTypes = {
   alert: 'alert',
   prompt: 'prompt',
   custom: 'custom',
-};
+} as const;
 
 export const loggerReplaceKey = {
   password: '********',
   confirmPassword: '********',
   avatar: 'data:Image/*;base64:*****',
   background: 'data:Image/*;base64:*****',
-};
+} as const;
 
 export const errorMessage = {
   ACCESS_DENIED: 'Access denied',
@@ -32,7 +32,7 @@ export const errorMessage = {
   AUTH_LOGIN: 'email/password wrong [400-20]',
   AUTH_REGISTER: '[400-21]',
   ANIME_USER_STATUS: 'status must be a AnimeStatus [400-30]',
-};
+} as const;
 
 export const tailwindcssGradiant = {
   50: '50',
@@ -45,7 +45,7 @@ export const tailwindcssGradiant = {
   700: '700',
   800: '800',
   900: '900',
-};
+} as const;
 
 export const tailwindcssColors = {
   slate: 'slate',
@@ -70,7 +70,7 @@ export const tailwindcssColors = {
   fuchsia: 'fuchsia',
   pink: 'pink',
   rose: 'rose',
-};
+} as const;
 
 export const SECOND = 1000;
 export const MINUTE = SECOND * 60;

@@ -31,8 +31,9 @@ type ModelOptions<T> = {
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-declare type ModalProps = {
-  close: (result: any) => void;
+declare type ModalProps<Result = any> = {
+  close: (result: Result) => void;
+  isOpen: boolean;
 };
 
 type InputType =
@@ -105,9 +106,9 @@ declare type upsertEntries = {
   animeId: number;
   status: EntryStatus;
   rating: number | null;
-  progress: number;
-  note: string;
+  progress: number | null;
+  note: string | null;
   visibility: Visibility;
-  startedAt: any;
-  finishAt: any;
+  startedAt?: string | Date | null;
+  finishAt?: string | Date | null;
 };

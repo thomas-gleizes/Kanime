@@ -5,7 +5,10 @@ type result = {
   alert: (message: string) => Promise<void>;
   confirm: (message: string) => Promise<boolean>;
   prompt: (message: string) => Promise<string | false>;
-  custom: (component: Component, props?: any) => Promise<any>;
+  custom: <Result = any, Props = any>(
+    component: Component<Props>,
+    props?: Props
+  ) => Promise<Result>;
 };
 
 export default function useDialog(): result {
@@ -15,7 +18,7 @@ export default function useDialog(): result {
 
   const generateDialog = <Params, Content = string>(
     content: Content,
-    type
+    type: keyof typeof dialogTypes
   ): Promise<Params> => new Promise((resolve) => setDialog({ type, content, resolve }));
 
   return {
@@ -26,3 +29,5 @@ export default function useDialog(): result {
       generateDialog({ component, props }, dialogTypes.custom),
   };
 }
+
+type Test = keyof typeof dialogTypes;
