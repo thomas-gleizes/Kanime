@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useMemo, useCallback } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
 

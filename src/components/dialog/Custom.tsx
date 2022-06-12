@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
-import Modal from 'components/layouts/Modal';
 
 const CustomDialog: Component = () => {
   const {

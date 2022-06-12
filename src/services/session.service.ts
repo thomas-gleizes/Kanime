@@ -1,11 +1,6 @@
 import type { IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import {
-  ApiHandler,
-  ServerSideProps,
-  ServerSidePropsContext,
-  ServerSidePropsResult,
-} from 'next/app';
+import { ApiHandler } from 'next/app';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,

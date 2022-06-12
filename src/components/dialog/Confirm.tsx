@@ -1,10 +1,15 @@
 import React, { useEffect, useMemo } from 'react';
-import { Dialog } from '@headlessui/react';
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Button,
+} from '@chakra-ui/react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
-import Modal from 'components/layouts/Modal';
-import Button from 'components/common/Button';
 
 const ConfirmDialog: Component = () => {
   const {
@@ -37,23 +42,32 @@ const ConfirmDialog: Component = () => {
   };
 
   return (
-    <Modal isOpen={isOpen} toggle={() => handleClose(false)} externalToggleDisabled>
-      <Dialog.Title>
-        <h3 className="text-xl font-bold px-3">Veuillez confirmer !</h3>
-      </Dialog.Title>
-      <Dialog.Description>
-        <div className="my-8">
-          <p className="text-center">{dialog.content}</p>
-        </div>
-        <div className="w-full flex justify-between space-x-5">
-          <Button color="sky" onClick={() => handleClose(false)}>
-            Annuler
-          </Button>
-          <Button color="emerald" onClick={() => handleClose(true)}>
-            Confirmer
-          </Button>
-        </div>
-      </Dialog.Description>
+    <Modal isOpen={isOpen} onClose={() => handleClose(false)}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <h3 className="text-xl font-bold px-3">Veuillez confirmer !</h3>
+        </ModalHeader>
+        <ModalBody>
+          <div className="my-8">
+            <p className="text-center">{dialog.content}</p>
+          </div>
+          <div className="w-full flex justify-between space-x-5">
+            <Button color="blue.500" variant="outline" onClick={() => handleClose(false)}>
+              Annuler
+            </Button>
+            <Button colorScheme="blue" color="white" onClick={() => handleClose(true)}>
+              Confirmer
+            </Button>
+            {/*<Button color="sky" onClick={() => handleClose(false)}>*/}
+            {/*  Annuler*/}
+            {/*</Button>*/}
+            {/*<Button color="emerald" onClick={() => handleClose(true)}>*/}
+            {/*  Confirmer*/}
+            {/*</Button>*/}
+          </div>
+        </ModalBody>
+      </ModalContent>
     </Modal>
   );
 };

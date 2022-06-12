@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-
-import EmptyLayout from 'components/layouts/pages/EmptyLayout';
-import { ApiService } from 'services/api.service';
-import { Spinner } from '@chakra-ui/react';
+import React from 'react';
 import dayjs from 'dayjs';
-import { ssrHandler } from 'services/handler.service';
+import { Button } from '@chakra-ui/react';
+
+import { Page } from 'next/app';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mappers';
-import { Page } from 'next/app';
+import { ssrHandler } from 'services/handler.service';
+import { useDialog } from 'hooks';
+import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
 export const getServerSideProps = ssrHandler(async (context) => {
   const anime = await AnimeModel.findById(15484);
@@ -20,11 +20,14 @@ export const getServerSideProps = ssrHandler(async (context) => {
 });
 
 const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
+  const dialog = useDialog();
+
   return (
     <div className="p-10 space-y-1">
       <div>{anime.slug}</div>
       <div>{dayjs(anime.dateEnd).format()}</div>
       <div>{dayjs(anime.dateBegin).toString()}</div>
+      <Button onClick={() => dialog.confirm('test')}>Click me</Button>
     </div>
   );
 };
@@ -32,5 +35,3 @@ const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
 DevPage.layout = EmptyLayout;
 
 export default DevPage;
-
-class PromiseD {}
