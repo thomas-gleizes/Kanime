@@ -12,6 +12,7 @@ import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/anime/AnimeCard';
+import AnimesEntry from 'components/common/anime/AnimesEntry';
 
 interface Props {
   user: User;
@@ -96,10 +97,10 @@ export const UserPage: Page<Props> = (props) => {
         </div>
       </div>
       <div className="text-center mt-5 h-screen">
-        <div className="grid grid-cols-4 max-w-1100 mx-auto">
+        <div className="grid grid-cols-5 max-w-1000 mx-auto">
           {entries.map((entry, index) => (
             <div key={index} className="my-3 mx-auto">
-              <AnimeCard anime={entry.anime} index={index} />
+              <AnimesEntry entry={entry} />
             </div>
           ))}
         </div>
