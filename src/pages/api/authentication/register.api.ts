@@ -6,6 +6,7 @@ import { registerSchema } from 'resources/validations';
 import { ApiError, SchemaError } from 'errors';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
+import HttpStatus from 'resources/HttpStatus';
 
 const handler = apiHandler();
 
@@ -25,7 +26,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
   if (users.length) {
     let key = 'email';
     if (users[0].username === userData.username) key = 'username';
-    throw new ApiError(409, `${key} already exist`);
+    throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
   }
 
   const [user] = UsersMapper.one(

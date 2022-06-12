@@ -4,6 +4,7 @@ import { withSessionApi } from 'services/session.service';
 import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { errorMessage } from 'resources/constants';
+import HttpStatus from 'resources/HttpStatus';
 import { ApiError } from 'errors';
 
 interface ResponseData extends DefaultResponseData {
@@ -17,7 +18,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
 
   const [user] = UsersMapper.one(await UserModel.findById(+id));
 
-  if (!user) throw new ApiError(404, errorMessage.USER_NOT_FOUND);
+  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
 
   res.json({ success: true, user });
 });

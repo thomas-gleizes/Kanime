@@ -6,6 +6,7 @@ import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { signInSchema } from 'resources/validations';
 import { errorMessage } from 'resources/constants';
+import HttpStatus from 'resources/HttpStatus';
 import { ApiError, SchemaError } from 'errors';
 
 const handler = apiHandler();
@@ -26,7 +27,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
   );
 
   if (!user || !Security.compare(body.password + user.username, hash)) {
-    throw new ApiError(400, errorMessage.AUTH_LOGIN);
+    throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
   }
 
   const token = Security.sign(user, body.rememberMe);

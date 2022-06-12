@@ -2,6 +2,7 @@ import { ApiRequest, ApiResponse } from 'next/app';
 import Security from 'services/security.service';
 import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
+import HttpStatus from 'resources/HttpStatus';
 
 export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) => {
   try {
@@ -13,7 +14,7 @@ export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) =
       await req.session.save();
     }
   } catch (e) {
-    throw new ApiError(401, errorMessage.ACCESS_DENIED);
+    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
   }
 
   next();
@@ -29,10 +30,11 @@ export const verifyAdmin = async (req, res, next) => {
       await req.session.save();
     }
   } catch (e) {
-    throw new ApiError(401, errorMessage.ACCESS_DENIED);
+    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
   }
 
-  if (!req.session.user.isAdmin) throw new ApiError(401, errorMessage.ACCESS_DENIED);
+  if (!req.session.user.isAdmin)
+    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
 
   next();
 };

@@ -5,6 +5,7 @@ import { verifyUser } from 'middlewares/auth.middleware';
 import { ApiError } from 'errors';
 import { AnimeModel, PostModel } from 'models';
 import { PostsMapper } from 'mappers';
+import HttpStatus from 'resources/HttpStatus';
 
 interface GetResponseData extends DefaultResponseData {
   posts: Posts;
@@ -32,9 +33,11 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseDa
     session: { user },
   } = req;
 
-  if (body.constructor.length > 0) throw new ApiError(400, 'Content message missing');
+  if (body.constructor.length > 0)
+    throw new ApiError(HttpStatus.BAD_REQUEST, 'Content message missing');
 
-  if (!(await AnimeModel.isExist(+animeId))) throw new ApiError(404, 'Anime not found');
+  if (!(await AnimeModel.isExist(+animeId)))
+    throw new ApiError(HttpStatus.NOT_FOUND, 'Anime not found');
 
   const post = await PostModel.create({
     userId: user.id,
@@ -54,10 +57,10 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
 
   const post = await PostModel.findByAnimeIdAndUserId(+animeId, user.id);
 
-  if (!post) throw new ApiError(404, 'Post not found');
+  if (!post) throw new ApiError(HttpStatus.NOT_FOUND, 'Post not found');
 
   if (post.user_id !== user.id)
-    throw new ApiError(403, 'You are not allowed to delete this post');
+    throw new ApiError(HttpStatus.BAD_GATEWAY, 'You are not allowed to delete this post');
 
   await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
 

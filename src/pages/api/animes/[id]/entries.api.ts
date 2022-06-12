@@ -7,6 +7,7 @@ import { verifyUser } from 'middlewares/auth.middleware';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
 import { ApiError, SchemaError } from 'errors';
+import HttpStatus from 'resources/HttpStatus';
 import { errorMessage } from 'resources/constants';
 import { editEntrySchema } from 'resources/validations';
 
@@ -21,7 +22,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) 
     await EntryModel.get(req.session.user.id, +req.query.id)
   );
 
-  if (!entry) throw new ApiError(404, 'Entry not found');
+  if (!entry) throw new ApiError(HttpStatus.NOT_FOUND, 'Entry not found');
 
   res.send({ success: true, entry });
 });
@@ -31,7 +32,7 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData
   const { id: userId } = req.session.user;
 
   const anime = await AnimeModel.findById(+animeId);
-  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
+  if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
 
   const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
 
@@ -47,7 +48,7 @@ const createOrUpdate = async (
   const { user } = session;
 
   const anime = await AnimeModel.findById(+animeId);
-  if (!anime) throw new ApiError(404, errorMessage.ANIME_NOT_FOUND);
+  if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
 
   try {
     await editEntrySchema(anime.episode_count || Infinity).validate(body);

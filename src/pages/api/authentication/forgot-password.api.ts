@@ -5,6 +5,7 @@ import { withSessionApi } from 'services/session.service';
 import { UserModel } from 'models';
 import { ApiError } from 'errors';
 import { DAY } from 'resources/constants';
+import HttpStatus from 'resources/HttpStatus';
 
 const handler = apiHandler();
 
@@ -13,13 +14,16 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
 
   const user = await UserModel.findByEmail(email);
 
-  if (!user) throw new ApiError(404, 'email user not found');
+  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, 'email user not found');
 
   if (
     user.last_ask_reset_password &&
     user.last_ask_reset_password.getTime() + DAY > Date.now()
   )
-    throw new ApiError(400, 'you can ask to change your password only one time per day');
+    throw new ApiError(
+      HttpStatus.BAD_REQUEST,
+      'you can ask to change your password only one time per day'
+    );
 
   const hash = Security.sha256(user.password + user.username);
   await UserModel.updateResetPasswordToken(user.id, hash);

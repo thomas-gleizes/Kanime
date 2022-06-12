@@ -1,12 +1,14 @@
-class ApiError extends Error {
-  private readonly _code: responseCode;
+import HttpStatus from 'resources/HttpStatus';
 
-  constructor(code, message) {
+class ApiError extends Error {
+  private readonly _code: HttpStatus;
+
+  constructor(code: HttpStatus, message: string) {
     super(message);
     this._code = code;
   }
 
-  get code(): number {
+  get code(): HttpStatus {
     return this._code;
   }
 }
