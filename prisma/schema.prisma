@@ -125,8 +125,8 @@ model Entry {
   rating     Float?
   progress   Int         @default(0) @db.SmallInt
   favorite   Boolean     @default(false)
-  started_at DateTime?
-  finish_at  DateTime?
+  started_at Date?
+  finish_at  Date?
   note       String?     @db.MediumText
   visibility Visibility  @default(public)
   created_at DateTime    @default(now()) @db.Timestamp(0)
