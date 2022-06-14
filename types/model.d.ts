@@ -61,8 +61,8 @@ declare type Anime = {
   popularity: Popularity;
   dateBegin: any;
   dateEnd: any;
-  poster: Images | string;
-  cover: Images | string;
+  poster: Images;
+  cover: Images;
   episode: Episode;
   type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
   status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';

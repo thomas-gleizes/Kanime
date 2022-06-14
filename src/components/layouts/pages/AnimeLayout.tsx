@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Error from 'next/error';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
 import {
@@ -24,6 +23,8 @@ import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
   Result as EditAnimesEntriesResult,
 } from 'components/modal/EditAnimesEntries';
+import Img from 'components/common/Img';
+import { POSTER_RAPPORT } from 'resources/constants';
 
 export interface AnimeLayoutProps {
   anime: Anime;
@@ -155,12 +156,13 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
             <div className="mx-auto w-full max-w-[1150px]">
               <div className="sticky float-right w-200 top-[230px]">
                 <div className="relative w-[214px] top-[-150px]">
-                  <div className="w-full shadow h-[304px] bg-kitsu mb-2">
-                    {anime.poster?.small && (
-                      <Image
-                        src={anime.poster.small as string}
+                  <div className="w-full shadow h-[304px] rounded-md bg-kitsu mb-2">
+                    {anime.poster?.medium && (
+                      <Img
+                        className="rounded-md"
+                        src={anime.poster.medium as string}
                         width={214}
-                        height={304}
+                        height={214 * POSTER_RAPPORT}
                         alt="test"
                       />
                     )}

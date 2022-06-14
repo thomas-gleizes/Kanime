@@ -9,8 +9,8 @@ import { ssrHandler } from 'services/handler.service';
 import { useDialog } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
-export const getServerSideProps = ssrHandler(async (context) => {
-  const anime = await AnimeModel.findById(15484);
+export const getServerSideProps = ssrHandler(async () => {
+  const anime = await AnimeModel.findById(22);
 
   return {
     props: {

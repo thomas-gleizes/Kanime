@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState, useCallback } from 'react';
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
+import { useConst } from '@chakra-ui/react';
 
 type Dialog<Params = any, Content = any> = {
   type: string;
@@ -19,6 +20,7 @@ export declare type LayoutContext = {
     showHeader: () => void;
   };
   isInactive: boolean;
+  environment: Environment;
 };
 
 interface Props {
@@ -76,6 +78,11 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
     return () => clearInterval(interval);
   }, [lastEventTime]);
 
+  const environment = useConst<Environment>({
+    isDevelopment: process.env.NEXT_PUBLIC_ENV === 'development',
+    appName: process.env.NEXT_PUBLIC_APP_NAME as string,
+  });
+
   return (
     <LayoutContext.Provider
       value={{
@@ -85,6 +92,7 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
         scrollHeight,
         header: { hiddenHeader, hideHeader, showHeader },
         isInactive,
+        environment,
       }}
     >
       {children}

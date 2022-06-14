@@ -6,6 +6,11 @@ declare type NodeR = React.ReactNode | string;
 
 declare type OptionalPromise<T> = T | Promise<T>;
 
+declare type Environment = {
+  readonly isDevelopment: boolean;
+  readonly appName: string;
+};
+
 interface ContextProviderProps {
   children: React.ReactNode;
 }

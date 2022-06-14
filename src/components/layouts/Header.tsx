@@ -69,7 +69,7 @@ const Header: Component = () => {
       onMouseOver={() => setHeaderHovered(true)}
       onMouseLeave={() => setHeaderHovered(false)}
       className={classnames(
-        'z-90 fixed top-0 w-full h-header shadow-lg bg-primary select-none transition-all duration-500 ease-in-out',
+        'z-50 fixed top-0 w-full h-header shadow-lg bg-primary select-none transition-all duration-500 ease-in-out',
         { 'bg-opacity-30 bg-black': headerTransparent }
       )}
     >
