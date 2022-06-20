@@ -11,7 +11,6 @@ import { EntriesMapper, UsersMapper } from 'mappers';
 import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import Title from 'components/layouts/Title';
-import AnimeCard from 'components/common/anime/AnimeCard';
 import AnimesEntry from 'components/common/anime/AnimesEntry';
 
 interface Props {
@@ -30,7 +29,7 @@ export const getServerSideProps = ssrHandler<Props, { username: string }>(
     if (!user) throw new SsrError(404, errorMessage.USER_NOT_FOUND);
 
     const visibility: Visibility[] = ['public'];
-    if (user.id)
+    if (sessionUser)
       if (user.id === sessionUser.id) visibility.push('limited', 'private');
       else {
         const [one, two] = await Promise.all([
@@ -100,7 +99,7 @@ export const UserPage: Page<Props> = (props) => {
         <div className="grid grid-cols-5 max-w-1000 mx-auto">
           {entries.map((entry, index) => (
             <div key={index} className="my-3 mx-auto">
-              <AnimesEntry entry={entry} />
+              <AnimesEntry entry={entry} editable={props.isCurrent} />
             </div>
           ))}
         </div>
