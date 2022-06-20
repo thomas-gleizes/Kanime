@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { FaEye, FaStar } from 'react-icons/fa';
 
 import { useDialog, useHovered } from 'hooks';
@@ -63,7 +64,9 @@ const AnimesEntry: Component<Props> = ({ entry, editable }) => {
                     <p className="text-white text-sm">Modifier l'entrée</p>
                   </div>
                   <div className="border border-white rounded px-1 py-0.5 ml-2 cursor-pointer hover:bg-white hover:bg-opacity-30 transition duration-100">
-                    <FaEye className="h-4 w-4 text-white" />
+                    <Link href={`/animes/${entry.anime.slug}`}>
+                      <FaEye className="h-4 w-4 text-white" />
+                    </Link>
                   </div>
                 </div>
               </div>
