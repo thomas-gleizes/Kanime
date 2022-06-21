@@ -3,9 +3,9 @@ import dayjs from 'dayjs';
 import { Button } from '@chakra-ui/react';
 
 import { Page } from 'next/app';
+import { UsersApi } from 'api';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mappers';
-import { ApiService } from 'services/api.service';
 import { ssrHandler } from 'services/handler.service';
 import { useDialog } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
@@ -26,16 +26,11 @@ const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
   const [entries, setEntries] = useState<Entries>([]);
 
   useEffect(() => {
-    ApiService.get('/users/1/entries', {
-      params: {
-        include: { anime: true },
-        status: 'Completed',
-        orderBy: { rating: 'desc' },
-      },
-    }).then((response) =>
-      // @ts-ignore
-      setEntries(response.entries)
-    );
+    UsersApi.showEntries(1, {
+      include: { anime: true },
+      status: 'Completed',
+      orderBy: { rating: 'desc' },
+    }).then((response) => setEntries(response.entries));
   }, []);
 
   return (

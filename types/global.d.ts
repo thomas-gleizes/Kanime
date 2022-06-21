@@ -28,10 +28,12 @@ type modelParams = {
   includes?: string | string[];
 };
 
+type QueryField = number | string | string[] | undefined;
+
 type ModelOptions<T> = {
   include?: T;
-  limit?: number;
-  skip?: number;
+  limit?: QueryField;
+  skip?: QueryField;
 };
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';

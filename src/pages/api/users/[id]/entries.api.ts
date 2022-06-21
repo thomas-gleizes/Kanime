@@ -9,7 +9,7 @@ import { EntriesMapper } from 'mappers';
 
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<any>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<UsersEntriesResponse>) => {
   const { query, session } = req;
 
   const visibility: Visibility[] = ['public'];
@@ -37,9 +37,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<any>) => {
       visibility,
       query.status as PrismaEntryStatus,
       orderBy,
-      {
-        include: req.query.include as PrismaEntryInclude,
-      }
+      { ...query }
     )
   );
 

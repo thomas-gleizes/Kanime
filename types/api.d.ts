@@ -10,6 +10,12 @@ interface RegisterResponse extends DefaultResponseData {
   token: string;
 }
 
+/** users */
+
+interface UsersEntriesResponse extends DefaultResponseData {
+  entries: Entries;
+}
+
 /** animes */
 
 interface AnimesListResponse extends DefaultResponseData {
