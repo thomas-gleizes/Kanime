@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function useHovered(): [React.Ref<any>, boolean] {
-  const ref = useRef<any>();
+export default function useHovered<T extends HTMLElement>(): [React.LegacyRef<T>, boolean] {
+  const ref = useRef<T>();
+
   const [isHover, setIsHover] = useState<boolean>(false);
 
   useEffect(() => {

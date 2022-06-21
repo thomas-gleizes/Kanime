@@ -15,7 +15,7 @@ interface Props {
 }
 
 const AnimesEntry: Component<Props> = ({ entry, editable }) => {
-  const [ref, isHover] = useHovered();
+  const [ref, isHover] = useHovered<HTMLDivElement>();
 
   const dialog = useDialog();
 
