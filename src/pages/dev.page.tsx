@@ -45,8 +45,8 @@ const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
       <div>{dayjs(anime.dateBegin).toString()}</div>
       <Button onClick={() => dialog.confirm('test')}>Click me</Button>
       <ul>
-        {entries.map((entry) => (
-          <li>{entry.anime.slug}</li>
+        {entries.map((entry, index) => (
+          <li key={index}>{entry.anime.slug}</li>
         ))}
       </ul>
     </div>
