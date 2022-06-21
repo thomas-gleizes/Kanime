@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
@@ -10,32 +10,28 @@ const CustomDialog: Component = () => {
     dialogState: [dialog, setDialog],
   } = useLayoutContext();
 
-  const [content, setContent] = useState<JSX.Element>();
+  const [isOpen, setIsOpen] = useState<boolean>(dialog.type === dialogTypes.custom);
 
-  const isOpen = useMemo<boolean>(
-    () => dialog.type === dialogTypes.custom,
-    [dialog.type]
-  );
+  useEffect(() => {
+    if (!isOpen) setIsOpen(dialog.type === dialogTypes.custom);
+  }, [dialog.type]);
 
   const handleClose = (result: any) => {
     dialog.resolve(result);
+    setIsOpen(false);
 
     setTimeout(() => setDialog({ type: null, content: null, resolve: null }), TIMEOUT);
   };
 
-  useEffect(() => {
-    if (isOpen)
-      setContent(
-        <dialog.content.component
-          isOpen={isOpen}
-          close={handleClose}
-          {...dialog.content.props}
-        />
-      );
-    else setTimeout(() => setContent(undefined), TIMEOUT);
-  }, [isOpen, dialog]);
+  if (!dialog.content) return null;
 
-  return content;
+  return (
+    <dialog.content.component
+      isOpen={isOpen}
+      close={handleClose}
+      {...dialog.content.props}
+    />
+  );
 };
 
 export default CustomDialog;
