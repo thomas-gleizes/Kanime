@@ -2,12 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { FaEye, FaStar } from 'react-icons/fa';
 
+import { ApiService } from 'services/api.service';
 import { useDialog, useHovered } from 'hooks';
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
   Result as EditAnimesEntriesResult,
 } from 'components/modal/EditAnimesEntries';
-import { ApiService } from 'services/api.service';
 
 interface Props {
   entry: Entry;
@@ -33,7 +33,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
       );
 
       // @ts-ignore
-      updateList('update', response.entry);
+      updateList('update', { ...response.entry, anime: entry.anime });
     } else if (result?.action === 'delete') {
       await ApiService.delete(`/animes/${entry.anime.id}/entries`);
 

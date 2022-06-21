@@ -20,7 +20,7 @@ abstract class Model<D = unknown> {
   ): Result {
     const result: Result = {};
 
-    if (Object.keys(options.include).length) {
+    if (options.include && Object.keys(options.include).length) {
       result.include = {};
 
       for (const key of Object.keys(options.include)) {

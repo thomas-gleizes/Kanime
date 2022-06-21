@@ -1,4 +1,9 @@
-import { PrismaEntry, PrismaEntryDelegate, PrismaEntryInclude } from 'prisma/app';
+import {
+  PrismaEntry,
+  PrismaEntryDelegate,
+  PrismaEntryInclude,
+  PrismaEntryStatus,
+} from 'prisma/app';
 import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
@@ -71,16 +76,20 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public getByUser = (
     userId: number,
     visibility: Visibility[],
+    status: PrismaEntryStatus | undefined,
+    orderBy: {
+      field: 'rating' | 'progress' | 'started_at' | 'finish_at';
+      order: 'asc' | 'desc';
+    },
     options?: ModelOptions<PrismaEntryInclude>
   ): Promise<PrismaEntry[]> =>
     this.model.findMany({
       where: {
         user_id: userId,
         visibility: { in: visibility },
+        status: status || undefined,
       },
-      orderBy: {
-        updated_at: 'desc',
-      },
+      orderBy: [{ [orderBy.field]: orderBy.order }, { updated_at: 'desc' }],
       ...this.parseOptions(options),
     });
 }

@@ -3,6 +3,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
 
+const TIMEOUT = 300;
+
 const CustomDialog: Component = () => {
   const {
     dialogState: [dialog, setDialog],
@@ -18,7 +20,7 @@ const CustomDialog: Component = () => {
   const handleClose = (result: any) => {
     dialog.resolve(result);
 
-    setTimeout(() => setDialog({ type: null, content: null, resolve: null }), 300);
+    setTimeout(() => setDialog({ type: null, content: null, resolve: null }), TIMEOUT);
   };
 
   useEffect(() => {
@@ -30,7 +32,7 @@ const CustomDialog: Component = () => {
           {...dialog.content.props}
         />
       );
-    else setTimeout(() => setContent(undefined), 300);
+    else setTimeout(() => setContent(undefined), TIMEOUT);
   }, [isOpen, dialog]);
 
   return content;

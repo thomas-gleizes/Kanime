@@ -42,7 +42,7 @@ export const getServerSideProps = ssrHandler<Props, { username: string }>(
       }
 
     const entries = EntriesMapper.many(
-      await EntryModel.getByUser(user.id, visibility, {
+      await EntryModel.getByUser(user.id, visibility, undefined, {
         include: { anime: true },
         limit: 40,
       })

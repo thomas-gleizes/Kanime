@@ -1,34 +1,46 @@
-import { Prisma, Visibility } from '@prisma/client';
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Visibility } from '@prisma/client';
 
+import { ApiRequest, ApiResponse } from 'next/app';
+import { PrismaEntryInclude, PrismaEntryStatus } from 'prisma/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { EntryModel, UserFollowModel } from 'models';
 import { EntriesMapper } from 'mappers';
-import { PrismaEntryInclude } from 'prisma/app';
 
 const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<any>) => {
-  const { id } = req.query;
-  const { user } = req.session;
+  const { query, session } = req;
 
   const visibility: Visibility[] = ['public'];
-  if (user.id)
-    if (user.id === +id) visibility.push('limited', 'private');
+  if (session.user)
+    if (session.user.id === +query.id) visibility.push('limited', 'private');
     else {
       const [one, two] = await Promise.all([
-        UserFollowModel.isFollow(user.id, +id),
-        UserFollowModel.isFollow(+id, user.id),
+        UserFollowModel.isFollow(session.user.id, +query.id),
+        UserFollowModel.isFollow(+query.id, session.user.id),
       ]);
 
       if (one && two) visibility.push('limited');
     }
 
+  let orderBy = undefined;
+
+  if (query.orderBy) {
+    for (const [key, value] of Object.entries(query.orderBy))
+      orderBy = { field: key, order: value };
+  }
+
   const entries = EntriesMapper.many(
-    await EntryModel.getByUser(+id, visibility, {
-      include: req.query.include as PrismaEntryInclude,
-    })
+    await EntryModel.getByUser(
+      +query.id,
+      visibility,
+      query.status as PrismaEntryStatus,
+      orderBy,
+      {
+        include: req.query.include as PrismaEntryInclude,
+      }
+    )
   );
 
   res.send({ success: true, entries });
