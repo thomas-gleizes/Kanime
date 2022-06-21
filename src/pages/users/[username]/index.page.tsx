@@ -10,6 +10,7 @@ import { EntryModel, UserFollowModel, UserModel } from 'models';
 import { EntriesMapper, UsersMapper } from 'mappers';
 import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
+import { useStateProps } from 'hooks';
 import Title from 'components/layouts/Title';
 import AnimesEntry from 'components/common/anime/AnimesEntry';
 
@@ -68,10 +69,21 @@ export const UserPage: Page<Props> = (props) => {
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
 
+  const [entries, setEntries] = useStateProps(props.entries);
+
   if ('error' in props)
     return <Error statusCode={props.error.statusCode} title={props.error.message} />;
 
-  const { user, isCurrent, entries } = props;
+  const { user, isCurrent } = props;
+
+  const updateEntriesList = (action: 'delete' | 'update', entry: Entry) => {
+    const index = entries.findIndex((search) => search.animeId === entry.animeId);
+
+    if (action === 'update') entries[index] = entry;
+    else entries.splice(index, 1);
+
+    setEntries([...entries]);
+  };
 
   return (
     <>
@@ -99,7 +111,11 @@ export const UserPage: Page<Props> = (props) => {
         <div className="grid grid-cols-5 max-w-1000 mx-auto">
           {entries.map((entry, index) => (
             <div key={index} className="my-3 mx-auto">
-              <AnimesEntry entry={entry} editable={props.isCurrent} />
+              <AnimesEntry
+                entry={entry}
+                editable={props.isCurrent}
+                updateList={updateEntriesList}
+              />
             </div>
           ))}
         </div>

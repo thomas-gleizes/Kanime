@@ -12,9 +12,10 @@ import { ApiService } from 'services/api.service';
 interface Props {
   entry: Entry;
   editable: boolean;
+  updateList: (action: 'delete' | 'update', entry: Entry) => void;
 }
 
-const AnimesEntry: Component<Props> = ({ entry, editable }) => {
+const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
   const [ref, isHover] = useHovered<HTMLDivElement>();
 
   const dialog = useDialog();
@@ -32,9 +33,11 @@ const AnimesEntry: Component<Props> = ({ entry, editable }) => {
       );
 
       // @ts-ignore
-      setEntry(response.entry);
+      updateList('update', response.entry);
     } else if (result?.action === 'delete') {
       await ApiService.delete(`/animes/${entry.anime.id}/entries`);
+
+      updateList('delete', entry);
     }
   };
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function useHovered<T extends HTMLElement>(): [React.LegacyRef<T>, boolean] {
+export default function useHovered<T extends HTMLElement>(): [
+  React.LegacyRef<T>,
+  boolean
+] {
   const ref = useRef<T>();
 
   const [isHover, setIsHover] = useState<boolean>(false);
@@ -13,8 +16,8 @@ export default function useHovered<T extends HTMLElement>(): [React.LegacyRef<T>
     ref.current.addEventListener('mouseout', handleMouseOut);
 
     return () => {
-      ref?.current.removeEventListener('mouseover', handleMouseOver);
-      ref?.current.removeEventListener('mouseout', handleMouseOut);
+      ref?.current?.removeEventListener('mouseover', handleMouseOver);
+      ref?.current?.removeEventListener('mouseout', handleMouseOut);
     };
   }, []);
 
