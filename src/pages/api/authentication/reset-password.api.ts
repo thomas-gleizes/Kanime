@@ -21,7 +21,7 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   const user = await UserModel.checkResetPasswordToken(body.token);
   if (!user) throw new ApiError(HttpStatus.BAD_REQUEST, 'token not found');
 
-  const hash = Security.sha256(body.newPassword + user.username);
+  const hash = Security.sha512(body.newPassword + user.username);
 
   await UserModel.resetPassword(user.id, hash);
 

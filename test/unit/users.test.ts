@@ -22,7 +22,7 @@ describe('users model', () => {
     const user = await UserModel.create({
       username: username,
       email: email,
-      password: Security.sha256(password),
+      password: Security.sha512(password),
     });
 
     expect(user).toBeDefined();

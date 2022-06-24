@@ -13,7 +13,7 @@ type result = {
 
 export default function useDialog(): result {
   const {
-    dialogState: { 1: setDialog },
+    dialogState: [, setDialog],
   } = useLayoutContext();
 
   const generateDialog = <Params, Content = string>(

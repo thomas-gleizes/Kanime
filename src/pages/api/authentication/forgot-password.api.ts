@@ -25,7 +25,7 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
       'you can ask to change your password only one time per day'
     );
 
-  const hash = Security.sha256(user.password + user.username);
+  const hash = Security.sha512(user.password + user.username);
   await UserModel.updateResetPasswordToken(user.id, hash);
 
   //TODO SEND email with a new services for email

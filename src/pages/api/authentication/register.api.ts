@@ -33,7 +33,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
     await UserModel.create({
       username: userData.username,
       email: userData.email,
-      password: Security.sha256(userData.password + userData.username),
+      password: Security.sha512(userData.password + userData.username),
     })
   );
 
