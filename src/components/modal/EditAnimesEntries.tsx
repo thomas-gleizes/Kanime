@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Form, Formik, FormikProps, Field } from 'formik';
+import deepEqual from 'deep-equal';
 import { EntryStatus, Visibility } from '@prisma/client';
 import { FaSave, FaStar, FaTrash } from 'react-icons/fa';
 import dayjs from 'dayjs';
@@ -115,13 +116,20 @@ const EditAnimesEntries: Component<RealProps> = ({ isOpen, close, anime, entry }
 
 const FormContent: Component<
   FormikProps<upsertEntries> & { anime: Anime; handleDelete: () => void }
-> = ({ values, setFieldValue, anime, handleDelete }) => {
+> = ({ values, setFieldValue, anime, handleDelete, initialValues }) => {
   const sliderColor = useMemo<string>(() => {
     if (values) return 'yellow';
     else if (values.rating >= 7.5) return 'yellow';
     else if (values.rating >= 5) return 'orange';
     else return 'red';
   }, [values.rating]);
+
+  const isChanged = useMemo<boolean>(
+    () => !deepEqual(initialValues, values),
+    [values, initialValues]
+  );
+
+  useEffect(() => console.log('IsChanged', isChanged), [isChanged]);
 
   return (
     <ModalContent className="px-4">
@@ -260,7 +268,13 @@ const FormContent: Component<
             icon={<FaTrash />}
             onClick={handleDelete}
           />
-          <Button type="submit" leftIcon={<FaSave />} colorScheme="teal" variant="solid">
+          <Button
+            type="submit"
+            leftIcon={<FaSave />}
+            colorScheme="teal"
+            variant="solid"
+            disabled={!isChanged}
+          >
             Enregistré
           </Button>
         </div>

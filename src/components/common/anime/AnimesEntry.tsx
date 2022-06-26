@@ -58,13 +58,12 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
                     <p className="text-white text-sm">Ajouter un reaction</p>
                   </div>
                 </div>
-                <div className="w-full flex">
+                <div className="w-full flex select-none">
                   <div
                     className="border border-white rounded w-full cursor-pointer hover:bg-white hover:bg-opacity-30 transition duration-100"
                     onClick={handleEntry}
                   >
-                    {/* eslint-disable-next-line react/no-unescaped-entities */}
-                    <p className="text-white text-sm">Modifier l'entrée</p>
+                    <p className="text-white text-sm">Modifier {"l'entrée"}</p>
                   </div>
                   <div className="border border-white rounded px-1 py-0.5 ml-2 cursor-pointer hover:bg-white hover:bg-opacity-30 transition duration-100">
                     <Link href={`/animes/${entry.anime.slug}`}>
