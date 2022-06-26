@@ -129,8 +129,6 @@ const FormContent: Component<
     [values, initialValues]
   );
 
-  useEffect(() => console.log('IsChanged', isChanged), [isChanged]);
-
   return (
     <ModalContent className="px-4">
       <ModalHeader className="border-b pb-5">
