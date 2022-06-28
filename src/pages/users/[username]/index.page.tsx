@@ -74,12 +74,14 @@ const StatusButton: Component<{
     if (active) {
       return {
         text: 'text-white',
+        span: 'text-white',
         wrapper: `bg-${color}-500`,
       };
     }
 
     return {
       text: 'text-gray-400 group-hover:text-gray-600 transition duration-100',
+      span: 'text-sm text-gray-400 group-hover:text-gray-500 transition duration-100',
       wrapper: `bg-${color}-100 hover:bg-${color}-200`,
     };
   }, [color, active]);
@@ -87,13 +89,13 @@ const StatusButton: Component<{
   return (
     <div
       className={classnames(
-        'border group flex justify-between items-baseline px-2.5 py-3 font-bold rounded-sm shadow cursor-pointer transition duration-100',
+        'border group flex justify-between select-none items-baseline p-3 font-bold rounded-sm shadow cursor-pointer transition duration-100',
         className.wrapper
       )}
       onClick={onClick}
     >
       <p className={className.text}>{libelle}</p>
-      <span className="text-gray-300 text-sm">{counter}</span>
+      <span className={className.span}>{counter}</span>
     </div>
   );
 };
