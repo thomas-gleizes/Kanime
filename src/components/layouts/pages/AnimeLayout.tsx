@@ -25,6 +25,7 @@ import EditAnimesEntries, {
 } from 'components/modal/EditAnimesEntries';
 import Img from 'components/common/Img';
 import { POSTER_RAPPORT } from 'resources/constants';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
 export interface AnimeLayoutProps {
   anime: Anime;
@@ -123,101 +124,98 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
 
   return (
-    <>
+    <DefaultLayout className="">
       <Title>{anime.canonicalTitle}</Title>
-      <Header />
-      <main>
-        <div className="min-h-screen pb-16">
-          <div className="w-full">
-            <div className="relative w-full h-[450px]">
-              <div className="fixed -z-10 w-full h-[450px] bg-primary-dark">
-                <div
-                  className="w-full h-full bg-cover bg-center bg-no-repeat"
-                  style={{ backgroundImage: `url('${anime.cover?.small}')` }}
-                >
-                  <div className="w-full h-full bg-black bg-opacity-40" />
-                </div>
+      <div className="min-h-screen pb-16">
+        <div className="w-full">
+          <div className="relative w-full h-[450px]">
+            <div className="fixed -z-10 w-full h-[450px] bg-primary-dark">
+              <div
+                className="w-full h-full bg-cover bg-center bg-no-repeat"
+                style={{ backgroundImage: `url('${anime.cover?.small}')` }}
+              >
+                <div className="w-full h-full bg-black bg-opacity-40" />
               </div>
             </div>
-            <nav className="relative bg-white p-0 w-full">
-              <div className="flex justify-center divide-x-2 divide-gray-200">
-                {TABS.map((tab, index) => (
-                  <NavLink
-                    key={index}
-                    href={`${routes.animes.list}/${anime.slug}${tab.path}`}
-                  >
-                    {tab.label}
-                  </NavLink>
-                ))}
-              </div>
-            </nav>
           </div>
-          <div className="w-full bg-gray-50 z-100">
-            <div className="mx-auto w-full max-w-[1150px]">
-              <div className="sticky float-right w-200 top-[230px]">
-                <div className="relative w-[214px] top-[-150px]">
-                  <div className="w-full shadow h-[304px] rounded-md bg-kitsu mb-2">
-                    {anime.poster?.medium && (
-                      <Img
-                        className="rounded-md"
-                        src={anime.poster.medium as string}
-                        width={214}
-                        height={214 * POSTER_RAPPORT}
-                        alt="test"
-                      />
-                    )}
-                  </div>
-                  <div className="w-full">
-                    <div className="flex flex-col space-y-2">
-                      <div>
-                        <KitsuButton slug={anime.slug} />
-                      </div>
-                      <div>
-                        <Menu label="Entries">
-                          {!entry && (
-                            <MenuGroup>
-                              <MenuItem
-                                onClick={() => handleSetupEntry('Completed')}
-                                icon={<CheckCircleIcon className="h-5 w-5" />}
-                              >
-                                Terminée
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => handleSetupEntry('Wanted')}
-                                icon={<EyeIcon className="h-5 w-5" />}
-                              >
-                                A voir
-                              </MenuItem>
-                              <MenuItem
-                                onClick={() => handleSetupEntry('Watching')}
-                                icon={<PlayIcon className="h-5 w-5" />}
-                              >
-                                A Commencé
-                              </MenuItem>
-                            </MenuGroup>
-                          )}
+          <nav className="relative bg-white p-0 w-full">
+            <div className="flex justify-center divide-x-2 divide-gray-200">
+              {TABS.map((tab, index) => (
+                <NavLink
+                  key={index}
+                  href={`${routes.animes.list}/${anime.slug}${tab.path}`}
+                >
+                  {tab.label}
+                </NavLink>
+              ))}
+            </div>
+          </nav>
+        </div>
+        <div className="w-full bg-gray-50 z-100">
+          <div className="mx-auto w-full max-w-[1150px]">
+            <div className="sticky float-right w-200 top-[230px]">
+              <div className="relative w-[214px] top-[-150px]">
+                <div className="w-full shadow h-[304px] rounded-md bg-kitsu mb-2">
+                  {anime.poster?.medium && (
+                    <Img
+                      className="rounded-md"
+                      src={anime.poster.medium as string}
+                      width={214}
+                      height={214 * POSTER_RAPPORT}
+                      alt="test"
+                    />
+                  )}
+                </div>
+                <div className="w-full">
+                  <div className="flex flex-col space-y-2">
+                    <div>
+                      <KitsuButton slug={anime.slug} />
+                    </div>
+                    <div>
+                      <Menu label="Entries">
+                        {!entry && (
                           <MenuGroup>
                             <MenuItem
-                              onClick={handleModal}
-                              icon={<PencilAltIcon className="h-5 w-5" />}
+                              onClick={() => handleSetupEntry('Completed')}
+                              icon={<CheckCircleIcon className="h-5 w-5" />}
                             >
-                              Edit
+                              Terminée
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => handleSetupEntry('Wanted')}
+                              icon={<EyeIcon className="h-5 w-5" />}
+                            >
+                              A voir
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => handleSetupEntry('Watching')}
+                              icon={<PlayIcon className="h-5 w-5" />}
+                            >
+                              A Commencé
                             </MenuItem>
                           </MenuGroup>
-                        </Menu>
-                      </div>
+                        )}
+                        <MenuGroup>
+                          <MenuItem
+                            onClick={handleModal}
+                            icon={<PencilAltIcon className="h-5 w-5" />}
+                          >
+                            Edit
+                          </MenuItem>
+                        </MenuGroup>
+                      </Menu>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="mr-[210px]">
-                <div className="w-full py-5">{children}</div>
-              </div>
+            </div>
+            <div className="mr-[210px]">
+              <div className="w-full py-5">{children}</div>
             </div>
           </div>
         </div>
-      </main>
-    </>
+      </div>
+    </DefaultLayout>
   );
 };
 

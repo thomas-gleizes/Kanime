@@ -39,6 +39,7 @@ select,
 option,
 textarea {
   outline: unset !important;
+  width: inherit;
 }
 
 .tw-select {

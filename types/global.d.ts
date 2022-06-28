@@ -11,6 +11,10 @@ declare type Environment = {
   readonly appName: string;
 };
 
+declare type ErrorProps = {
+  error: ErrorPage;
+};
+
 interface ContextProviderProps {
   children: React.ReactNode;
 }

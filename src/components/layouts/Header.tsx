@@ -9,6 +9,7 @@ import { useLayoutContext } from 'context/layout.context';
 import { routes } from 'resources/routes';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
+import { useHovered } from 'hooks';
 
 const DropDownItem: Component<{ href: string; children: NodeR }> = ({
   href,
@@ -55,7 +56,7 @@ const Header: Component = () => {
 
   const [extend, setExtend] = useState<boolean>(false);
   const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent);
-  const [headerHovered, setHeaderHovered] = useState<boolean>(false);
+  const [headerRef, headerHovered] = useHovered();
 
   useEffect(() => {
     if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250);
@@ -66,8 +67,7 @@ const Header: Component = () => {
 
   return (
     <header
-      onMouseOver={() => setHeaderHovered(true)}
-      onMouseLeave={() => setHeaderHovered(false)}
+      ref={headerRef}
       className={classnames(
         'z-50 fixed top-0 w-full h-header shadow-lg bg-primary select-none transition-all duration-500 ease-in-out',
         { 'bg-opacity-30 bg-black': headerTransparent }
