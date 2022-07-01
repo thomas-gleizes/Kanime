@@ -259,14 +259,18 @@ const FormContent: Component<
       </ModalBody>
       <ModalFooter className="border-t">
         <div className="w-full flex justify-between">
-          <IconButton
-            variant="outline"
-            colorScheme="teal"
-            aria-label="close dialog"
-            icon={<FaTrash />}
-            onClick={handleDelete}
-          />
+          <div>
+            <IconButton
+              className="w-fit"
+              variant="outline"
+              colorScheme="teal"
+              aria-label="close dialog"
+              icon={<FaTrash />}
+              onClick={handleDelete}
+            />
+          </div>
           <Button
+            className="w-fit"
             type="submit"
             leftIcon={<FaSave />}
             colorScheme="teal"

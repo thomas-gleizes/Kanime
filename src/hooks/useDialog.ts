@@ -25,8 +25,11 @@ export default function useDialog(): result {
     alert: (message) => generateDialog<void>(message, dialogTypes.alert),
     confirm: (message) => generateDialog<boolean>(message, dialogTypes.confirm),
     prompt: (message) => generateDialog<string | false>(message, dialogTypes.prompt),
-    custom: (component, props) =>
-      generateDialog({ component, props }, dialogTypes.custom),
+    custom: <T = any, P = any>(component, props) =>
+      generateDialog<T, { component: Component; props: P }>(
+        { component, props },
+        dialogTypes.custom
+      ),
   };
 }
 
