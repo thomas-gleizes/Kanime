@@ -147,7 +147,7 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
           entry.anime.titles.en?.toLowerCase()?.includes(searchQuery) ||
           entry.anime.titles.en_jp?.toLowerCase()?.includes(searchQuery)
       );
-  }, [status, query]);
+  }, [status, query, entries]);
 
   return (
     <>
@@ -212,8 +212,8 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
             </div>
           </div>
           <div className="grid grid-cols-5">
-            {filteredEntries.slice(0, limit).map((entry, index) => (
-              <div key={index} className="my-3 mx-1 mx-auto">
+            {filteredEntries.slice(0, limit).map((entry) => (
+              <div key={entry.animeId} className="my-3 mx-1 mx-auto">
                 <AnimesEntry
                   entry={entry}
                   editable={props.isCurrent}
