@@ -149,7 +149,7 @@ CREATE TABLE `countries` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `animes_import` (
+CREATE TABLE `import_animes` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `anime_id` INTEGER NULL,
     `kitsu_id` INTEGER NOT NULL,
@@ -172,19 +172,19 @@ CREATE TABLE `animes_import` (
     `status` VARCHAR(191) NULL,
     `import_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
-    UNIQUE INDEX `animes_import_anime_id_key`(`anime_id`),
+    UNIQUE INDEX `import_animes_anime_id_key`(`anime_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `sagas_import` (
+CREATE TABLE `import_sagas` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `import_id` INTEGER NOT NULL,
     `details` LONGTEXT NOT NULL,
     `treat` BOOLEAN NOT NULL,
     `import_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
 
-    UNIQUE INDEX `sagas_import_import_id_key`(`import_id`),
+    UNIQUE INDEX `import_sagas_import_id_key`(`import_id`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -245,10 +245,10 @@ ALTER TABLE `users_follows` ADD CONSTRAINT `users_follows_follower_id_fkey` FORE
 ALTER TABLE `users_follows` ADD CONSTRAINT `users_follows_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `animes_import` ADD CONSTRAINT `animes_import_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `import_animes` ADD CONSTRAINT `import_animes_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `sagas_import` ADD CONSTRAINT `sagas_import_import_id_fkey` FOREIGN KEY (`import_id`) REFERENCES `animes_import`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `import_sagas` ADD CONSTRAINT `import_sagas_import_id_fkey` FOREIGN KEY (`import_id`) REFERENCES `import_animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `logs` ADD CONSTRAINT `logs_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

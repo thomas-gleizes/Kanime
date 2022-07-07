@@ -180,6 +180,29 @@ model Country {
   @@map("countries")
 }
 
+model Log {
+  id         Int      @id @default(autoincrement())
+  path       String
+  method     Method
+  user_id    Int?
+  ip         String   @db.VarChar(64)
+  params     String?  @db.Text
+  body       String?  @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(0)
+
+  user User? @relation(fields: [user_id], references: [id])
+
+  @@map("logs")
+}
+
+model EventLog {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(64)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("event_logs")
+}
+
 model AnimeImport {
   id               Int       @id @default(autoincrement())
   anime_id         Int?      @unique
@@ -206,7 +229,7 @@ model AnimeImport {
   anime       Anime?      @relation(fields: [anime_id], references: [id])
   saga_import SagaImport?
 
-  @@map("animes_import")
+  @@map("import_animes")
 }
 
 model SagaImport {
@@ -218,30 +241,7 @@ model SagaImport {
 
   import AnimeImport @relation(fields: [import_id], references: [id])
 
-  @@map("sagas_import")
-}
-
-model Log {
-  id         Int      @id @default(autoincrement())
-  path       String
-  method     Method
-  user_id    Int?
-  ip         String   @db.VarChar(64)
-  params     String?  @db.Text
-  body       String?  @db.Text
-  created_at DateTime @default(now()) @db.Timestamp(0)
-
-  user User? @relation(fields: [user_id], references: [id])
-
-  @@map("logs")
-}
-
-model EventLog {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(64)
-  created_at DateTime @default(now()) @db.Timestamp(0)
-
-  @@map("event_logs")
+  @@map("import_sagas")
 }
 
 enum AnimeSeason {
