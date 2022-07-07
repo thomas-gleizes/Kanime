@@ -28,7 +28,10 @@ declare module 'next/app' {
   declare type ApiResponse<D = DefaultResponseData> = NextApiResponse<
     D | ApiResponseError | ApiResponseSchemaError
   >;
-  declare type ApiRequest<Body = any, Query = any> = NextApiRequest & { body: Body };
+  declare type ApiRequest<Body = any, Query = any> = NextApiRequest & {
+    body: Body;
+    query: Query;
+  };
 
   interface AppProps {
     pageProps: any;

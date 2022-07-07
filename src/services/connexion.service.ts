@@ -6,7 +6,13 @@ class ConnexionService extends PrismaClient {
   private static _instance;
 
   private constructor() {
-    super();
+    super({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
+    });
   }
 
   public static create() {
@@ -18,5 +24,3 @@ class ConnexionService extends PrismaClient {
 }
 
 export default ConnexionService.create();
-
-// export default new PrismaClient();

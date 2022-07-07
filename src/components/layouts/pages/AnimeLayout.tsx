@@ -18,7 +18,6 @@ import { routes } from 'resources/routes';
 import Title from 'components/layouts/Title';
 import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu';
 import KitsuButton from 'components/common/KitsuButton';
-import Header from 'components/layouts/Header';
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
   Result as EditAnimesEntriesResult,
