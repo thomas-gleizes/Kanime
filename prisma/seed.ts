@@ -28,9 +28,9 @@ async function main() {
     },
   });
 
-  for (let i = 0; i < 1000; i++) {
-    const username: string = faker.internet.userName();
-    const email: string = faker.internet.email();
+  for (let i = 0; i < 30000; i++) {
+    const username: string = `user_${i}`;
+    const email: string = `${username}@kanime.dev`;
 
     await prisma.user.create({
       data: {
