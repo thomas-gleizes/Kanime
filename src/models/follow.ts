@@ -2,9 +2,9 @@ import { PrismaFollow, PrismaFollowDelegate } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
-class FollowModel extends Model<PrismaFollowDelegate> {
+class FollowModel extends Model<PrismaFollowDelegate, PrismaFollow, FollowModel, never> {
   public constructor(connexion: ConnexionType) {
-    super(connexion.userFollow);
+    super(connexion, 'userFollow');
   }
 
   public create = (followerId: number, followId: number): Promise<PrismaFollow> =>

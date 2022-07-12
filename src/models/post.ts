@@ -9,9 +9,9 @@ type createData = {
   parentId?: number;
 };
 
-class PostModel extends Model<PrismaPostsDelegate> {
+class PostModel extends Model<PrismaPostsDelegate, PrismaPost, Post, never> {
   public constructor(connexion: ConnexionType) {
-    super(connexion.post);
+    super(connexion, 'post');
   }
 
   public all = (params: modelParams): Promise<PrismaPosts> =>

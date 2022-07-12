@@ -8,9 +8,9 @@ import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
-class EntryModel extends Model<PrismaEntryDelegate> {
+class EntryModel extends Model<PrismaEntryDelegate, PrismaEntry, Entry, never> {
   constructor(connexion: ConnexionType) {
-    super(connexion.entry);
+    super(connexion, 'entry');
   }
 
   public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>

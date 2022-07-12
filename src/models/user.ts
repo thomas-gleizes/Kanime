@@ -20,9 +20,9 @@ type updateData = {
   backgroundPath?: string | null;
 };
 
-class UserModel extends Model<PrismaUserDelegate> {
+class UserModel extends Model<PrismaUserDelegate, PrismaUser, User, never> {
   public constructor(connexion: ConnexionType) {
-    super(connexion.user);
+    super(connexion, 'user');
   }
 
   public findById = (id: number): Promise<PrismaUser> =>

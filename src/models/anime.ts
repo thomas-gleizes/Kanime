@@ -1,10 +1,13 @@
 import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
+import { AnimeMiddleware } from '../mappers/prisma.middleware';
 
-class AnimeModel extends Model<PrismaAnimeDelegate> {
+class AnimeModel extends Model<PrismaAnimeDelegate, PrismaAnime, Anime, AnimeMiddleware> {
   public constructor(connexion: ConnexionType) {
-    super(connexion.anime);
+    super(connexion, 'anime');
+
+    this.addMiddleware(new AnimeMiddleware());
   }
 
   public findById = (id: number): Promise<PrismaAnime> =>
