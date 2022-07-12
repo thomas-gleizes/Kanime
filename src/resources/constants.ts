@@ -15,6 +15,7 @@ export const dialogTypes = {
 
 export const loggerReplaceKey = {
   password: '********',
+  newPassword: '********',
   confirmPassword: '********',
   avatar: 'data:Image/*;base64:*****',
   background: 'data:Image/*;base64:*****',

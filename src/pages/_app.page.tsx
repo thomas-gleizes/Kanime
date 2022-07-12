@@ -60,4 +60,10 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
+// export const getInitialProps = async (appContext: AppProps) => {
+//   return {
+//     props: await appContext.Component.getInitialProps(appContext),
+//   };
+// };
+
 export default App;

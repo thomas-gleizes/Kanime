@@ -1,7 +1,7 @@
 import { Visibility } from '@prisma/client';
 
 import { ApiRequest, ApiResponse } from 'next/app';
-import { PrismaEntryInclude, PrismaEntryStatus } from 'prisma/app';
+import { PrismaEntryStatus } from 'prisma/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import { EntryModel, UserFollowModel } from 'models';
@@ -31,17 +31,15 @@ handler.get(async (req: ApiRequest, res: ApiResponse<UsersEntriesResponse>) => {
       orderBy = { field: key, order: value };
   }
 
-  const entries = EntriesMapper.many(
-    await EntryModel.getByUser(
-      +query.id,
-      visibility,
-      query.status as PrismaEntryStatus,
-      orderBy,
-      { ...query }
-    )
+  const entries = await EntryModel.getByUser(
+    +query.id,
+    visibility,
+    query.status as PrismaEntryStatus,
+    orderBy,
+    { ...query }
   );
 
-  res.send({ success: true, entries });
+  res.send({ success: true, entries: EntriesMapper.many(entries) });
 });
 
 export default withSessionApi(handler);

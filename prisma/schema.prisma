@@ -19,9 +19,9 @@ model Anime {
   season_year      String?      @db.VarChar(4)
   date_begin       DateTime?    @db.Date
   date_end         DateTime?    @db.Date
-  rating_average   Float?
+  rating_average   Float?       @db.UnsignedInt
   rating_rank      Int?         @db.UnsignedInt
-  popularity_count Float?
+  popularity_count Float?       @db.UnsignedInt
   popularity_rank  Int?         @db.UnsignedInt
   type             AnimeType?
   poster           String?      @db.LongText
@@ -175,6 +175,7 @@ model Country {
   iso3     String? @db.VarChar(3)
   name     String  @db.VarChar(80)
   nicename String  @db.VarChar(80)
+
   users    User[]
 
   @@map("countries")

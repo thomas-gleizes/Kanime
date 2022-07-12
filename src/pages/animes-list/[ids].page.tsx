@@ -13,7 +13,7 @@ export const getServerSideProps = ssrHandler<Props>(async (context) => {
   const queryIds = context.query.ids as string;
   const ids = queryIds.split(',');
 
-  const animes = AnimesMapper.many(await AnimeModel.findByIds(ids.map((id) => +id)));
+  const animes = AnimesMapper.many(await AnimeModel.findByIds(ids.map(Number)));
 
   if (animes.length === 0) {
     throw new SsrError(404, 'Anime not found');
