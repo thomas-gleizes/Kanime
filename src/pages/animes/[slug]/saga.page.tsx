@@ -17,13 +17,18 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
     const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime = await AnimeModel.findBySlug(slug);
 
-    if (!anime || !anime.sagaId) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime || !anime.saga_id) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
-    const saga = SagasMapper.one(await SagaModel.findById(anime.sagaId));
+    const saga = await SagaModel.findById(anime.saga_id);
 
-    return { props: { anime, saga } };
+    return {
+      props: {
+        anime: AnimesMapper.one(anime),
+        saga: SagasMapper.one(saga),
+      },
+    };
   }
 );
 

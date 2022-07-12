@@ -5,11 +5,12 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { AnimeModel, CategoryModel } from 'models';
 import { AnimesMapper, CategoriesMapper } from 'mappers';
+import { SsrError } from 'errors';
+import { errorMessage } from 'resources/constants';
 import { routes } from 'resources/routes';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
+import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 
-interface Props {
-  anime: Anime;
+interface Props extends AnimeLayoutProps {
   categories: Categories;
 }
 
@@ -17,13 +18,17 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
     const { slug } = params;
 
-    const anime: Anime = AnimesMapper.one(await AnimeModel.findBySlug(slug as string));
+    const anime = await AnimeModel.findBySlug(slug);
+    if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
-    const categories: Categories = CategoriesMapper.many(
-      await CategoryModel.findByAnimeId(anime.id)
-    );
+    const categories = await CategoryModel.findByAnimeId(anime.id);
 
-    return { props: { anime, categories, test: 'ok' } };
+    return {
+      props: {
+        anime: AnimesMapper.one(anime),
+        categories: CategoriesMapper.many(categories),
+      },
+    };
   }
 );
 
