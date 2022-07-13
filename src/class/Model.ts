@@ -28,8 +28,6 @@ abstract class Model<
   protected addMiddleware(middleware: Middleware) {
     this._client.$use(async (params, next) => {
       let result = await next(params);
-      console.log('Params', params);
-      console.log('Result', result);
 
       if (params.model.toLowerCase() === this._modelName.toLowerCase()) {
         result = middleware.onResult(result);
