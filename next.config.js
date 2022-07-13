@@ -5,4 +5,10 @@ module.exports = {
   },
   pageExtensions: ['page.tsx', 'api.ts'],
   reactStrictMode: true,
+  headers: () => [
+    {
+      source: '/api/:path*',
+      headers: [{ key: 'Access-Control-Allow-Origin', value: '*' }],
+    },
+  ],
 };
