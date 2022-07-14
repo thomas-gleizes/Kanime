@@ -11,7 +11,7 @@ type crateData = {
   userId?: number;
 };
 
-class LogModel extends Model<PrismaLogDelegate, PrismaLog, Log, never> {
+class LogModel extends Model<PrismaLogDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion, 'log');
   }

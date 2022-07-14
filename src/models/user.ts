@@ -20,7 +20,7 @@ type updateData = {
   backgroundPath?: string | null;
 };
 
-class UserModel extends Model<PrismaUserDelegate, PrismaUser, User, never> {
+class UserModel extends Model<PrismaUserDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion, 'user');
   }

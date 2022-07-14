@@ -2,7 +2,7 @@ import { PrismaSagaDelegate, PrismaSaga, PrismaSagas } from 'prisma/app';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
-class SagaModel extends Model<PrismaSagaDelegate, SagaModel, Saga, never> {
+class SagaModel extends Model<PrismaSagaDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion, 'saga');
   }

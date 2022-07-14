@@ -9,7 +9,7 @@ type createData = {
   parentId?: number;
 };
 
-class PostModel extends Model<PrismaPostsDelegate, PrismaPost, Post, never> {
+class PostModel extends Model<PrismaPostsDelegate> {
   public constructor(connexion: ConnexionType) {
     super(connexion, 'post');
   }

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaEye } from 'react-icons/fa';
+import dayjs from 'dayjs';
 import {
   Table,
   Thead,
@@ -15,7 +16,6 @@ import { ApiService } from 'services/api.service';
 import { routes } from 'resources/routes';
 import toast from 'utils/toastr';
 import { useToggle } from 'hooks';
-import dayjs from 'dayjs';
 
 const fetchLogs = (limit: number, start: number) =>
   ApiService.get<any, { logs: Logs }>(routes.logs.api.list, { params: { limit, start } });

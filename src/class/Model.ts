@@ -1,4 +1,3 @@
-import { PrismaMiddleware } from '../mappers/prisma.middleware';
 import { ConnexionType } from 'services/connexion.service';
 
 type Result = {
@@ -7,12 +6,7 @@ type Result = {
   skip?: number;
 };
 
-abstract class Model<
-  Delegate,
-  Model,
-  Output,
-  Middleware extends PrismaMiddleware<Model, Output>
-> {
+abstract class Model<Delegate> {
   private _client: ConnexionType;
   private readonly _modelName: string;
 
@@ -25,17 +19,19 @@ abstract class Model<
     this.model = client[model];
   }
 
-  protected addMiddleware(middleware: Middleware) {
-    this._client.$use(async (params, next) => {
-      let result = await next(params);
-
-      if (params.model.toLowerCase() === this._modelName.toLowerCase()) {
-        result = middleware.onResult(result);
-      }
-
-      return result;
-    });
-  }
+  // protected addMiddleware(middleware: Middleware) {
+  //   throw new Error("doesn't work");
+  //
+  //   this._client.$use(async (params, next) => {
+  //     let result = await next(params);
+  //
+  //     if (params.model.toLowerCase() === this._modelName.toLowerCase()) {
+  //       result = middleware.onResult(result);
+  //     }
+  //
+  //     return result;
+  //   });
+  // }
 
   protected getKeyParams(params?: modelParams): { take?: number; skip?: number } {
     return { skip: +params?.skip || 0, take: +params?.limit || 50 };

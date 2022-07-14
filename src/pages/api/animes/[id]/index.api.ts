@@ -16,8 +16,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {
 
   if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
 
-  // @ts-ignore
-  return res.json({ success: true, anime });
+  return res.json({ success: true, anime: AnimesMapper.one(anime) });
 });
 
 export default withSessionApi(handler);

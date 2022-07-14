@@ -8,7 +8,7 @@ import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
-class EntryModel extends Model<PrismaEntryDelegate, PrismaEntry, Entry, never> {
+class EntryModel extends Model<PrismaEntryDelegate> {
   constructor(connexion: ConnexionType) {
     super(connexion, 'entry');
   }
