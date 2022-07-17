@@ -12,7 +12,7 @@ interface Props {
 const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
   const { synopsis, canonicalTitle, season_year, rating, popularity, type } = anime;
 
-  const styles = useMemo(() => ({ [position]: '100%' }), [position]);
+  const styles = useMemo(() => ({ [position]: '104%' }), [position]);
 
   const [render, setRender] = useState<boolean>(isOpen);
 
@@ -24,7 +24,7 @@ const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
   if (!render) return null;
 
   return (
-    <div className={classnames('absolute w-[140%] f-full z-20 top-0')} style={styles}>
+    <div className={classnames('absolute w-[330px] f-full z-80 top-0')} style={styles}>
       <Transition
         show={isOpen}
         enter="transition ease-out duration-200"

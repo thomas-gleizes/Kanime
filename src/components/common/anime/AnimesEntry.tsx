@@ -100,8 +100,8 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
             </div>
           </div>
         </div>
+        <AnimePopup anime={entry.anime} isOpen={isHover} position="right" />
       </div>
-      <AnimePopup anime={entry.anime} isOpen={true} position="right" />
     </>
   );
 };
