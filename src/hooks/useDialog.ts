@@ -1,5 +1,6 @@
 import { useLayoutContext } from 'context/layout.context';
 import { dialogTypes } from 'resources/constants';
+import { useDialogContext } from 'context/dialog.context';
 
 type result = {
   alert: (message: string) => Promise<void>;
@@ -12,14 +13,12 @@ type result = {
 };
 
 export default function useDialog(): result {
-  const {
-    dialogState: [, setDialog],
-  } = useLayoutContext();
+  const { addDialog } = useDialogContext();
 
   const generateDialog = <Params, Content = string>(
     content: Content,
     type: keyof typeof dialogTypes
-  ): Promise<Params> => new Promise((resolve) => setDialog({ type, content, resolve }));
+  ): Promise<Params> => new Promise((resolve) => addDialog({ type, content, resolve }));
 
   return {
     alert: (message) => generateDialog<void>(message, dialogTypes.alert),

@@ -8,15 +8,16 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-import { useLayoutContext } from 'context/layout.context';
+import { useDialogContext } from 'context/dialog.context';
 import { dialogTypes } from 'resources/constants';
 import Button from 'components/common/Button';
 import { Input } from 'components/common/inputs';
 
 const PromptDialog: Component = () => {
   const {
-    dialogState: [dialog, setDialog],
-  } = useLayoutContext();
+    dialogs: [dialog],
+    resetDialogs,
+  } = useDialogContext();
 
   const [value, setValue] = useState<string>('');
 
@@ -41,7 +42,7 @@ const PromptDialog: Component = () => {
 
   const handleClose = (value: string | false) => {
     dialog.resolve(value);
-    setDialog({ type: null, content: '', resolve: null });
+    resetDialogs({ type: null, content: '', resolve: null });
     setValue('');
   };
 

@@ -8,13 +8,14 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-import { useLayoutContext } from 'context/layout.context';
+import { useDialogContext } from 'context/dialog.context';
 import { dialogTypes } from 'resources/constants';
 
 const ConfirmDialog: Component = () => {
   const {
-    dialogState: [dialog, setDialog],
-  } = useLayoutContext();
+    dialogs: [dialog],
+    resetDialogs,
+  } = useDialogContext();
 
   const isOpen = useMemo<boolean>(
     () => dialog.type === dialogTypes.confirm,
@@ -38,7 +39,7 @@ const ConfirmDialog: Component = () => {
 
   const handleClose = (result: boolean) => {
     dialog.resolve(result);
-    setDialog({ type: null, content: '', resolve: null });
+    resetDialogs();
   };
 
   return (

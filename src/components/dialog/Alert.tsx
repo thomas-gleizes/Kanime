@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 
-import { useLayoutContext } from 'context/layout.context';
+import { useDialogContext } from 'context/dialog.context';
 import { dialogTypes } from 'resources/constants';
 import Modal from 'components/layouts/Modal';
 import Button from 'components/common/Button';
@@ -8,8 +8,9 @@ import { Dialog } from '@headlessui/react';
 
 const AlertDialog: Component = () => {
   const {
-    dialogState: [dialog, setDialog],
-  } = useLayoutContext();
+    dialogs: [dialog],
+    resetDialogs,
+  } = useDialogContext();
 
   const isOpen = useMemo<boolean>(() => dialog.type === dialogTypes.alert, [dialog.type]);
 
@@ -29,7 +30,7 @@ const AlertDialog: Component = () => {
 
   const handleClose = () => {
     dialog.resolve(null);
-    setDialog({ type: null, content: '', resolve: null });
+    resetDialogs();
   };
 
   return (
