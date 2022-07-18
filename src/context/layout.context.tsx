@@ -1,7 +1,8 @@
 import React, { createContext, useEffect, useState, useCallback } from 'react';
+import { useConst } from '@chakra-ui/react';
+
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
-import { useConst } from '@chakra-ui/react';
 
 type Dialog<Params = any, Content = any> = {
   type: string;
@@ -27,9 +28,8 @@ interface Props {
   children: NodeR;
 }
 
-const LayoutContext = createContext<LayoutContext>(null);
+const LayoutContext = createContext<LayoutContext>({} as any);
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 
 const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => {
