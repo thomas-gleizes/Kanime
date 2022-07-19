@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  children: NodeR;
+  children: ReactNode;
 }
 
 const EmptyLayout: Component<Props> = ({ children }) => {

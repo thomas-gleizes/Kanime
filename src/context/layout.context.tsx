@@ -18,7 +18,7 @@ export declare type LayoutContext = {
 };
 
 interface Props {
-  children: NodeR;
+  children: ReactNode;
 }
 
 const LayoutContext = createContext<LayoutContext>({} as any);

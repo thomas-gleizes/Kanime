@@ -12,7 +12,7 @@ export type UserLayoutProps = {
 };
 
 interface Props extends UserLayoutProps {
-  children: NodeR;
+  children: ReactNode;
 }
 
 const UserLayout: Component<Props> = ({ children, user, ...props }) => {

@@ -12,7 +12,7 @@ declare module 'next/app' {
   } from 'next';
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
-    layout?: Component<{ children: NodeR } & P>;
+    layout?: Component<{ children: ReactNode } & P>;
     // errors?: Component<P>;
   };
 

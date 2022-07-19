@@ -13,25 +13,35 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 
-interface Props1 extends ModalProps {
+interface Props1 {
   content: string;
 }
 
-interface Props2 extends ModalProps {
-  value: string;
+type Result1 = { action: 'close'; value: number } | { action: 'cancel' };
+
+interface Props2 {
+  value: number;
 }
 
-const Modal1: Component<Props1> = ({ isOpen, close, content }) => {
+type Result2 = { action: 'close' | 'cancel' };
+
+const Modal1: DialogComponent<Props1, Result1> = ({ isOpen, close, content }) => {
   const dialog = useDialog();
 
-  const handleClick = () => {
-    console.log('click');
+  const handleClick = async () => {
+    const result = await dialog<Props2, Result2>(Modal2, {
+      value: Math.random() * 10,
+    });
+
+    if (result.action === 'close') {
+      close({ action: 'close', value: Math.random() });
+    }
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={close.bind({ action: 'cancel' })}
+      onClose={() => close({ action: 'cancel' })}
       motionPreset="slideInBottom"
       isCentered
       size="lg"
@@ -49,11 +59,11 @@ const Modal1: Component<Props1> = ({ isOpen, close, content }) => {
   );
 };
 
-const Modal2: Component<Props2> = ({ isOpen, close, value }) => {
+const Modal2: DialogComponent<Props2, Result2> = ({ isOpen, close, value }) => {
   return (
     <Modal
       isOpen={isOpen}
-      onClose={close.bind({ action: 'cancel' })}
+      onClose={() => close({ action: 'cancel' })}
       motionPreset="slideInBottom"
       isCentered
       size="sm"
@@ -63,7 +73,10 @@ const Modal2: Component<Props2> = ({ isOpen, close, value }) => {
         <ModalHeader>
           <h1>{value}</h1>
         </ModalHeader>
-        <ModalBody></ModalBody>
+        <ModalBody>
+          <Button onClick={() => close({ action: 'cancel' })}>Close</Button>
+          <Button onClick={() => close({ action: 'close' })}>Close all</Button>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );
@@ -73,7 +86,9 @@ const DevPage: Page = () => {
   const dialog = useDialog();
 
   const handleClick = async () => {
-    const result = await dialog.custom<Props1, any>(Modal1, { content: 'ojk' });
+    const result = await dialog<Props1, Result1>(Modal1, { content: 'ojk' });
+
+    console.log('Result', result);
   };
 
   return (

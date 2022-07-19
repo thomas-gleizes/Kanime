@@ -1,47 +1,30 @@
 import React, { createContext, useState } from 'react';
 import { useContextFactory } from 'hooks';
-import {
-  AlertDialog,
-  ConfirmDialog,
-  CustomDialog,
-  PromptDialog,
-} from 'components/dialog';
+import DialogWrapper from 'components/common/DialogWrapper';
 
-type Dialog<Params = any, Content = any> = {
-  type: string;
-  content: Content;
-  resolve: (params: Params) => void;
-};
-
-type DialogContextType = {
+type DialogContextValues = {
   dialogs: Dialog[];
-  resetDialogs: Function;
   addDialog: (dialog: Dialog) => void;
+  closeDialog: Function;
 };
 
-const DialogContext = createContext<DialogContextType>({} as any);
-export const useDialogContext = useContextFactory<DialogContextType>(DialogContext);
+const DialogContext = createContext<DialogContextValues>({} as any);
+export const useDialogContext = useContextFactory<DialogContextValues>(DialogContext);
 
-const DialogContextProvider: Component<{ children: NodeR }> = ({ children }) => {
+const DialogContextProvider: Component<{ children: ReactNode }> = ({ children }) => {
   const [dialogs, setDialogs] = useState<Dialog[]>([]);
 
   const addDialog = (dialog: Dialog) => setDialogs([...dialogs, dialog]);
 
-  const resetDialogs = () => {
-    setDialogs([]);
+  const closeDialog = (uid: string) => {
+    const index = dialogs.findIndex((d) => d.uid === uid);
+    setDialogs([...dialogs.slice(0, index), ...dialogs.slice(index + 1)]);
   };
 
   return (
-    <DialogContext.Provider value={{ dialogs, resetDialogs, addDialog }}>
+    <DialogContext.Provider value={{ dialogs, closeDialog, addDialog }}>
       {children}
-      {dialogs.length > 0 && (
-        <>
-          <ConfirmDialog />
-          <PromptDialog />
-          <AlertDialog />
-          <CustomDialog />
-        </>
-      )}
+      <DialogWrapper />
     </DialogContext.Provider>
   );
 };
