@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Form, Formik, FormikProps, Field } from 'formik';
 import deepEqual from 'deep-equal';
 import { EntryStatus, Visibility } from '@prisma/client';
@@ -49,8 +49,6 @@ export interface Props {
   entry?: Entry;
 }
 
-interface RealProps extends Props, ModalProps<Result> {}
-
 const status = Object.entries(EntryStatus).map(([key, value]) => ({
   label: replaceCamelCaseWithSpace(key),
   value: value,
@@ -61,7 +59,12 @@ const visibilities = Object.entries(Visibility).map(([key, value]) => ({
   value,
 }));
 
-const EditAnimesEntries: Component<RealProps> = ({ isOpen, close, anime, entry }) => {
+const EditAnimesEntries: DialogComponent<Props, Result> = ({
+  isOpen,
+  close,
+  anime,
+  entry,
+}) => {
   const { user } = useUserContext();
 
   const initialValues = useMemo<upsertEntries>(

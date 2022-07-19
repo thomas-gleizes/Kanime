@@ -6,7 +6,7 @@ import { Dialog, Transition } from '@headlessui/react';
 interface Props {
   isOpen: boolean;
   toggle: () => void;
-  children: NodeR;
+  children: ReactNode;
   externalToggleDisabled?: boolean;
 }
 

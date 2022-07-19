@@ -1,17 +1,11 @@
 import React, { createContext, useEffect, useState, useCallback } from 'react';
-import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
-import { MINUTE, SECOND } from 'resources/constants';
 import { useConst } from '@chakra-ui/react';
 
-type Dialog<Params = any, Content = any> = {
-  type: string;
-  content: Content;
-  resolve: (params: Params) => void;
-};
+import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
+import { MINUTE, SECOND } from 'resources/constants';
 
 export declare type LayoutContext = {
   activeTransparentState: State<boolean>;
-  dialogState: State<Dialog>;
   scrollPercent: number;
   scrollHeight: number;
   header: {
@@ -24,17 +18,15 @@ export declare type LayoutContext = {
 };
 
 interface Props {
-  children: NodeR;
+  children: ReactNode;
 }
 
-const LayoutContext = createContext<LayoutContext>(null);
+const LayoutContext = createContext<LayoutContext>({} as any);
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 
-const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => {
+const LayoutContextProvider: Component<Props> = ({ children }) => {
   const activeTransparentState = useState<boolean>(false);
-  const dialogState = useState<Dialog>({ type: null, content: null, resolve: null });
   const [hiddenHeader, setHiddenHeader] = useState<boolean>(false);
 
   const [lastEventTime, setLastEventTime] = useState<number>(Date.now());
@@ -87,7 +79,6 @@ const LayoutContextProvider: React.FunctionComponent<Props> = ({ children }) => 
     <LayoutContext.Provider
       value={{
         activeTransparentState,
-        dialogState,
         scrollPercent,
         scrollHeight,
         header: { hiddenHeader, hideHeader, showHeader },

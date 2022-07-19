@@ -15,12 +15,11 @@ export declare type UserContext = {
 };
 
 interface Props {
-  children: NodeR;
+  children: ReactNode;
 }
 
-const UserContext = createContext<UserContext>(null);
+const UserContext = createContext<UserContext>({} as any);
 
-// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
 const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {

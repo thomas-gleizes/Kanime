@@ -60,7 +60,7 @@ const NavLink: Component<{ href: string; children: string }> = ({ href, children
   );
 };
 
-const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
+const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
   children,
   anime,
   error,
@@ -92,7 +92,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: NodeR }> = ({
 
   const handleModal = async () => {
     if (isLogin) {
-      const result = await dialog.custom<EditAnimesEntriesResult, EditAnimesEntriesProps>(
+      const result = await dialog<EditAnimesEntriesProps, EditAnimesEntriesResult>(
         EditAnimesEntries,
         { anime, entry }
       );

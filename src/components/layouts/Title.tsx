@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 interface Props {
-  children: string | NodeR;
+  children: string | ReactNode;
 }
 
 const Title: Component<Props> = ({ children }) => {

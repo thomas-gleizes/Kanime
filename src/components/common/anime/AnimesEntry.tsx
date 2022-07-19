@@ -22,7 +22,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
   const dialog = useDialog();
 
   const handleEntry = async () => {
-    const result = await dialog.custom<EditAnimesEntriesResult, EditAnimesEntriesProps>(
+    const result = await dialog<EditAnimesEntriesProps, EditAnimesEntriesResult>(
       EditAnimesEntries,
       { entry, anime: entry.anime }
     );
