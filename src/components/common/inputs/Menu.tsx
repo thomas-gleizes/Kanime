@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 interface Props {
   label: string;
-  children: NodeR;
+  children: ReactNode;
 }
 
 const Menu: Component<Props> = ({ label, children }) => {
@@ -37,13 +37,13 @@ const Menu: Component<Props> = ({ label, children }) => {
   );
 };
 
-export const MenuGroup: Component<{ children: NodeR }> = ({ children }) => {
+export const MenuGroup: Component<{ children: ReactNode }> = ({ children }) => {
   return <div className="p-1">{children}</div>;
 };
 
 interface MenuItemProps {
-  children: NodeR;
-  icon?: NodeR;
+  children: ReactNode;
+  icon?: ReactNode;
   color?: TailwindcssColors | CustomColors;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }

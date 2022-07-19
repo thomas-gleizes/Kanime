@@ -2,7 +2,7 @@ declare type Component<P = {}> = React.FC<P>;
 
 declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>];
 
-declare type NodeR = React.ReactNode | string;
+declare type ReactNode = React.ReactNode | string;
 
 declare type OptionalPromise<T> = T | Promise<T>;
 
@@ -41,11 +41,6 @@ type ModelOptions<T> = {
 };
 
 declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-
-declare type ModalProps<Result = any> = {
-  close: (result: Result) => void;
-  isOpen: boolean;
-};
 
 type InputType =
   | 'text'
@@ -123,3 +118,24 @@ declare type upsertEntries = {
   startedAt?: string | Date | null;
   finishAt?: string | Date | null;
 };
+
+declare type DialogOptions = {
+  timeout?: number;
+};
+
+declare type Dialog = {
+  uid: string;
+  Component: Component;
+  props: any;
+  resolve: (r: any) => void;
+  options?: DialogOptions;
+};
+
+declare type DialogProps<Result = any> = {
+  close: (result: Result) => void;
+  isOpen: boolean;
+};
+
+declare type DialogComponent<Props = {}, Result = undefined> = Component<
+  DialogProps<Result> & Props
+>;

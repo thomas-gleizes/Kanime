@@ -3,7 +3,7 @@ import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
-  children: NodeR;
+  children: ReactNode;
 }
 
 const DefaultLayout: Component<Props> = ({ children, ...props }) => {

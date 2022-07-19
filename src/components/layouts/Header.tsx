@@ -11,7 +11,7 @@ import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
 import { useHovered } from 'hooks';
 
-const DropDownItem: Component<{ href: string; children: NodeR }> = ({
+const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
   children,
 }) => (

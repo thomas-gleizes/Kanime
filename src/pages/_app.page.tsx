@@ -6,30 +6,19 @@ import { AppProps } from 'next/app';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import {
-  AlertDialog,
-  ConfirmDialog,
-  PromptDialog,
-  CustomDialog,
-} from 'components/dialog';
 
 import 'styles/globals.css';
 import 'simplebar/dist/simplebar.min.css';
+import DialogContextProvider from 'context/dialog.context';
 
 const ContextsProvider: Component<ContextProviderProps> = ({ children }) => (
-  <LayoutContextProvider>
-    <UserContextProvider>{children}</UserContextProvider>
-  </LayoutContextProvider>
-);
-
-const Dialogs: Component<ContextProviderProps> = ({ children }) => (
-  <>
-    {children}
-    <ConfirmDialog />
-    <PromptDialog />
-    <AlertDialog />
-    <CustomDialog />
-  </>
+  <ChakraProvider>
+    <LayoutContextProvider>
+      <DialogContextProvider>
+        <UserContextProvider>{children}</UserContextProvider>
+      </DialogContextProvider>
+    </LayoutContextProvider>
+  </ChakraProvider>
 );
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -39,24 +28,20 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 
   return (
-    <ChakraProvider>
-      <ContextsProvider>
-        <Dialogs>
-          <Head>
-            <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
-            <link
-              href="/fonts/asap/Asap-VariableFont_wght.ttf"
-              crossOrigin=""
-              rel="preload"
-              as="font"
-            />
-          </Head>
-          <Layout {...pageProps}>
-            <Component {...pageProps} />
-          </Layout>
-        </Dialogs>
-      </ContextsProvider>
-    </ChakraProvider>
+    <ContextsProvider>
+      <Head>
+        <title>{process.env.NEXT_PUBLIC_APP_NAME}</title>
+        <link
+          href="/fonts/asap/Asap-VariableFont_wght.ttf"
+          crossOrigin=""
+          rel="preload"
+          as="font"
+        />
+      </Head>
+      <Layout {...pageProps}>
+        <Component {...pageProps} />
+      </Layout>
+    </ContextsProvider>
   );
 };
 

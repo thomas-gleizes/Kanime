@@ -1,49 +1,99 @@
 import React, { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
-import { Button } from '@chakra-ui/react';
 
 import { Page } from 'next/app';
-import { UsersApi } from 'api';
-import { AnimeModel } from 'models';
-import { AnimesMapper } from 'mappers';
-import { ssrHandler } from 'services/handler.service';
+
 import { useDialog } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+} from '@chakra-ui/react';
 
-export const getServerSideProps = ssrHandler(async () => {
-  const anime = await AnimeModel.findById(22);
+interface Props1 {
+  content: string;
+}
 
-  return {
-    props: {
-      anime: AnimesMapper.one(anime),
-    },
-  };
-});
+type Result1 = { action: 'close'; value: number } | { action: 'cancel' };
 
-const DevPage: Page<{ anime: Anime }> = ({ anime }) => {
+interface Props2 {
+  value: number;
+}
+
+type Result2 = { action: 'close' | 'cancel' };
+
+const Modal1: DialogComponent<Props1, Result1> = ({ isOpen, close, content }) => {
   const dialog = useDialog();
 
-  const [entries, setEntries] = useState<Entries>([]);
+  const handleClick = async () => {
+    const result = await dialog<Props2, Result2>(Modal2, {
+      value: Math.random() * 10,
+    });
 
-  useEffect(() => {
-    UsersApi.showEntries(1, {
-      include: { anime: true },
-      status: 'Completed',
-      orderBy: { rating: 'desc' },
-    }).then((response) => setEntries(response.entries));
-  }, []);
+    if (result.action === 'close') {
+      close({ action: 'close', value: Math.random() });
+    }
+  };
 
   return (
-    <div className="p-10 space-y-1">
-      <div>{anime.slug}</div>
-      <div>{dayjs(anime.dateEnd).format()}</div>
-      <div>{dayjs(anime.dateBegin).toString()}</div>
-      <Button onClick={() => dialog.confirm('test')}>Click me</Button>
-      <ul>
-        {entries.map((entry, index) => (
-          <li key={index}>{entry.anime.slug}</li>
-        ))}
-      </ul>
+    <Modal
+      isOpen={isOpen}
+      onClose={() => close({ action: 'cancel' })}
+      motionPreset="slideInBottom"
+      isCentered
+      size="lg"
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <h1>{content}</h1>
+        </ModalHeader>
+        <ModalBody>
+          <Button onClick={handleClick}>Open other Modal</Button>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const Modal2: DialogComponent<Props2, Result2> = ({ isOpen, close, value }) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={() => close({ action: 'cancel' })}
+      motionPreset="slideInBottom"
+      isCentered
+      size="sm"
+    >
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>
+          <h1>{value}</h1>
+        </ModalHeader>
+        <ModalBody>
+          <Button onClick={() => close({ action: 'cancel' })}>Close</Button>
+          <Button onClick={() => close({ action: 'close' })}>Close all</Button>
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const DevPage: Page = () => {
+  const dialog = useDialog();
+
+  const handleClick = async () => {
+    const result = await dialog<Props1, Result1>(Modal1, { content: 'ojk' });
+
+    console.log('Result', result);
+  };
+
+  return (
+    <div className="p-10">
+      <Button onClick={handleClick}>Click me</Button>
     </div>
   );
 };

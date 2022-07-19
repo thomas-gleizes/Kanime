@@ -15,7 +15,7 @@ export declare type UserContext = {
 };
 
 interface Props {
-  children: NodeR;
+  children: ReactNode;
 }
 
 const UserContext = createContext<UserContext>({} as any);

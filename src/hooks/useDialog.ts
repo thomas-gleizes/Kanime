@@ -1,36 +1,17 @@
-import { useLayoutContext } from 'context/layout.context';
-import { dialogTypes } from 'resources/constants';
+import { v4 as uuid } from 'uuid';
 
-type result = {
-  alert: (message: string) => Promise<void>;
-  confirm: (message: string) => Promise<boolean>;
-  prompt: (message: string) => Promise<string | false>;
-  custom: <Result = any, Props = any>(
-    component: Component<Props>,
-    props?: Props
-  ) => Promise<Result>;
-};
+import { useDialogContext } from 'context/dialog.context';
 
-export default function useDialog(): result {
-  const {
-    dialogState: [, setDialog],
-  } = useLayoutContext();
+type useDialogResult = <Props, Result>(
+  component: DialogComponent<Props, Result>,
+  props: Props
+) => Promise<Result>;
 
-  const generateDialog = <Params, Content = string>(
-    content: Content,
-    type: keyof typeof dialogTypes
-  ): Promise<Params> => new Promise((resolve) => setDialog({ type, content, resolve }));
+export default function useDialog(options?: DialogOptions): useDialogResult {
+  const { addDialog } = useDialogContext();
 
-  return {
-    alert: (message) => generateDialog<void>(message, dialogTypes.alert),
-    confirm: (message) => generateDialog<boolean>(message, dialogTypes.confirm),
-    prompt: (message) => generateDialog<string | false>(message, dialogTypes.prompt),
-    custom: <T = any, P = any>(component, props) =>
-      generateDialog<T, { component: Component; props: P }>(
-        { component, props },
-        dialogTypes.custom
-      ),
-  };
+  return (component, props) =>
+    new Promise((resolve) =>
+      addDialog({ uid: uuid(), props, Component: component, resolve, options })
+    );
 }
-
-type Test = keyof typeof dialogTypes;
