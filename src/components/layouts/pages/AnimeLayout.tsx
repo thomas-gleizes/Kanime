@@ -92,7 +92,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
 
   const handleModal = async () => {
     if (isLogin) {
-      const result = await dialog<EditAnimesEntriesResult, EditAnimesEntriesProps>(
+      const result = await dialog<EditAnimesEntriesProps, EditAnimesEntriesResult>(
         EditAnimesEntries,
         { anime, entry }
       );
