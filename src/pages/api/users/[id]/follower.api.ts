@@ -7,24 +7,17 @@ import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
 
-interface Data extends DefaultResponseData {
-  users: Users;
-  length: number;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<Data>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
 
-  const users = UsersMapper.many(await UserModel.findFollowers(+id)).map(
-    ([user]) => user
-  );
+  const users = await UserModel.findFollowers(+id);
 
-  res.json({ success: true, users, length: users.length });
+  return res.json({ success: true, users: UsersMapper.many(users) });
 });
 
 export default withSessionApi(handler);

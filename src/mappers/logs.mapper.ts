@@ -14,10 +14,7 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
       createAt: resource.created_at.toISOString(),
     };
 
-    if (resource.user) {
-      const [user] = UsersMapper.one(resource.user);
-      log.user = user;
-    }
+    if (resource.user) log.user = UsersMapper.one(resource.user);
 
     return log;
   }

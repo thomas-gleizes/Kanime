@@ -31,10 +31,14 @@ class UserModel extends Model<PrismaUserDelegate> {
   public findByUsername = (username: string): Promise<PrismaUser> =>
     this.model.findUnique({ where: { username } });
 
+  public findBySlug = (slug: string): Promise<PrismaUser> =>
+    this.model.findUnique({ where: { slug } });
+
   public create = (data: createData): Promise<PrismaUser> =>
     this.model.create({
       data: {
         username: data.username,
+        slug: data.username.toLowerCase().replaceAll(' ', '-'),
         email: data.email,
         real_email: emailHelpers.removeDot(data.email),
         password: data.password,

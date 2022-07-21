@@ -11,7 +11,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
 
   const animes: Animes = AnimesMapper.many(await AnimeModel.all(req.query));
 
-  res.json({ success: true, animes, debug: query });
+  return res.json({ success: true, animes, debug: query });
 });
 
 export default withSessionApi(handler);

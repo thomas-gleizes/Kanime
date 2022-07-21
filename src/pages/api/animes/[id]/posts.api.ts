@@ -23,7 +23,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<GetResponseData>) => {
 
   const posts = PostsMapper.many(await PostModel.findByAnimes(+id));
 
-  res.json({ success: true, total: posts.length, posts });
+  return res.json({ success: true, total: posts.length, posts });
 });
 
 handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseData>) => {
@@ -46,7 +46,7 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse<PostResponseDa
     parentId: body.parentId,
   });
 
-  res.json({ success: true, post: PostsMapper.one(post) });
+  return res.json({ success: true, post: PostsMapper.one(post) });
 });
 
 handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
@@ -64,7 +64,7 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<any>) => {
 
   await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
 
-  res.status(204).json({ success: true });
+  return res.status(HttpStatus.NO_CONTENT).json({ success: true });
 });
 
 export default withSessionApi(handler);

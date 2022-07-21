@@ -28,12 +28,12 @@ handler.get((req, res) => {
     });
 
     // @ts-ignore
-    res.socket.server.io = io;
+    return (res.socket.server.io = io);
   } else {
     console.log('socket.io already running');
   }
 
-  res.end();
+  return res.end();
 });
 
 export const config = {

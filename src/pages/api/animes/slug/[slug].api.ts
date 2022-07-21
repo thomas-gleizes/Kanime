@@ -16,7 +16,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeSlugResponse>) => {
 
   if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
 
-  res.json({ success: true, anime, params: req.query });
+  return res.json({ success: true, anime, params: req.query });
 });
 
 export default withSessionApi(handler);

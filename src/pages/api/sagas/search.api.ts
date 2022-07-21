@@ -6,13 +6,9 @@ import { SagasMapper } from 'mappers';
 import { SagaModel } from 'models';
 import { ApiError } from 'errors';
 
-interface ResponseData extends DefaultResponseData {
-  sagas: Sagas;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ sagas: Sagas }>) => {
   const { limit, skip, query } = req.query;
 
   if (!query) throw new ApiError(HttpStatus.BAD_REQUEST, 'query is required');
@@ -21,7 +17,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
     await SagaModel.search(query as string, { limit, skip })
   );
 
-  res.json({ success: true, sagas });
+  return res.json({ success: true, sagas });
 });
 
 export default withSessionApi(handler);

@@ -9,7 +9,7 @@ interface Props {}
 
 export const getServerSideProps = ssrHandler<Props, { username: string }>(
   ({ req, query }) => {
-    if (req.session.user.username !== query.username) {
+    if (req.session.user.slug !== query.slug) {
       return {
         redirect: {
           permanent: false,

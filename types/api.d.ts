@@ -5,44 +5,43 @@ interface SignInResponse extends DefaultResponseData {
   token: string;
 }
 
-interface RegisterResponse extends DefaultResponseData {
+interface RegisterResponse {
   user: User;
   token: string;
 }
 
 /** users */
 
-interface UsersEntriesResponse extends DefaultResponseData {
+interface UsersEntriesResponse {
   entries: Entries;
 }
 
 /** animes */
 
-interface AnimesListResponse extends DefaultResponseData {
+interface AnimesListResponse {
   animes: Animes;
 }
 
-interface AnimesSearchResponse extends DefaultResponseData {
+interface AnimesSearchResponse {
   animes: Animes;
 }
 
-interface AnimeSlugResponse extends DefaultResponseData {
+interface AnimeSlugResponse {
   anime: Anime;
 }
 
-interface AnimeUserResponse extends DefaultResponseData {
+interface AnimeUserResponse {
   users: Users;
 }
 
-interface AnimeResponse extends DefaultResponseData {
-  anime?: Anime;
-  animes?: Animes;
+interface AnimeResponse {
+  anime: Anime;
 }
 
-interface AnimeCategories extends DefaultResponseData {
+interface AnimeCategories {
   categories: Categories;
 }
 
-interface AnimeEntry extends DefaultResponseData {
+interface AnimeEntry {
   entry: Entry;
 }

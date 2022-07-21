@@ -3,8 +3,6 @@ import { AnimesMapper, UsersMapper } from 'mappers';
 
 class EntriesMapper implements Mapper<PrismaEntry, Entry> {
   one(resource: PrismaEntry): Entry {
-    if (!resource) return null;
-
     const entry: Entry = {
       animeId: resource.anime_id,
       userId: resource.user_id,
@@ -20,11 +18,7 @@ class EntriesMapper implements Mapper<PrismaEntry, Entry> {
     };
 
     if (resource.anime) entry.anime = AnimesMapper.one(resource.anime);
-
-    if (resource.user) {
-      const [user] = UsersMapper.one(resource.user);
-      entry.user = user;
-    }
+    if (resource.user) entry.user = UsersMapper.one(resource.user);
 
     return entry;
   }

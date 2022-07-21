@@ -14,6 +14,7 @@ import queryParser from 'middlewares/queryParser.middleware';
 import { withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import trace from 'utils/trace';
+import HttpStatus from 'resources/HttpStatus';
 
 export const apiHandler = () =>
   nc<ApiRequest, ApiResponse>({
@@ -38,7 +39,9 @@ export const apiHandler = () =>
     onNoMatch: (req, res) => {
       trace('No match route', req.url);
 
-      res.status(405).json({ error: errorMessage.METHOD_NOT_ALLOWED });
+      return res
+        .status(HttpStatus.METHOD_NOT_ALLOWED)
+        .json({ error: errorMessage.METHOD_NOT_ALLOWED });
     },
   })
     .use(apiLogger)

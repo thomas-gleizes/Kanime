@@ -18,11 +18,7 @@ class LogsMapper implements Mapper<PrismaPost, Post> {
     if (resource.anime) post.anime = AnimesMapper.one(resource.anime);
     if (resource.replyTo) post.replyTo = this.one(resource.replyTo);
     if (resource.replies) post.replies = this.many(resource.replies);
-
-    if (resource.user) {
-      const [user] = UsersMapper.one(resource.user);
-      post.user = user;
-    }
+    if (resource.user) post.user = UsersMapper.one(resource.user);
 
     return post;
   }

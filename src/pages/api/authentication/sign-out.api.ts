@@ -7,7 +7,7 @@ const handler = apiHandler();
 handler.all(async (req: ApiRequest, res: ApiResponse) => {
   req.session.destroy();
 
-  res.json({ success: true });
+  return res.json({ success: true });
 });
 
 export default withSessionApi(handler);

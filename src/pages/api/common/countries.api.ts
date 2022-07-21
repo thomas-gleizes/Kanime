@@ -5,16 +5,12 @@ import { apiHandler } from 'services/handler.service';
 import { CountryModel } from 'models';
 import { withSessionApi } from 'services/session.service';
 
-interface Data extends DefaultResponseData {
-  countries: Array<Country>;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<Data>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ countries: Country[] }>) => {
   const countries = await CountryModel.all();
 
-  res.json({ success: true, countries });
+  return res.json({ success: true, countries });
 });
 
 export default withSessionApi(handler);

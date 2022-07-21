@@ -7,14 +7,9 @@ import { errorMessage } from 'resources/constants';
 import { ApiError } from 'errors';
 import HttpStatus from 'resources/HttpStatus';
 
-interface ResponseData extends DefaultResponseData {
-  animes: Animes;
-  length: number;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ animes: Animes }>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
@@ -22,7 +17,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
 
   const animes = AnimesMapper.many(await AnimeModel.findByUser(+id));
 
-  res.json({ success: true, animes: animes, length: animes.length });
+  return res.json({ success: true, animes: animes });
 });
 
 export default withSessionApi(handler);

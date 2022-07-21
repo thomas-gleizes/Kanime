@@ -20,12 +20,12 @@ interface Props {
   error?: ErrorPage;
 }
 
-export const getServerSideProps = ssrHandler<Props, { username: string }>(
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ query, req }) => {
-    const { username } = query;
+    const { slug } = query;
     const { user: sessionUser } = req.session;
 
-    const [user] = UsersMapper.one(await UserModel.findByUsername(username as string));
+    const user = await UserModel.findBySlug(slug as string);
     if (!user) throw new SsrError(404, errorMessage.USER_NOT_FOUND);
 
     const visibility: Visibility[] = ['public'];
@@ -55,7 +55,7 @@ export const getServerSideProps = ssrHandler<Props, { username: string }>(
 
     return {
       props: {
-        user,
+        user: UsersMapper.one(user),
         isCurrent: user.id === sessionUser?.id,
         entries: entries,
       },

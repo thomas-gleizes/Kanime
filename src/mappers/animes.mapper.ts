@@ -4,8 +4,6 @@ import { CategoriesMapper, EntriesMapper, PostsMapper, SagasMapper } from 'mappe
 
 class AnimesMapper implements Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
-    if (!resource) return null;
-
     const anime: Anime = {
       id: resource.id,
       kitsu_id: resource.kitsu_id,

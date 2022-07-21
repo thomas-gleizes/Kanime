@@ -22,22 +22,22 @@ handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
 
   if (session) await session.destroy();
 
-  const [user, hash]: [User, string] = UsersMapper.one(
-    await UserModel.findByEmail(body.email)
-  );
+  const user = await UserModel.findByEmail(body.email);
 
-  if (!user || !Security.compare(body.password + user.username, hash)) {
+  if (!user || !Security.compare(body.password + user.username, user.password)) {
     throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
   }
 
-  const token = Security.sign(user, body.rememberMe);
+  const mappedUser = UsersMapper.one(user);
 
-  session.user = user;
+  const token = Security.sign(mappedUser, body.rememberMe);
+
+  session.user = mappedUser;
   session.token = token;
 
   await session.save();
 
-  res.json({ success: true, user, token });
+  return res.json({ success: true, user: mappedUser, token });
 });
 
 export default withSessionApi(handler);

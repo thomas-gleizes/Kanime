@@ -29,7 +29,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
     throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
   }
 
-  const [user] = UsersMapper.one(
+  const user = UsersMapper.one(
     await UserModel.create({
       username: userData.username,
       email: userData.email,
@@ -43,7 +43,7 @@ handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
   session.token = token;
   await session.save();
 
-  res.status(201).json({ success: true, user: user, token: token });
+  return res.status(201).json({ success: true, user: user, token: token });
 });
 
 export default withSessionApi(handler);

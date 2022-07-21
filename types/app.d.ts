@@ -25,8 +25,8 @@ declare module 'next/app' {
   declare type ServerSidePropsContext<Q = {}, D = any> = GetServerSidePropsContext<Q, D>;
   declare type ServerSidePropsResult<P = {}> = GetServerSidePropsResult<P>;
 
-  declare type ApiResponse<D = DefaultResponseData> = NextApiResponse<
-    D | ApiResponseError | ApiResponseSchemaError
+  declare type ApiResponse<Data = {}> = NextApiResponse<
+    (Data & DefaultResponseData) | ApiResponseError | ApiResponseSchemaError
   >;
   declare type ApiRequest<Body = any, Query = any> = NextApiRequest & {
     body: Body;

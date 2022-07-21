@@ -33,7 +33,7 @@ handler.all(async (req: ApiRequest, res: ApiResponse<any>) => {
     },
   };
 
-  res.json({ routes });
+  return res.json({ routes });
 });
 
 export default handler;

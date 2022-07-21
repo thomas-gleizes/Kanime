@@ -106,6 +106,7 @@ declare type Posts = Post[];
 declare type User = {
   id: number;
   username: string;
+  slug: string;
   email: string;
   gender: 'Male' | 'Female' | 'Secret';
   bio?: string;

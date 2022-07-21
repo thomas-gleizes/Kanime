@@ -8,22 +8,17 @@ import { UserFollowModel, UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
 
-interface ResponseData extends DefaultResponseData {
-  users: Users;
-  length: number;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
   const { id } = req.query;
 
   const user = await UserModel.findById(+id);
   if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
 
-  const users = UsersMapper.many(await UserModel.findFollows(+id)).map(([user]) => user);
+  const users = await UserModel.findFollows(+id);
 
-  res.json({ success: true, users, length: users.length });
+  return res.json({ success: true, users: UsersMapper.many(users) });
 });
 
 handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
@@ -32,7 +27,7 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
   try {
     await UserFollowModel.create(+session.user.id, +query.id);
 
-    res.status(201).json({ success: true });
+    return res.status(HttpStatus.CREATED).json({ success: true });
   } catch (e) {
     throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.FOLLOW);
   }
@@ -44,7 +39,7 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
   try {
     const result = await UserFollowModel.delete(+session.user.id, +query.id);
 
-    res.json({ success: true, debug: result });
+    return res.json({ success: true, debug: result });
   } catch (e) {
     throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.UNFOLLOW);
   }

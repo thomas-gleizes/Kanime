@@ -9,28 +9,19 @@ import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
 
-interface ResponseGetData extends DefaultResponseData {
-  user: User;
-}
-
-interface ResponsePatchData extends DefaultResponseData {
-  user: User;
-  token: string;
-}
-
 const handler = apiHandler();
 
-handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseGetData>) => {
+handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
   const { session } = req;
 
-  const [user] = UsersMapper.one(await UserModel.findById(session.user.id));
+  const user = await UserModel.findById(session.user.id);
 
-  res.json({ success: true, user: user });
+  return res.json({ success: true, user: UsersMapper.one(user) });
 });
 
 handler.patch(
   verifyUser,
-  async (req: ApiRequest, res: ApiResponse<ResponsePatchData>) => {
+  async (req: ApiRequest, res: ApiResponse<{ user: User; token: string }>) => {
     const { body, session } = req;
     const { user } = session;
 
@@ -64,7 +55,7 @@ handler.patch(
       body.backgroundPath = backgroundPath;
     }
 
-    const [updatedUser] = UsersMapper.one(await UserModel.update(user.id, body));
+    const updatedUser = UsersMapper.one(await UserModel.update(user.id, body));
 
     const token = Security.sign(updatedUser);
 
@@ -73,7 +64,7 @@ handler.patch(
 
     await session.save();
 
-    res.json({ success: true, user: updatedUser, token: token });
+    return res.json({ success: true, user: updatedUser, token: token });
   }
 );
 

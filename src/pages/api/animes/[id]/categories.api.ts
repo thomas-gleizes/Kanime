@@ -11,7 +11,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimeCategories>) => {
 
   const categories = CategoriesMapper.many(await CategoryModel.findByAnimeId(+id));
 
-  res.json({ success: true, categories, params: req.query });
+  return res.json({ success: true, categories, params: req.query });
 });
 
 export default withSessionApi(handler);

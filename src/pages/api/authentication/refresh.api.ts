@@ -7,14 +7,10 @@ import { UserModel } from 'models';
 
 const handler = apiHandler();
 
-interface ResponseData extends DefaultResponseData {
-  user: User;
-}
+handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
+  const user = await UserModel.findById(req.session.user.id);
 
-handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
-  const [user] = UsersMapper.one(await UserModel.findById(req.session.user.id));
-
-  res.send({ success: true, user });
+  return res.send({ success: true, user: UsersMapper.one(user) });
 });
 
 export default withSessionApi(handler);

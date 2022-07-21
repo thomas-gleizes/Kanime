@@ -24,7 +24,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) 
 
   if (!entry) throw new ApiError(HttpStatus.NOT_FOUND, 'Entry not found');
 
-  res.send({ success: true, entry });
+  return res.send({ success: true, entry });
 });
 
 handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
@@ -36,7 +36,7 @@ handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData
 
   const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
 
-  res.status(204).json({ success: true, entry });
+  return res.status(HttpStatus.NO_CONTENT).json({ success: true, entry });
 });
 
 const createOrUpdate = async (
@@ -83,7 +83,7 @@ const createOrUpdate = async (
     await EntryModel.upsert({ ...payload, animeId: anime.id, userId: user.id })
   );
 
-  res.json({ success: true, entry });
+  return res.json({ success: true, entry });
 };
 
 handler.post(verifyUser, createOrUpdate);

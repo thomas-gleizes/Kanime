@@ -26,10 +26,9 @@ handler.get(async (req: ApiRequest, res: ApiResponse<UsersEntriesResponse>) => {
 
   let orderBy = undefined;
 
-  if (query.orderBy) {
+  if (query.orderBy)
     for (const [key, value] of Object.entries(query.orderBy))
       orderBy = { field: key, order: value };
-  }
 
   const entries = await EntryModel.getByUser(
     +query.id,
@@ -39,7 +38,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<UsersEntriesResponse>) => {
     { ...query }
   );
 
-  res.send({ success: true, entries: EntriesMapper.many(entries) });
+  return res.send({ success: true, entries: EntriesMapper.many(entries) });
 });
 
 export default withSessionApi(handler);

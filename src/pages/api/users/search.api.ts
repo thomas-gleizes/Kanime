@@ -6,22 +6,16 @@ import { ApiError } from 'errors';
 import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 
-interface ResponseData extends DefaultResponseData {
-  users: Users;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
   const { query, limit, skip } = req.query;
 
   if (!query) throw new ApiError(HttpStatus.BAD_REQUEST, 'query is required');
 
-  const users = UsersMapper.many(
-    await UserModel.search(query as string, { limit: +limit, skip: +skip })
-  ).map(([user]) => user);
+  const users = await UserModel.search(query as string, { limit: +limit, skip: +skip });
 
-  res.json({ success: true, users: users });
+  return res.json({ success: true, users: UsersMapper.many(users) });
 });
 
 export default withSessionApi(handler);

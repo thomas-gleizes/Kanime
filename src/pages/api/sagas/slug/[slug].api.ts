@@ -4,18 +4,14 @@ import { withSessionApi } from 'services/session.service';
 import { SagasMapper } from 'mappers';
 import { SagaModel } from 'models';
 
-interface ResponseData extends DefaultResponseData {
-  saga: Saga;
-}
-
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<{ saga: Saga }>) => {
   const { slug } = req.query;
 
   const saga = SagasMapper.one(await SagaModel.findBySlug(slug as string));
 
-  res.json({ success: true, saga });
+  return res.json({ success: true, saga });
 });
 
 export default withSessionApi(handler);
