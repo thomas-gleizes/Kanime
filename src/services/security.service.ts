@@ -5,10 +5,34 @@ class Security {
   private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN;
   private static readonly SECRET_SEED: string = process.env.SECRET_SEED;
 
+  private static shuffle(input: string): string {
+    let output = '';
+
+    for (const [index, char] of Object.entries(input)) {
+      const code = char.charCodeAt(0);
+
+      if (code % +index === 0) {
+        output = output.concat(
+          char,
+          `${code << output.length}`,
+          this.SECRET_SEED.substring(input.length - (+index % 5), input.length)
+        );
+      } else {
+        output = char.concat(
+          `${code << input.length}`,
+          this.SECRET_SEED.substring(output.length - (+index % 8), output.length),
+          output
+        );
+      }
+    }
+
+    return output;
+  }
+
   static sha512(stringToHash: string): string {
     const hash = crypto.createHash('sha512');
 
-    hash.update(stringToHash + this.SECRET_SEED);
+    hash.update(this.shuffle(stringToHash));
     const hashedString: string = hash.digest().toString('hex');
     hash.end();
 

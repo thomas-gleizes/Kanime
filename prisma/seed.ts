@@ -15,11 +15,12 @@ async function main() {
   await prisma.user.create({
     data: {
       id: 1,
-      username: 'kalat',
+      username: 'Kalat',
+      slug: 'kalat',
       email: 'kalat@kanime.fr',
-      real_email: 'Kalat@kanime.fr',
+      real_email: 'kalat@kanime.fr',
       email_verified: true,
-      password: Security.sha512(password + 'kalat'),
+      password: Security.sha512(password + 'Kalat'),
       is_admin: true,
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
@@ -29,13 +30,14 @@ async function main() {
   });
 
   for (let i = 0; i < 30000; i++) {
-    const username: string = `user_${i}`;
-    const email: string = `${username}@kanime.dev`;
+    const username: string = `User ${i}`;
+    const email: string = `user.${i}@kanime.dev`;
 
     await prisma.user.create({
       data: {
         username: username,
         email: email,
+        slug: username.toLowerCase().replaceAll(' ', '-'),
         real_email: removeDot(email),
         email_verified: Math.random() > 0.4,
         password: Security.sha512(password + username),
