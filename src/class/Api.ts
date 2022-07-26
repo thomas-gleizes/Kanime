@@ -9,17 +9,11 @@ abstract class Api {
     this._path = path;
   }
 
-  protected get<R extends DefaultResponseData = DefaultResponseData, P = undefined>(
-    path: string,
-    params?: any
-  ): Promise<R> {
+  protected get<R, P = undefined>(path: string, params?: any): Promise<R> {
     return this._instance.get<R, R, P>(`${this._path}${path}`, params);
   }
 
-  protected post<R extends DefaultResponseData = DefaultResponseData, D = any>(
-    path: string,
-    data: D
-  ): Promise<R> {
+  protected post<R, D = any>(path: string, data: D): Promise<R> {
     return this._instance.post<R, R, D>(`${this._path}${path}`, data);
   }
 }
