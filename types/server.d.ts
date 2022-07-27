@@ -20,8 +20,3 @@ interface ErrorPage {
   code: responseCode;
   message: string;
 }
-
-interface Mapper<E = any, S = any, O = {}> {
-  one: (resource: E, options?: O) => S;
-  many: (resources: Array<E>, options?: O) => Array<S>;
-}

@@ -1,7 +1,8 @@
-import { PrismaEntries, PrismaEntry } from 'prisma/app';
+import { PrismaEntry } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import { AnimesMapper, UsersMapper } from 'mappers';
 
-class EntriesMapper implements Mapper<PrismaEntry, Entry> {
+class EntriesMapper extends Mapper<PrismaEntry, Entry> {
   one(resource: PrismaEntry): Entry {
     const entry: Entry = {
       animeId: resource.anime_id,
@@ -21,10 +22,6 @@ class EntriesMapper implements Mapper<PrismaEntry, Entry> {
     if (resource.user) entry.user = UsersMapper.one(resource.user);
 
     return entry;
-  }
-
-  many(resources: PrismaEntries): Entries {
-    return resources.map(this.one);
   }
 }
 

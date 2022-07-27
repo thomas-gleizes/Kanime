@@ -1,8 +1,9 @@
-import { PrismaAnime, PrismaAnimes } from 'prisma/app';
+import { PrismaAnime } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import jsonParser from 'utils/jsonParser';
 import { CategoriesMapper, EntriesMapper, PostsMapper, SagasMapper } from 'mappers';
 
-class AnimesMapper implements Mapper<PrismaAnime, Anime> {
+class AnimesMapper extends Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
     const anime: Anime = {
       id: resource.id,
@@ -42,10 +43,6 @@ class AnimesMapper implements Mapper<PrismaAnime, Anime> {
       anime.categories = CategoriesMapper.many(resource.categories);
 
     return anime;
-  }
-
-  public many(resources: PrismaAnimes): Animes {
-    return resources.map(this.one);
   }
 }
 

@@ -1,15 +1,14 @@
-import { PrismaSaga, PrismaSagas } from 'prisma/app';
-import jsonParser from 'utils/jsonParser';
+import { PrismaSaga } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import { AnimesMapper } from 'mappers';
+import jsonParser from 'utils/jsonParser';
 
-class SagasMapper implements Mapper<PrismaSaga, Saga> {
+class SagasMapper extends Mapper<PrismaSaga, Saga> {
   one(resource: PrismaSaga): Saga {
-    if (!resource) return null;
-
     const saga: Saga = {
       id: resource.id,
       slug: resource.slug,
-      canonical_title: '',
+      canonicalTitle: resource.canonical_title,
       titles: jsonParser<Titles>(resource.titles),
       description: resource.description,
       created_at: resource.created_at.toISOString(),
@@ -19,10 +18,6 @@ class SagasMapper implements Mapper<PrismaSaga, Saga> {
     if (resource.animes) saga.animes = AnimesMapper.many(resource.animes);
 
     return saga;
-  }
-
-  many(resources: PrismaSagas): Sagas {
-    return resources.map((resource) => this.one(resource));
   }
 }
 

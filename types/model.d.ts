@@ -139,7 +139,7 @@ declare type Logs = Array<Log>;
 declare type Saga = {
   id: number;
   slug: string;
-  canonical_title: string;
+  canonicalTitle: string;
   titles?: Titles;
   description?: string;
   created_at: Date | string;

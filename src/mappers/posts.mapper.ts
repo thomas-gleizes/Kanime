@@ -1,10 +1,9 @@
-import { PrismaPost, PrismaPosts } from 'prisma/app';
+import { PrismaPost } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import { AnimesMapper, UsersMapper } from 'mappers';
 
-class LogsMapper implements Mapper<PrismaPost, Post> {
+class LogsMapper extends Mapper<PrismaPost, Post> {
   one(resource: PrismaPost): Post {
-    if (!resource) return null;
-
     const post: Post = {
       id: resource.id,
       animeId: resource.anime_id,
@@ -21,10 +20,6 @@ class LogsMapper implements Mapper<PrismaPost, Post> {
     if (resource.user) post.user = UsersMapper.one(resource.user);
 
     return post;
-  }
-
-  many(resources: PrismaPosts): Posts {
-    return resources.map((ressource) => this.one(ressource));
   }
 }
 

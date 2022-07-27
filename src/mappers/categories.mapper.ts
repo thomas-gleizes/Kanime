@@ -1,6 +1,7 @@
-import { PrismaCategories, PrismaCategory } from 'prisma/app';
+import { PrismaCategory } from 'prisma/app';
+import Mapper from 'class/Mapper';
 
-class CategoriesMapper implements Mapper<PrismaCategory, Category> {
+class CategoriesMapper extends Mapper<PrismaCategory, Category> {
   one(resource: PrismaCategory): Category {
     if (!resource) return null;
 
@@ -11,10 +12,6 @@ class CategoriesMapper implements Mapper<PrismaCategory, Category> {
       description: resource.description,
       totalMediaCount: resource.total_media_count,
     };
-  }
-
-  many(resources: PrismaCategories): Categories {
-    return resources.map(this.one);
   }
 }
 

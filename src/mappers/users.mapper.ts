@@ -1,7 +1,8 @@
-import { PrismaUser, PrismaUsers } from 'prisma/app';
+import { PrismaUser } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import { EntriesMapper, PostsMapper } from 'mappers';
 
-class UsersMapper implements Mapper<PrismaUser, User> {
+class UsersMapper extends Mapper<PrismaUser, User> {
   public one(resource: PrismaUser): User {
     const user: User = {
       id: resource.id,
@@ -25,10 +26,6 @@ class UsersMapper implements Mapper<PrismaUser, User> {
     if (resource.posts) user.posts = PostsMapper.many(resource.posts);
 
     return user;
-  }
-
-  public many(resources: PrismaUsers): Users {
-    return resources.map(this.one);
   }
 }
 

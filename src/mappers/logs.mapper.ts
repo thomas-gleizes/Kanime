@@ -1,8 +1,9 @@
-import { PrismaLog, PrismaLogs } from 'prisma/app';
-import JsonParser from 'utils/jsonParser';
+import { PrismaLog } from 'prisma/app';
+import Mapper from 'class/Mapper';
 import { UsersMapper } from 'mappers';
+import JsonParser from 'utils/jsonParser';
 
-class LogsMapper implements Mapper<PrismaLog, Log> {
+class LogsMapper extends Mapper<PrismaLog, Log> {
   one(resource: PrismaLog): Log {
     const log: Log = {
       id: resource.id,
@@ -17,10 +18,6 @@ class LogsMapper implements Mapper<PrismaLog, Log> {
     if (resource.user) log.user = UsersMapper.one(resource.user);
 
     return log;
-  }
-
-  many(resources: PrismaLogs): Logs {
-    return resources.map(this.one);
   }
 }
 
