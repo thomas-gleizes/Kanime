@@ -67,6 +67,8 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 }) => {
   const { user } = useUserContext();
 
+  console.log('User', user);
+
   const initialValues = useMemo<upsertEntries>(
     () => ({
       animeId: anime.id,

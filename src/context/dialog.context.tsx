@@ -9,6 +9,7 @@ type DialogContextValues = {
 };
 
 const DialogContext = createContext<DialogContextValues>({} as any);
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useDialogContext = useContextFactory<DialogContextValues>(DialogContext);
 
 const DialogContextProvider: Component<{ children: ReactNode }> = ({ children }) => {

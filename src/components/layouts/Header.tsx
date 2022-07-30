@@ -129,10 +129,10 @@ const Header: Component = () => {
                   </div>
                   <DropDownByRef innerRef={avatarRef}>
                     <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                      <DropDownItem href={routes.users.page(user.username)}>
+                      <DropDownItem href={routes.users.page(user.slug)}>
                         Mon profile
                       </DropDownItem>
-                      <DropDownItem href={routes.users.settings(user.username)}>
+                      <DropDownItem href={routes.users.settings(user.slug)}>
                         Settings
                       </DropDownItem>
                       <div onClick={signOut}>

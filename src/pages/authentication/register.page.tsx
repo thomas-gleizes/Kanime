@@ -30,7 +30,7 @@ const RegisterPage: Page = () => {
 
       signIn(user, token);
 
-      await router.push(`${routes.users}/${user.username}`);
+      await router.push(routes.users.page(user.slug));
     } catch (e) {}
   };
 

@@ -22,13 +22,12 @@ const fetchLogs = (limit: number, start: number) =>
 
 const ListLogs: Component = () => {
   const [logs, setLogs] = useState<Logs>([]);
-  const [dep, toggleDep] = useToggle();
 
   useEffect(() => {
     fetchLogs(20, 0)
       .then((data) => setLogs(data.logs))
       .catch((error) => toast(error.message, 'error'));
-  }, [dep]);
+  }, []);
 
   return (
     <div className="border rounded-md shadow-lg">

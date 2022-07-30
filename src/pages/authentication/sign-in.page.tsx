@@ -33,7 +33,7 @@ const SignInPage: Page = () => {
       if (!user || !token) window.location.reload();
       else {
         signIn(user, token);
-        await router.push(routes.users.page(user.username));
+        await router.push(routes.users.page(user.slug));
       }
     } catch (e) {
       console.log('E', e);

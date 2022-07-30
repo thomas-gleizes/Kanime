@@ -14,9 +14,9 @@ import DialogContextProvider from 'context/dialog.context';
 const ContextsProvider: Component<ContextProviderProps> = ({ children }) => (
   <ChakraProvider>
     <LayoutContextProvider>
-      <DialogContextProvider>
-        <UserContextProvider>{children}</UserContextProvider>
-      </DialogContextProvider>
+      <UserContextProvider>
+        <DialogContextProvider>{children}</DialogContextProvider>
+      </UserContextProvider>
     </LayoutContextProvider>
   </ChakraProvider>
 );

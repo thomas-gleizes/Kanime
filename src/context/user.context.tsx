@@ -20,6 +20,7 @@ interface Props {
 
 const UserContext = createContext<UserContext>({} as any);
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
 const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
