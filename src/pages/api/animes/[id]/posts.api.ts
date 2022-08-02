@@ -7,12 +7,12 @@ import { AnimeModel, PostModel } from 'models';
 import { PostsMapper } from 'mappers';
 import HttpStatus from 'resources/HttpStatus';
 
-interface GetResponseData extends DefaultResponseData {
+interface GetResponseData {
   posts: Posts;
   total: number;
 }
 
-interface PostResponseData extends DefaultResponseData {
+interface PostResponseData {
   post: Post;
 }
 

@@ -7,11 +7,9 @@ import { AnimesMapper } from 'mappers';
 const handler = apiHandler();
 
 handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
-  const query = req.query;
+  const animes = await AnimeModel.all(req.query);
 
-  const animes: Animes = AnimesMapper.many(await AnimeModel.all(req.query));
-
-  return res.json({ success: true, animes, debug: query });
+  return res.json({ success: true, animes: AnimesMapper.many(animes) });
 });
 
 export default withSessionApi(handler);

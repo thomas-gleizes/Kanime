@@ -24,9 +24,8 @@ handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
 
   const user = await UserModel.findByEmail(body.email);
 
-  if (!user || !Security.compare(body.password + user.username, user.password)) {
+  if (!user || !Security.compare(body.password + user.username, user.password))
     throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
-  }
 
   const mappedUser = UsersMapper.one(user);
 

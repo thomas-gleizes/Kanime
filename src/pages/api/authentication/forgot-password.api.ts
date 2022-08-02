@@ -22,7 +22,7 @@ handler.patch(async (req: ApiRequest, res: ApiResponse) => {
   )
     throw new ApiError(
       HttpStatus.BAD_REQUEST,
-      'you can ask to change your password only one time per day'
+      'you can ask to change your password only one time each 24 hours'
     );
 
   const hash = Security.sha512(user.password + user.username);

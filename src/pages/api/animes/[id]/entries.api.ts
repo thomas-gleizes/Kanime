@@ -11,32 +11,30 @@ import HttpStatus from 'resources/HttpStatus';
 import { errorMessage } from 'resources/constants';
 import { editEntrySchema } from 'resources/validations';
 
-interface ResponseData extends DefaultResponseData {
+interface ResponseData {
   entry: Entry;
 }
 
 const handler = apiHandler();
 
 handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
-  const entry = EntriesMapper.one(
-    await EntryModel.get(req.session.user.id, +req.query.id)
-  );
+  const entry = await EntryModel.get(req.session.user.id, +req.query.id);
 
   if (!entry) throw new ApiError(HttpStatus.NOT_FOUND, 'Entry not found');
 
-  return res.send({ success: true, entry });
+  return res.send({ success: true, entry: EntriesMapper.one(entry) });
 });
 
-handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
   const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
 
   const anime = await AnimeModel.findById(+animeId);
   if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
 
-  const entry = EntriesMapper.one(await EntryModel.delete(userId, +animeId));
+  await EntryModel.delete(userId, +animeId);
 
-  return res.status(HttpStatus.NO_CONTENT).json({ success: true, entry });
+  return res.status(HttpStatus.NO_CONTENT).json({ success: true });
 });
 
 const createOrUpdate = async (
@@ -79,11 +77,15 @@ const createOrUpdate = async (
     else if (EntryStatus.Completed === payload.status) payload.finishAt = new Date();
   }
 
-  const entry = EntriesMapper.one(
-    await EntryModel.upsert({ ...payload, animeId: anime.id, userId: user.id })
-  );
+  const entry = await EntryModel.upsert({
+    ...payload,
+    animeId: anime.id,
+    userId: user.id,
+  });
 
-  return res.json({ success: true, entry });
+  return res
+    .status(HttpStatus.CREATED)
+    .json({ success: true, entry: EntriesMapper.one(entry) });
 };
 
 handler.post(verifyUser, createOrUpdate);

@@ -13,14 +13,10 @@ handler.get(async (req: ApiRequest, res: ApiResponse<AnimesSearchResponse>) => {
 
   if (!query) throw new ApiError(HttpStatus.BAD_REQUEST, 'query is required');
 
-  const animes = AnimesMapper.many(
-    await AnimeModel.search(query as string, { limit, skip })
-  );
-
+  const animes = await AnimeModel.search(query as string, { limit, skip });
   return res.json({
     success: true,
-    animes,
-    debug: { limit, skip, query },
+    animes: AnimesMapper.many(animes),
   });
 });
 
