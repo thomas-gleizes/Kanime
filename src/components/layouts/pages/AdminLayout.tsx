@@ -1,6 +1,10 @@
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
-const AdminLayout: Component = ({ children }) => {
+export interface AdminLayoutProps {
+  children: ReactNode;
+}
+
+const AdminLayout: Component<AdminLayoutProps> = ({ children }) => {
   return (
     <DefaultLayout>
       <div className="absolute left-0 top-0 pt-header w-[200px] h-full">
