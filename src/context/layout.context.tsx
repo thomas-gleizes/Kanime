@@ -23,6 +23,7 @@ interface Props {
 
 const LayoutContext = createContext<LayoutContext>({} as any);
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 
 const LayoutContextProvider: Component<Props> = ({ children }) => {
