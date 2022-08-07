@@ -7,7 +7,7 @@ import { EntryModel, UserFollowModel, UserModel } from 'models';
 import { EntriesMapper, UsersMapper } from 'mappers';
 import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
-import { useScrollPercent, useStateProps, useDelayBoolean } from 'hooks';
+import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks';
 import UserLayout from 'components/layouts/pages/UserLayout';
 import Title from 'components/layouts/Title';
 import AnimesEntry from 'components/common/anime/AnimesEntry';
@@ -152,9 +152,9 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
   return (
     <>
       <Title>{user.username}</Title>
-      <div className="relative flex justify-center space-x-5 min-h-screen">
-        <div className="w-250 sticky top-20 mt-10 h-fit mx-5">
-          <div className="flex flex-col space-y-1 w-inherit p-3 h-full border rounded-lg">
+      <div className="relative flex flex-col md:flex-row md:justify-center space-y-3 md:space-x-5 min-h-screen">
+        <div className="w-full h-fit md:w-250 md:sticky top-20 mt-10 px-2">
+          <div className="flex flex-col space-y-1 w-inherit h-full border rounded-lg p-3">
             <StatusButton
               active={status === 'All'}
               libelle="Tous les animes"
@@ -199,9 +199,9 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
             />
           </div>
         </div>
-        <div className="max-w-1000">
+        <div className="max-w-1000 w-11/12 mx-auto">
           <div className="w-full p-2">
-            <div className="p-3 border-2 border-gray-300 bg-gray-100 shadow rounded w-full h-full">
+            <div className="p-3 border-2 border-gray-300 bg-gray-100 shadow rounded w-full h-full mt-5">
               {/*TODO: SEARCH INPUT*/}
               <input
                 className="bg-transparent py-2 text-lg"
@@ -211,15 +211,14 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-5">
-            {filteredEntries.slice(0, limit).map((entry) => (
-              <div key={entry.animeId} className="my-3 mx-1 mx-auto">
-                <AnimesEntry
-                  entry={entry}
-                  editable={props.isCurrent}
-                  updateList={updateEntriesList}
-                />
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-5">
+            {filteredEntries.slice(0, limit).map((entry, index) => (
+              <AnimesEntry
+                key={index}
+                entry={entry}
+                editable={props.isCurrent}
+                updateList={updateEntriesList}
+              />
             ))}
           </div>
         </div>

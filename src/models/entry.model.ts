@@ -85,9 +85,6 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       | undefined,
     options?: ModelOptions<PrismaEntryInclude>
   ): Promise<PrismaEntry[]> => {
-    if (orderBy) {
-    }
-
     return this.model.findMany({
       where: {
         user_id: userId,

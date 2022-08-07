@@ -123,11 +123,11 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
 
   return (
-    <DefaultLayout className="">
+    <DefaultLayout>
       <Title>{anime.canonicalTitle}</Title>
-      <div className="min-h-screen pb-16">
+      <div>
         <div className="w-full">
-          <div className="relative w-full h-[450px]">
+          <div className="relative -top-header w-full h-[450px]">
             <div className="fixed -z-10 w-full h-[450px] bg-primary-dark">
               <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"

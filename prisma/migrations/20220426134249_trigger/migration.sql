@@ -96,10 +96,8 @@ SET rating_rank = (SELECT ranking
 WHERE a.popularity_count IS NOT NULL;
 END;
 
-#SET GLOBAL event_scheduler = ON;
+# SET GLOBAL event_scheduler = ON;
 
 CREATE OR REPLACE EVENT event_update_animes_ranking
     ON SCHEDULE EVERY 1 HOUR STARTS NOW()
     DO CALL update_animes_ranking();
-
-

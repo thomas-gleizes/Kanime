@@ -10,7 +10,7 @@ const DefaultLayout: Component<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="bg-primary-dark"> {children}</main>
+      <main className="dark:bg-gray-800"> {children}</main>
       <Footer />
     </>
   );

@@ -52,7 +52,7 @@ const ExploreAnimes: Page<Props> = (props) => {
   }, [active, percent]);
 
   return (
-    <div className="py-10 dark:bg-gray-700">
+    <div className="py-10">
       <Title>Animes</Title>
       <div className="max-w-1100 mx-auto w-11/12 mb-400">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-x-4 gap-y-5">

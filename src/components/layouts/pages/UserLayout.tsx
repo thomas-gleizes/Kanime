@@ -34,7 +34,7 @@ const UserLayout: Component<Props> = ({ children, user, ...props }) => {
     <DefaultLayout>
       <div className="w-full">
         <div
-          className="relative bg-center -mt-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
+          className="relative bg-center -top-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
           style={{ backgroundImage: `url('${user.backgroundPath}')` }}
         >
           <div className="absolute bottom-[10%] left-[10%] flex select-none">
