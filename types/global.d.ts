@@ -6,11 +6,6 @@ declare type ReactNode = React.ReactNode | string;
 
 declare type OptionalPromise<T> = T | Promise<T>;
 
-declare type Environment = {
-  readonly isDevelopment: boolean;
-  readonly appName: string;
-};
-
 declare type ErrorProps = {
   error: ErrorPage;
 };
@@ -104,6 +99,8 @@ declare type TailwindcssColors =
   | 'fuchsia'
   | 'pink'
   | 'rose';
+
+declare type TailwindTheme = 'light' | 'dark';
 
 declare type CustomColors = 'primary' | 'secondary' | 'tertiary';
 

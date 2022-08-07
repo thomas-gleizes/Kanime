@@ -30,9 +30,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
     });
 
   public all = (params?: modelParams): Promise<PrismaAnimes> =>
-    this.model.findMany({
-      ...this.getKeyParams(params),
-    });
+    this.model.findMany({ ...this.getKeyParams(params) });
 
   public findByUser = (userId: number, params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({

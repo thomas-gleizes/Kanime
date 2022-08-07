@@ -1,20 +1,21 @@
-import React, { createContext, useEffect, useState, useCallback } from 'react';
-import { useConst } from '@chakra-ui/react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
+import LocalStorageService from 'services/localStorage.service';
 
 export declare type LayoutContext = {
   activeTransparentState: State<boolean>;
   scrollPercent: number;
   scrollHeight: number;
+  theme: TailwindTheme;
+  toggleTheme: () => void;
   header: {
     hiddenHeader: boolean;
     hideHeader: () => void;
     showHeader: () => void;
   };
   isInactive: boolean;
-  environment: Environment;
 };
 
 interface Props {
@@ -29,6 +30,7 @@ export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
 const LayoutContextProvider: Component<Props> = ({ children }) => {
   const activeTransparentState = useState<boolean>(false);
   const [hiddenHeader, setHiddenHeader] = useState<boolean>(false);
+  const [theme, setTheme] = useState<TailwindTheme>(LocalStorageService.getTheme());
 
   const [lastEventTime, setLastEventTime] = useState<number>(Date.now());
   const [isInactive, setIsInactive] = useState<boolean>(false);
@@ -38,6 +40,13 @@ const LayoutContextProvider: Component<Props> = ({ children }) => {
 
   const hideHeader = () => setHiddenHeader(true);
   const showHeader = () => setHiddenHeader(true);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+
+    setTheme(newTheme);
+    LocalStorageService.setTheme(newTheme);
+  };
 
   const activityListener = useCallback(() => {
     const now = Date.now();
@@ -71,10 +80,12 @@ const LayoutContextProvider: Component<Props> = ({ children }) => {
     return () => clearInterval(interval);
   }, [lastEventTime]);
 
-  const environment = useConst<Environment>({
-    isDevelopment: process.env.NEXT_PUBLIC_ENV === 'development',
-    appName: process.env.NEXT_PUBLIC_APP_NAME as string,
-  });
+  useEffect(() => {
+    if (theme === 'dark')
+      !document.documentElement.classList.contains('dark') &&
+        document.documentElement.classList.add('dark');
+    else document.documentElement.classList.remove('dark');
+  }, [theme]);
 
   return (
     <LayoutContext.Provider
@@ -82,9 +93,10 @@ const LayoutContextProvider: Component<Props> = ({ children }) => {
         activeTransparentState,
         scrollPercent,
         scrollHeight,
+        theme,
+        toggleTheme,
         header: { hiddenHeader, hideHeader, showHeader },
         isInactive,
-        environment,
       }}
     >
       {children}

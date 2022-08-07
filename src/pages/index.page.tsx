@@ -1,7 +1,6 @@
 import type { Page, StaticProps } from 'next/app';
-import dayjs from 'dayjs';
+
 import Title from 'components/layouts/Title';
-import { useEffect } from 'react';
 
 interface Props {
   time: number;
@@ -12,14 +11,6 @@ export const getStaticProps: StaticProps<Props> = async () => {
 };
 
 const HomePage: Page<Props> = ({ time }) => {
-  useEffect(() => {
-    const date = dayjs(time);
-
-    console.log('toString', date.toString());
-    console.log('toDate', date.toDate());
-    console.log('toISOString', date.toISOString());
-  }, [time]);
-
   return (
     <>
       <Title>Accueil</Title>

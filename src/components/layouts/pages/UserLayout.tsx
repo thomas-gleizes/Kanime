@@ -1,8 +1,9 @@
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import Image from 'next/image';
 import React, { useEffect } from 'react';
-import { useLayoutContext } from 'context/layout.context';
+import Image from 'next/image';
 import Error from 'next/error';
+
+import { useLayoutContext } from 'context/layout.context';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
 export type UserLayoutProps = {
   user: User;

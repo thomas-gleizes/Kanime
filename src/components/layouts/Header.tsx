@@ -7,9 +7,9 @@ import classnames from 'classnames';
 import { useUserContext } from 'context/user.context';
 import { useLayoutContext } from 'context/layout.context';
 import { routes } from 'resources/routes';
+import { useHovered } from 'hooks';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
-import { useHovered } from 'hooks';
 
 const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
@@ -66,14 +66,13 @@ const Header: Component = () => {
   if (header.hiddenHeader) return null;
 
   return (
-    <header
-      ref={headerRef}
-      className={classnames(
-        'z-50 fixed top-0 w-full h-header shadow-lg bg-primary select-none transition-all duration-500 ease-in-out',
-        { 'bg-opacity-30 bg-black': headerTransparent }
-      )}
-    >
-      <nav>
+    <header ref={headerRef} className="mb-header">
+      <nav
+        className={classnames(
+          'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out',
+          headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
+        )}
+      >
         <div className="relative">
           <div className="hidden md:flex justify-between w-full h-14 px-5">
             <div className="text-center m-auto">

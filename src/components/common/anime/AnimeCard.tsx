@@ -8,20 +8,17 @@ import AnimePopup from 'components/common/anime/AnimePopup';
 
 interface Props {
   anime: Anime;
-  index: number;
+  popupPosition: 'none' | 'left' | 'right';
 }
 
-const AnimeCard: Component<Props> = ({ anime, index }) => {
+const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
   const { slug, poster, canonicalTitle } = anime;
 
   const [ref, isHover] = useHovered<HTMLDivElement>();
 
   return (
-    <div className="relative w-full mx-auto px-2" style={{ width: 250, height: 340 }}>
-      <div
-        ref={ref}
-        className="my-3 bg-primary shadow hover:shadow-lg cursor-pointer border rounded-b rounded-lg"
-      >
+    <div className="relative w-full mx-auto">
+      <div ref={ref} className="bg-primary shadow hover:shadow-lg cursor-pointer rounded">
         <Link href={`${routes.animes.list}/${slug}`}>
           <a>
             <div className="flex justify-center">
@@ -32,23 +29,21 @@ const AnimeCard: Component<Props> = ({ anime, index }) => {
                   width={250}
                   height={340}
                   alt={canonicalTitle}
-                  className="mx-auto"
+                  className="mx-auto rounded-t"
                 />
               ) : (
-                <div className="bg-primary-dark w-[232px] h-[315px]" />
+                <div className="bg-primary-dark" />
               )}
             </div>
-            <h3 className="text-center text-white font-bold py-1 truncate px-2">
+            <h3 className="text-center text-white font-bold py-1 truncate max-w-full px-2">
               {canonicalTitle}
             </h3>
           </a>
         </Link>
       </div>
-      <AnimePopup
-        anime={anime}
-        isOpen={isHover}
-        position={[0, 1].includes(index % 4) ? 'left' : 'right'}
-      />
+      {popupPosition !== 'none' && (
+        <AnimePopup anime={anime} isOpen={isHover} position={popupPosition} />
+      )}
     </div>
   );
 };

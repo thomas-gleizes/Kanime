@@ -1,8 +1,9 @@
 import isBrowser from 'utils/isBrowser';
 
 class LocalStorageService {
-  private static readonly USER: string = 'STORAGE_USER';
-  private static readonly TOKEN: string = 'STORAGE_TOKEN';
+  private static readonly USER: string = 'KANIME_USER';
+  private static readonly TOKEN: string = 'KANIME_TOKEN';
+  private static readonly THEME: string = 'KANIME_THEME';
 
   private static isBrowser(): boolean {
     return isBrowser();
@@ -33,6 +34,22 @@ class LocalStorageService {
       localStorage.removeItem(LocalStorageService.USER);
       localStorage.removeItem(LocalStorageService.TOKEN);
     }
+  }
+
+  static getTheme(): TailwindTheme {
+    if (this.isBrowser()) {
+      const theme = localStorage.getItem(
+        LocalStorageService.THEME
+      ) as TailwindTheme | null;
+
+      return theme || 'light';
+    }
+
+    return 'light';
+  }
+
+  static setTheme(theme: TailwindTheme) {
+    if (this.isBrowser()) localStorage.setItem(LocalStorageService.THEME, theme);
   }
 }
 

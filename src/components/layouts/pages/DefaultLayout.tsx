@@ -1,16 +1,16 @@
 import React from 'react';
-import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
+import Header from 'components/layouts/Header';
 
 interface Props extends React.HTMLAttributes<HTMLElement> {
   children: ReactNode;
 }
 
-const DefaultLayout: Component<Props> = ({ children, ...props }) => {
+const DefaultLayout: Component<Props> = ({ children }) => {
   return (
     <>
       <Header />
-      <main {...props}> {children}</main>
+      <main className="bg-primary-dark"> {children}</main>
       <Footer />
     </>
   );

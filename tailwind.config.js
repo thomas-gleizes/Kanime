@@ -11,6 +11,7 @@ function generateKeys(length, indicator, multi = 10, negative = false) {
 
 module.exports = {
   mode: 'jit',
+  darkMode: ['class', '[data-mode="dark"]'],
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
@@ -119,11 +120,5 @@ module.exports = {
       ],
     },
   },
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/forms')({
-      strategy: 'class',
-    }),
-  ],
+  plugins: [require('@tailwindcss/line-clamp'), require('@tailwindcss/typography')],
 };
