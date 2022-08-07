@@ -27,7 +27,7 @@ const AnimesList: Page<Props> = ({ animes }) => {
     <div className="grid grid-cols-4 w-1000 mx-auto">
       {animes?.map((anime, index) => (
         <div key={index}>
-          <AnimeCard anime={anime} index={index} />
+          <AnimeCard anime={anime} popupPosition="left" />
         </div>
       ))}
     </div>
