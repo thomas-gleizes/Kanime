@@ -1,8 +1,6 @@
 import Image from 'next/image';
 import { IconButton } from '@chakra-ui/react';
 import { FaTimes } from 'react-icons/fa';
-
-import { useLayoutContext } from 'context/layout.context';
 import { useToggle } from 'hooks';
 
 interface Props {
@@ -15,8 +13,6 @@ interface Props {
 }
 
 const Img: Component<Props> = ({ src, width, height, alt, className, fullScreen }) => {
-  const { environment } = useLayoutContext();
-
   const [isFullScreen, toggleFullScreen] = useToggle(false);
 
   return (
