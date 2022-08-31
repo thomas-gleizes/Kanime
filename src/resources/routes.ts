@@ -18,17 +18,17 @@ export const routes = {
       users: (id: number) => `/api/animes/${id}/users`,
     },
   },
-  authentication: {
-    signIn: '/authentication/sign-in',
-    register: '/authentication/register',
-    forgotPassword: '/authentication/forgot-password',
-    resetPassword: '/authentication/reset-password/:token',
+  authentification: {
+    signIn: '/authentification/sign-in',
+    register: '/authentification/register',
+    forgotPassword: '/authentification/forgot-password',
+    resetPassword: '/authentification/reset-password/:token',
     api: {
-      signIn: '/api/authentication/sign-in',
-      register: '/api/authentication/register',
-      logout: '/api/authentication/logout',
-      forgotPassword: '/api/authentication/forgot-password',
-      resetPassword: '/api/authentication/reset-password',
+      signIn: '/api/authentification/sign-in',
+      register: '/api/authentification/register',
+      logout: '/api/authentification/logout',
+      forgotPassword: '/api/authentification/forgot-password',
+      resetPassword: '/api/authentification/reset-password',
     },
   },
   users: {

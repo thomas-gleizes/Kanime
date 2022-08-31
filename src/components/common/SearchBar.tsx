@@ -4,13 +4,14 @@ import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
 import SimpleBar from 'simplebar-react';
 import classnames from 'classnames';
+import { Spinner } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
+import { FaSearch } from 'react-icons/fa';
 
 import { AnimesApi } from 'api';
 import { useKeyPress } from 'hooks';
 import { routes } from 'resources/routes';
-import toast from 'utils/toastr';
 import timeout from 'utils/timeout';
-import { Spinner } from '@chakra-ui/react';
 
 interface Props {
   transparent: boolean;
@@ -20,7 +21,6 @@ const SearchBar: Component<Props> = ({ transparent }) => {
   const [query, setQuery] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const [animes, setAnimes] = useState<Animes>([]);
-  const [users, setUsers] = useState<Users>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [iSelected, setISelected] = useState<number>(0);
 
@@ -54,38 +54,40 @@ const SearchBar: Component<Props> = ({ transparent }) => {
 
       const animesPromises = AnimesApi.search(value, { limit: 50, skip: 0 })
         .then((response) => setAnimes(response.animes))
-        .catch((e) => toast(e.error, 'error'));
+        .catch((e) => toast.error(e.error || 'Une erreur est survenue'));
 
       Promise.all([animesPromises]).finally(() => setLoading(false));
     } else {
       setAnimes([]);
-      setUsers([]);
     }
   };
 
   return (
     <div
-      className="relative w-full px-2"
+      className="relative w-full py-1"
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
     >
       <div
         className={classnames(
-          'flex w-full h-[35px] px-3 rounded duration-500 ease-in-out transition-all items-center',
-          {
-            'bg-opacity-30 bg-black': transparent,
-            'bg-primary-dark bg-opacity-100': !transparent,
-          }
+          'w-full h-[30px] md:h-[25px] my-auto rounded duration-500 ease-in-out transition-all',
+          transparent ? 'bg-opacity-20 bg-black' : 'bg-primary-dark bg-opacity-100'
         )}
       >
-        <input
-          type="search"
-          value={query}
-          onChange={handleChangeQuery}
-          className="bg-transparent text-gray-100 w-full h-full my-auto"
-        />
+        <span className="text-sm text-white text-opacity-80 flex items-center space-x-2 mx-3 h-full">
+          <i className="font-light">
+            <FaSearch />
+          </i>
+          <input
+            type="search"
+            value={query}
+            onChange={handleChangeQuery}
+            className="bg-transparent text-gray-100 w-full"
+            placeholder="Recherché sur K'anime"
+          />
+        </span>
       </div>
-      <div className="absolute top-[55px] w-[96%] right-[2%]">
+      <div className="absolute top-[45px] w-[96%] mx-auto z-100">
         <Transition
           show={open}
           enter="transition ease-out duration-200"

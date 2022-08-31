@@ -5,7 +5,7 @@ import { ApiService } from 'services/api.service';
 
 class AuthenticationApi extends Api {
   constructor(apiService: AxiosInstance) {
-    super(apiService, '/authentication');
+    super(apiService, '/authentification');
   }
 
   public signIn(payload: any) {

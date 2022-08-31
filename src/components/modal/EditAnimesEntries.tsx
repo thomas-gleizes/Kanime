@@ -1,48 +1,52 @@
 import React, { useMemo } from 'react';
-import { Form, Formik, FormikProps, Field } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 import deepEqual from 'deep-equal';
 import { EntryStatus, Visibility } from '@prisma/client';
 import { FaSave, FaStar, FaTrash } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import {
-  IconButton,
+  Box,
   Button,
-  InputGroup,
-  Input,
-  InputRightAddon,
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Textarea,
-  Slider,
-  SliderTrack,
-  SliderFilledTrack,
-  SliderThumb,
-  Box,
-  SliderMark,
+  IconButton,
+  Input,
+  InputGroup,
+  InputRightAddon,
   Modal,
-  ModalOverlay,
-  ModalHeader,
-  ModalContent,
   ModalBody,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
+  Textarea,
 } from '@chakra-ui/react';
 
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
 import { useUserContext } from 'context/user.context';
 import { Select } from 'components/common/inputs';
+import { ApiService } from 'services/api.service';
 
 type SubmitResult = {
   action: 'submit';
-  values: upsertEntries;
+  values: Entry;
 };
 
 type DeleteSubmit = {
   action: 'delete';
 };
 
-export type Result = DeleteSubmit | SubmitResult | null;
+type CancelSubmit = { action: 'cancel' };
+
+export type Result = DeleteSubmit | SubmitResult | CancelSubmit;
 
 export interface Props {
   anime: Anime;
@@ -67,8 +71,6 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 }) => {
   const { user } = useUserContext();
 
-  console.log('User', user);
-
   const initialValues = useMemo<upsertEntries>(
     () => ({
       animeId: anime.id,
@@ -86,19 +88,38 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
     [entry]
   );
 
-  const handleSubmit = (values: upsertEntries) => {
-    close({ action: 'submit', values });
+  const handleSubmit = async (values: upsertEntries) => {
+    try {
+      const response = await ApiService.post<{ entry: Entry }>(
+        `/animes/${entry.animeId}/entries`,
+        values
+      );
+
+      // @ts-ignore
+      close({ action: 'submit', values: { ...response.entry, anime } });
+    } catch (err) {
+      console.log('Er', err);
+
+      toast.error(err.message || 'Une erreur est survenue');
+    }
   };
 
-  const handleDelete = () => {
-    if (entry) close({ action: 'delete' });
-    else close(null);
+  const handleDelete = async () => {
+    if (!entry) return close({ action: 'cancel' });
+
+    try {
+      await ApiService.delete(`/animes/${entry.animeId}/entries`);
+
+      return close({ action: 'delete' });
+    } catch (err) {
+      toast.error(err.message || 'Une erreur est survenue');
+    }
   };
 
   return (
     <Modal
       isOpen={isOpen}
-      onClose={() => close(null)}
+      onClose={() => close({ action: 'cancel' })}
       motionPreset="slideInBottom"
       isCentered
       size="lg"
@@ -121,7 +142,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 
 const FormContent: Component<
   FormikProps<upsertEntries> & { anime: Anime; handleDelete: () => void }
-> = ({ values, setFieldValue, anime, handleDelete, initialValues }) => {
+> = ({ values, setFieldValue, anime, handleDelete, initialValues, isSubmitting }) => {
   const sliderColor = useMemo<string>(() => {
     if (values) return 'yellow';
     else if (values.rating >= 7.5) return 'yellow';
@@ -272,6 +293,7 @@ const FormContent: Component<
               aria-label="close dialog"
               icon={<FaTrash />}
               onClick={handleDelete}
+              disabled={isSubmitting}
             />
           </div>
           <Button
@@ -280,7 +302,7 @@ const FormContent: Component<
             leftIcon={<FaSave />}
             colorScheme="teal"
             variant="solid"
-            disabled={!isChanged}
+            disabled={!isChanged || isSubmitting}
           >
             Enregistré
           </Button>

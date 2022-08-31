@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
+import { toast } from 'react-toastify';
 
 import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
@@ -9,7 +10,6 @@ import { ssrHandler } from 'services/handler.service';
 import { resetPasswordSchema } from 'resources/validations';
 import { UserModel } from 'models';
 import { routes } from 'resources/routes';
-import toast from 'utils/toastr';
 import { Field } from 'components/common/formik';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
@@ -30,7 +30,7 @@ export const getServerSideProps = ssrHandler<Props, { token: string }>(
       return {
         redirect: {
           permanent: false,
-          destination: routes.authentication.signIn,
+          destination: routes.authentification.signIn,
         },
       };
     } else
@@ -53,10 +53,10 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
     try {
       await AuthenticationApi.resetPassword(values);
 
-      toast('Votre mot de passe a bien été changé', 'success');
-      await router.push(routes.authentication.signIn);
+      toast.success('Votre mot de passe a bien été changé');
+      await router.push(routes.authentification.signIn);
     } catch (err) {
-      toast(err.error, 'error');
+      toast.error(err.error);
     }
   };
 

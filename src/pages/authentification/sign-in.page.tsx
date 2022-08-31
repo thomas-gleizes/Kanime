@@ -2,17 +2,17 @@ import React from 'react';
 import Link from 'next/link';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-import { Formik, Form } from 'formik';
+import { Form, Formik } from 'formik';
 
 import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { signInSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
-import toast from 'utils/toastr';
 import { Field } from 'components/common/formik';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
+import { toast } from 'react-toastify';
 
 type loginType = Yup.TypeOf<typeof signInSchema>;
 
@@ -36,9 +36,7 @@ const SignInPage: Page = () => {
         await router.push(routes.users.page(user.slug));
       }
     } catch (e) {
-      console.log('E', e);
-
-      toast(e.error, 'error');
+      toast.error(e.error || 'Une erreur est survenue');
     }
   };
 
@@ -98,7 +96,7 @@ const SignInPage: Page = () => {
                   </label>
                 </div>
                 <div>
-                  <Link href={routes.authentication.forgotPassword}>
+                  <Link href={routes.authentification.forgotPassword}>
                     <a className="text-sm text-blue-600 hover:underline">
                       mot de passe oublié ?
                     </a>

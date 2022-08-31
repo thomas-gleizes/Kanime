@@ -2,21 +2,19 @@ import React, { useState } from 'react';
 
 import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
-import toast from 'utils/toastr';
 import { Input } from 'components/common/inputs';
 import Button from 'components/common/Button';
+import { toast } from 'react-toastify';
 
 const ForgotPasswordPage: Page = () => {
   const [email, setEmail] = useState<string>('kalat@kanime.fr');
 
   const handleClick = async () => {
     try {
-      const response = await AuthenticationApi.forgotPassword(email);
-      toast('Demande de nouveau mot de passe effectué', 'success');
+      await AuthenticationApi.forgotPassword(email);
+      toast.success('Demande de nouveau mot de passe effectué');
     } catch (err) {
-      console.log('Err', err);
-
-      toast(err, 'error');
+      toast.error(err);
     }
   };
 

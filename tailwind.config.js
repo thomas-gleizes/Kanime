@@ -44,8 +44,8 @@ module.exports = {
         ...generateKeys(50, 'px', 50),
         unset: 'unset',
         full: '100%',
-        header: '56px',
-        banner: `${400 - 56}px`,
+        header: '42px',
+        banner: `${400 - 42}px`,
         inherit: 'inherit',
       },
       minWidth: {

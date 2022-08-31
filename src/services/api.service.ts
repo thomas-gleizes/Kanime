@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import LocalStorageService from 'services/localStorage.service';
-import toast from 'utils/toastr';
+import { toast } from 'react-toastify';
 
 const ApiService = axios.create({
   baseURL: `/api/`,
@@ -12,7 +12,7 @@ ApiService.interceptors.response.use(
   (error: AxiosError) => {
     if (error.isAxiosError) {
       if (error.response.status === 401) {
-        toast('Veuillez vous reconnecter', 'warning');
+        toast.warning('Veuillez vous reconnecter');
         LocalStorageService.clearUser();
 
         setTimeout(() => window.postMessage({ content: 'unconnected' }), 100);

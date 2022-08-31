@@ -1,4 +1,4 @@
-/** authentication */
+/** authentification */
 
 interface SignInResponse extends DefaultResponseData {
   user: User;

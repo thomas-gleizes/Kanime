@@ -66,7 +66,7 @@ const Header: Component = () => {
   if (header.hiddenHeader) return null;
 
   return (
-    <header ref={headerRef} className="mb-header">
+    <header ref={headerRef} className="h-header">
       <nav
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out',
@@ -74,10 +74,11 @@ const Header: Component = () => {
         )}
       >
         <div className="relative">
-          <div className="hidden md:flex justify-between w-full h-14 px-5">
+          {/*large*/}
+          <div className="hidden md:flex justify-between w-full h-header py-1 px-5">
             <div className="text-center m-auto">
               <Link href={routes.home}>
-                <a className="cursor-pointer font-bold text-3xl text-white">
+                <a className="cursor-pointer font-bold text-white">
                   {process.env.NEXT_PUBLIC_APP_NAME}
                 </a>
               </Link>
@@ -104,14 +105,14 @@ const Header: Component = () => {
                 </span>
               ) : null}
             </div>
-            <div className="flex justify-between w-2/5 px-3 my-auto">
+            <div className="flex justify-between w-2/5 px-3 my-auto space-x-4">
               <SearchBar transparent={headerTransparent} />
               {!isLogin ? (
                 <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <Link href={routes.authentication.signIn}>
+                  <Link href={routes.authentification.signIn}>
                     <a className="mx-3 cursor-pointer">Connexion</a>
                   </Link>
-                  <Link href={routes.authentication.register}>
+                  <Link href={routes.authentification.register}>
                     <a className="mx-3 cursor-pointer">Inscription</a>
                   </Link>
                 </div>
@@ -146,41 +147,47 @@ const Header: Component = () => {
             </div>
           </div>
 
-          <div className="block md:hidden h-14">
-            <div className="h-14 flex justify-between">
+          {/*small*/}
+          <div className="block md:hidden h-header py-1">
+            <div className="h-full flex justify-between">
               <div className="w-2/3  px-5 my-auto">
                 <Link href={routes.home}>
-                  <a className="cursor-pointer font-bold text-3xl text-white">
+                  <a className="cursor-pointer font-bold text-2xl text-white">
                     {process.env.NEXT_PUBLIC_APP_NAME}
                   </a>
                 </Link>
               </div>
               <div className="w-1/3 m-auto px-5 flex justify-end">
                 <i onClick={() => setExtend(!extend)}>
-                  <MenuIcon className="text-white hover:text-gray-200 cursor-pointer h-14 w-14" />
+                  <MenuIcon className="text-white hover:text-gray-200 cursor-pointer w-8" />
                 </i>
               </div>
             </div>
             <div
               className={classnames(
-                'bg-primary w-full transform ease-in-out duration-200',
-                { 'h-36 translate-y-0': extend, 'translate-y-[-100px]': !extend }
+                'bg-primary w-full transform ease-in-out duration-200 px-2',
+                { 'h-fit translate-y-0': extend, 'translate-y-[-100px]': !extend }
               )}
             >
               {extend && (
-                <div className="py-4 divide-y">
-                  <div className="my-1 text-lg font-medium">
-                    <DropDownExplore />
+                <div className="flex flex-col p-3">
+                  <div className="pb-2 border-b-2 border-b-white">
+                    <SearchBar transparent={false} />
                   </div>
-                  <div>
-                    <Link href={routes.forum}>
-                      <a className="text-white"> Discussion </a>
-                    </Link>
-                  </div>
-                  <div>
-                    <Link href={routes.feedback}>
-                      <a className="text-white"> Feedback </a>
-                    </Link>
+                  <div className="flex flex-col space-y-2 justify-evenly">
+                    <div className="my-1 text-lg font-medium">
+                      <DropDownExplore />
+                    </div>
+                    <div>
+                      <Link href={routes.forum}>
+                        <a className="text-white"> Discussion </a>
+                      </Link>
+                    </div>
+                    <div>
+                      <Link href={routes.feedback}>
+                        <a className="text-white"> Feedback </a>
+                      </Link>
+                    </div>
                   </div>
                 </div>
               )}

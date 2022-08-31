@@ -6,9 +6,9 @@ import { PrismaCountries } from 'prisma/app';
 import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { useFetch } from 'hooks';
-import toast from 'utils/toastr';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
+import { toast } from 'react-toastify';
 
 declare type values = {
   city: string;
@@ -50,7 +50,7 @@ const EditUserModal: React.FunctionComponent = () => {
 
       signIn(user, token);
     } catch (e) {
-      toast(e.message, 'error');
+      toast.error(e.message || 'Une erreur est survenue');
 
       // TODO setFieldError with formik and yup schema
     }

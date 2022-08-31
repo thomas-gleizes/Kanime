@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { FaEye, FaStar } from 'react-icons/fa';
+import { toast } from 'react-toastify';
 
 import { useDialog, useHovered } from 'hooks';
-import { ApiService } from 'services/api.service';
 import AnimePopup from 'components/common/anime/AnimePopup';
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
@@ -27,26 +27,23 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
       { entry, anime: entry.anime }
     );
 
-    if (result?.action === 'submit') {
-      const response = await ApiService.post<{ entry: Entry }>(
-        `/animes/${entry.anime.id}/entries`,
-        result.values
-      );
-
-      // @ts-ignore
-      updateList('update', { ...response.entry, anime: entry.anime });
-    } else if (result?.action === 'delete') {
-      await ApiService.delete(`/animes/${entry.anime.id}/entries`);
-
-      updateList('delete', entry);
+    switch (result.action) {
+      case 'submit':
+        updateList('update', result.values);
+        return void toast.success('Entry updated successfully');
+      case 'delete':
+        updateList('delete', entry);
+        return void toast.success('Entry deleted successfully');
+      case 'cancel':
     }
   };
 
   return (
-    <div className="relative">
+    <div className="relative h-auto">
       <div ref={ref} className="bg-primary shadow">
         <div className="relative">
           <img
+            className="h-auto"
             src={entry.anime.poster.small as string}
             alt={entry.anime.canonicalTitle}
           />

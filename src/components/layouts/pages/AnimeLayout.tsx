@@ -4,9 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
 import {
+  CheckCircleIcon,
   EyeIcon,
   PencilAltIcon,
-  CheckCircleIcon,
   PlayIcon,
 } from '@heroicons/react/solid';
 
@@ -67,8 +67,10 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
 }) => {
   const { isLogin } = useUserContext();
   const {
-    activeTransparentState: [_, setHeaderTransparent],
+    activeTransparentState: [, setHeaderTransparent],
   } = useLayoutContext();
+
+  const router = useRouter();
 
   const dialog = useDialog();
 
@@ -118,6 +120,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
         // @ts-ignore
         (response) => setEntry(response.entry)
       );
+    else router.push(routes.authentification.signIn);
   };
 
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
@@ -126,8 +129,8 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
     <DefaultLayout>
       <Title>{anime.canonicalTitle}</Title>
       <div>
-        <div className="w-full">
-          <div className="relative -top-header w-full h-[450px]">
+        <div className="relative -top-header flex flex-col justify-between">
+          <div className="w-full h-[450px]">
             <div className="fixed -z-10 w-full h-[450px] bg-primary-dark">
               <div
                 className="w-full h-full bg-cover bg-center bg-no-repeat"
@@ -137,22 +140,24 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
               </div>
             </div>
           </div>
-          <nav className="relative bg-white p-0 w-full">
-            <div className="flex justify-center divide-x-2 divide-gray-200">
-              {TABS.map((tab, index) => (
-                <NavLink
-                  key={index}
-                  href={`${routes.animes.list}/${anime.slug}${tab.path}`}
-                >
-                  {tab.label}
-                </NavLink>
-              ))}
-            </div>
-          </nav>
+          <div>
+            <nav className="relative bg-white p-0 w-full">
+              <div className="flex justify-center divide-x-2 divide-gray-200">
+                {TABS.map((tab, index) => (
+                  <NavLink
+                    key={index}
+                    href={`${routes.animes.list}/${anime.slug}${tab.path}`}
+                  >
+                    {tab.label}
+                  </NavLink>
+                ))}
+              </div>
+            </nav>
+          </div>
         </div>
-        <div className="w-full bg-gray-50 z-100">
+        <div className="relative -top-header w-full bg-gray-50 z-70">
           <div className="mx-auto w-full max-w-[1150px]">
-            <div className="sticky float-right w-200 top-[230px]">
+            <div className="sticky float-right w-200 top-[250px]">
               <div className="relative w-[214px] top-[-150px]">
                 <div className="w-full shadow h-[304px] rounded-md bg-kitsu mb-2">
                   {anime.poster?.medium && (
@@ -161,7 +166,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
                       src={anime.poster.medium as string}
                       width={214}
                       height={214 * POSTER_RAPPORT}
-                      alt="test"
+                      alt={`poster ${anime.canonicalTitle}`}
                     />
                   )}
                 </div>
@@ -171,7 +176,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
                       <KitsuButton slug={anime.slug} />
                     </div>
                     <div>
-                      <Menu label="Entries">
+                      <Menu label="Modifier l'entrée">
                         {!entry && (
                           <MenuGroup>
                             <MenuItem
