@@ -128,8 +128,8 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
   return (
     <DefaultLayout>
       <Title>{anime.canonicalTitle}</Title>
-      <div>
-        <div className="relative -top-header flex flex-col justify-between">
+      <div className="relative -top-header">
+        <div className="flex flex-col justify-between">
           <div className="w-full h-[450px]">
             <div className="fixed -z-10 w-full h-[450px] bg-primary-dark">
               <div
@@ -155,7 +155,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
             </nav>
           </div>
         </div>
-        <div className="relative -top-header w-full bg-gray-50 z-70">
+        <div className="w-full bg-gray-50 z-70">
           <div className="mx-auto w-full max-w-[1150px]">
             <div className="sticky float-right w-200 top-[250px]">
               <div className="relative w-[214px] top-[-150px]">

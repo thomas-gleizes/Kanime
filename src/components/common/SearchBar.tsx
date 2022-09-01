@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { Spinner } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
+import ReactStars from 'react-stars';
 
 import { AnimesApi } from 'api';
 import { useKeyPress } from 'hooks';
@@ -98,16 +99,16 @@ const SearchBar: Component<Props> = ({ transparent }) => {
           leaveTo="transform opacity-0 scale-0"
         >
           <div className="w-full bg-gray-50 backdrop-blur rounded border border-gray-300 shadow-xl">
+            <div className="flex items-center justify-center space-x-3 py-1 bg-primary rounded-t text-white">
+              <h3 className="text-center text-xl">Animes</h3>
+              <Spinner
+                thickness="4px"
+                color="red.300"
+                className={classnames({ invisible: !loading })}
+              />
+            </div>
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">
-                <div className="flex items-center justify-center space-x-3 py-1 bg-primary rounded-t text-white">
-                  <h3 className="text-center text-xl">Animes</h3>
-                  <Spinner
-                    thickness="4px"
-                    color="red.300"
-                    className={classnames({ invisible: !loading })}
-                  />
-                </div>
                 {animes?.length ? (
                   <div onClick={timeout(() => setOpen(false), 10)}>
                     {animes.map((anime, index) => (
@@ -120,8 +121,32 @@ const SearchBar: Component<Props> = ({ transparent }) => {
                               { 'bg-gray-200': index === iSelected }
                             )}
                           >
-                            <div>
-                              <h6 className="truncate">{anime.canonicalTitle}</h6>
+                            <div className="flex justify-between space-x-2">
+                              <div className="flex flex-col justify-between w-full">
+                                <div>
+                                  <h6 className="text-slate-900">
+                                    {anime.canonicalTitle}{' '}
+                                    <span className="text-sm font-light text-slate-600">
+                                      ({anime.type})
+                                    </span>
+                                  </h6>
+                                </div>
+                                <div className="flex justify-between">
+                                  <span>{anime.season_year}</span>
+                                  <span>
+                                    {anime.rating.average && (
+                                      <ReactStars
+                                        count={Math.round((84.4 / 100) * 5 * 10) / 10}
+                                        size={16}
+                                        color1={'#e1be00'}
+                                      />
+                                    )}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="w-[14%]">
+                                <img src={anime.poster.tiny} className="w-full rounded" />
+                              </div>
                             </div>
                           </div>
                         </a>

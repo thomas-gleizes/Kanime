@@ -89,7 +89,7 @@ const Header: Component = () => {
               </div>
               <span className="mx-3">
                 <Link href={routes.forum}>
-                  <a className="text-white"> Discussion </a>
+                  <a className="text-white">Discussion</a>
                 </Link>
               </span>
               <span className="mx-3">
@@ -180,12 +180,12 @@ const Header: Component = () => {
                     </div>
                     <div>
                       <Link href={routes.forum}>
-                        <a className="text-white"> Discussion </a>
+                        <a className="my-1 text-white text-lg font-medium">Discussion</a>
                       </Link>
                     </div>
                     <div>
                       <Link href={routes.feedback}>
-                        <a className="text-white"> Feedback </a>
+                        <a className="my-1 text-white text-lg font-medium">Feedback</a>
                       </Link>
                     </div>
                   </div>
