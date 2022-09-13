@@ -72,7 +72,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
     >
       <div
         className={classnames(
-          'w-full h-[30px] md:h-[25px] my-auto rounded duration-500 ease-in-out transition-all',
+          'w-full h-[30px] md:h-[25px] my-auto rounded transition duration-300 ease-in-out',
           transparent ? 'bg-opacity-20 bg-black' : 'bg-primary-dark bg-opacity-100'
         )}
       >
@@ -92,7 +92,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
       <div className="absolute top-[45px] w-full mx-auto">
         <Transition
           show={open}
-          enter="transition ease-out duration-200"
+          enter="transition ease-out duration-200 z-90"
           enterFrom="transform opacity-0 scale-0"
           enterTo="transform opacity-100 scale-100"
           leave="transition ease-in duration-100"

@@ -29,13 +29,13 @@ const DropDownExplore: Component = () => {
       <div>
         <button ref={button} type="button" className="text-white flex group">
           Explore
-          <i className="mx-1 my-auto">
+          <i className="mx-1 my-auto z-10">
             <ChevronDownIcon className="h-4 w-4 transform transition rotate-90 group-focus:rotate-0" />
           </i>
         </button>
       </div>
       <DropDownByRef innerRef={button}>
-        <div className="absolute top-5 py-1 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
+        <div className="absolute top-3 left-0 py-1 w-32 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 outline-none rounded-sm shadow-lg divide-y">
           <DropDownItem href={routes.animes.list}>Animes</DropDownItem>
           <DropDownItem href={routes.animes.list}>Mangas</DropDownItem>
           <DropDownItem href={routes.animes.list}>Sagas</DropDownItem>
@@ -78,13 +78,17 @@ const Header: Component = () => {
     <header ref={headerRef} className="h-header">
       <nav
         className={classnames(
-          'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out',
-          headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
+          'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'
         )}
       >
         <div className="relative">
           {/*large*/}
-          <div className="hidden md:flex justify-between w-full h-header py-1 px-5">
+          <div
+            className={classnames(
+              'hidden md:flex justify-between w-full h-header py-1 px-5 transform duration-300 ease-in-out',
+              headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
+            )}
+          >
             <div className="text-center m-auto">
               <Link href={routes.home}>
                 <a className="cursor-pointer font-bold text-white">
@@ -114,22 +118,22 @@ const Header: Component = () => {
                 </span>
               ) : null}
             </div>
-            <div className="flex justify-end w-2/5 px-3 my-auto space-x-8">
+            <div className="flex justify-end w-2/5 my-auto">
               <div className="max-w-lg w-full">
                 <SearchBar transparent={headerTransparent} />
               </div>
               <div>
                 {!isLogin ? (
-                  <div className="flex items-center justify-around text-white h-full my-auto mx-3">
+                  <div className="flex items-center space-x-3 ml-4 justify-around text-white h-full my-auto">
                     <Link href={routes.authentification.signIn}>
-                      <a className="mx-3 cursor-pointer">Connexion</a>
+                      <a className="cursor-pointer">Connexion</a>
                     </Link>
                     <Link href={routes.authentification.register}>
-                      <a className="mx-3 cursor-pointer">Inscription</a>
+                      <a className="cursor-pointer">Inscription</a>
                     </Link>
                   </div>
                 ) : (
-                  <div className="my-auto">
+                  <div className="flex items-center justify-center h-full ml-4">
                     <div className="cursor-pointer" ref={avatarRef}>
                       <Image
                         className="rounded-full"
@@ -139,21 +143,23 @@ const Header: Component = () => {
                         alt="avatar"
                       />
                     </div>
-                    <DropDownByRef innerRef={avatarRef}>
-                      <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                        <DropDownItem href={routes.users.page(user.slug)}>
-                          Mon profile
-                        </DropDownItem>
-                        <DropDownItem href={routes.users.settings(user.slug)}>
-                          Settings
-                        </DropDownItem>
-                        <div onClick={signOut}>
-                          <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-                            Déconnexion
-                          </span>
+                    <div>
+                      <DropDownByRef innerRef={avatarRef}>
+                        <div className="absolute py-1 top-6 right-0 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
+                          <DropDownItem href={routes.users.page(user.slug)}>
+                            Mon profile
+                          </DropDownItem>
+                          <DropDownItem href={routes.users.settings(user.slug)}>
+                            Settings
+                          </DropDownItem>
+                          <div onClick={signOut}>
+                            <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
+                              Déconnexion
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </DropDownByRef>
+                      </DropDownByRef>
+                    </div>
                   </div>
                 )}
               </div>
@@ -161,8 +167,8 @@ const Header: Component = () => {
           </div>
 
           {/*small*/}
-          <div className="block md:hidden h-header py-1">
-            <div className="h-full flex justify-between">
+          <div className="block md:hidden h-header">
+            <div className="h-full bg-primary py-1 z-10 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
                 <Link href={routes.home}>
                   <a className="cursor-pointer font-bold text-2xl text-white">
