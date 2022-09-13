@@ -7,6 +7,7 @@ import classnames from 'classnames';
 import { Spinner } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
+import { BiLoaderCircle } from 'react-icons/bi';
 import ReactStars from 'react-stars';
 
 import { AnimesApi } from 'api';
@@ -88,7 +89,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
           />
         </span>
       </div>
-      <div className="absolute top-[45px] w-[96%] mx-auto z-100">
+      <div className="absolute top-[45px] w-full mx-auto">
         <Transition
           show={open}
           enter="transition ease-out duration-200"
@@ -99,13 +100,13 @@ const SearchBar: Component<Props> = ({ transparent }) => {
           leaveTo="transform opacity-0 scale-0"
         >
           <div className="w-full bg-gray-50 backdrop-blur rounded border border-gray-300 shadow-xl">
-            <div className="flex items-center justify-center space-x-3 py-1 bg-primary rounded-t text-white">
+            <div className="flex items-center justify-between px-3 py-1 bg-primary rounded-t text-white">
               <h3 className="text-center text-xl">Animes</h3>
-              <Spinner
-                thickness="4px"
-                color="red.300"
-                className={classnames({ invisible: !loading })}
-              />
+              {loading && (
+                <i>
+                  <BiLoaderCircle className="animate-spin text-lg" />
+                </i>
+              )}
             </div>
             <SimpleBar className="max-h-[60vh]">
               <div className="w-full">

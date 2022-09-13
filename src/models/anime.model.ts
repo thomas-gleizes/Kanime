@@ -51,6 +51,25 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       },
       ...this.getKeyParams(params),
     });
+
+  public findPopular = (params?: modelParams): Promise<PrismaAnimes> =>
+    this.model.findMany({
+      where: {
+        NOT: [{ popularity_rank: null }],
+      },
+      orderBy: {
+        popularity_rank: 'asc',
+      },
+      ...this.getKeyParams(params),
+    });
+
+  public findHeightRated = (params?: modelParams): Promise<PrismaAnimes> =>
+    this.model.findMany({
+      orderBy: {
+        rating_rank: 'asc',
+      },
+      ...this.getKeyParams(params),
+    });
 }
 
 export default new AnimeModel(connexion);

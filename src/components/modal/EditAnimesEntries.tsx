@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import deepEqual from 'deep-equal';
 import { EntryStatus, Visibility } from '@prisma/client';
-import { FaSave, FaStar, FaTrash } from 'react-icons/fa';
+import { FaSave, FaStar, FaTimes, FaTrash } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import {
@@ -71,6 +71,8 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 }) => {
   const { user } = useUserContext();
 
+  console.log('Entry', entry);
+
   const initialValues = useMemo<upsertEntries>(
     () => ({
       animeId: anime.id,
@@ -91,7 +93,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
   const handleSubmit = async (values: upsertEntries) => {
     try {
       const response = await ApiService.post<{ entry: Entry }>(
-        `/animes/${entry.animeId}/entries`,
+        `/animes/${anime.id}/entries`,
         values
       );
 
@@ -132,7 +134,12 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
       >
         {(props) => (
           <Form>
-            <FormContent {...props} anime={anime} handleDelete={handleDelete} />
+            <FormContent
+              {...props}
+              anime={anime}
+              handleDelete={handleDelete}
+              handleClose={() => close({ action: 'cancel' })}
+            />
           </Form>
         )}
       </Formik>
@@ -141,8 +148,20 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 };
 
 const FormContent: Component<
-  FormikProps<upsertEntries> & { anime: Anime; handleDelete: () => void }
-> = ({ values, setFieldValue, anime, handleDelete, initialValues, isSubmitting }) => {
+  FormikProps<upsertEntries> & {
+    anime: Anime;
+    handleDelete: () => void;
+    handleClose: () => void;
+  }
+> = ({
+  values,
+  setFieldValue,
+  anime,
+  handleDelete,
+  initialValues,
+  isSubmitting,
+  handleClose,
+}) => {
   const sliderColor = useMemo<string>(() => {
     if (values) return 'yellow';
     else if (values.rating >= 7.5) return 'yellow';
@@ -157,8 +176,17 @@ const FormContent: Component<
 
   return (
     <ModalContent className="px-4">
-      <ModalHeader className="border-b pb-5">
+      <ModalHeader className="flex justify-between items-center border-b pb-5">
         <h3 className="text-xl font-bold">{anime.canonicalTitle}</h3>
+        <IconButton
+          size="sm"
+          variant="outline"
+          aria-label="close dialog"
+          icon={<FaTimes />}
+          onClick={handleClose}
+          disabled={isSubmitting}
+          colorScheme="orange"
+        />
       </ModalHeader>
       <ModalBody>
         <div className="py-4 flex flex-col space-y-4">
@@ -289,7 +317,7 @@ const FormContent: Component<
             <IconButton
               className="w-fit"
               variant="outline"
-              colorScheme="teal"
+              colorScheme="black"
               aria-label="close dialog"
               icon={<FaTrash />}
               onClick={handleDelete}
@@ -300,7 +328,7 @@ const FormContent: Component<
             className="w-fit"
             type="submit"
             leftIcon={<FaSave />}
-            colorScheme="teal"
+            colorScheme="blue"
             variant="solid"
             disabled={!isChanged || isSubmitting}
           >

@@ -10,6 +10,7 @@ import { routes } from 'resources/routes';
 import { useHovered } from 'hooks';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
+import { Transition } from '@headlessui/react';
 
 const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
@@ -63,6 +64,14 @@ const Header: Component = () => {
     else setHeaderTransparent(false);
   }, [activeTransparent, scrollHeight, headerHovered]);
 
+  useEffect(() => {
+    const listener = (event) => {
+      console.log('Event', event.target);
+    };
+
+    document.body.addEventListener('click', listener);
+  }, []);
+
   if (header.hiddenHeader) return null;
 
   return (
@@ -105,45 +114,49 @@ const Header: Component = () => {
                 </span>
               ) : null}
             </div>
-            <div className="flex justify-between w-2/5 px-3 my-auto space-x-4">
-              <SearchBar transparent={headerTransparent} />
-              {!isLogin ? (
-                <div className="flex justify-around text-white h-full my-auto mx-3">
-                  <Link href={routes.authentification.signIn}>
-                    <a className="mx-3 cursor-pointer">Connexion</a>
-                  </Link>
-                  <Link href={routes.authentification.register}>
-                    <a className="mx-3 cursor-pointer">Inscription</a>
-                  </Link>
-                </div>
-              ) : (
-                <div className="my-auto">
-                  <div className="cursor-pointer" ref={avatarRef}>
-                    <Image
-                      className="rounded-full"
-                      src={user.avatarPath}
-                      width={35}
-                      height={35}
-                      alt="avatar"
-                    />
+            <div className="flex justify-end w-2/5 px-3 my-auto space-x-8">
+              <div className="max-w-lg w-full">
+                <SearchBar transparent={headerTransparent} />
+              </div>
+              <div>
+                {!isLogin ? (
+                  <div className="flex items-center justify-around text-white h-full my-auto mx-3">
+                    <Link href={routes.authentification.signIn}>
+                      <a className="mx-3 cursor-pointer">Connexion</a>
+                    </Link>
+                    <Link href={routes.authentification.register}>
+                      <a className="mx-3 cursor-pointer">Inscription</a>
+                    </Link>
                   </div>
-                  <DropDownByRef innerRef={avatarRef}>
-                    <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                      <DropDownItem href={routes.users.page(user.slug)}>
-                        Mon profile
-                      </DropDownItem>
-                      <DropDownItem href={routes.users.settings(user.slug)}>
-                        Settings
-                      </DropDownItem>
-                      <div onClick={signOut}>
-                        <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-                          Déconnexion
-                        </span>
-                      </div>
+                ) : (
+                  <div className="my-auto">
+                    <div className="cursor-pointer" ref={avatarRef}>
+                      <Image
+                        className="rounded-full"
+                        src={user.avatarPath}
+                        width={35}
+                        height={35}
+                        alt="avatar"
+                      />
                     </div>
-                  </DropDownByRef>
-                </div>
-              )}
+                    <DropDownByRef innerRef={avatarRef}>
+                      <div className="absolute py-1 top-14 -right-8 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
+                        <DropDownItem href={routes.users.page(user.slug)}>
+                          Mon profile
+                        </DropDownItem>
+                        <DropDownItem href={routes.users.settings(user.slug)}>
+                          Settings
+                        </DropDownItem>
+                        <div onClick={signOut}>
+                          <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
+                            Déconnexion
+                          </span>
+                        </div>
+                      </div>
+                    </DropDownByRef>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
@@ -163,34 +176,47 @@ const Header: Component = () => {
                 </i>
               </div>
             </div>
-            <div
-              className={classnames(
-                'bg-primary w-full transform ease-in-out duration-200 px-2',
-                { 'h-fit translate-y-0': extend, 'translate-y-[-100px]': !extend }
-              )}
-            >
-              {extend && (
-                <div className="flex flex-col p-3">
+            <div>
+              <Transition
+                show={extend}
+                enter="transition ease-out duration-200"
+                enterFrom="transform -translate-y-full"
+                enterTo="transform translate-y-0"
+                leave="transition ease-in duration-100"
+                leaveFrom="transform translate-y-0"
+                leaveTo="transform -translate-y-full"
+              >
+                <div className="flex flex-col py-2 px-4 bg-primary">
                   <div className="pb-2 border-b-2 border-b-white">
                     <SearchBar transparent={false} />
                   </div>
-                  <div className="flex flex-col space-y-2 justify-evenly">
-                    <div className="my-1 text-lg font-medium">
+                  <div className="flex flex-col my-3 space-y-3 justify-evenly">
+                    <div className="text-lg font-medium">
                       <DropDownExplore />
                     </div>
                     <div>
                       <Link href={routes.forum}>
-                        <a className="my-1 text-white text-lg font-medium">Discussion</a>
+                        <a
+                          className="text-white text-lg font-medium"
+                          onClick={() => setExtend(false)}
+                        >
+                          Discussion
+                        </a>
                       </Link>
                     </div>
                     <div>
                       <Link href={routes.feedback}>
-                        <a className="my-1 text-white text-lg font-medium">Feedback</a>
+                        <a
+                          className="text-white text-lg font-medium"
+                          onClick={() => setExtend(false)}
+                        >
+                          Feedback
+                        </a>
                       </Link>
                     </div>
                   </div>
                 </div>
-              )}
+              </Transition>
             </div>
           </div>
         </div>
