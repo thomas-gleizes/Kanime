@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
 
 import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
@@ -47,7 +46,7 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
                 className="bg-white shadow border rounded-xl px-3 py-2 w-full"
               >
                 <div className="flex">
-                  <Image
+                  <img
                     className="rounded-lg"
                     src={anime.poster.small as string}
                     width={158}
