@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'next/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { verifyUser } from 'middlewares/auth.middleware';
+import { authMiddleware } from 'middlewares/auth.middleware';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
 import { UserFollowModel, UserModel } from 'models';
@@ -21,7 +21,7 @@ handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
   return res.json({ success: true, users: UsersMapper.many(users) });
 });
 
-handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
+handler.post(authMiddleware, async (req: ApiRequest, res: ApiResponse) => {
   const { query, session } = req;
 
   try {
@@ -33,7 +33,7 @@ handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
   }
 });
 
-handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
+handler.delete(authMiddleware, async (req: ApiRequest, res: ApiResponse) => {
   const { query, session } = req;
 
   try {

@@ -1,42 +1,43 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Body, Post } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-import { signInSchema } from 'resources/validations';
+import { ApiError } from 'errors';
+import { Session } from 'decorators';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { ApiError, SchemaError } from 'errors';
 
-const handler = apiHandler();
+// TODO: move it and add package "class-validator"
+class SignInInput {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
 
-handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
-  const { body, session } = req;
+class SignInInHandler extends ApiHandler {
+  @Post()
+  async get(@Body() body: SignInInput, @Session() session: any) {
+    if (session) await session.destroy();
 
-  try {
-    await signInSchema.validate(body);
-  } catch (err) {
-    throw new SchemaError(err);
+    const user = await UserModel.findByEmail(body.email);
+
+    if (!user || !Security.compare(body.password + user.username, user.password))
+      throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
+
+    const mappedUser = UsersMapper.one(user);
+
+    const token = Security.sign(mappedUser, body.rememberMe);
+
+    session.user = mappedUser;
+    session.token = token;
+
+    await session.save();
+
+    return { success: true, user: mappedUser, token };
   }
+}
 
-  if (session) await session.destroy();
-
-  const user = await UserModel.findByEmail(body.email);
-
-  if (!user || !Security.compare(body.password + user.username, user.password))
-    throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
-
-  const mappedUser = UsersMapper.one(user);
-
-  const token = Security.sign(mappedUser, body.rememberMe);
-
-  session.user = mappedUser;
-  session.token = token;
-
-  await session.save();
-
-  return res.json({ success: true, user: mappedUser, token });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(SignInInHandler);

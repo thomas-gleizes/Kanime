@@ -5,47 +5,16 @@ import type {
   PreviewData,
 } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
-import nc from 'next-connect';
+import { createHandler } from 'next-api-decorators';
 
-import type { ApiRequest, ApiResponse } from 'next/app';
-import { SsrError, SchemaError, ApiError } from 'errors';
-import { apiLogger, ssrLogger } from 'middlewares/logger.middleware';
-import queryParser from 'middlewares/queryParser.middleware';
-import { withSessionSsr } from 'services/session.service';
+import { SsrError } from 'errors';
+import { ssrLogger } from 'middlewares/logger.middleware';
+import ApiHandler from 'class/ApiHandler';
+import { withSessionApi, withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import trace from 'utils/trace';
-import HttpStatus from 'resources/HttpStatus';
 
-export const apiHandler = () =>
-  nc<ApiRequest, ApiResponse>({
-    onError: (err, req, res) => {
-      if (err instanceof ApiError) {
-        trace('ApiError', err.message);
-        return res.status(err.code).json({ error: err.message });
-      } else if (err instanceof SchemaError) {
-        trace('SchemaError', err.message);
-        return res.status(err.code).json({ error: err.message, schemaError: err.data });
-      } else if (process.env.NODE_ENV !== 'production') {
-        trace('Dev Error', err.stack);
-        console.log('API ERROR :', err.stack);
-
-        return res.status(500).send(err.message);
-      } else {
-        trace('ProductionError', err.stack);
-
-        return res.status(500).json({ error: errorMessage.INTERNAL_ERROR });
-      }
-    },
-    onNoMatch: (req, res) => {
-      trace('No match route', req.url);
-
-      return res
-        .status(HttpStatus.METHOD_NOT_ALLOWED)
-        .json({ error: errorMessage.METHOD_NOT_ALLOWED });
-    },
-  })
-    .use(apiLogger)
-    .use(queryParser);
+export const apiHandler = (handler: any) => withSessionApi(createHandler(handler));
 
 export function ssrHandler<
   P extends { [key: string]: any } = { [key: string]: any },

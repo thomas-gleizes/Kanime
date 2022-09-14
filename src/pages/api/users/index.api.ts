@@ -4,14 +4,14 @@ import { ApiRequest, ApiResponse } from 'next/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
 import Security from 'services/security.service';
-import { verifyUser } from 'middlewares/auth.middleware';
+import { authMiddleware } from 'middlewares/auth.middleware';
 import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
 
 const handler = apiHandler();
 
-handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
+handler.get(authMiddleware, async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
   const { session } = req;
 
   const user = await UserModel.findById(session.user.id);
@@ -20,7 +20,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<{ user: User }>
 });
 
 handler.patch(
-  verifyUser,
+  authMiddleware,
   async (req: ApiRequest, res: ApiResponse<{ user: User; token: string }>) => {
     const { body, session } = req;
     const { user } = session;

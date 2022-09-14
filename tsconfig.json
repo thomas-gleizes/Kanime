@@ -14,6 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": "./src",
     "paths": {
       "api": ["api"],
@@ -30,6 +32,7 @@
       "services/*": ["services/*"],
       "styles/*": ["styles/*"],
       "utils/*": ["utils/*"],
+      "decorators/*": ["decorators/*"],
       "public/*": ["../public"],
       "types": ["../types"]
     }

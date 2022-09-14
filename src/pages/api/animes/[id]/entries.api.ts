@@ -3,7 +3,7 @@ import { EntryStatus } from '@prisma/client';
 import { ApiRequest, ApiResponse } from 'next/app';
 import { apiHandler } from 'services/handler.service';
 import { withSessionApi } from 'services/session.service';
-import { verifyUser } from 'middlewares/auth.middleware';
+import { authMiddleware } from 'middlewares/auth.middleware';
 import { AnimeModel, EntryModel } from 'models';
 import { EntriesMapper } from 'mappers';
 import { ApiError, SchemaError } from 'errors';
@@ -17,7 +17,7 @@ interface ResponseData {
 
 const handler = apiHandler();
 
-handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
+handler.get(authMiddleware, async (req: ApiRequest, res: ApiResponse<ResponseData>) => {
   const entry = await EntryModel.get(req.session.user.id, +req.query.id);
 
   if (!entry) throw new ApiError(HttpStatus.NOT_FOUND, 'Entry not found');
@@ -25,7 +25,7 @@ handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<ResponseData>) 
   return res.send({ success: true, entry: EntriesMapper.one(entry) });
 });
 
-handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
+handler.delete(authMiddleware, async (req: ApiRequest, res: ApiResponse) => {
   const { id: animeId } = req.query;
   const { id: userId } = req.session.user;
 
@@ -88,7 +88,7 @@ const createOrUpdate = async (
     .json({ success: true, entry: EntriesMapper.one(entry) });
 };
 
-handler.post(verifyUser, createOrUpdate);
-handler.patch(verifyUser, createOrUpdate);
+handler.post(authMiddleware, createOrUpdate);
+handler.patch(authMiddleware, createOrUpdate);
 
 export default withSessionApi(handler);

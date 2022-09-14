@@ -3,8 +3,9 @@ import Security from 'services/security.service';
 import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
+import { UnauthorizedException } from 'next-api-decorators';
 
-export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) => {
+export const authMiddleware = async (req: ApiRequest, res: ApiResponse<any>, next) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const tokenPayload = Security.getTokenPayload(token);
@@ -14,13 +15,13 @@ export const verifyUser = async (req: ApiRequest, res: ApiResponse<any>, next) =
       await req.session.save();
     }
   } catch (e) {
-    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
+    throw new UnauthorizedException(errorMessage.ACCESS_DENIED);
   }
 
   next();
 };
 
-export const verifyAdmin = async (req, res, next) => {
+export const authAdminMiddleware = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const tokenPayload = Security.getTokenPayload(token);
@@ -30,11 +31,11 @@ export const verifyAdmin = async (req, res, next) => {
       await req.session.save();
     }
   } catch (e) {
-    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
+    throw new UnauthorizedException(errorMessage.ACCESS_DENIED);
   }
 
   if (!req.session.user.isAdmin)
-    throw new ApiError(HttpStatus.UNAUTHORIZED, errorMessage.ACCESS_DENIED);
+    throw new UnauthorizedException(errorMessage.ACCESS_DENIED);
 
   next();
 };
