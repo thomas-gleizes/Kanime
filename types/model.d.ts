@@ -157,3 +157,13 @@ declare type Category = {
 };
 
 declare type Categories = Array<Category>;
+
+declare type Country = {
+  id: number;
+  iso: string;
+  iso3: string | null;
+  name: string;
+  nicename: string;
+};
+
+declare type Countries = Array<Country>;

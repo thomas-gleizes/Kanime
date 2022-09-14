@@ -6,7 +6,7 @@ import { CategoryModel } from 'models';
 
 const handler = apiHandler();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimeCategories>) => {
+handler.get(async (req: ApiRequest, res: ApiResponse<AnimeCategoriesResponse>) => {
   const { id } = req.query;
 
   const categories = await CategoryModel.findByAnimeId(+id);

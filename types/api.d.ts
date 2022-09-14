@@ -38,10 +38,16 @@ interface AnimeResponse {
   anime: Anime;
 }
 
-interface AnimeCategories {
+interface AnimeCategoriesResponse {
   categories: Categories;
 }
 
-interface AnimeEntry {
+interface AnimeEntryResponse {
   entry: Entry;
+}
+
+/** common */
+
+interface CountriesResponse {
+  countries: Countries;
 }

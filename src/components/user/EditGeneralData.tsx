@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import { Gender } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
 
-import { PrismaCountries } from 'prisma/app';
 import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
-import { useFetch } from 'hooks';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
 import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
+import { CommonApi } from 'api';
 
 declare type values = {
   city: string;
@@ -19,8 +19,7 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountry = (): any =>
-  ApiService.get<PrismaCountries>(routes.common.countries.list);
+const fetchCountries = () => CommonApi.showCountries().then((data) => data.countries);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
@@ -29,7 +28,7 @@ const EditUserModal: React.FunctionComponent = () => {
   const avatarRef = useRef<HTMLInputElement>();
   const backgroundRef = useRef<HTMLInputElement>();
 
-  const [{ countries }] = useFetch<{ countries?: any[] }>(fetchCountry);
+  const { isLoading, data } = useQuery<Countries>(['countries'], fetchCountries);
 
   if (!user) return null;
 
@@ -56,7 +55,7 @@ const EditUserModal: React.FunctionComponent = () => {
     }
   };
 
-  const displayBackground = (media: UserMediaHandling | string) => {
+  const displayBackgroundUrl = (media: UserMediaHandling | string) => {
     if (typeof media === 'string') return media;
     else return media.raw;
   };
@@ -70,13 +69,15 @@ const EditUserModal: React.FunctionComponent = () => {
               <div
                 onClick={() => backgroundRef.current.click()}
                 className="absolute w-full h-full rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
-                style={{ background: `url('${displayBackground(values.background)}')` }}
+                style={{
+                  background: `url('${displayBackgroundUrl(values.background)}')`,
+                }}
               />
               <File innerRef={backgroundRef} name="background" />
               <div
                 onClick={() => avatarRef.current.click()}
                 className="absolute w-[260px] h-[260px] top-[20px] rounded-full right-10 bg-no-repeat bg-center"
-                style={{ background: `url(${displayBackground(values.avatar)})` }}
+                style={{ background: `url(${displayBackgroundUrl(values.avatar)})` }}
               />
               <File innerRef={avatarRef} name="avatar" />
             </div>
