@@ -4,10 +4,11 @@ import { apiHandler } from 'services/handler.service';
 import { UserModel } from 'models';
 import Security from 'services/security.service';
 import { DAY } from 'resources/constants';
+import { ForgotPasswordDto } from 'dto/authentifications.dto';
 
 class ForgotPasswordHandler {
   @Patch()
-  async post(@Body() body) {
+  async post(@Body() body: ForgotPasswordDto) {
     const user = await UserModel.findByEmail(body.email);
 
     if (!user) throw new NotFoundException('email user not found');

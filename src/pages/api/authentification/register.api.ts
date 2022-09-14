@@ -8,18 +8,12 @@ import ApiHandler from 'class/ApiHandler';
 import { ApiError } from 'errors';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-
-interface RegisterInput {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { RegisterDto } from 'dto/authentifications.dto';
 
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async register(@Body() body: RegisterInput, @Session() session) {
+  async register(@Body() body: RegisterDto, @Session() session) {
     if (session) await session.destroy();
 
     const users = await UserModel.findByEmailOrUsername(body.email, body.username);

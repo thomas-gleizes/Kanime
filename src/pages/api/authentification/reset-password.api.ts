@@ -4,16 +4,11 @@ import { apiHandler } from 'services/handler.service';
 import { UserModel } from 'models';
 import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
-
-interface ResetPasswordInput {
-  newPassword: string;
-  confirmPassword: string;
-  token: string;
-}
+import { ResetPasswordDto } from 'dto/authentifications.dto';
 
 class ResetPasswordHandler extends ApiHandler {
   @Patch()
-  async resetPassword(@Body() body: ResetPasswordInput) {
+  async resetPassword(@Body() body: ResetPasswordDto) {
     const user = await UserModel.checkResetPasswordToken(body.token);
 
     if (!user) throw new NotFoundException('token not found');

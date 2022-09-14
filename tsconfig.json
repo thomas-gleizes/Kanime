@@ -33,6 +33,7 @@
       "styles/*": ["styles/*"],
       "utils/*": ["utils/*"],
       "decorators/*": ["decorators/*"],
+      "dto/*": ["dto/*"],
       "public/*": ["../public"],
       "types": ["../types"]
     }

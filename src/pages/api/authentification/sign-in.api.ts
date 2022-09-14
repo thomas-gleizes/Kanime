@@ -9,17 +9,11 @@ import { ApiError } from 'errors';
 import { Session } from 'decorators';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-
-// TODO: move it and add package "class-validator"
-class SignInInput {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-}
+import { SignInDto } from 'dto/authentifications.dto';
 
 class SignInInHandler extends ApiHandler {
   @Post()
-  async get(@Body() body: SignInInput, @Session() session: any) {
+  async get(@Body() body: SignInDto, @Session() session: any) {
     if (session) await session.destroy();
 
     const user = await UserModel.findByEmail(body.email);
