@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 import { useHovered } from 'hooks';
 import { routes } from 'resources/routes';
@@ -23,8 +22,7 @@ const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
           <a>
             <div className="flex justify-center">
               {poster?.small ? (
-                <Image
-                  //@ts-ignore
+                <img
                   src={poster.small}
                   width={250}
                   height={340}

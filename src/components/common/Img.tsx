@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { IconButton } from '@chakra-ui/react';
 import { FaTimes } from 'react-icons/fa';
+
 import { useToggle } from 'hooks';
 
 interface Props {
@@ -17,7 +17,7 @@ const Img: Component<Props> = ({ src, width, height, alt, className, fullScreen 
 
   return (
     <>
-      <Image
+      <img
         src={src}
         onClick={fullScreen && toggleFullScreen}
         width={width}
