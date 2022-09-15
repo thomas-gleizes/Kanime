@@ -1,10 +1,10 @@
-import { BadRequestException, Body, NotFoundException, Patch } from 'next-api-decorators';
+import { Body, Patch, NotFoundException, BadRequestException } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import { UserModel } from 'models';
 import Security from 'services/security.service';
 import { DAY } from 'resources/constants';
-import { ForgotPasswordDto } from 'dto/authentifications.dto';
+import { ForgotPasswordDto } from 'dto';
 
 class ForgotPasswordHandler {
   @Patch()

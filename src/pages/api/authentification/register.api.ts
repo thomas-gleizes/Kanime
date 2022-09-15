@@ -2,13 +2,13 @@ import { Post, Body, HttpCode } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
-import { Session } from 'decorators/session';
 import HttpStatus from 'resources/HttpStatus';
 import ApiHandler from 'class/ApiHandler';
 import { ApiError } from 'errors';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-import { RegisterDto } from 'dto/authentifications.dto';
+import { Session } from 'decorators';
+import { RegisterDto } from 'dto';
 
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
@@ -38,7 +38,7 @@ class RegisterHandler extends ApiHandler {
     session.token = token;
     await session.save();
 
-    return { success: true, user: user, token: token };
+    return { success: true, user, token };
   }
 }
 

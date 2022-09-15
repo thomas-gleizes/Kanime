@@ -1,23 +1,33 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import {
+  Get,
+  ParseNumberPipe,
+  Query,
+  ValidationPipe,
+  NotFoundException,
+} from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class UserFollowerHandler extends ApiHandler {
+  @Get()
+  async showFollowers(
+    @Query('id', ParseNumberPipe) id: number,
+    @Query(ValidationPipe) page: QueryParamsDto
+  ) {
+    const user = await UserModel.findById(id);
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
-  const { id } = req.query;
+    const users = await UserModel.findFollowers(id);
 
-  const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
+    return { users: UsersMapper.many(users) };
+  }
+}
 
-  const users = await UserModel.findFollowers(+id);
-
-  return res.json({ success: true, users: UsersMapper.many(users) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(UserFollowerHandler);

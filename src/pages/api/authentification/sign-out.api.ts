@@ -2,7 +2,7 @@ import { Get } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { Session } from 'decorators/session';
+import { Session } from 'decorators';
 
 class SignOutHandler extends ApiHandler {
   @Get()

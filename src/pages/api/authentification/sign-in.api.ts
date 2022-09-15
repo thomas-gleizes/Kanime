@@ -6,10 +6,10 @@ import Security from 'services/security.service';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
-import { Session } from 'decorators';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { SignInDto } from 'dto/authentifications.dto';
+import { Session } from 'decorators';
+import { SignInDto } from 'dto';
 
 class SignInInHandler extends ApiHandler {
   @Post()

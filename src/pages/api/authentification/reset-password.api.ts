@@ -4,7 +4,7 @@ import { apiHandler } from 'services/handler.service';
 import { UserModel } from 'models';
 import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
-import { ResetPasswordDto } from 'dto/authentifications.dto';
+import { ResetPasswordDto } from 'dto';
 
 class ResetPasswordHandler extends ApiHandler {
   @Patch()
