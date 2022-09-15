@@ -7,13 +7,13 @@ import Security from 'services/security.service';
 import { UsersMapper } from 'mappers';
 import { UserModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
-import { Session, AuthGuard } from 'decorators';
+import { GetSession, AuthGuard } from 'decorators';
 import { UpdateUserDto } from 'dto';
 
 class UsersHandler extends ApiHandler {
   @Get()
   @AuthGuard()
-  async get(@Session() session) {
+  async get(@GetSession() session) {
     const user = await UserModel.findById(session.user.id).then((user) =>
       UsersMapper.one(user)
     );
@@ -23,7 +23,7 @@ class UsersHandler extends ApiHandler {
 
   @Patch()
   @AuthGuard()
-  async update(@Body() body: UpdateUserDto, @Session() session) {
+  async update(@Body() body: UpdateUserDto, @GetSession() session) {
     const path = `/media/users/${session.user.id.toString().split('').join('/')}`;
     const fullPath = `${publicPath}${path}`;
 

@@ -8,12 +8,12 @@ import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { Session } from 'decorators';
+import { GetSession } from 'decorators';
 import { SignInDto } from 'dto';
 
 class SignInInHandler extends ApiHandler {
   @Post()
-  async get(@Body() body: SignInDto, @Session() session: any) {
+  async get(@Body() body: SignInDto, @GetSession() session) {
     if (session) await session.destroy();
 
     const user = await UserModel.findByEmail(body.email);

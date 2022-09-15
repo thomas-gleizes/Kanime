@@ -95,6 +95,28 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       ...this.parseOptions(options),
     });
   };
+
+  public getByAnimes = (
+    animeId: number,
+    visibility: Visibility[],
+    status: PrismaEntryStatus | undefined,
+    orderBy:
+      | {
+          field: 'rating' | 'progress' | 'started_at' | 'finish_at';
+          order: 'asc' | 'desc';
+        }
+      | undefined,
+    options?: ModelOptions<PrismaEntryInclude>
+  ): Promise<PrismaEntry[]> =>
+    this.model.findMany({
+      where: {
+        anime_id: animeId,
+        visibility: { in: visibility },
+        status: status || undefined,
+      },
+      orderBy: [{ [orderBy.field]: orderBy.order }, { updated_at: 'desc' }],
+      ...this.parseOptions(options),
+    });
 }
 
 export default new EntryModel(connexion);

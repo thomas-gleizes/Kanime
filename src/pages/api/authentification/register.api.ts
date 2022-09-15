@@ -7,13 +7,13 @@ import ApiHandler from 'class/ApiHandler';
 import { ApiError } from 'errors';
 import { UserModel } from 'models';
 import { UsersMapper } from 'mappers';
-import { Session } from 'decorators';
+import { GetSession } from 'decorators';
 import { RegisterDto } from 'dto';
 
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async register(@Body() body: RegisterDto, @Session() session) {
+  async register(@Body() body: RegisterDto, @GetSession() session) {
     if (session) await session.destroy();
 
     const users = await UserModel.findByEmailOrUsername(body.email, body.username);

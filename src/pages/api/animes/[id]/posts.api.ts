@@ -1,73 +1,74 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import {
+  BadRequestException,
+  Body,
+  Delete,
+  Get,
+  HttpCode,
+  NotFoundException,
+  ParseNumberPipe,
+  Post,
+  Query,
+  ValidationPipe,
+} from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { authMiddleware } from 'middlewares/auth.middleware';
-import { ApiError } from 'errors';
+import ApiHandler from 'class/ApiHandler';
 import { AnimeModel, PostModel } from 'models';
 import { PostsMapper } from 'mappers';
 import HttpStatus from 'resources/HttpStatus';
+import { errorMessage } from 'resources/constants';
+import { AnimePostDto, QueryParamsDto } from 'dto';
+import { GetSession, AuthGuard } from 'decorators';
 
-interface GetResponseData {
-  posts: Posts;
-  total: number;
-}
+class AnimePostHandler extends ApiHandler {
+  @Get()
+  async show(
+    @Query('id', ParseNumberPipe) id: number,
+    @Query(ValidationPipe) params: QueryParamsDto
+  ) {
+    const anime = await AnimeModel.isExist(id);
 
-interface PostResponseData {
-  post: Post;
-}
+    if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-const handler = apiHandler();
+    const posts = await PostModel.findByAnimes(id, params);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<GetResponseData>) => {
-  const { id } = req.query;
+    return { posts: PostsMapper.many(posts) };
+  }
 
-  const posts = PostsMapper.many(await PostModel.findByAnimes(+id));
-
-  return res.json({ success: true, total: posts.length, posts });
-});
-
-handler.post(
-  authMiddleware,
-  async (req: ApiRequest, res: ApiResponse<PostResponseData>) => {
-    const {
-      body,
-      query: { id: animeId },
-      session: { user },
-    } = req;
-
-    if (body.constructor.length > 0)
-      throw new ApiError(HttpStatus.BAD_REQUEST, 'Content message missing');
-
-    if (!(await AnimeModel.isExist(+animeId)))
-      throw new ApiError(HttpStatus.NOT_FOUND, 'Anime not found');
+  @Post()
+  @AuthGuard()
+  @HttpCode(HttpStatus.CREATED)
+  async create(
+    @Query('id', ParseNumberPipe) id: number,
+    @Body() body: AnimePostDto,
+    @GetSession() session
+  ) {
+    if (!(await AnimeModel.isExist(id)))
+      throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
     const post = await PostModel.create({
-      userId: user.id,
-      animeId: +animeId,
+      userId: session.user.id,
+      animeId: id,
       content: body.content,
       parentId: body.parentId,
     });
 
-    return res.json({ success: true, post: PostsMapper.one(post) });
+    return { post: PostsMapper.one(post) };
   }
-);
 
-handler.delete(authMiddleware, async (req: ApiRequest, res: ApiResponse<any>) => {
-  const {
-    query: { id: animeId },
-    session: { user },
-  } = req;
+  @Delete()
+  @AuthGuard()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async deletePost(@Query('id', ParseNumberPipe) id: number, @GetSession() session) {
+    const post = await PostModel.findByAnimeIdAndUserId(id, session.user.id);
 
-  const post = await PostModel.findByAnimeIdAndUserId(+animeId, user.id);
+    if (!post) throw new NotFoundException('Post not found');
 
-  if (!post) throw new ApiError(HttpStatus.NOT_FOUND, 'Post not found');
+    if (post.user_id !== session.user.id)
+      throw new BadRequestException('You are not allowed to delete this post');
 
-  if (post.user_id !== user.id)
-    throw new ApiError(HttpStatus.BAD_GATEWAY, 'You are not allowed to delete this post');
+    await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
+  }
+}
 
-  await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
-
-  return res.status(HttpStatus.NO_CONTENT).json({ success: true });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimePostHandler);

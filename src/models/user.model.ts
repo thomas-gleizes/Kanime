@@ -123,11 +123,12 @@ class UserModel extends Model<PrismaUserDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public findByAnime = (animeId: number): Promise<PrismaUsers> =>
+  public findByAnime = (animeId: number, params?: modelParams): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
         animes: { some: { anime_id: animeId } },
       },
+      ...this.getKeyParams(params),
     });
 
   public search = (query: string, params?: modelParams): Promise<PrismaUsers> =>

@@ -1,15 +1,17 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, Query, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
+import ApiHandler from 'class/ApiHandler';
 import { CountryModel } from 'models';
-import { withSessionApi } from 'services/session.service';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class CountriesHandler extends ApiHandler {
+  @Get()
+  async show(@Query(ValidationPipe) params: QueryParamsDto) {
+    const countries = await CountryModel.all();
 
-handler.get(async (req: ApiRequest, res: ApiResponse<CountriesResponse>) => {
-  const countries = await CountryModel.all();
+    return { countries };
+  }
+}
 
-  return res.json({ success: true, countries });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(CountriesHandler);

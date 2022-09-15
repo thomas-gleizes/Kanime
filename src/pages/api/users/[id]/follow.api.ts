@@ -16,7 +16,7 @@ import HttpStatus from 'resources/HttpStatus';
 import { UserFollowModel, UserModel } from 'models';
 import { UsersMapper } from 'mappers';
 import { ApiError } from 'errors';
-import { Session, AuthGuard } from 'decorators';
+import { GetSession, AuthGuard } from 'decorators';
 
 class UserFollowHandler extends ApiHandler {
   @Get()
@@ -33,7 +33,7 @@ class UserFollowHandler extends ApiHandler {
   @Post()
   @AuthGuard()
   @HttpCode(HttpStatus.CREATED)
-  async follow(@Query('id', ParseNumberPipe) id: number, @Session() session: any) {
+  async follow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
     const user = await UserModel.findById(id);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
@@ -50,7 +50,7 @@ class UserFollowHandler extends ApiHandler {
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async unfollow(@Query('id', ParseNumberPipe) id: number, @Session() session: any) {
+  async unfollow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
     const user = await UserModel.findById(id);
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 

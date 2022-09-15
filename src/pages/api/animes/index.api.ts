@@ -1,15 +1,18 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, Query, ValidationPipe } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
 import { AnimeModel } from 'models';
 import { AnimesMapper } from 'mappers';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class AnimesHandler extends ApiHandler {
+  @Get()
+  async showAll(@Query(ValidationPipe) params: QueryParamsDto) {
+    const animes = await AnimeModel.all(params);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimesListResponse>) => {
-  const animes = await AnimeModel.all(req.query);
+    return { animes: AnimesMapper.many(animes) };
+  }
+}
 
-  return res.json({ success: true, animes: AnimesMapper.many(animes) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimesHandler);

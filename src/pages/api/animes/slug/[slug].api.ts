@@ -1,22 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, Query, NotFoundException } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
 import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';
-import { ApiError } from 'errors';
-import HttpStatus from 'resources/HttpStatus';
 
-const handler = apiHandler();
+class AnimesSlugHandler extends ApiHandler {
+  @Get()
+  async findBySlug(@Query('slug') slug: string) {
+    const anime = await AnimeModel.findBySlug(slug);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimeSlugResponse>) => {
-  const { slug } = req.query;
+    if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-  const anime = await AnimeModel.findBySlug(slug as string);
+    return { anime: AnimesMapper.one(anime) };
+  }
+}
 
-  if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
-
-  return res.json({ success: true, anime: AnimesMapper.one(anime) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimesSlugHandler);

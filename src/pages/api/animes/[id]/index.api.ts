@@ -1,22 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, NotFoundException, ParseNumberPipe, Query } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import HttpStatus from 'resources/HttpStatus';
+import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
-import { ApiError } from 'errors';
 import { AnimesMapper } from 'mappers';
 import { AnimeModel } from 'models';
 
-const handler = apiHandler();
+class AnimeHandler extends ApiHandler {
+  @Get()
+  async show(@Query('id', ParseNumberPipe) id: number) {
+    const anime = await AnimeModel.findById(id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimeResponse>) => {
-  const id = req.query.id as string;
+    if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-  const anime = await AnimeModel.findById(+id);
+    return { anime: AnimesMapper.one(anime) };
+  }
+}
 
-  if (!anime) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.ANIME_NOT_FOUND);
-
-  return res.json({ success: true, anime: AnimesMapper.one(anime) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimeHandler);
