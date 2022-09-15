@@ -3,6 +3,7 @@ import Link from 'next/link';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 import { Form, Formik } from 'formik';
+import { toast } from 'react-toastify';
 
 import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
@@ -12,7 +13,6 @@ import { routes } from 'resources/routes';
 import { Field } from 'components/common/formik';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
-import { toast } from 'react-toastify';
 
 type loginType = Yup.TypeOf<typeof signInSchema>;
 
@@ -42,7 +42,7 @@ const SignInPage: Page = () => {
 
   return (
     <DefaultLayout>
-      <div className="flex justify-center items-center h-[80vh] bg-gray-50">
+      <div className="flex justify-center items-center h-[80vh] bg-gray-50 mx-2">
         <Formik
           onSubmit={handleSubmit}
           initialValues={initialValues}
@@ -74,6 +74,7 @@ const SignInPage: Page = () => {
                   label="Mot de passe"
                   placeholder="password"
                   required
+                  valid={false}
                 />
               </div>
               <div>

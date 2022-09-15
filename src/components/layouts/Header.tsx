@@ -244,7 +244,9 @@ const Header: Component = () => {
                               <a
                                 className="text-white text-lg font-medium"
                                 onClick={() => setExtend(false)}
-                              ></a>
+                              >
+                                Inscription
+                              </a>
                             </Link>
                           </div>
                         </>
@@ -269,6 +271,17 @@ const Header: Component = () => {
                                 Settings
                               </a>
                             </Link>
+                          </div>
+                          <div>
+                            <span
+                              className="text-white text-lg font-medium"
+                              onClick={() => {
+                                signOut();
+                                setExtend(false);
+                              }}
+                            >
+                              Déconnexion
+                            </span>
                           </div>
                         </>
                       )}
