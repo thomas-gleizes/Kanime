@@ -29,7 +29,7 @@ const DropDownExplore: Component = () => {
       <div>
         <button ref={button} type="button" className="text-white flex group">
           Explore
-          <i className="mx-1 my-auto z-10">
+          <i className="my-auto z-10">
             <ChevronDownIcon className="h-4 w-4 transform transition rotate-90 group-focus:rotate-0" />
           </i>
         </button>
@@ -76,7 +76,7 @@ const Header: Component = () => {
 
   return (
     <header ref={headerRef} className="h-header">
-      <nav
+      <div
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'
         )}
@@ -85,83 +85,87 @@ const Header: Component = () => {
           {/*large*/}
           <div
             className={classnames(
-              'hidden md:flex justify-between w-full h-header py-1 px-5 transform duration-300 ease-in-out',
+              'hidden md:block w-full h-header py-1 px-5 transform duration-300 ease-in-out',
               headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
             )}
           >
-            <div className="text-center m-auto">
-              <Link href={routes.home}>
-                <a className="cursor-pointer font-bold text-white">
-                  {process.env.NEXT_PUBLIC_APP_NAME}
-                </a>
-              </Link>
-            </div>
-            <div className="flex justify-start items-center w-2/5 m-auto">
-              <div className="mx-3">
-                <DropDownExplore />
-              </div>
-              <span className="mx-3">
-                <Link href={routes.forum}>
-                  <a className="text-white">Discussion</a>
-                </Link>
-              </span>
-              <span className="mx-3">
-                <Link href={routes.feedback}>
-                  <a className="text-white"> Feedback </a>
-                </Link>
-              </span>
-              {isLogin && user.isAdmin ? (
-                <span className="mx-3">
-                  <Link href={routes.admin}>
-                    <a className="text-white"> Admin </a>
+            <div className="flex justify-between items-center max-w-[1500px] w-full mx-auto">
+              <div className="flex space-x-8">
+                <div className="w-fit">
+                  <Link href={routes.home}>
+                    <a className="cursor-pointer font-bold text-lg text-white">
+                      {process.env.NEXT_PUBLIC_APP_NAME}
+                    </a>
                   </Link>
-                </span>
-              ) : null}
-            </div>
-            <div className="flex justify-end w-2/5 my-auto">
-              <div className="max-w-lg w-full">
-                <SearchBar transparent={headerTransparent} />
+                </div>
+                <nav className="flex justify-start items-center space-x-4 w-fit">
+                  <div>
+                    <DropDownExplore />
+                  </div>
+                  <span>
+                    <Link href={routes.forum}>
+                      <a className="text-white">Discussion</a>
+                    </Link>
+                  </span>
+                  <span>
+                    <Link href={routes.feedback}>
+                      <a className="text-white"> Feedback </a>
+                    </Link>
+                  </span>
+                  {isLogin && user.isAdmin ? (
+                    <span className="mx-3">
+                      <Link href={routes.admin}>
+                        <a className="text-white"> Admin </a>
+                      </Link>
+                    </span>
+                  ) : null}
+                </nav>
               </div>
-              <div>
-                {!isLogin ? (
-                  <div className="flex items-center space-x-3 ml-4 justify-around text-white h-full my-auto">
-                    <Link href={routes.authentification.signIn}>
-                      <a className="cursor-pointer">Connexion</a>
-                    </Link>
-                    <Link href={routes.authentification.register}>
-                      <a className="cursor-pointer">Inscription</a>
-                    </Link>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center h-full ml-4">
-                    <div className="cursor-pointer" ref={avatarRef}>
-                      <Image
-                        className="rounded-full"
-                        src={user.avatarPath}
-                        width={35}
-                        height={35}
-                        alt="avatar"
-                      />
+              <div className="flex justify-end w-full max-w-[700px] my-auto">
+                <div className="max-w-lg w-full">
+                  <SearchBar transparent={headerTransparent} />
+                </div>
+                <div>
+                  {!isLogin ? (
+                    <div className="flex items-center space-x-3 ml-4 justify-around text-white h-full my-auto">
+                      <Link href={routes.authentification.signIn}>
+                        <a className="cursor-pointer">Connexion</a>
+                      </Link>
+                      <Link href={routes.authentification.register}>
+                        <a className="cursor-pointer">Inscription</a>
+                      </Link>
                     </div>
-                    <div>
-                      <DropDownByRef innerRef={avatarRef}>
-                        <div className="absolute py-1 top-6 right-0 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
-                          <DropDownItem href={routes.users.page(user.slug)}>
-                            Mon profile
-                          </DropDownItem>
-                          <DropDownItem href={routes.users.settings(user.slug)}>
-                            Settings
-                          </DropDownItem>
-                          <div onClick={signOut}>
-                            <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
-                              Déconnexion
-                            </span>
+                  ) : (
+                    <div className="flex items-center justify-center h-full ml-4">
+                      <div className="cursor-pointer" ref={avatarRef}>
+                        <Image
+                          className="rounded-full"
+                          src={user.avatarPath}
+                          width={35}
+                          height={35}
+                          alt="avatar"
+                        />
+                      </div>
+                      <div>
+                        <DropDownByRef innerRef={avatarRef}>
+                          <div className="absolute py-1 top-6 right-0 text-right w-40 bg-white ring-1 ring-black ring-opacity-5 text-gray-700 z-50 outline-none rounded-sm shadow-lg divide-y">
+                            <DropDownItem href={routes.users.page(user.slug)}>
+                              Mon profile
+                            </DropDownItem>
+                            <DropDownItem href={routes.users.settings(user.slug)}>
+                              Settings
+                            </DropDownItem>
+                            <div onClick={signOut}>
+                              <span className="block w-full py-1.5 px-2 hover:bg-gray-100">
+                                Déconnexion
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                      </DropDownByRef>
+                        </DropDownByRef>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -196,37 +200,86 @@ const Header: Component = () => {
                   <div className="pb-2 border-b-2 border-b-white">
                     <SearchBar transparent={false} />
                   </div>
-                  <div className="flex flex-col my-3 space-y-3 justify-evenly">
-                    <div className="text-lg font-medium">
-                      <DropDownExplore />
-                    </div>
-                    <div>
-                      <Link href={routes.forum}>
-                        <a
-                          className="text-white text-lg font-medium"
-                          onClick={() => setExtend(false)}
-                        >
-                          Discussion
-                        </a>
-                      </Link>
-                    </div>
-                    <div>
-                      <Link href={routes.feedback}>
-                        <a
-                          className="text-white text-lg font-medium"
-                          onClick={() => setExtend(false)}
-                        >
-                          Feedback
-                        </a>
-                      </Link>
-                    </div>
+                  <div className="flex flex-col space-y-4 my-3">
+                    <nav className="flex flex-col space-y-2 justify-evenly border-b border-b-white border-opacity-50 pb-3">
+                      <div className="text-lg font-medium">
+                        <DropDownExplore />
+                      </div>
+                      <div>
+                        <Link href={routes.forum}>
+                          <a
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Discussion
+                          </a>
+                        </Link>
+                      </div>
+                      <div>
+                        <Link href={routes.feedback}>
+                          <a
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Feedback
+                          </a>
+                        </Link>
+                      </div>
+                    </nav>
+                    <nav className="flex flex-col space-y-2 justify-evenly">
+                      {!isLogin ? (
+                        <>
+                          <div>
+                            <Link href={routes.authentification.signIn}>
+                              <a
+                                className="text-white text-lg font-medium"
+                                onClick={() => setExtend(false)}
+                              >
+                                Connexion
+                              </a>
+                            </Link>
+                          </div>
+                          <div>
+                            <Link href={routes.authentification.register}>
+                              <a
+                                className="text-white text-lg font-medium"
+                                onClick={() => setExtend(false)}
+                              ></a>
+                            </Link>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div>
+                            <Link href={routes.users.page(user.slug)}>
+                              <a
+                                className="text-white text-lg font-medium"
+                                onClick={() => setExtend(false)}
+                              >
+                                Mon profile
+                              </a>
+                            </Link>
+                          </div>
+                          <div>
+                            <Link href={routes.users.settings(user.slug)}>
+                              <a
+                                className="text-white text-lg font-medium"
+                                onClick={() => setExtend(false)}
+                              >
+                                Settings
+                              </a>
+                            </Link>
+                          </div>
+                        </>
+                      )}
+                    </nav>
                   </div>
                 </div>
               </Transition>
             </div>
           </div>
         </div>
-      </nav>
+      </div>
     </header>
   );
 };
