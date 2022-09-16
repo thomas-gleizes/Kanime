@@ -8,7 +8,7 @@ import { Page } from 'next/app';
 import { AuthenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
 import { resetPasswordSchema } from 'resources/validations';
-import { UserModel } from 'models';
+import { userModel } from 'models';
 import { routes } from 'resources/routes';
 import { Field } from 'components/common/formik';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
@@ -24,7 +24,7 @@ export const getServerSideProps = ssrHandler<Props, { token: string }>(
   async (context) => {
     const { token } = context.query;
 
-    const user = await UserModel.checkResetPasswordToken(token as string);
+    const user = await userModel.checkResetPasswordToken(token as string);
 
     if (!user) {
       return {

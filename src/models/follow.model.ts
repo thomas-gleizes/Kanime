@@ -36,6 +36,11 @@ class FollowModel extends Model<PrismaFollowDelegate> {
         },
       })
       .then((result) => !!result);
+
+  public isFriends = (userId1: number, userId2: number): Promise<boolean> =>
+    Promise.all([this.isFollow(userId1, userId2), this.isFollow(userId2, userId1)]).then(
+      ([one, two]) => one && two
+    );
 }
 
 export default new FollowModel(connexion);

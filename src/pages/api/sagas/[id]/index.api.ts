@@ -1,21 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, ParseNumberPipe, Query } from 'next-api-decorators';
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
 import HttpStatus from 'resources/HttpStatus';
-import { SagaModel } from 'models';
-import { SagasMapper } from 'mappers';
+import { sagaModel } from 'models';
+import { sagasMapper } from 'mappers';
 import { ApiError } from 'errors';
+import ApiHandler from 'class/ApiHandler';
 
-const handler = apiHandler();
+class SagaHandler extends ApiHandler {
+  @Get()
+  async showById(@Query('id', ParseNumberPipe) id: number) {
+    const saga = await sagaModel.findById(id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ saga: Saga }>) => {
-  const { id } = req.query;
+    if (!saga) throw new ApiError(HttpStatus.NOT_FOUND, 'Saga not found');
 
-  const saga = await SagaModel.findById(+id);
+    return { saga: sagasMapper.one(saga) };
+  }
+}
 
-  if (!saga) throw new ApiError(HttpStatus.NOT_FOUND, 'Saga not found');
-
-  return res.json({ success: true, saga: SagasMapper.one(saga) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(SagaHandler);

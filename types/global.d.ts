@@ -22,8 +22,8 @@ type ErrorPage = {
 };
 
 type modelParams = {
-  limit?: number | string | string[];
-  skip?: number | string | string[];
+  limit?: number;
+  skip?: number;
   includes?: string | string[];
 };
 

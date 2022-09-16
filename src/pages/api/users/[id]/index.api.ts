@@ -1,22 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, NotFoundException, ParseNumberPipe, Query } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { UsersMapper } from 'mappers';
-import { UserModel } from 'models';
+import ApiHandler from 'class/ApiHandler';
+import { usersMapper } from 'mappers';
+import { userModel } from 'models';
 import { errorMessage } from 'resources/constants';
-import HttpStatus from 'resources/HttpStatus';
-import { ApiError } from 'errors';
 
-const handler = apiHandler();
+class UserHandler extends ApiHandler {
+  @Get()
+  async get(@Query('id', ParseNumberPipe) id: number) {
+    const user = await userModel.findById(+id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
-  const { id } = req.query;
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-  const user = await UserModel.findById(+id);
+    return { user: usersMapper.one(user) };
+  }
+}
 
-  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
-
-  return res.json({ success: true, user: UsersMapper.one(user) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(UserHandler);

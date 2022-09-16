@@ -1,42 +1,37 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Body, Post } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
-import { UserModel } from 'models';
-import { UsersMapper } from 'mappers';
-import { signInSchema } from 'resources/validations';
+import { userModel } from 'models';
+import { usersMapper } from 'mappers';
+import { ApiError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { ApiError, SchemaError } from 'errors';
+import { GetSession } from 'decorators';
+import { SignInDto } from 'dto';
 
-const handler = apiHandler();
+class SignInInHandler extends ApiHandler {
+  @Post('/')
+  async get(@Body() body: SignInDto, @GetSession() session) {
+    if (session) await session.destroy();
 
-handler.post(async (req: ApiRequest, res: ApiResponse<SignInResponse>) => {
-  const { body, session } = req;
+    const user = await userModel.findByEmail(body.email);
 
-  try {
-    await signInSchema.validate(body);
-  } catch (err) {
-    throw new SchemaError(err);
+    if (!user || !Security.compare(body.password + user.username, user.password))
+      throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
+
+    const mappedUser = usersMapper.one(user);
+
+    const token = Security.sign(mappedUser, body.rememberMe);
+
+    session.user = mappedUser;
+    session.token = token;
+
+    await session.save();
+
+    return { success: true, user: mappedUser, token };
   }
+}
 
-  if (session) await session.destroy();
-
-  const user = await UserModel.findByEmail(body.email);
-
-  if (!user || !Security.compare(body.password + user.username, user.password))
-    throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.AUTH_LOGIN);
-
-  const mappedUser = UsersMapper.one(user);
-
-  const token = Security.sign(mappedUser, body.rememberMe);
-
-  session.user = mappedUser;
-  session.token = token;
-
-  await session.save();
-
-  return res.json({ success: true, user: mappedUser, token });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(SignInInHandler);

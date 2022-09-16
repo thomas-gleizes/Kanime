@@ -3,8 +3,8 @@ import { EntryStatus, Visibility } from '@prisma/client';
 
 import type { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
-import { EntryModel, UserFollowModel, UserModel } from 'models';
-import { EntriesMapper, UsersMapper } from 'mappers';
+import { entryModel, userFollowModel, userModel } from 'models';
+import { entriesMapper, usersMapper } from 'mappers';
 import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks';
@@ -25,23 +25,20 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
     const { slug } = query;
     const { user: sessionUser } = req.session;
 
-    const user = await UserModel.findBySlug(slug as string);
+    const user = await userModel.findBySlug(slug as string);
     if (!user) throw new SsrError(404, errorMessage.USER_NOT_FOUND);
 
     const visibility: Visibility[] = ['public'];
     if (sessionUser)
       if (user.id === sessionUser.id) visibility.push('limited', 'private');
       else {
-        const [one, two] = await Promise.all([
-          UserFollowModel.isFollow(user.id, sessionUser.id),
-          UserFollowModel.isFollow(sessionUser.id, user.id),
-        ]);
+        const isFriends = await userFollowModel.isFriends(sessionUser.id, user.id);
 
-        if (one && two) visibility.push('limited');
+        if (isFriends) visibility.push('limited');
       }
 
-    const entries = EntriesMapper.many(
-      await EntryModel.getByUser(
+    const entries = entriesMapper.many(
+      await entryModel.getByUser(
         user.id,
         visibility,
         undefined,
@@ -55,7 +52,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
 
     return {
       props: {
-        user: UsersMapper.one(user),
+        user: usersMapper.one(user),
         isCurrent: user.id === sessionUser?.id,
         entries: entries,
       },

@@ -1,13 +1,16 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
+import { GetSession } from 'decorators';
 
-const handler = apiHandler();
+class SignOutHandler extends ApiHandler {
+  @Get()
+  get(@GetSession() session) {
+    if (session) session.destroy();
 
-handler.all(async (req: ApiRequest, res: ApiResponse) => {
-  req.session.destroy();
+    return { success: true };
+  }
+}
 
-  return res.json({ success: true });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(SignOutHandler);

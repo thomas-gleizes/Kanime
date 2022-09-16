@@ -31,12 +31,13 @@ class PostModel extends Model<PrismaPostsDelegate> {
       where: { anime_id: animeId, user_id: userId },
     });
 
-  public findByAnimes = (animeId: number): Promise<PrismaPosts> =>
+  public findByAnimes = (animeId: number, params?: modelParams): Promise<PrismaPosts> =>
     this.model.findMany({
       where: {
         AND: [{ anime_id: animeId }, { parent_id: null }],
       },
       include: { user: true, replies: { include: { replies: true } } },
+      ...this.getKeyParams(params),
     });
 
   public findByUser = (userId: number): Promise<PrismaPosts> =>

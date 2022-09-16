@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
-import { AnimeModel, SagaModel } from 'models';
-import { AnimesMapper, SagasMapper } from 'mappers';
+import { animeModel, sagaModel } from 'models';
+import { animesMapper, sagasMapper } from 'mappers';
 import { SsrError } from 'errors';
 import { errorMessage } from 'resources/constants';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
@@ -16,16 +16,16 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
     const { slug } = params;
 
-    const anime = await AnimeModel.findBySlug(slug);
+    const anime = await animeModel.findBySlug(slug);
 
     if (!anime || !anime.saga_id) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
 
-    const saga = await SagaModel.findById(anime.saga_id);
+    const saga = await sagaModel.findById(anime.saga_id);
 
     return {
       props: {
-        anime: AnimesMapper.one(anime),
-        saga: SagasMapper.one(saga),
+        anime: animesMapper.one(anime),
+        saga: sagasMapper.one(saga),
       },
     };
   }

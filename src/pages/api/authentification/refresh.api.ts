@@ -1,16 +1,19 @@
-import { ApiRequest, ApiResponse } from 'next/app';
-import { verifyUser } from 'middlewares/auth.middleware';
+import { Get } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { UsersMapper } from 'mappers';
-import { UserModel } from 'models';
+import { usersMapper } from 'mappers';
+import { userModel } from 'models';
+import ApiHandler from 'class/ApiHandler';
+import { GetSession, AuthGuard } from 'decorators';
 
-const handler = apiHandler();
+class RefreshHandler extends ApiHandler {
+  @Get()
+  @AuthGuard()
+  async refresh(@GetSession() session) {
+    const user = await userModel.findById(session.user.id);
 
-handler.get(verifyUser, async (req: ApiRequest, res: ApiResponse<{ user: User }>) => {
-  const user = await UserModel.findById(req.session.user.id);
+    return { success: true, user: usersMapper.one(user) };
+  }
+}
 
-  return res.send({ success: true, user: UsersMapper.one(user) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(RefreshHandler);

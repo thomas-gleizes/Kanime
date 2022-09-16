@@ -120,6 +120,7 @@ model User {
 }
 
 model Entry {
+  id         Int         @id @default(autoincrement())
   anime_id   Int
   user_id    Int
   status     EntryStatus @default(Wanted)
@@ -136,7 +137,7 @@ model Entry {
   anime Anime @relation(fields: [anime_id], references: [id])
   user  User  @relation(fields: [user_id], references: [id])
 
-  @@id([anime_id, user_id])
+  @@unique([anime_id, user_id])
   @@map("entries")
 }
 

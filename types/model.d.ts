@@ -72,6 +72,7 @@ declare type Anime = {
 type Animes = Array<Anime>;
 
 declare type Entry = {
+  id: number;
   animeId: number;
   userId: number;
   status: EntryStatus;

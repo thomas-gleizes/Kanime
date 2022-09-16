@@ -1,7 +1,7 @@
 import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
-import { AnimesMapper } from 'mappers';
-import { AnimeModel } from 'models';
+import { animesMapper } from 'mappers';
+import { animeModel } from 'models';
 import { SsrError } from 'errors';
 import AnimeCard from 'components/common/anime/AnimeCard';
 
@@ -13,7 +13,7 @@ export const getServerSideProps = ssrHandler<Props>(async (context) => {
   const queryIds = context.query.ids as string;
   const ids = queryIds.split(',');
 
-  const animes = AnimesMapper.many(await AnimeModel.findByIds(ids.map(Number)));
+  const animes = animesMapper.many(await animeModel.findByIds(ids.map(Number)));
 
   if (animes.length === 0) {
     throw new SsrError(404, 'Anime not found');

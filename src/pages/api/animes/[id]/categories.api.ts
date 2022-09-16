@@ -1,17 +1,17 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, ParseNumberPipe, Query } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { CategoriesMapper } from 'mappers';
-import { CategoryModel } from 'models';
+import ApiHandler from 'class/ApiHandler';
+import { categoriesMapper } from 'mappers';
+import { categoryModel } from 'models';
 
-const handler = apiHandler();
+class AnimesCategoriesHandler extends ApiHandler {
+  @Get()
+  async showCategories(@Query('id', ParseNumberPipe) id: number) {
+    const categories = await categoryModel.findByAnimeId(id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimeCategoriesResponse>) => {
-  const { id } = req.query;
+    return { categories: categoriesMapper.many(categories) };
+  }
+}
 
-  const categories = await CategoryModel.findByAnimeId(+id);
-
-  return res.json({ success: true, categories: CategoriesMapper.many(categories) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimesCategoriesHandler);

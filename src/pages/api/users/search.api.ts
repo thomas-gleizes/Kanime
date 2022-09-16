@@ -1,21 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, Query, ValidationPipe } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import HttpStatus from 'resources/HttpStatus';
-import { ApiError } from 'errors';
-import { UsersMapper } from 'mappers';
-import { UserModel } from 'models';
+import ApiHandler from 'class/ApiHandler';
+import { usersMapper } from 'mappers';
+import { userModel } from 'models';
+import { SearchUserQueryDto } from 'dto';
 
-const handler = apiHandler();
+class SearchUserHandler extends ApiHandler {
+  @Get()
+  async search(@Query(ValidationPipe) params: SearchUserQueryDto) {
+    const users = await userModel
+      .search(params.query, params)
+      .then((users) => usersMapper.many(users));
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
-  const { query, limit, skip } = req.query;
+    return { users };
+  }
+}
 
-  if (!query) throw new ApiError(HttpStatus.BAD_REQUEST, 'query is required');
-
-  const users = await UserModel.search(query as string, { limit: +limit, skip: +skip });
-
-  return res.json({ success: true, users: UsersMapper.many(users) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(SearchUserHandler);

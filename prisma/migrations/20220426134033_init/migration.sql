@@ -100,7 +100,8 @@ CREATE TABLE `users` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `entries` (
+CREATE OR REPLACE TABLE `entries` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `anime_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `status` ENUM('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
@@ -114,7 +115,8 @@ CREATE TABLE `entries` (
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
-    PRIMARY KEY (`anime_id`, `user_id`)
+    PRIMARY KEY (`id`),
+    UNIQUE KEY (`anime_id`, `user_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable

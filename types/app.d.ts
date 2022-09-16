@@ -143,3 +143,14 @@ declare module 'prisma/app' {
   declare type PrismaGender = Gender;
   declare type PrismaMethod = Method;
 }
+
+declare module 'sessions/app' {
+  import { IronSession } from 'iron-session';
+
+  declare type SessionData = {
+    user: User;
+    token: string;
+  };
+
+  declare type Session = IronSession & SessionData;
+}

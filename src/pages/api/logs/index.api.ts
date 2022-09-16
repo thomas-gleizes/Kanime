@@ -1,18 +1,20 @@
-import { ApiRequest, ApiResponse } from 'next/app';
-import { LogsMapper } from 'mappers';
-import { LogModel } from 'models';
-import { verifyAdmin } from 'middlewares/auth.middleware';
+import { Get, Query, ValidationPipe } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
+import ApiHandler from 'class/ApiHandler';
+import { logsMapper } from 'mappers';
+import { logModel } from 'models';
+import { AuthAdminGuard } from 'decorators';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class LogsHandler extends ApiHandler {
+  @Get()
+  @AuthAdminGuard()
+  async show(@Query(ValidationPipe) params: QueryParamsDto) {
+    const logs = await logModel.show(params);
 
-handler.get(verifyAdmin, async (req: ApiRequest, res: ApiResponse<{ logs: Logs }>) => {
-  const { start, limit } = req.query;
+    return { logs: logsMapper.many(logs) };
+  }
+}
 
-  const logs = await LogModel.show({ limit: +limit || 20, skip: +start });
-
-  return res.json({ success: true, logs: LogsMapper.many(logs) });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(LogsHandler);

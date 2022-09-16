@@ -1,7 +1,7 @@
 import type { Page, StaticProps } from 'next/app';
 
-import { AnimeModel } from 'models';
-import { AnimesMapper } from 'mappers';
+import { animeModel } from 'models';
+import { animesMapper } from 'mappers';
 import Title from 'components/layouts/Title';
 import PopularAnimes from 'components/landing/PopularAnimes';
 
@@ -15,16 +15,16 @@ interface Props {
 
 export const getStaticProps: StaticProps<Props> = async () => {
   const [popularAnimes, ratedAnimes] = await Promise.all([
-    AnimeModel.findPopular(),
-    AnimeModel.findHeightRated(),
+    animeModel.findPopular(),
+    animeModel.findHeightRated(),
   ]);
 
   return {
     props: {
       time: Date.now(),
       animes: {
-        popular: AnimesMapper.many(popularAnimes),
-        rated: AnimesMapper.many(ratedAnimes),
+        popular: animesMapper.many(popularAnimes),
+        rated: animesMapper.many(ratedAnimes),
       },
     },
     revalidate: 60,

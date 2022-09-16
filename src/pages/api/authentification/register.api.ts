@@ -1,49 +1,45 @@
-import { ApiRequest, ApiResponse } from 'next/app';
-import Security from 'services/security.service';
+import { Post, Body, HttpCode } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { registerSchema } from 'resources/validations';
-import { ApiError, SchemaError } from 'errors';
-import { UserModel } from 'models';
-import { UsersMapper } from 'mappers';
+import Security from 'services/security.service';
 import HttpStatus from 'resources/HttpStatus';
+import ApiHandler from 'class/ApiHandler';
+import { ApiError } from 'errors';
+import { userModel } from 'models';
+import { usersMapper } from 'mappers';
+import { GetSession } from 'decorators';
+import { RegisterDto } from 'dto';
 
-const handler = apiHandler();
+class RegisterHandler extends ApiHandler {
+  @HttpCode(HttpStatus.CREATED)
+  @Post()
+  async register(@Body() body: RegisterDto, @GetSession() session) {
+    if (session) await session.destroy();
 
-handler.post(async (req: ApiRequest, res: ApiResponse<RegisterResponse>) => {
-  const { body: userData, session } = req;
+    const users = await userModel.findByEmailOrUsername(body.email, body.username);
 
-  try {
-    await registerSchema.validate(userData);
-  } catch (err) {
-    throw new SchemaError(err);
+    if (users.length) {
+      let key = 'email';
+      if (users[0].username === body.username) key = 'username';
+      throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
+    }
+
+    const user = usersMapper.one(
+      await userModel.create({
+        username: body.username,
+        email: body.email,
+        password: Security.sha512(body.password + body.username),
+      })
+    );
+
+    const token = Security.sign(user);
+
+    session.user = user;
+    session.token = token;
+    await session.save();
+
+    return { success: true, user, token };
   }
+}
 
-  session.destroy();
-
-  const users = await UserModel.findByEmailOrUsername(userData.email, userData.username);
-
-  if (users.length) {
-    let key = 'email';
-    if (users[0].username === userData.username) key = 'username';
-    throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
-  }
-
-  const user = UsersMapper.one(
-    await UserModel.create({
-      username: userData.username,
-      email: userData.email,
-      password: Security.sha512(userData.password + userData.username),
-    })
-  );
-
-  const token = Security.sign(user);
-
-  session.user = user;
-  session.token = token;
-  await session.save();
-
-  return res.status(201).json({ success: true, user: user, token: token });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(RegisterHandler);

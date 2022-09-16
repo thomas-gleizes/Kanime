@@ -1,5 +1,5 @@
 import { Gender } from '@prisma/client';
-import { UserModel } from '../../src/models';
+import { userModel } from '../../src/models';
 import Security from '../../src/services/security.service';
 import { defaultUsersMedia } from 'resources/constants';
 
@@ -7,11 +7,11 @@ describe('users model', () => {
   let userId: number = null;
 
   beforeAll(async () => {
-    await UserModel.deleteAll();
+    await userModel.deleteAll();
   });
 
   it('should user table is empty', async () => {
-    expect(await UserModel.count()).toBe(0);
+    expect(await userModel.count()).toBe(0);
   });
 
   it('should create user', async () => {
@@ -19,7 +19,7 @@ describe('users model', () => {
     const username: string = 'Kalat';
     const email: string = 'kalat@email.fr';
 
-    const user = await UserModel.create({
+    const user = await userModel.create({
       username: username,
       email: email,
       password: Security.sha512(password),
@@ -44,7 +44,7 @@ describe('users model', () => {
     const birthDay: Date = new Date('1999-05-21');
     const city: string = 'Montpellier';
 
-    const updateUser = await UserModel.update(userId, {
+    const updateUser = await userModel.update(userId, {
       avatarPath: '',
       backgroundPath: '',
       birthday: birthDay,

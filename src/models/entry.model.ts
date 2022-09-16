@@ -13,6 +13,22 @@ class EntryModel extends Model<PrismaEntryDelegate> {
     super(connexion, 'entry');
   }
 
+  public all = (params?: modelParams) =>
+    this.model.findMany({
+      ...this.getKeyParams(params),
+    });
+
+  public find = (id: number): Promise<PrismaEntry> =>
+    this.model.findUnique({
+      where: { id },
+    });
+
+  public findWithAnime = (id: number) =>
+    this.model.findUnique({
+      where: { id },
+      include: { anime: true },
+    });
+
   public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.findUnique({
       where: {
@@ -20,6 +36,35 @@ class EntryModel extends Model<PrismaEntryDelegate> {
           user_id: userId,
           anime_id: animeId,
         },
+      },
+    });
+
+  public create = (data) =>
+    this.model.create({
+      data: {
+        anime_id: data.animeId,
+        user_id: data.userId,
+        status: data.status,
+        rating: data.rating,
+        progress: data.progress,
+        note: data.note,
+        started_at: new Date(data.startedAt),
+        finish_at: new Date(data.finishAt),
+        visibility: data.visibility,
+      },
+    });
+
+  public update = (id: number, data) =>
+    this.model.update({
+      where: { id },
+      data: {
+        status: data.status,
+        rating: data.rating,
+        progress: data.progress,
+        note: data.note,
+        started_at: new Date(data.startedAt),
+        finish_at: new Date(data.finishAt),
+        visibility: data.visibility,
       },
     });
 
@@ -53,14 +98,9 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
-  public delete = (userId: number, animeId: number): Promise<PrismaEntry> =>
+  public delete = (id: number): Promise<PrismaEntry> =>
     this.model.delete({
-      where: {
-        anime_id_user_id: {
-          user_id: userId,
-          anime_id: animeId,
-        },
-      },
+      where: { id },
     });
 
   public get = (userId: number, animeId: number): Promise<PrismaEntry> =>
@@ -95,6 +135,28 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       ...this.parseOptions(options),
     });
   };
+
+  public getByAnimes = (
+    animeId: number,
+    visibility: Visibility[],
+    status: PrismaEntryStatus | undefined,
+    orderBy:
+      | {
+          field: 'rating' | 'progress' | 'started_at' | 'finish_at';
+          order: 'asc' | 'desc';
+        }
+      | undefined,
+    options?: ModelOptions<PrismaEntryInclude>
+  ): Promise<PrismaEntry[]> =>
+    this.model.findMany({
+      where: {
+        anime_id: animeId,
+        visibility: { in: visibility },
+        status: status || undefined,
+      },
+      orderBy: [{ [orderBy.field]: orderBy.order }, { updated_at: 'desc' }],
+      ...this.parseOptions(options),
+    });
 }
 
 export default new EntryModel(connexion);

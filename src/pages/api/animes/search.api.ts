@@ -1,23 +1,21 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { Get, Query, ValidationPipe } from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { AnimesMapper } from 'mappers';
-import { AnimeModel } from 'models';
-import { ApiError } from 'errors';
-import HttpStatus from 'resources/HttpStatus';
+import ApiHandler from 'class/ApiHandler';
+import { animesMapper } from 'mappers';
+import { animeModel } from 'models';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class AnimesSearchHandler extends ApiHandler {
+  @Get()
+  async search(
+    @Query('query') query: string,
+    @Query(ValidationPipe) params: QueryParamsDto
+  ) {
+    const animes = await animeModel.search(query, params);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<AnimesSearchResponse>) => {
-  const { limit, skip, query } = req.query;
+    return { animes: animesMapper.many(animes) };
+  }
+}
 
-  if (!query) throw new ApiError(HttpStatus.BAD_REQUEST, 'query is required');
-
-  const animes = await AnimeModel.search(query as string, { limit, skip });
-  return res.json({
-    success: true,
-    animes: AnimesMapper.many(animes),
-  });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(AnimesSearchHandler);

@@ -1,48 +1,65 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import {
+  Delete,
+  Get,
+  HttpCode,
+  ParseNumberPipe,
+  Post,
+  Query,
+  BadRequestException,
+  NotFoundException,
+} from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { verifyUser } from 'middlewares/auth.middleware';
+import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { UserFollowModel, UserModel } from 'models';
-import { UsersMapper } from 'mappers';
+import { userFollowModel, userModel } from 'models';
+import { usersMapper } from 'mappers';
 import { ApiError } from 'errors';
+import { GetSession, AuthGuard } from 'decorators';
 
-const handler = apiHandler();
+class UserFollowHandler extends ApiHandler {
+  @Get()
+  async showFollow(@Query('id', ParseNumberPipe) id: number) {
+    const user = await userModel.findById(id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ users: Users }>) => {
-  const { id } = req.query;
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-  const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
+    const followers = await userModel.findFollows(user.id);
 
-  const users = await UserModel.findFollows(+id);
-
-  return res.json({ success: true, users: UsersMapper.many(users) });
-});
-
-handler.post(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
-  const { query, session } = req;
-
-  try {
-    await UserFollowModel.create(+session.user.id, +query.id);
-
-    return res.status(HttpStatus.CREATED).json({ success: true });
-  } catch (e) {
-    throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.FOLLOW);
+    return { followers: usersMapper.many(followers) };
   }
-});
 
-handler.delete(verifyUser, async (req: ApiRequest, res: ApiResponse) => {
-  const { query, session } = req;
+  @Post()
+  @AuthGuard()
+  @HttpCode(HttpStatus.CREATED)
+  async follow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
+    const user = await userModel.findById(id);
 
-  try {
-    const result = await UserFollowModel.delete(+session.user.id, +query.id);
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-    return res.json({ success: true, debug: result });
-  } catch (e) {
-    throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.UNFOLLOW);
+    try {
+      const follow = await userFollowModel.create(session.user.id, user.id);
+
+      return { follow };
+    } catch (e) {
+      throw new BadRequestException(errorMessage.FOLLOW);
+    }
   }
-});
 
-export default withSessionApi(handler);
+  @Delete()
+  @AuthGuard()
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async unfollow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
+    const user = await userModel.findById(id);
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
+
+    try {
+      await userFollowModel.delete(session.user.id, id);
+    } catch (e) {
+      throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.UNFOLLOW);
+    }
+  }
+}
+
+export default apiHandler(UserFollowHandler);

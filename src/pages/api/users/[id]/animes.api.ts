@@ -1,23 +1,32 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import {
+  Get,
+  Query,
+  ParseNumberPipe,
+  ValidationPipe,
+  NotFoundException,
+} from 'next-api-decorators';
+
 import { apiHandler } from 'services/handler.service';
-import { withSessionApi } from 'services/session.service';
-import { AnimeModel, UserModel } from 'models';
-import { AnimesMapper } from 'mappers';
+import ApiHandler from 'class/ApiHandler';
+import { animeModel, userModel } from 'models';
+import { animesMapper } from 'mappers';
 import { errorMessage } from 'resources/constants';
-import { ApiError } from 'errors';
-import HttpStatus from 'resources/HttpStatus';
+import { QueryParamsDto } from 'dto';
 
-const handler = apiHandler();
+class UserAnimesHandler extends ApiHandler {
+  @Get()
+  async get(
+    @Query('id', ParseNumberPipe) id: number,
+    @Query(ValidationPipe) query: QueryParamsDto
+  ) {
+    const user = await userModel.findById(id);
 
-handler.get(async (req: ApiRequest, res: ApiResponse<{ animes: Animes }>) => {
-  const { id } = req.query;
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-  const user = await UserModel.findById(+id);
-  if (!user) throw new ApiError(HttpStatus.NOT_FOUND, errorMessage.USER_NOT_FOUND);
+    const animes = await animeModel.findByUser(id);
 
-  const animes = AnimesMapper.many(await AnimeModel.findByUser(+id));
+    return { animes: animesMapper.many(animes) };
+  }
+}
 
-  return res.json({ success: true, animes: animes });
-});
-
-export default withSessionApi(handler);
+export default apiHandler(UserAnimesHandler);

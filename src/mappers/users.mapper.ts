@@ -1,6 +1,6 @@
 import { PrismaUser } from 'prisma/app';
 import Mapper from 'class/Mapper';
-import { EntriesMapper, PostsMapper } from 'mappers';
+import { entriesMapper, postsMapper } from 'mappers';
 
 class UsersMapper extends Mapper<PrismaUser, User> {
   public one(resource: PrismaUser): User {
@@ -22,8 +22,8 @@ class UsersMapper extends Mapper<PrismaUser, User> {
       updatedAt: resource.updated_at.toISOString(),
     };
 
-    if (resource.entries) user.entries = EntriesMapper.many(resource.entries);
-    if (resource.posts) user.posts = PostsMapper.many(resource.posts);
+    if (resource.entries) user.entries = entriesMapper.many(resource.entries);
+    if (resource.posts) user.posts = postsMapper.many(resource.posts);
 
     return user;
   }
