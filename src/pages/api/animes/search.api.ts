@@ -2,8 +2,8 @@ import { Get, Query, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { AnimesMapper } from 'mappers';
-import { AnimeModel } from 'models';
+import { animesMapper } from 'mappers';
+import { animeModel } from 'models';
 import { QueryParamsDto } from 'dto';
 
 class AnimesSearchHandler extends ApiHandler {
@@ -12,9 +12,9 @@ class AnimesSearchHandler extends ApiHandler {
     @Query('query') query: string,
     @Query(ValidationPipe) params: QueryParamsDto
   ) {
-    const animes = await AnimeModel.search(query, params);
+    const animes = await animeModel.search(query, params);
 
-    return { animes: AnimesMapper.many(animes) };
+    return { animes: animesMapper.many(animes) };
   }
 }
 

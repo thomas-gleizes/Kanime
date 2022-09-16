@@ -1,6 +1,6 @@
 import { PrismaSaga } from 'prisma/app';
 import Mapper from 'class/Mapper';
-import { AnimesMapper } from 'mappers';
+import { animesMapper } from 'mappers';
 import jsonParser from 'utils/jsonParser';
 
 class SagasMapper extends Mapper<PrismaSaga, Saga> {
@@ -15,7 +15,7 @@ class SagasMapper extends Mapper<PrismaSaga, Saga> {
       updated_at: resource.updated_at.toISOString(),
     };
 
-    if (resource.animes) saga.animes = AnimesMapper.many(resource.animes);
+    if (resource.animes) saga.animes = animesMapper.many(resource.animes);
 
     return saga;
   }

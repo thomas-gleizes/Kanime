@@ -2,16 +2,16 @@ import { Get, Query, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { AnimeModel } from 'models';
-import { AnimesMapper } from 'mappers';
+import { animeModel } from 'models';
+import { animesMapper } from 'mappers';
 import { QueryParamsDto } from 'dto';
 
 class AnimesHandler extends ApiHandler {
   @Get()
   async showAll(@Query(ValidationPipe) params: QueryParamsDto) {
-    const animes = await AnimeModel.all(params);
+    const animes = await animeModel.all(params);
 
-    return { animes: AnimesMapper.many(animes) };
+    return { animes: animesMapper.many(animes) };
   }
 }
 

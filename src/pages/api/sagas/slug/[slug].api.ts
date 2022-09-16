@@ -2,17 +2,17 @@ import { Get, Query, NotFoundException } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { SagasMapper } from 'mappers';
-import { SagaModel } from 'models';
+import { sagasMapper } from 'mappers';
+import { sagaModel } from 'models';
 
 class SagaSlug extends ApiHandler {
   @Get()
   async findBySlug(@Query('slug') slug: string) {
-    const saga = await SagaModel.findBySlug(slug);
+    const saga = await sagaModel.findBySlug(slug);
 
     if (!saga) throw new NotFoundException('Saga not found');
 
-    return { saga: SagasMapper.one(saga) };
+    return { saga: sagasMapper.one(saga) };
   }
 }
 

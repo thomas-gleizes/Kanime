@@ -10,8 +10,8 @@ import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
-import { UserModel } from 'models';
-import { UsersMapper } from 'mappers';
+import { userModel } from 'models';
+import { usersMapper } from 'mappers';
 import { ApiError } from 'errors';
 import { QueryParamsDto } from 'dto';
 
@@ -21,12 +21,12 @@ class UserFollowerHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) page: QueryParamsDto
   ) {
-    const user = await UserModel.findById(id);
+    const user = await userModel.findById(id);
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-    const users = await UserModel.findFollowers(id);
+    const users = await userModel.findFollowers(id);
 
-    return { users: UsersMapper.many(users) };
+    return { users: usersMapper.many(users) };
   }
 }
 

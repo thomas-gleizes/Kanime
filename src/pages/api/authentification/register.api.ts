@@ -5,8 +5,8 @@ import Security from 'services/security.service';
 import HttpStatus from 'resources/HttpStatus';
 import ApiHandler from 'class/ApiHandler';
 import { ApiError } from 'errors';
-import { UserModel } from 'models';
-import { UsersMapper } from 'mappers';
+import { userModel } from 'models';
+import { usersMapper } from 'mappers';
 import { GetSession } from 'decorators';
 import { RegisterDto } from 'dto';
 
@@ -16,7 +16,7 @@ class RegisterHandler extends ApiHandler {
   async register(@Body() body: RegisterDto, @GetSession() session) {
     if (session) await session.destroy();
 
-    const users = await UserModel.findByEmailOrUsername(body.email, body.username);
+    const users = await userModel.findByEmailOrUsername(body.email, body.username);
 
     if (users.length) {
       let key = 'email';
@@ -24,8 +24,8 @@ class RegisterHandler extends ApiHandler {
       throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
     }
 
-    const user = UsersMapper.one(
-      await UserModel.create({
+    const user = usersMapper.one(
+      await userModel.create({
         username: body.username,
         email: body.email,
         password: Security.sha512(body.password + body.username),

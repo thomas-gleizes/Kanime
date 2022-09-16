@@ -13,8 +13,8 @@ import {
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { AnimeModel, PostModel } from 'models';
-import { PostsMapper } from 'mappers';
+import { animeModel, postModel } from 'models';
+import { postsMapper } from 'mappers';
 import HttpStatus from 'resources/HttpStatus';
 import { errorMessage } from 'resources/constants';
 import { AnimePostDto, QueryParamsDto } from 'dto';
@@ -26,13 +26,13 @@ class AnimePostHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) params: QueryParamsDto
   ) {
-    const anime = await AnimeModel.isExist(id);
+    const anime = await animeModel.isExist(id);
 
     if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    const posts = await PostModel.findByAnimes(id, params);
+    const posts = await postModel.findByAnimes(id, params);
 
-    return { posts: PostsMapper.many(posts) };
+    return { posts: postsMapper.many(posts) };
   }
 
   @Post()
@@ -43,31 +43,31 @@ class AnimePostHandler extends ApiHandler {
     @Body() body: AnimePostDto,
     @GetSession() session
   ) {
-    if (!(await AnimeModel.isExist(id)))
+    if (!(await animeModel.isExist(id)))
       throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    const post = await PostModel.create({
+    const post = await postModel.create({
       userId: session.user.id,
       animeId: id,
       content: body.content,
       parentId: body.parentId,
     });
 
-    return { post: PostsMapper.one(post) };
+    return { post: postsMapper.one(post) };
   }
 
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
   async deletePost(@Query('id', ParseNumberPipe) id: number, @GetSession() session) {
-    const post = await PostModel.findByAnimeIdAndUserId(id, session.user.id);
+    const post = await postModel.findByAnimeIdAndUserId(id, session.user.id);
 
     if (!post) throw new NotFoundException('Post not found');
 
     if (post.user_id !== session.user.id)
       throw new BadRequestException('You are not allowed to delete this post');
 
-    await Promise.all([PostModel.deleteParent(post.id), PostModel.delete(post.id)]);
+    await Promise.all([postModel.deleteParent(post.id), postModel.delete(post.id)]);
   }
 }
 

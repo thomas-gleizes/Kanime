@@ -1,7 +1,7 @@
 import { Body, Patch, NotFoundException, BadRequestException } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
-import { UserModel } from 'models';
+import { userModel } from 'models';
 import Security from 'services/security.service';
 import { DAY } from 'resources/constants';
 import { ForgotPasswordDto } from 'dto';
@@ -9,7 +9,7 @@ import { ForgotPasswordDto } from 'dto';
 class ForgotPasswordHandler {
   @Patch()
   async post(@Body() body: ForgotPasswordDto) {
-    const user = await UserModel.findByEmail(body.email);
+    const user = await userModel.findByEmail(body.email);
 
     if (!user) throw new NotFoundException('email user not found');
 
@@ -22,7 +22,7 @@ class ForgotPasswordHandler {
       );
 
     const hash = Security.sha512(user.password + user.username);
-    await UserModel.updateResetPasswordToken(user.id, hash);
+    await userModel.updateResetPasswordToken(user.id, hash);
 
     //TODO SEND email with a new services for email
 

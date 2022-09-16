@@ -1,10 +1,11 @@
 import { PrismaEntry } from 'prisma/app';
 import Mapper from 'class/Mapper';
-import { AnimesMapper, UsersMapper } from 'mappers';
+import { animesMapper, usersMapper } from 'mappers';
 
 class EntriesMapper extends Mapper<PrismaEntry, Entry> {
   one(resource: PrismaEntry): Entry {
     const entry: Entry = {
+      id: resource.id,
       animeId: resource.anime_id,
       userId: resource.user_id,
       status: resource.status,
@@ -18,8 +19,8 @@ class EntriesMapper extends Mapper<PrismaEntry, Entry> {
       updateAt: resource.updated_at.toISOString(),
     };
 
-    if (resource.anime) entry.anime = AnimesMapper.one(resource.anime);
-    if (resource.user) entry.user = UsersMapper.one(resource.user);
+    if (resource.anime) entry.anime = animesMapper.one(resource.anime);
+    if (resource.user) entry.user = usersMapper.one(resource.user);
 
     return entry;
   }

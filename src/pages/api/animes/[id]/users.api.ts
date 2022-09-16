@@ -9,8 +9,8 @@ import {
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
-import { AnimeModel, UserModel } from 'models';
-import { UsersMapper } from 'mappers';
+import { animeModel, userModel } from 'models';
+import { usersMapper } from 'mappers';
 import { QueryParamsDto } from 'dto';
 
 class AnimesUserHandler extends ApiHandler {
@@ -19,12 +19,12 @@ class AnimesUserHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) params: QueryParamsDto
   ) {
-    const anime = await AnimeModel.findById(id);
+    const anime = await animeModel.findById(id);
     if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    const users = await UserModel.findByAnime(id, params);
+    const users = await userModel.findByAnime(id, params);
 
-    return { users: UsersMapper.many(users) };
+    return { users: usersMapper.many(users) };
   }
 }
 

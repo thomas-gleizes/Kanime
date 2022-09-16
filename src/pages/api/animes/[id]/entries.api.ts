@@ -2,8 +2,8 @@ import { Get, Query, ParseNumberPipe, NotFoundException } from 'next-api-decorat
 import { Visibility } from '@prisma/client';
 
 import { apiHandler } from 'services/handler.service';
-import { AnimeModel, EntryModel, UserFollowModel } from 'models';
-import { EntriesMapper } from 'mappers';
+import { animeModel, entryModel, userFollowModel } from 'models';
+import { entriesMapper } from 'mappers';
 import { errorMessage } from 'resources/constants';
 import { PrismaEntryStatus } from 'resources/prisma';
 import ApiHandler from 'class/ApiHandler';
@@ -17,7 +17,7 @@ class AnimesEntriesHandler extends ApiHandler {
     @Query() query: QueryEntryListDto,
     @GetSession() session
   ) {
-    const isExist = await AnimeModel.isExist(id);
+    const isExist = await animeModel.isExist(id);
 
     if (!isExist) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
@@ -25,12 +25,9 @@ class AnimesEntriesHandler extends ApiHandler {
     if (session?.user)
       if (session.user.id === id) visibility.push('limited', 'private');
       else {
-        const [one, two] = await Promise.all([
-          UserFollowModel.isFollow(session.user.id, id),
-          UserFollowModel.isFollow(id, session.user.id),
-        ]);
+        const isFriends = await userFollowModel.isFriends(session.user.id, id);
 
-        if (one && two) visibility.push('limited');
+        if (isFriends) visibility.push('limited');
       }
 
     let orderBy;
@@ -39,7 +36,7 @@ class AnimesEntriesHandler extends ApiHandler {
       for (const [key, value] of Object.entries(query.orderBy))
         orderBy = { field: key, order: value };
 
-    const entries = await EntryModel.getByAnimes(
+    const entries = await entryModel.getByAnimes(
       id,
       visibility,
       query.status as PrismaEntryStatus,
@@ -47,7 +44,7 @@ class AnimesEntriesHandler extends ApiHandler {
       { ...query }
     );
 
-    return { entries: EntriesMapper.many(entries) };
+    return { entries: entriesMapper.many(entries) };
   }
 }
 

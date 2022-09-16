@@ -4,8 +4,8 @@ import { Visibility } from '@prisma/client';
 import { PrismaEntryStatus } from 'prisma/app';
 import ApiHandler from 'class/ApiHandler';
 import { apiHandler } from 'services/handler.service';
-import { EntryModel, UserFollowModel } from 'models';
-import { EntriesMapper } from 'mappers';
+import { entryModel, userFollowModel } from 'models';
+import { entriesMapper } from 'mappers';
 import { GetSession } from 'decorators';
 import { QueryEntryListDto } from 'dto';
 
@@ -20,12 +20,9 @@ class UserEntriesHandler extends ApiHandler {
     if (session?.user)
       if (session.user.id === id) visibility.push('limited', 'private');
       else {
-        const [one, two] = await Promise.all([
-          UserFollowModel.isFollow(session.user.id, id),
-          UserFollowModel.isFollow(id, session.user.id),
-        ]);
+        const isFriends = await userFollowModel.isFriends(session.user.id, id);
 
-        if (one && two) visibility.push('limited');
+        if (isFriends) visibility.push('limited');
       }
 
     let orderBy = undefined;
@@ -34,7 +31,7 @@ class UserEntriesHandler extends ApiHandler {
       for (const [key, value] of Object.entries(query.orderBy))
         orderBy = { field: key, order: value };
 
-    const entries = await EntryModel.getByUser(
+    const entries = await entryModel.getByUser(
       id,
       visibility,
       query.status as PrismaEntryStatus,
@@ -42,7 +39,7 @@ class UserEntriesHandler extends ApiHandler {
       { ...query }
     );
 
-    return { entries: EntriesMapper.many(entries) };
+    return { entries: entriesMapper.many(entries) };
   }
 }
 

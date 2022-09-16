@@ -1,6 +1,6 @@
 import { GetServerSidePropsContext, NextApiRequest } from 'next';
 
-import { LogModel } from 'models';
+import { logModel } from 'models';
 import { loggerReplaceKey } from 'resources/constants';
 import ip from 'utils/ip';
 
@@ -22,14 +22,16 @@ export function apiLogger(req: NextApiRequest): any {
 
   const [path, params] = req.url.split('?');
 
-  return LogModel.create({
-    path: path,
-    method: req.method as Method,
-    ip: ip(req),
-    body: replaceKey(req.body),
-    params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
-    userId: userId,
-  }).catch((err) => console.log('ERROR LOGGER : ', err));
+  return logModel
+    .create({
+      path: path,
+      method: req.method as Method,
+      ip: ip(req),
+      body: replaceKey(req.body),
+      params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
+      userId: userId,
+    })
+    .catch((err) => console.log('ERROR LOGGER : ', err));
 }
 
 export async function ssrLogger(context: GetServerSidePropsContext) {
@@ -37,7 +39,7 @@ export async function ssrLogger(context: GetServerSidePropsContext) {
 
   const [path, params] = context.resolvedUrl.split('?');
 
-  await LogModel.create({
+  await logModel.create({
     path: path,
     method: context.req.method as Method,
     ip: ip(context.req),

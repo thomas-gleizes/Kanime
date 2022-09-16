@@ -34,7 +34,7 @@ abstract class Model<Delegate> {
   // }
 
   protected getKeyParams(params?: modelParams): { take?: number; skip?: number } {
-    return { skip: +params?.skip || 0, take: +params?.limit || 50 };
+    return { skip: +params?.skip || 0, take: +params?.limit || 20 };
   }
 
   protected parseOptions<IncludeOptions = any>(

@@ -4,8 +4,8 @@ import { Spinner } from '@chakra-ui/react';
 
 import { Page } from 'next/app';
 import { AnimesApi } from 'api';
-import { AnimesMapper } from 'mappers';
-import { AnimeModel } from 'models';
+import { animesMapper } from 'mappers';
+import { animeModel } from 'models';
 import { ssrHandler } from 'services/handler.service';
 import { useDelayBoolean, useScrollPercent } from 'hooks';
 import Title from 'components/layouts/Title';
@@ -19,10 +19,10 @@ export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: str
   async ({ query }) => {
     const { offset, limit } = query;
 
-    const animes = await AnimeModel.all({ limit: +limit || 40, skip: +offset || 0 });
+    const animes = await animeModel.all({ limit: +limit || 40, skip: +offset || 0 });
 
     return {
-      props: { animes: AnimesMapper.many(animes) },
+      props: { animes: animesMapper.many(animes) },
     };
   }
 );

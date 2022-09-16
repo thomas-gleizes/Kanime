@@ -4,8 +4,8 @@ import { Body, Get, Patch } from 'next-api-decorators';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
-import { UsersMapper } from 'mappers';
-import { UserModel } from 'models';
+import { usersMapper } from 'mappers';
+import { userModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
 import { GetSession, AuthGuard } from 'decorators';
 import { UpdateUserDto } from 'dto';
@@ -14,9 +14,9 @@ class UsersHandler extends ApiHandler {
   @Get()
   @AuthGuard()
   async get(@GetSession() session) {
-    const user = await UserModel.findById(session.user.id).then((user) =>
-      UsersMapper.one(user)
-    );
+    const user = await userModel
+      .findById(session.user.id)
+      .then((user) => usersMapper.one(user));
 
     return { user };
   }
@@ -60,7 +60,7 @@ class UsersHandler extends ApiHandler {
       body.backgroundPath = backgroundPath;
     }
 
-    const updatedUser = UsersMapper.one(await UserModel.update(session.user.id, body));
+    const updatedUser = usersMapper.one(await userModel.update(session.user.id, body));
 
     const token = Security.sign(updatedUser);
 

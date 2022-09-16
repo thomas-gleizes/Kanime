@@ -1,6 +1,6 @@
 import { PrismaLog } from 'prisma/app';
 import Mapper from 'class/Mapper';
-import { UsersMapper } from 'mappers';
+import { usersMapper } from 'mappers';
 import JsonParser from 'utils/jsonParser';
 
 class LogsMapper extends Mapper<PrismaLog, Log> {
@@ -15,7 +15,7 @@ class LogsMapper extends Mapper<PrismaLog, Log> {
       createAt: resource.created_at.toISOString(),
     };
 
-    if (resource.user) log.user = UsersMapper.one(resource.user);
+    if (resource.user) log.user = usersMapper.one(resource.user);
 
     return log;
   }

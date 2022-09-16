@@ -2,15 +2,15 @@ import { Get, ParseNumberPipe, Query } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { CategoriesMapper } from 'mappers';
-import { CategoryModel } from 'models';
+import { categoriesMapper } from 'mappers';
+import { categoryModel } from 'models';
 
 class AnimesCategoriesHandler extends ApiHandler {
   @Get()
   async showCategories(@Query('id', ParseNumberPipe) id: number) {
-    const categories = await CategoryModel.findByAnimeId(id);
+    const categories = await categoryModel.findByAnimeId(id);
 
-    return { categories: CategoriesMapper.many(categories) };
+    return { categories: categoriesMapper.many(categories) };
   }
 }
 
