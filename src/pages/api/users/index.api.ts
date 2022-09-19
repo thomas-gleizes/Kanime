@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { Body, Get, Patch } from 'next-api-decorators';
+import { Body, Get, Patch, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
@@ -23,7 +23,7 @@ class UsersHandler extends ApiHandler {
 
   @Patch()
   @AuthGuard()
-  async update(@Body() body: UpdateUserDto, @GetSession() session) {
+  async update(@Body(ValidationPipe) body: UpdateUserDto, @GetSession() session) {
     const path = `/media/users/${session.user.id.toString().split('').join('/')}`;
     const fullPath = `${publicPath}${path}`;
 

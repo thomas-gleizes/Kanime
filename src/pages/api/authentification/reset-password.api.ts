@@ -1,4 +1,4 @@
-import { Patch, Body, NotFoundException } from 'next-api-decorators';
+import { Patch, Body, NotFoundException, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import { userModel } from 'models';
@@ -8,7 +8,7 @@ import { ResetPasswordDto } from 'dto';
 
 class ResetPasswordHandler extends ApiHandler {
   @Patch()
-  async resetPassword(@Body() body: ResetPasswordDto) {
+  async resetPassword(@Body(ValidationPipe) body: ResetPasswordDto) {
     const user = await userModel.checkResetPasswordToken(body.token);
 
     if (!user) throw new NotFoundException('token not found');

@@ -7,7 +7,7 @@ class AnimesMapper extends Mapper<PrismaAnime, Anime> {
   public one(resource: PrismaAnime): Anime {
     const anime: Anime = {
       id: resource.id,
-      kitsu_id: resource.kitsu_id,
+      kitsuId: resource.kitsu_id,
       slug: resource.slug,
       canonicalTitle: resource.canonical_title,
       titles: jsonParser<Titles>(resource.titles),

@@ -49,7 +49,7 @@ interface UserMediaHandling {
 
 declare type Anime = {
   id: number;
-  kitsu_id: number;
+  kitsuId: number;
   slug: string;
   canonicalTitle: string;
   titles: Titles;

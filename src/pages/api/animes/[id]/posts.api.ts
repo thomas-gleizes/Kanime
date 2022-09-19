@@ -40,7 +40,7 @@ class AnimePostHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Query('id', ParseNumberPipe) id: number,
-    @Body() body: AnimePostDto,
+    @Body(ValidationPipe) body: AnimePostDto,
     @GetSession() session
   ) {
     if (!(await animeModel.isExist(id)))

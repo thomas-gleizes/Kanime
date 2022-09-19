@@ -7,6 +7,7 @@ import {
 import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
+import { CreateEntryDto, UpdateEntryDto } from 'dto/entry.dto';
 
 class EntryModel extends Model<PrismaEntryDelegate> {
   constructor(connexion: ConnexionType) {
@@ -24,10 +25,10 @@ class EntryModel extends Model<PrismaEntryDelegate> {
     });
 
   public findWithAnime = (id: number) =>
-    this.model.findUnique({
-      where: { id },
-      include: { anime: true },
-    });
+    this.model.findUnique({ where: { id }, include: { anime: true } });
+
+  public findWithUser = (id: number) =>
+    this.model.findUnique({ where: { id }, include: { user: true } });
 
   public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.findUnique({
@@ -39,11 +40,11 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
-  public create = (data) =>
+  public create = (userId: number, data: CreateEntryDto) =>
     this.model.create({
       data: {
         anime_id: data.animeId,
-        user_id: data.userId,
+        user_id: userId,
         status: data.status,
         rating: data.rating,
         progress: data.progress,
@@ -54,40 +55,10 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       },
     });
 
-  public update = (id: number, data) =>
+  public update = (id: number, data: UpdateEntryDto) =>
     this.model.update({
       where: { id },
       data: {
-        status: data.status,
-        rating: data.rating,
-        progress: data.progress,
-        note: data.note,
-        started_at: new Date(data.startedAt),
-        finish_at: new Date(data.finishAt),
-        visibility: data.visibility,
-      },
-    });
-
-  public upsert = ({ userId, animeId, ...data }: upsertEntries): Promise<PrismaEntry> =>
-    this.model.upsert({
-      where: {
-        anime_id_user_id: {
-          user_id: userId,
-          anime_id: animeId,
-        },
-      },
-      update: {
-        status: data.status,
-        rating: data.rating,
-        progress: data.progress,
-        note: data.note,
-        started_at: new Date(data.startedAt),
-        finish_at: new Date(data.finishAt),
-        visibility: data.visibility,
-      },
-      create: {
-        anime_id: animeId,
-        user_id: userId,
         status: data.status,
         rating: data.rating,
         progress: data.progress,

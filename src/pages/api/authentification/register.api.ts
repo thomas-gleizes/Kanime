@@ -1,4 +1,4 @@
-import { Post, Body, HttpCode } from 'next-api-decorators';
+import { Post, Body, HttpCode, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
@@ -13,7 +13,7 @@ import { RegisterDto } from 'dto';
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async register(@Body() body: RegisterDto, @GetSession() session) {
+  async register(@Body(ValidationPipe) body: RegisterDto, @GetSession() session) {
     if (session) await session.destroy();
 
     const users = await userModel.findByEmailOrUsername(body.email, body.username);

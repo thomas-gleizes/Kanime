@@ -9,7 +9,7 @@ datasource db {
 
 model Anime {
   id               Int          @id @default(autoincrement())
-  kitsu_id         Int?         @unique
+  kitsuId         Int?         @unique
   slug             String       @unique
   canonical_title  String
   titles           String?      @db.LongText
@@ -209,7 +209,7 @@ model EventLog {
 model AnimeImport {
   id               Int       @id @default(autoincrement())
   anime_id         Int?      @unique
-  kitsu_id         Int
+  kitsuId         Int
   slug             String
   canonical_title  String
   titles           String?   @db.LongText

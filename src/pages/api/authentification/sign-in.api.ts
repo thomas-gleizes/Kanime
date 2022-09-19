@@ -1,4 +1,4 @@
-import { Body, Post } from 'next-api-decorators';
+import { Body, Post, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
@@ -13,7 +13,7 @@ import { SignInDto } from 'dto';
 
 class SignInInHandler extends ApiHandler {
   @Post('/')
-  async get(@Body() body: SignInDto, @GetSession() session) {
+  async get(@Body(ValidationPipe) body: SignInDto, @GetSession() session) {
     if (session) await session.destroy();
 
     const user = await userModel.findByEmail(body.email);

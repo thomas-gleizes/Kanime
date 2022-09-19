@@ -104,18 +104,6 @@ declare type TailwindTheme = 'light' | 'dark';
 
 declare type CustomColors = 'primary' | 'secondary' | 'tertiary';
 
-declare type upsertEntries = {
-  userId: number;
-  animeId: number;
-  status: EntryStatus;
-  rating: number | null;
-  progress: number | null;
-  note: string | null;
-  visibility: Visibility;
-  startedAt?: string | Date | null;
-  finishAt?: string | Date | null;
-};
-
 declare type DialogOptions = {
   timeout?: number;
 };

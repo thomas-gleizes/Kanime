@@ -1,4 +1,10 @@
-import { Body, Patch, NotFoundException, BadRequestException } from 'next-api-decorators';
+import {
+  Body,
+  Patch,
+  NotFoundException,
+  BadRequestException,
+  ValidationPipe,
+} from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import { userModel } from 'models';
@@ -8,7 +14,7 @@ import { ForgotPasswordDto } from 'dto';
 
 class ForgotPasswordHandler {
   @Patch()
-  async post(@Body() body: ForgotPasswordDto) {
+  async post(@Body(ValidationPipe) body: ForgotPasswordDto) {
     const user = await userModel.findByEmail(body.email);
 
     if (!user) throw new NotFoundException('email user not found');

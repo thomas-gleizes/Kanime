@@ -6,18 +6,19 @@ import {
   Query,
   HttpCode,
   ParseNumberPipe,
+  ValidationPipe,
   NotFoundException,
 } from 'next-api-decorators';
-import { GetSession } from 'decorators/getSession';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { EntryStatus, Visibility } from '@prisma/client';
+
+import { apiHandler } from 'services/handler.service';
+import ApiHandler from 'class/ApiHandler';
 import { entryModel, userFollowModel } from 'models';
 import { entriesMapper } from 'mappers';
-import { PrismaVisibility } from 'resources/prisma';
-import { AuthGuard } from 'decorators/authGuard';
-import { EntryStatus } from '@prisma/client';
 import HttpStatus from 'resources/HttpStatus';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import ApiHandler from 'class/ApiHandler';
-import { apiHandler } from 'services/handler.service';
+import { GetSession, AuthGuard } from 'decorators';
+import { UpdateEntryDto } from 'dto';
 
 class EntryHandler extends ApiHandler {
   @Get()
@@ -25,10 +26,10 @@ class EntryHandler extends ApiHandler {
     const entry = await entryModel.find(id).then((entry) => entriesMapper.one(entry));
 
     if (!entry) throw new NotFoundException('entry not found');
-    if (entry.visibility !== PrismaVisibility.public) {
+    if (entry.visibility !== Visibility.public) {
       if (!session) throw new NotFoundException('entry not found');
 
-      if (entry.visibility === PrismaVisibility.limited) {
+      if (entry.visibility === Visibility.limited) {
         const isFriends = await userFollowModel.isFriends(session.user.id, id);
 
         if (!isFriends) throw new NotFoundException('Entry not found');
@@ -43,7 +44,7 @@ class EntryHandler extends ApiHandler {
   @AuthGuard()
   async update(
     @Query('id', ParseNumberPipe) id: number,
-    @Body() body: any,
+    @Body(ValidationPipe) body: UpdateEntryDto,
     @GetSession() session
   ) {
     const entry = await entryModel
@@ -54,13 +55,16 @@ class EntryHandler extends ApiHandler {
       throw new NotFoundException('entry not found');
 
     if (body.status === EntryStatus.Completed && entry.anime.episode.count)
-      body.progress = body.episode_count;
+      body.progress = entry.anime.episode.count;
     else if (body.progress === entry.anime.episode.count)
       body.status = EntryStatus.Completed;
 
     if (!body.startedAt)
       if (entry.startedAt) body.startedAt = entry.startedAt;
-      else if ([EntryStatus.Completed, EntryStatus.Watching].includes(body.status))
+      else if (
+        body.status === EntryStatus.Completed ||
+        body.status === EntryStatus.Watching
+      )
         body.startedAt = new Date();
 
     if (!body.finishAt)
