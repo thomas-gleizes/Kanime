@@ -75,7 +75,7 @@ const Header: Component = () => {
   if (header.hiddenHeader) return null;
 
   return (
-    <header ref={headerRef} className="h-header">
+    <header ref={headerRef} className="h-header bg-blue-200">
       <div
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'
@@ -85,20 +85,20 @@ const Header: Component = () => {
           {/*large*/}
           <div
             className={classnames(
-              'hidden md:block w-full h-header py-1 px-5 transform duration-300 ease-in-out',
+              'hidden md:block w-full h-header px-5 transform duration-300 ease-in-out',
               headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
             )}
           >
-            <div className="flex justify-between items-center max-w-[1500px] w-full mx-auto">
-              <div className="flex space-x-8">
+            <div className="flex items-center justify-between h-[95%] my-auto max-w-[1500px] w-full mx-auto">
+              <div className="flex items-center space-x-8">
                 <div className="w-fit">
                   <Link href={routes.home}>
-                    <a className="cursor-pointer font-bold text-lg text-white">
+                    <a className="cursor-pointer font-bold text-xl text-white">
                       {process.env.NEXT_PUBLIC_APP_NAME}
                     </a>
                   </Link>
                 </div>
-                <nav className="flex justify-start items-center space-x-4 w-fit">
+                <nav className="flex justify-start space-x-4 w-fit">
                   <div>
                     <DropDownExplore />
                   </div>
@@ -138,11 +138,9 @@ const Header: Component = () => {
                   ) : (
                     <div className="flex items-center justify-center h-full ml-4">
                       <div className="cursor-pointer" ref={avatarRef}>
-                        <Image
-                          className="rounded-full"
+                        <img
+                          className="rounded-full h-[28px]"
                           src={user.avatarPath}
-                          width={35}
-                          height={35}
                           alt="avatar"
                         />
                       </div>
