@@ -8,7 +8,7 @@ import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { CommonApi } from 'api';
+import { commonApi } from 'api';
 
 declare type values = {
   city: string;
@@ -19,7 +19,7 @@ declare type values = {
   gender: Gender;
 };
 
-const fetchCountries = () => CommonApi.showCountries().then((data) => data.countries);
+const fetchCountries = () => commonApi.showCountries().then((data) => data.countries);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();

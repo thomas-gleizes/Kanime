@@ -7,10 +7,10 @@ import { QueryParamsDto } from 'dto';
 
 class CountriesHandler extends ApiHandler {
   @Get()
-  async show(@Query(ValidationPipe) params: QueryParamsDto) {
+  async show(@Query(ValidationPipe) params: QueryParamsDto): Promise<CountriesResponse> {
     const countries = await countryModel.all();
 
-    return { countries };
+    return { success: true, countries };
   }
 }
 

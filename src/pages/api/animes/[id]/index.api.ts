@@ -8,12 +8,12 @@ import { animeModel } from 'models';
 
 class AnimeHandler extends ApiHandler {
   @Get()
-  async show(@Query('id', ParseNumberPipe) id: number) {
+  async show(@Query('id', ParseNumberPipe) id: number): Promise<ShowAnimeResponse> {
     const anime = await animeModel.findById(id);
 
     if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    return { anime: animesMapper.one(anime) };
+    return { success: true, anime: animesMapper.one(anime) };
   }
 }
 

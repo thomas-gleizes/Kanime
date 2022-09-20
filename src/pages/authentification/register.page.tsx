@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 
 import type { Page } from 'next/app';
-import { AuthenticationApi } from 'api';
+import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { registerSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
@@ -26,7 +26,7 @@ const RegisterPage: Page = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { user, token } = await AuthenticationApi.register(values);
+      const { user, token } = await authenticationApi.register(values);
 
       signIn(user, token);
 

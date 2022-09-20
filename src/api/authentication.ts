@@ -17,7 +17,7 @@ class AuthenticationApi extends Api {
   }
 
   public refresh() {
-    return this.get<any>('/refresh');
+    return this.get<RefreshUserResponse>('/refresh');
   }
 
   public signOut() {

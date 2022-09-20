@@ -14,7 +14,7 @@ import { ForgotPasswordDto } from 'dto';
 
 class ForgotPasswordHandler {
   @Patch()
-  async post(@Body(ValidationPipe) body: ForgotPasswordDto) {
+  async post(@Body(ValidationPipe) body: ForgotPasswordDto): Promise<ApiResponse> {
     const user = await userModel.findByEmail(body.email);
 
     if (!user) throw new NotFoundException('email user not found');

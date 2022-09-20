@@ -8,7 +8,9 @@ import { ResetPasswordDto } from 'dto';
 
 class ResetPasswordHandler extends ApiHandler {
   @Patch()
-  async resetPassword(@Body(ValidationPipe) body: ResetPasswordDto) {
+  async resetPassword(
+    @Body(ValidationPipe) body: ResetPasswordDto
+  ): Promise<ApiResponse> {
     const user = await userModel.checkResetPasswordToken(body.token);
 
     if (!user) throw new NotFoundException('token not found');

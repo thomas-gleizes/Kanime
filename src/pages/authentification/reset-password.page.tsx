@@ -5,7 +5,7 @@ import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
 import { Page } from 'next/app';
-import { AuthenticationApi } from 'api';
+import { authenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
 import { resetPasswordSchema } from 'resources/validations';
 import { userModel } from 'models';
@@ -51,7 +51,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
 
   const handleSubmit = async (values: resetPasswordPayload) => {
     try {
-      await AuthenticationApi.resetPassword(values);
+      await authenticationApi.resetPassword(values);
 
       toast.success('Votre mot de passe a bien été changé');
       await router.push(routes.authentification.signIn);

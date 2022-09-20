@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { Body, Get, Patch, ValidationPipe } from 'next-api-decorators';
+import { Body, Get, Patch, Query, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
@@ -8,22 +8,24 @@ import { usersMapper } from 'mappers';
 import { userModel } from 'models';
 import { defaultUsersMedia, publicPath } from 'resources/constants';
 import { GetSession, AuthGuard } from 'decorators';
-import { UpdateUserDto } from 'dto';
+import { QueryParamsDto, UpdateUserDto } from 'dto';
 
 class UsersHandler extends ApiHandler {
   @Get()
-  @AuthGuard()
-  async get(@GetSession() session) {
-    const user = await userModel
-      .findById(session.user.id)
-      .then((user) => usersMapper.one(user));
+  async get(
+    @Query(ValidationPipe) params: QueryParamsDto
+  ): Promise<ShowUsersListResponse> {
+    const users = await userModel.findAll();
 
-    return { user };
+    return { success: true, users: usersMapper.many(users) };
   }
 
   @Patch()
   @AuthGuard()
-  async update(@Body(ValidationPipe) body: UpdateUserDto, @GetSession() session) {
+  async update(
+    @Body(ValidationPipe) body: UpdateUserDto,
+    @GetSession() session
+  ): Promise<UpdateUserResponse> {
     const path = `/media/users/${session.user.id.toString().split('').join('/')}`;
     const fullPath = `${publicPath}${path}`;
 
@@ -69,7 +71,7 @@ class UsersHandler extends ApiHandler {
 
     await session.save();
 
-    return { user: updatedUser, token: token };
+    return { success: true, user: updatedUser, token: token };
   }
 }
 

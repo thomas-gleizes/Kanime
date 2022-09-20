@@ -9,7 +9,10 @@ import { GetSession } from 'decorators';
 
 class EntryUserHandler extends ApiHandler {
   @Get()
-  async showEntryUser(@Param('id', ParseNumberPipe) id: number, @GetSession() session) {
+  async showEntryUser(
+    @Param('id', ParseNumberPipe) id: number,
+    @GetSession() session
+  ): Promise<ShowEntryUserResponse> {
     const entry = await entryModel
       .findWithUser(id)
       .then((entry) => entriesMapper.one(entry));
@@ -26,7 +29,7 @@ class EntryUserHandler extends ApiHandler {
         throw new NotFoundException('Entry not found');
     }
 
-    return { user: entry.user };
+    return { success: true, user: entry.user };
   }
 }
 

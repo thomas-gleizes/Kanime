@@ -6,3 +6,7 @@ interface ErrorPage {
   code: responseCode;
   message: string;
 }
+
+declare interface ApiResponse {
+  success: true;
+}

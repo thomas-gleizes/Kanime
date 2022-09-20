@@ -6,8 +6,8 @@ import { GetSession } from 'decorators';
 
 class SignOutHandler extends ApiHandler {
   @Get()
-  get(@GetSession() session) {
-    if (session) session.destroy();
+  async get(@GetSession() session): Promise<ApiResponse> {
+    if (session) await session.destroy();
 
     return { success: true };
   }

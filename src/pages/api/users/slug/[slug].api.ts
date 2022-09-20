@@ -8,12 +8,12 @@ import { usersMapper } from 'mappers';
 
 class UserSlugHandler extends ApiHandler {
   @Get()
-  async get(@Query('slug') slug: string) {
+  async get(@Query('slug') slug: string): Promise<ShowUserResponse> {
     const user = await userModel.findBySlug(slug);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-    return { user: usersMapper.one(user) };
+    return { success: true, user: usersMapper.one(user) };
   }
 }
 

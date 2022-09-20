@@ -22,12 +22,15 @@ import { UpdateEntryDto } from 'dto';
 
 class EntryHandler extends ApiHandler {
   @Get()
-  async show(@Query('id', ParseNumberPipe) id: number, @GetSession() session) {
+  async show(
+    @Query('id', ParseNumberPipe) id: number,
+    @GetSession() session
+  ): Promise<ShowEntryResponse> {
     const entry = await entryModel.find(id).then((entry) => entriesMapper.one(entry));
 
-    if (!entry) throw new NotFoundException('entry not found');
+    if (!entry) throw new NotFoundException('Entry not found');
     if (entry.visibility !== Visibility.public) {
-      if (!session) throw new NotFoundException('entry not found');
+      if (!session) throw new NotFoundException('Entry not found');
 
       if (entry.visibility === Visibility.limited) {
         const isFriends = await userFollowModel.isFriends(session.user.id, id);
@@ -37,7 +40,7 @@ class EntryHandler extends ApiHandler {
         throw new NotFoundException('Entry not found');
     }
 
-    return { entry };
+    return { success: true, entry };
   }
 
   @Patch()
@@ -46,7 +49,7 @@ class EntryHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Body(ValidationPipe) body: UpdateEntryDto,
     @GetSession() session
-  ) {
+  ): Promise<UpdateEntryResponse> {
     const entry = await entryModel
       .findWithAnime(id)
       .then((entry) => entriesMapper.one(entry));
@@ -73,15 +76,20 @@ class EntryHandler extends ApiHandler {
 
     const newEntry = await entryModel.update(id, body);
 
-    return { entry: entriesMapper.one(newEntry) };
+    return { success: true, entry: entriesMapper.one(newEntry) };
   }
 
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Query('id', ParseNumberPipe) id: number, @GetSession() session) {
+  async remove(
+    @Query('id', ParseNumberPipe) id: number,
+    @GetSession() session
+  ): Promise<ApiResponse> {
     try {
       await entryModel.delete(id);
+
+      return { success: true };
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError && err.code == 'P2025')
         throw new NotFoundException('entry not found');

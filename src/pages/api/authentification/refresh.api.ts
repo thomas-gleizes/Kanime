@@ -9,7 +9,7 @@ import { GetSession, AuthGuard } from 'decorators';
 class RefreshHandler extends ApiHandler {
   @Get()
   @AuthGuard()
-  async refresh(@GetSession() session) {
+  async refresh(@GetSession() session): Promise<RefreshUserResponse> {
     const user = await userModel.findById(session.user.id);
 
     return { success: true, user: usersMapper.one(user) };

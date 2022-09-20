@@ -8,12 +8,8 @@ class AnimesApi extends Api {
     super(apiService, 'animes');
   }
 
-  public showAll(params?: modelParams) {
+  public show(params?: modelParams) {
     return this.get<AnimesListResponse>('/', { params });
-  }
-
-  public search(query, params?: modelParams) {
-    return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } });
   }
 }
 

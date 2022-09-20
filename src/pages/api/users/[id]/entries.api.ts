@@ -15,7 +15,7 @@ class UserEntriesHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) query: QueryEntryListDto,
     @GetSession() session
-  ) {
+  ): Promise<ShowUserEntriesResponse> {
     const visibility: Visibility[] = ['public'];
     if (session?.user)
       if (session.user.id === id) visibility.push('limited', 'private');
@@ -39,7 +39,7 @@ class UserEntriesHandler extends ApiHandler {
       { ...query }
     );
 
-    return { entries: entriesMapper.many(entries) };
+    return { success: true, entries: entriesMapper.many(entries) };
   }
 }
 

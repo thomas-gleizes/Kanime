@@ -8,10 +8,12 @@ import { QueryParamsDto } from 'dto';
 
 class AnimesHandler extends ApiHandler {
   @Get()
-  async showAll(@Query(ValidationPipe) params: QueryParamsDto) {
+  async showAll(
+    @Query(ValidationPipe) params: QueryParamsDto
+  ): Promise<AnimesListResponse> {
     const animes = await animeModel.all(params);
 
-    return { animes: animesMapper.many(animes) };
+    return { success: true, animes: animesMapper.many(animes) };
   }
 }
 

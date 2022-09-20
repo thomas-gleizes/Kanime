@@ -11,10 +11,10 @@ class AnimesSearchHandler extends ApiHandler {
   async search(
     @Query('query') query: string,
     @Query(ValidationPipe) params: QueryParamsDto
-  ) {
+  ): Promise<AnimesSearchResponse> {
     const animes = await animeModel.search(query, params);
 
-    return { animes: animesMapper.many(animes) };
+    return { success: true, animes: animesMapper.many(animes) };
   }
 }
 

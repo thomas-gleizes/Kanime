@@ -18,14 +18,14 @@ class UserAnimesHandler extends ApiHandler {
   async get(
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) query: QueryParamsDto
-  ) {
+  ): Promise<ShowUserAnimesResponse> {
     const user = await userModel.findById(id);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
     const animes = await animeModel.findByUser(id);
 
-    return { animes: animesMapper.many(animes) };
+    return { success: true, animes: animesMapper.many(animes) };
   }
 }
 

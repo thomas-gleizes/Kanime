@@ -9,12 +9,39 @@ abstract class Api {
     this._path = path;
   }
 
-  protected get<R, P = undefined>(path: string, params?: any): Promise<R> {
+  protected get<R extends ApiResponse = ApiResponse, P = undefined>(
+    path: string,
+    params?: any
+  ): Promise<R> {
     return this._instance.get<R, R, P>(`${this._path}${path}`, params);
   }
 
-  protected post<R, D = any>(path: string, data: D): Promise<R> {
+  protected post<R extends ApiResponse = ApiResponse, D = any>(
+    path: string,
+    data: D
+  ): Promise<R> {
     return this._instance.post<R, R, D>(`${this._path}${path}`, data);
+  }
+
+  protected patch<R extends ApiResponse = ApiResponse, D = any>(
+    path: string,
+    data: D
+  ): Promise<R> {
+    return this._instance.patch<R, R, D>(`${this._path}${path}`, data);
+  }
+
+  protected put<R extends ApiResponse = ApiResponse, D = any>(
+    path: string,
+    data: D
+  ): Promise<R> {
+    return this._instance.put<R, R, D>(`${this._path}${path}`, data);
+  }
+
+  protected delete<R extends ApiResponse = ApiResponse, P = undefined>(
+    path: string,
+    params: P
+  ): Promise<R> {
+    return this._instance.delete<R, R, P>(`${this._path}${path}`, params);
   }
 }
 

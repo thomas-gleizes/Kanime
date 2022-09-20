@@ -25,6 +25,9 @@ class UserModel extends Model<PrismaUserDelegate> {
     super(connexion, 'user');
   }
 
+  public findAll = (params?: modelParams) =>
+    this.model.findMany({ ...this.getKeyParams(params) });
+
   public findById = (id: number): Promise<PrismaUser> =>
     this.model.findUnique({ where: { id: +id } });
 

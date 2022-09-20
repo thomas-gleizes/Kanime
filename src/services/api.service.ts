@@ -7,8 +7,12 @@ const ApiService = axios.create({
   responseType: 'json',
 });
 
+declare module 'axios' {
+  interface AxiosResponse extends ApiResponse {}
+}
+
 ApiService.interceptors.response.use(
-  (response: any): any => response.data,
+  (response: AxiosResponse): ApiResponse => response.data,
   (error: AxiosError) => {
     if (error.isAxiosError) {
       if (error.response.status === 401) {

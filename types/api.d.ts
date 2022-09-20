@@ -1,53 +1,131 @@
 /** authentification */
 
-interface SignInResponse extends DefaultResponseData {
+interface SignInResponse extends ApiResponse {
   user: User;
   token: string;
 }
 
-interface RegisterResponse {
+interface RegisterResponse extends ApiResponse {
   user: User;
   token: string;
+}
+
+interface RefreshUserResponse extends ApiResponse {
+  user: User;
 }
 
 /** users */
 
-interface UsersEntriesResponse {
+interface ShowUsersListResponse extends ApiResponse {
+  users: Users;
+}
+
+interface SearchUserResponse extends ApiResponse {
+  users: Users;
+}
+
+interface ShowUserResponse extends ApiResponse {
+  user: User;
+}
+
+interface UpdateUserResponse extends ApiResponse {
+  user: User;
+  token: string;
+}
+
+interface ShowUserEntriesResponse extends ApiResponse {
   entries: Entries;
+}
+
+interface ShowUserAnimesResponse extends ApiResponse {
+  animes: Animes;
+}
+
+interface ShowUserFollowsResponse extends ApiResponse {
+  follows: Users;
+}
+
+interface ShowUserFollowersResponse extends ApiResponse {
+  followers: Users;
+}
+
+interface CreateFollowResponse extends ApiResponse {
+  follow: any;
 }
 
 /** animes */
 
-interface AnimesListResponse {
+interface AnimesListResponse extends ApiResponse {
   animes: Animes;
 }
 
-interface AnimesSearchResponse {
+interface AnimesSearchResponse extends ApiResponse {
   animes: Animes;
 }
 
-interface AnimeSlugResponse {
+interface AnimeSlugResponse extends ApiResponse {
   anime: Anime;
 }
 
-interface AnimeUserResponse {
+interface AnimeUserResponse extends ApiResponse {
   users: Users;
 }
 
-interface AnimeResponse {
+interface ShowAnimeResponse extends ApiResponse {
   anime: Anime;
 }
 
-interface AnimeCategoriesResponse {
+interface ShowAnimeCategoriesResponse extends ApiResponse {
   categories: Categories;
 }
 
-interface AnimeEntryResponse {
+interface ShowAnimeEntriesResponse extends ApiResponse {
+  entries: Entries;
+}
+
+/** entries */
+
+interface ShowEntriesListResponse extends ApiResponse {
+  entries: Entries;
+}
+
+interface CreateEntryResponse extends ApiResponse {
   entry: Entry;
+}
+
+interface ShowEntryResponse extends ApiResponse {
+  entry: Entry;
+}
+
+interface UpdateEntryResponse extends ApiResponse {
+  entry: Entry;
+}
+
+interface ShowEntryUserResponse extends ApiResponse {
+  user: User;
+}
+
+/** sagas */
+
+interface ShowSagasListResponse extends ApiResponse {
+  sagas: Sagas;
+}
+
+interface SearchSagasResponse extends ApiResponse {
+  sagas: Sagas;
+}
+
+interface ShowSagaResponse extends ApiResponse {
+  saga: Saga;
 }
 
 /** common */
 
-interface CountriesResponse {
+interface CountriesResponse extends ApiResponse {
   countries: Countries;
+}
+
+/** logs */
+interface LogsResponse extends ApiResponse {
+  logs: Logs;
 }

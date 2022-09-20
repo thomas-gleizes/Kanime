@@ -13,7 +13,10 @@ import { SignInDto } from 'dto';
 
 class SignInInHandler extends ApiHandler {
   @Post('/')
-  async get(@Body(ValidationPipe) body: SignInDto, @GetSession() session) {
+  async get(
+    @Body(ValidationPipe) body: SignInDto,
+    @GetSession() session
+  ): Promise<SignInResponse> {
     if (session) await session.destroy();
 
     const user = await userModel.findByEmail(body.email);

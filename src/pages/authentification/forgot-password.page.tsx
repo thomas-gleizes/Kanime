@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { Page } from 'next/app';
-import { AuthenticationApi } from 'api';
+import { authenticationApi } from 'api';
 import { Input } from 'components/common/inputs';
 import Button from 'components/common/Button';
 import { toast } from 'react-toastify';
@@ -11,7 +11,7 @@ const ForgotPasswordPage: Page = () => {
 
   const handleClick = async () => {
     try {
-      await AuthenticationApi.forgotPassword(email);
+      await authenticationApi.forgotPassword(email);
       toast.success('Demande de nouveau mot de passe effectué');
     } catch (err) {
       toast.error(err);

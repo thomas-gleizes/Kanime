@@ -10,10 +10,10 @@ import { QueryParamsDto } from 'dto';
 class LogsHandler extends ApiHandler {
   @Get()
   @AuthAdminGuard()
-  async show(@Query(ValidationPipe) params: QueryParamsDto) {
+  async show(@Query(ValidationPipe) params: QueryParamsDto): Promise<LogsResponse> {
     const logs = await logModel.show(params);
 
-    return { logs: logsMapper.many(logs) };
+    return { success: true, logs: logsMapper.many(logs) };
   }
 }
 

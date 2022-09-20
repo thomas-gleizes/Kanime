@@ -3,7 +3,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Spinner } from '@chakra-ui/react';
 
 import { Page } from 'next/app';
-import { AnimesApi } from 'api';
+import { animesApi } from 'api';
 import { animesMapper } from 'mappers';
 import { animeModel } from 'models';
 import { ssrHandler } from 'services/handler.service';
@@ -28,7 +28,7 @@ export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: str
 );
 
 const fetchAnimes = ({ pageParam = 0 }) =>
-  AnimesApi.showAll({ limit: 40, skip: pageParam * 40 }).then((data) => data.animes);
+  animesApi.show({ limit: 40, skip: pageParam * 40 }).then((data) => data.animes);
 
 const ExploreAnimes: Page<Props> = (props) => {
   const { data, isLoading, fetchNextPage } = useInfiniteQuery<Animes>(

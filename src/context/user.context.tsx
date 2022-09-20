@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
-import { AuthenticationApi } from 'api';
+import { authenticationApi } from 'api';
 import { useBrowser, useContextFactory } from 'hooks';
 import { useLayoutContext } from 'context/layout.context';
 import LocalStorageService from 'services/localStorage.service';
@@ -42,7 +42,7 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   }, []);
 
   const signOut = useCallback((fetching: boolean = true): void => {
-    fetching && AuthenticationApi.signOut();
+    fetching && authenticationApi.signOut();
 
     LocalStorageService.clearUser();
     setIsLogin(false);
@@ -52,7 +52,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
 
   useEffect(() => {
     if (isBrowser && isLogin && !isInactive) {
-      AuthenticationApi.refresh()
+      authenticationApi
+        .refresh()
         .then(() => null)
         .catch(() => null);
     }
@@ -61,7 +62,8 @@ const UserContextProvider: React.FunctionComponent<Props> = ({ children }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (isLogin && isBrowser && !isInactive)
-        AuthenticationApi.refresh()
+        authenticationApi
+          .refresh()
           .then(() => null)
           .catch(() => null);
     }, MINUTE * 15);

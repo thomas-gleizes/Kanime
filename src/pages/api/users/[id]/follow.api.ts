@@ -20,20 +20,25 @@ import { GetSession, AuthGuard } from 'decorators';
 
 class UserFollowHandler extends ApiHandler {
   @Get()
-  async showFollow(@Query('id', ParseNumberPipe) id: number) {
+  async showFollow(
+    @Query('id', ParseNumberPipe) id: number
+  ): Promise<ShowUserFollowsResponse> {
     const user = await userModel.findById(id);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
     const followers = await userModel.findFollows(user.id);
 
-    return { followers: usersMapper.many(followers) };
+    return { success: true, follows: usersMapper.many(followers) };
   }
 
   @Post()
   @AuthGuard()
   @HttpCode(HttpStatus.CREATED)
-  async follow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
+  async follow(
+    @Query('id', ParseNumberPipe) id: number,
+    @GetSession() session
+  ): Promise<CreateFollowResponse> {
     const user = await userModel.findById(id);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
@@ -41,7 +46,7 @@ class UserFollowHandler extends ApiHandler {
     try {
       const follow = await userFollowModel.create(session.user.id, user.id);
 
-      return { follow };
+      return { success: true, follow };
     } catch (e) {
       throw new BadRequestException(errorMessage.FOLLOW);
     }
@@ -50,12 +55,17 @@ class UserFollowHandler extends ApiHandler {
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async unfollow(@Query('id', ParseNumberPipe) id: number, @GetSession() session: any) {
+  async unfollow(
+    @Query('id', ParseNumberPipe) id: number,
+    @GetSession() session: any
+  ): Promise<ApiResponse> {
     const user = await userModel.findById(id);
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
     try {
       await userFollowModel.delete(session.user.id, id);
+
+      return { success: true };
     } catch (e) {
       throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.UNFOLLOW);
     }

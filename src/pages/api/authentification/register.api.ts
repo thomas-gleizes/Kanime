@@ -13,7 +13,10 @@ import { RegisterDto } from 'dto';
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   @Post()
-  async register(@Body(ValidationPipe) body: RegisterDto, @GetSession() session) {
+  async register(
+    @Body(ValidationPipe) body: RegisterDto,
+    @GetSession() session
+  ): Promise<RegisterResponse> {
     if (session) await session.destroy();
 
     const users = await userModel.findByEmailOrUsername(body.email, body.username);

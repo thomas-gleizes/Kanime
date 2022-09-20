@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaEye } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import { toast } from 'react-toastify';
 import {
+  Button,
   IconButton,
   Table,
   TableContainer,
@@ -12,21 +12,23 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { ApiService } from 'services/api.service';
-import { routes } from 'resources/routes';
+import { logsApi } from 'api';
+import { useHideHeader } from 'hooks';
 
-const fetchLogs = (limit: number, start: number) =>
-  ApiService.get<any, { logs: Logs }>(routes.logs.api.list, { params: { limit, start } });
+const fetchLogs = ({ pageParam = 0 }) =>
+  logsApi.showAll({ limit: 39, skip: pageParam * 40 }).then((data) => data.logs);
 
 const ListLogs: Component = () => {
-  const [logs, setLogs] = useState<Logs>([]);
+  useHideHeader();
 
-  useEffect(() => {
-    fetchLogs(20, 0)
-      .then((data) => setLogs(data.logs))
-      .catch((error) => toast.error(error.message));
-  }, []);
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery<Logs>(['logs'], fetchLogs, {
+    getNextPageParam: (_, pages) => pages.length,
+    initialData: { pageParams: [0], pages: [] },
+  });
+
+  const [logs, setLogs] = useState<Logs>([]);
 
   return (
     <div className="border rounded-md shadow-lg">
@@ -75,6 +77,9 @@ const ListLogs: Component = () => {
           </Tbody>
         </Table>
       </TableContainer>
+      <div className="flex justify-between">
+        <Button onClick={() => fetchNextPage()}>Next</Button>
+      </div>
     </div>
   );
 };

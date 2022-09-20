@@ -7,10 +7,12 @@ import { categoryModel } from 'models';
 
 class AnimesCategoriesHandler extends ApiHandler {
   @Get()
-  async showCategories(@Query('id', ParseNumberPipe) id: number) {
+  async showCategories(
+    @Query('id', ParseNumberPipe) id: number
+  ): Promise<ShowAnimeCategoriesResponse> {
     const categories = await categoryModel.findByAnimeId(id);
 
-    return { categories: categoriesMapper.many(categories) };
+    return { success: true, categories: categoriesMapper.many(categories) };
   }
 }
 

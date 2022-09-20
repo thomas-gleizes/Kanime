@@ -6,7 +6,7 @@ import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
 import { Page } from 'next/app';
-import { AuthenticationApi } from 'api';
+import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { signInSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
@@ -28,7 +28,7 @@ const SignInPage: Page = () => {
 
   const handleSubmit = async (values: loginType) => {
     try {
-      const { user, token } = await AuthenticationApi.signIn(values);
+      const { user, token } = await authenticationApi.signIn(values);
 
       if (!user || !token) window.location.reload();
       else {

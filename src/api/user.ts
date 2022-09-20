@@ -19,7 +19,7 @@ class UsersApi extends Api {
       skip?: number;
     }
   ) {
-    return this.get<UsersEntriesResponse>(`/${userId}/entries`, { params });
+    return this.get<ShowUserEntriesResponse>(`/${userId}/entries`, { params });
   }
 }
 

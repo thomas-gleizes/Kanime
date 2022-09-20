@@ -10,7 +10,7 @@ import { FaSearch } from 'react-icons/fa';
 import { BiLoaderCircle } from 'react-icons/bi';
 import ReactStars from 'react-stars';
 
-import { AnimesApi } from 'api';
+import { animesApi } from 'api';
 import { useKeyPress } from 'hooks';
 import { routes } from 'resources/routes';
 import timeout from 'utils/timeout';
@@ -54,7 +54,8 @@ const SearchBar: Component<Props> = ({ transparent }) => {
     if (value.length > 3) {
       setLoading(true);
 
-      const animesPromises = AnimesApi.search(value, { limit: 50, skip: 0 })
+      const animesPromises = animesApi
+        .search(value, { limit: 50, skip: 0 })
         .then((response) => setAnimes(response.animes))
         .catch((e) => toast.error(e.error || 'Une erreur est survenue'));
 

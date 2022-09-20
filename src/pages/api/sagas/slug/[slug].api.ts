@@ -7,12 +7,12 @@ import { sagaModel } from 'models';
 
 class SagaSlug extends ApiHandler {
   @Get()
-  async findBySlug(@Query('slug') slug: string) {
+  async findBySlug(@Query('slug') slug: string): Promise<ShowSagaResponse> {
     const saga = await sagaModel.findBySlug(slug);
 
     if (!saga) throw new NotFoundException('Saga not found');
 
-    return { saga: sagasMapper.one(saga) };
+    return { success: true, saga: sagasMapper.one(saga) };
   }
 }
 

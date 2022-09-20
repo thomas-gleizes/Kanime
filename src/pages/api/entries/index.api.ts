@@ -20,16 +20,21 @@ import { CreateEntryDto, QueryParamsDto } from 'dto';
 
 class EntriesHandler extends ApiHandler {
   @Get()
-  async showAll(@Query(ValidationPipe) params: QueryParamsDto) {
+  async showAll(
+    @Query(ValidationPipe) params: QueryParamsDto
+  ): Promise<ShowEntriesListResponse> {
     const entries = await entryModel.all(params);
 
-    return { entries: entriesMapper.many(entries) };
+    return { success: true, entries: entriesMapper.many(entries) };
   }
 
   @Post()
   @AuthGuard()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body(ValidationPipe) body: CreateEntryDto, @GetSession() session) {
+  async create(
+    @Body(ValidationPipe) body: CreateEntryDto,
+    @GetSession() session
+  ): Promise<CreateEntryResponse> {
     const anime = await animeModel
       .findById(body.animeId)
       .then((anime) => animesMapper.one(anime));
@@ -52,7 +57,7 @@ class EntriesHandler extends ApiHandler {
 
     const entry = await entryModel.create(session.user.id, body);
 
-    return { entry: entriesMapper.one(entry) };
+    return { success: true, entry: entriesMapper.one(entry) };
   }
 }
 

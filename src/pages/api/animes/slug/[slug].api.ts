@@ -8,12 +8,12 @@ import { animeModel } from 'models';
 
 class AnimesSlugHandler extends ApiHandler {
   @Get()
-  async findBySlug(@Query('slug') slug: string) {
+  async findBySlug(@Query('slug') slug: string): Promise<AnimeSlugResponse> {
     const anime = await animeModel.findBySlug(slug);
 
     if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    return { anime: animesMapper.one(anime) };
+    return { success: true, anime: animesMapper.one(anime) };
   }
 }
 

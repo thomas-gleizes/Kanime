@@ -8,12 +8,12 @@ import { errorMessage } from 'resources/constants';
 
 class UserHandler extends ApiHandler {
   @Get()
-  async get(@Query('id', ParseNumberPipe) id: number) {
+  async get(@Query('id', ParseNumberPipe) id: number): Promise<ShowUserResponse> {
     const user = await userModel.findById(+id);
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
 
-    return { user: usersMapper.one(user) };
+    return { success: true, user: usersMapper.one(user) };
   }
 }
 
