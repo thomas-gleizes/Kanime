@@ -29,11 +29,12 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 
+import { ApiService } from 'services/api.service';
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
+import { CreateEntryDto } from 'dto/entry.dto';
 import { useUserContext } from 'context/user.context';
 import { Select } from 'components/common/inputs';
-import { ApiService } from 'services/api.service';
 
 type SubmitResult = {
   action: 'submit';
@@ -73,7 +74,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 
   console.log('Entry', entry);
 
-  const initialValues = useMemo<upsertEntries>(
+  const initialValues = useMemo<CreateEntryDto>(
     () => ({
       animeId: anime.id,
       userId: user.id,
@@ -90,7 +91,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
     [entry]
   );
 
-  const handleSubmit = async (values: upsertEntries) => {
+  const handleSubmit = async (values: CreateEntryDto) => {
     try {
       const response = await ApiService.post<{ entry: Entry }>(
         `/animes/${anime.id}/entries`,
@@ -148,7 +149,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 };
 
 const FormContent: Component<
-  FormikProps<upsertEntries> & {
+  FormikProps<CreateEntryDto> & {
     anime: Anime;
     handleDelete: () => void;
     handleClose: () => void;

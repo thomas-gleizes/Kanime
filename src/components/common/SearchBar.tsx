@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
 import SimpleBar from 'simplebar-react';
 import classnames from 'classnames';
-import { Spinner } from '@chakra-ui/react';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
 import { BiLoaderCircle } from 'react-icons/bi';
