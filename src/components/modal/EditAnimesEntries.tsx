@@ -32,7 +32,7 @@ import {
 import { ApiService } from 'services/api.service';
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
-import { CreateEntryDto } from 'dto/entry.dto';
+import { CreateEntryDto } from 'dto';
 import { useUserContext } from 'context/user.context';
 import { Select } from 'components/common/inputs';
 
@@ -71,8 +71,6 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
   entry,
 }) => {
   const { user } = useUserContext();
-
-  console.log('Entry', entry);
 
   const initialValues = useMemo<CreateEntryDto>(
     () => ({

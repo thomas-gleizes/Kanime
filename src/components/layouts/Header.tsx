@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid';
 import classnames from 'classnames';

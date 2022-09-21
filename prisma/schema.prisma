@@ -9,7 +9,7 @@ datasource db {
 
 model Anime {
   id               Int          @id @default(autoincrement())
-  kitsuId         Int?         @unique
+  kitsu_id         Int?         @unique
   slug             String       @unique
   canonical_title  String
   titles           String?      @db.LongText
