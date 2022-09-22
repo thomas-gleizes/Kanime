@@ -3,6 +3,7 @@ import Security from 'services/security.service';
 import { errorMessage } from 'resources/constants';
 import { UnauthorizedException } from 'next-api-decorators';
 
+// TODO: refactor this
 export const authMiddleware = async (req: ApiRequest, res: ApiResponse<any>, next) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;

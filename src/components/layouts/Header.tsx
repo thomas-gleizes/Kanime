@@ -92,7 +92,7 @@ const Header: Component = () => {
               <div className="flex items-center space-x-8">
                 <div className="w-fit">
                   <Link href={routes.home}>
-                    <a className="cursor-pointer font-bold text-xl text-white">
+                    <a className="cursor-pointer font-gang-of-three text-xl text-white">
                       {process.env.NEXT_PUBLIC_APP_NAME}
                     </a>
                   </Link>
@@ -172,7 +172,7 @@ const Header: Component = () => {
             <div className="h-full bg-primary py-1 z-10 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
                 <Link href={routes.home}>
-                  <a className="cursor-pointer font-bold text-2xl text-white">
+                  <a className="cursor-pointer font-gang-of-three font-bold text-2xl text-white">
                     {process.env.NEXT_PUBLIC_APP_NAME}
                   </a>
                 </Link>

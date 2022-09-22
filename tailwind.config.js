@@ -83,6 +83,10 @@ module.exports = {
       lineClamp: {
         ...generateKeys(20, '', 1),
       },
+      fontFamily: {
+        'gang-of-three': ['"Gang of Three"', 'Asap', 'sans-serif'],
+        asap: ['Asap', 'sans-serif'],
+      },
     },
   },
   variants: {
