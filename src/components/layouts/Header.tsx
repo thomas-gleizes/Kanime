@@ -63,18 +63,18 @@ const Header: Component = () => {
     else setHeaderTransparent(false);
   }, [activeTransparent, scrollHeight, headerHovered]);
 
-  useEffect(() => {
-    const listener = (event) => {
-      console.log('Event', event.target);
-    };
-
-    document.body.addEventListener('click', listener);
-  }, []);
+  // useEffect(() => {
+  //   const listener = (event) => {
+  //     console.log('Event', event.target);
+  //   };
+  //
+  //   document.body.addEventListener('click', listener);
+  // }, []);
 
   if (header.hiddenHeader) return null;
 
   return (
-    <header ref={headerRef} className="h-header bg-blue-200">
+    <header ref={headerRef} className="h-header">
       <div
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'
