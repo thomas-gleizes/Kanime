@@ -1,12 +1,8 @@
-import AnimeCard from 'components/common/anime/AnimeCard';
-
 interface Props {
   animes: Animes;
 }
 
 const PopularAnimes: Component<Props> = ({ animes }) => {
-  console.log('popular', animes);
-
   return (
     <div className="w-full h-56">
       <div className="flex space-x-3 overflow-x-auto">

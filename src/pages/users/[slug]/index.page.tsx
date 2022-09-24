@@ -37,24 +37,22 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
         if (isFriends) visibility.push('limited');
       }
 
-    const entries = entriesMapper.many(
-      await entryModel.getByUser(
-        user.id,
-        visibility,
-        undefined,
-        { field: 'rating', order: 'desc' },
-        {
-          include: { anime: true },
-          limit: 1000,
-        }
-      )
+    const entries = await entryModel.getByUser(
+      user.id,
+      visibility,
+      undefined,
+      { field: 'rating', order: 'desc' },
+      {
+        include: { anime: true },
+        limit: 1000,
+      }
     );
 
     return {
       props: {
-        user: usersMapper.one(user),
         isCurrent: user.id === sessionUser?.id,
-        entries: entries,
+        user: usersMapper.one(user),
+        entries: entriesMapper.many(entries),
       },
     };
   }

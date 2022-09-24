@@ -3,7 +3,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 
-import { AppProps } from 'next/app';
+import { AppContext } from 'next/app';
 import LayoutContextProvider from 'context/layout.context';
 import UserContextProvider from 'context/user.context';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
@@ -46,7 +46,9 @@ const ContextsProvider: Component<ContextProviderProps> = ({ children }) => {
   );
 };
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps, session }: any) => {
+  console.log('Session', session);
+
   const Layout = useMemo<Component>(
     () => Component.layout || DefaultLayout,
     [Component.layout]
@@ -64,10 +66,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-// export const getInitialProps = async (appContext: AppProps) => {
-//   return {
-//     props: await appContext.Component.getInitialProps(appContext),
-//   };
-// };
+App.getInitialProps = async (context: AppContext) => {
+  return { session: 'ok' };
+};
 
 export default App;

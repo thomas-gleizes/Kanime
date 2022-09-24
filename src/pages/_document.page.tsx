@@ -8,14 +8,8 @@ import Document, {
 } from 'next/document';
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
-    const initialProps = await Document.getInitialProps(ctx);
-
-    console.log('session', ctx.res);
-
-    console.log(initialProps);
-
-    return initialProps;
+  static getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+    return Document.getInitialProps(ctx);
   }
 
   render() {

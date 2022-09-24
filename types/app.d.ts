@@ -10,6 +10,7 @@ declare module 'next/app' {
     GetServerSidePropsResult,
     NextApiHandler,
   } from 'next';
+  import { Session } from 'sessions/app';
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: ReactNode } & P>;
@@ -36,6 +37,7 @@ declare module 'next/app' {
   interface AppProps {
     pageProps: any;
     Component: Page;
+    session: Session;
   }
 
   declare type SsrHandlerType<P = {}, Q = any> = (

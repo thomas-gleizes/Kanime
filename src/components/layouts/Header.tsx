@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid';
+import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
+import Link from 'next/link';
 
 import { useUserContext } from 'context/user.context';
 import { useLayoutContext } from 'context/layout.context';
@@ -9,7 +10,6 @@ import { routes } from 'resources/routes';
 import { useHovered } from 'hooks';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
-import { Transition } from '@headlessui/react';
 
 const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
@@ -169,7 +169,7 @@ const Header: Component = () => {
 
           {/*small*/}
           <div className="block md:hidden h-header">
-            <div className="h-full bg-primary py-1 z-10 flex justify-between">
+            <div className="h-full bg-primary py-1 -z-10 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
                 <Link href={routes.home}>
                   <a className="cursor-pointer font-gang-of-three font-bold text-2xl text-white">
@@ -183,110 +183,108 @@ const Header: Component = () => {
                 </i>
               </div>
             </div>
-            <div>
-              <Transition
-                show={extend}
-                enter="transition ease-out duration-200"
-                enterFrom="transform -translate-y-full"
-                enterTo="transform translate-y-0"
-                leave="transition ease-in duration-100"
-                leaveFrom="transform translate-y-0"
-                leaveTo="transform -translate-y-full"
-              >
-                <div className="flex flex-col py-2 px-4 bg-primary">
-                  <div className="pb-2 border-b-2 border-b-white">
-                    <SearchBar transparent={false} />
-                  </div>
-                  <div className="flex flex-col space-y-4 my-3">
-                    <nav className="flex flex-col space-y-2 justify-evenly border-b border-b-white border-opacity-50 pb-3">
-                      <div className="text-lg font-medium">
-                        <DropDownExplore />
-                      </div>
-                      <div>
-                        <Link href={routes.forum}>
-                          <a
-                            className="text-white text-lg font-medium"
-                            onClick={() => setExtend(false)}
-                          >
-                            Discussion
-                          </a>
-                        </Link>
-                      </div>
-                      <div>
-                        <Link href={routes.feedback}>
-                          <a
-                            className="text-white text-lg font-medium"
-                            onClick={() => setExtend(false)}
-                          >
-                            Feedback
-                          </a>
-                        </Link>
-                      </div>
-                    </nav>
-                    <nav className="flex flex-col space-y-2 justify-evenly">
-                      {!isLogin ? (
-                        <>
-                          <div>
-                            <Link href={routes.authentification.signIn}>
-                              <a
-                                className="text-white text-lg font-medium"
-                                onClick={() => setExtend(false)}
-                              >
-                                Connexion
-                              </a>
-                            </Link>
-                          </div>
-                          <div>
-                            <Link href={routes.authentification.register}>
-                              <a
-                                className="text-white text-lg font-medium"
-                                onClick={() => setExtend(false)}
-                              >
-                                Inscription
-                              </a>
-                            </Link>
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div>
-                            <Link href={routes.users.page(user.slug)}>
-                              <a
-                                className="text-white text-lg font-medium"
-                                onClick={() => setExtend(false)}
-                              >
-                                Mon profile
-                              </a>
-                            </Link>
-                          </div>
-                          <div>
-                            <Link href={routes.users.settings(user.slug)}>
-                              <a
-                                className="text-white text-lg font-medium"
-                                onClick={() => setExtend(false)}
-                              >
-                                Settings
-                              </a>
-                            </Link>
-                          </div>
-                          <div>
-                            <span
-                              className="text-white text-lg font-medium"
-                              onClick={() => {
-                                signOut();
-                                setExtend(false);
-                              }}
-                            >
-                              Déconnexion
-                            </span>
-                          </div>
-                        </>
-                      )}
-                    </nav>
-                  </div>
+            <Transition
+              show={extend}
+              enter="transition ease-out duration-200"
+              enterFrom="transform -translate-y-full"
+              enterTo="transform translate-y-0"
+              leave="transition ease-in duration-100"
+              leaveFrom="transform translate-y-0"
+              leaveTo="transform -translate-y-full"
+            >
+              <div className="flex z-10 flex-col py-2 px-4 bg-primary">
+                <div className="pb-2 border-b-2 border-b-white">
+                  <SearchBar transparent={false} />
                 </div>
-              </Transition>
-            </div>
+                <div className="flex flex-col space-y-4 my-3">
+                  <nav className="flex flex-col space-y-2 justify-evenly border-b border-b-white border-opacity-50 pb-3">
+                    <div className="text-lg font-medium">
+                      <DropDownExplore />
+                    </div>
+                    <div>
+                      <Link href={routes.forum}>
+                        <a
+                          className="text-white text-lg font-medium"
+                          onClick={() => setExtend(false)}
+                        >
+                          Discussion
+                        </a>
+                      </Link>
+                    </div>
+                    <div>
+                      <Link href={routes.feedback}>
+                        <a
+                          className="text-white text-lg font-medium"
+                          onClick={() => setExtend(false)}
+                        >
+                          Feedback
+                        </a>
+                      </Link>
+                    </div>
+                  </nav>
+                  <nav className="flex flex-col space-y-2 justify-evenly">
+                    {!isLogin ? (
+                      <>
+                        <div>
+                          <Link href={routes.authentification.signIn}>
+                            <a
+                              className="text-white text-lg font-medium"
+                              onClick={() => setExtend(false)}
+                            >
+                              Connexion
+                            </a>
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href={routes.authentification.register}>
+                            <a
+                              className="text-white text-lg font-medium"
+                              onClick={() => setExtend(false)}
+                            >
+                              Inscription
+                            </a>
+                          </Link>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <Link href={routes.users.page(user.slug)}>
+                            <a
+                              className="text-white text-lg font-medium"
+                              onClick={() => setExtend(false)}
+                            >
+                              Mon profile
+                            </a>
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href={routes.users.settings(user.slug)}>
+                            <a
+                              className="text-white text-lg font-medium"
+                              onClick={() => setExtend(false)}
+                            >
+                              Settings
+                            </a>
+                          </Link>
+                        </div>
+                        <div>
+                          <span
+                            className="text-white text-lg font-medium"
+                            onClick={() => {
+                              signOut();
+                              setExtend(false);
+                            }}
+                          >
+                            Déconnexion
+                          </span>
+                        </div>
+                      </>
+                    )}
+                  </nav>
+                </div>
+              </div>
+            </Transition>
           </div>
         </div>
       </div>

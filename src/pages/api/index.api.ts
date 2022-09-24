@@ -1,4 +1,5 @@
 import { Get } from 'next-api-decorators';
+
 import ApiHandler from 'class/ApiHandler';
 import { apiHandler } from 'services/handler.service';
 

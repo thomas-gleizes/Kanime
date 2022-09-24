@@ -9,7 +9,6 @@ import { createHandler } from 'next-api-decorators';
 
 import { SsrError } from 'errors';
 import { ssrLogger } from 'middlewares/logger.middleware';
-import ApiHandler from 'class/ApiHandler';
 import { withSessionApi, withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
 import trace from 'utils/trace';

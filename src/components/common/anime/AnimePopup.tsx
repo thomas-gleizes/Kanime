@@ -24,7 +24,10 @@ const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
   if (!render) return null;
 
   return (
-    <div className={classnames('absolute w-[330px] f-full z-80 top-0')} style={styles}>
+    <div
+      className={classnames('hidden md:block absolute w-[330px] f-full z-80 top-0')}
+      style={styles}
+    >
       <Transition
         show={isOpen}
         enter="transition ease-out duration-200"
