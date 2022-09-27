@@ -17,7 +17,7 @@ import Button from 'components/common/Button';
 type loginType = Yup.TypeOf<typeof signInSchema>;
 
 const initialValues: loginType = {
-  email: 'kalat@kanime.fr ',
+  email: 'kalat@kanime.fr',
   password: 'azerty',
   rememberMe: false,
 };
@@ -28,13 +28,10 @@ const SignInPage: Page = () => {
 
   const handleSubmit = async (values: loginType) => {
     try {
-      const { user, token } = await authenticationApi.signIn(values);
+      const { user } = await authenticationApi.signIn(values);
 
-      if (!user || !token) window.location.reload();
-      else {
-        signIn(user, token);
-        await router.push(routes.users.page(user.slug));
-      }
+      signIn(user);
+      await router.push(routes.users.page(user.slug));
     } catch (e) {
       toast.error(e.error || 'Une erreur est survenue');
     }

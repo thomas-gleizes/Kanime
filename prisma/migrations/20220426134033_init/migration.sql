@@ -105,7 +105,7 @@ CREATE OR REPLACE TABLE `entries` (
     `anime_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `status` ENUM('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
-    `rating` DOUBLE NULL,
+    `rating` FLOAT NULL,
     `progress` SMALLINT NOT NULL DEFAULT 0,
     `favorite` BOOLEAN NOT NULL DEFAULT FALSE,
     `started_at` DATE NULL,

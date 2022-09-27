@@ -1,4 +1,4 @@
-import type { IronSessionOptions } from 'iron-session';
+import { getIronSession, IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
 import { ApiHandler } from 'next/app';
 import {
@@ -32,6 +32,8 @@ export function withSessionSsr<
 ): GetServerSideProps<P, Q, D> {
   return withIronSessionSsr(handler, sessionOptions);
 }
+
+export const getSession = (req, res) => getIronSession(req, res, sessionOptions);
 
 // This is where we specify the typings of req.session.*
 declare module 'iron-session' {

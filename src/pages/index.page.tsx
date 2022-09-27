@@ -4,6 +4,8 @@ import { animeModel } from 'models';
 import { animesMapper } from 'mappers';
 import Title from 'components/layouts/Title';
 import PopularAnimes from 'components/landing/PopularAnimes';
+import HighRatingAnimes from 'components/landing/HighRatingAnimes';
+import { useEffect } from 'react';
 
 interface Props {
   time: number;
@@ -16,7 +18,7 @@ interface Props {
 export const getStaticProps: StaticProps<Props> = async () => {
   const [popularAnimes, ratedAnimes] = await Promise.all([
     animeModel.findPopular(),
-    animeModel.findHeightRated(),
+    animeModel.findHighRated(),
   ]);
 
   return {
@@ -32,6 +34,8 @@ export const getStaticProps: StaticProps<Props> = async () => {
 };
 
 const HomePage: Page<Props> = ({ time, animes }) => {
+  useEffect(() => console.log('Animes', animes), [animes]);
+
   return (
     <>
       <Title>Accueil</Title>
@@ -40,7 +44,9 @@ const HomePage: Page<Props> = ({ time, animes }) => {
           <div className="text-center">{time}</div>
           <h1 className="text-6xl font-bold first-letter:text-[#db8000]">
             Bienvenue sur{' '}
-            <span className="text-sky-500">{process.env.NEXT_PUBLIC_APP_NAME}!</span>
+            <span className="text-sky-500 font-gang-of-three">
+              {process.env.NEXT_PUBLIC_APP_NAME}!
+            </span>
           </h1>
 
           <p className="mt-3 text-2xl">
@@ -48,7 +54,8 @@ const HomePage: Page<Props> = ({ time, animes }) => {
           </p>
 
           <div className="flex flex-col space-y-3 bg-red-500 h-40 w-full">
-            <div>{<PopularAnimes animes={animes.popular} />}</div>
+            <HighRatingAnimes animes={animes.rated} />
+            <HighRatingAnimes animes={animes.popular} />
           </div>
         </div>
       </div>

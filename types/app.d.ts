@@ -1,16 +1,16 @@
 declare module 'next/app' {
   import type {
     GetServerSideProps,
+    GetServerSidePropsContext,
+    GetServerSidePropsResult,
     GetStaticPaths,
     GetStaticProps,
+    NextApiHandler,
     NextApiRequest,
     NextApiResponse,
     NextPage,
-    GetServerSidePropsContext,
-    GetServerSidePropsResult,
-    NextApiHandler,
   } from 'next';
-  import { Session } from 'sessions/app';
+  import type { SessionData } from 'sessions/app';
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: ReactNode } & P>;
@@ -34,11 +34,15 @@ declare module 'next/app' {
     query: Query;
   };
 
-  interface AppProps {
+  declare type AppProps = {
     pageProps: any;
     Component: Page;
-    session: Session;
-  }
+    initialState: SessionData;
+  };
+
+  declare type initialState = {
+    session: User;
+  };
 
   declare type SsrHandlerType<P = {}, Q = any> = (
     handler: (
@@ -50,22 +54,22 @@ declare module 'next/app' {
 declare module 'prisma/app' {
   import type {
     Anime,
+    AnimeSeason,
+    AnimeStatus,
+    AnimeType,
     Category,
     Country,
     Entry,
+    EntryStatus,
+    Gender,
     Log,
-    Prisma,
+    Method,
     Post,
+    Prisma,
     Saga,
     User,
     UserFollow,
-    AnimeSeason,
-    AnimeType,
-    AnimeStatus,
-    EntryStatus,
     Visibility,
-    Gender,
-    Method,
   } from '@prisma/client';
 
   declare type PrismaUser = User & PrismaUserRelations;

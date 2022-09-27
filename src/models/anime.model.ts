@@ -63,11 +63,10 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public findHeightRated = (params?: modelParams): Promise<PrismaAnimes> =>
+  public findHighRated = (params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
-      orderBy: {
-        rating_rank: 'asc',
-      },
+      where: { NOT: { rating_rank: null } },
+      orderBy: { rating_rank: 'asc' },
       ...this.getKeyParams(params),
     });
 }

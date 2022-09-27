@@ -4,12 +4,12 @@ interface Props {
   animes: Animes;
 }
 
-const PopularAnimes: Component<Props> = ({ animes }) => {
+const HighRatingAnimes: Component<Props> = ({ animes }) => {
   return (
     <div className="w-full h-56">
       <div className="flex space-x-3 overflow-x-auto">
         {animes.map((anime) => (
-          <div key={anime.id} className="h-48 w-24 bg-blue-700">
+          <div key={anime.id} className="h-48 w-24">
             <AnimeCard anime={anime} popupPosition="none" />
           </div>
         ))}
@@ -18,4 +18,4 @@ const PopularAnimes: Component<Props> = ({ animes }) => {
   );
 };
 
-export default PopularAnimes;
+export default HighRatingAnimes;
