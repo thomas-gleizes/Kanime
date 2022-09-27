@@ -12,9 +12,6 @@ declare type ErrorProps = {
 
 interface ContextsProviderProps {
   children: React.ReactNode;
-  values: {
-    user?: User;
-  };
 }
 
 declare type Id = string | number;

@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useState } from 'react';
 
 import { authenticationApi } from 'api';
 import { useContextFactory } from 'hooks';
+import LocalStorageService from 'services/localStorage.service';
 
 export declare type UserContext = {
   isLogin: boolean;
@@ -12,7 +13,6 @@ export declare type UserContext = {
 
 interface Props {
   children: ReactNode;
-  initialUser?: User;
 }
 
 const UserContext = createContext<UserContext>({} as any);
@@ -20,13 +20,15 @@ const UserContext = createContext<UserContext>({} as any);
 // eslint-disable-next-line react-hooks/rules-of-hooks
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
-const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
-  const [user, setUser] = useState<User>(initialUser);
+const UserContextProvider: Component<Props> = ({ children }) => {
+  const [user, setUser] = useState<User>(LocalStorageService.getUser());
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
   const signIn = useCallback((user: User): void => {
     setUser(user);
     setIsLogin(true);
+
+    LocalStorageService.saveUser(user);
   }, []);
 
   const signOut = useCallback((fetching: boolean = true): void => {
@@ -34,6 +36,8 @@ const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
 
     setIsLogin(false);
     setUser(null);
+
+    LocalStorageService.clearUser();
   }, []);
 
   return (

@@ -6,6 +6,7 @@ import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
 import { Page } from 'next/app';
+import { ssrHandler } from 'services/handler.service';
 import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { signInSchema } from 'resources/validations';
@@ -21,6 +22,20 @@ const initialValues: loginType = {
   password: 'azerty',
   rememberMe: false,
 };
+
+export const getServerSideProps = ssrHandler<{}>(async (context) => {
+  console.log('TEST');
+
+  if (context.req.session.user)
+    return {
+      redirect: {
+        permanent: false,
+        destination: routes.users.page(context.req.session.user.slug),
+      },
+    };
+
+  return { props: {} };
+});
 
 const SignInPage: Page = () => {
   const { signIn } = useUserContext();

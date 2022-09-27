@@ -37,7 +37,6 @@ declare module 'next/app' {
   declare type AppProps = {
     pageProps: any;
     Component: Page;
-    initialState: SessionData;
   };
 
   declare type initialState = {
