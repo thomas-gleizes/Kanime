@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { Gender } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
+import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
 
+import { commonApi } from 'api';
 import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
-import { toast } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
-import { commonApi } from 'api';
 
 declare type values = {
   city: string;
@@ -44,14 +44,14 @@ const EditUserModal: React.FunctionComponent = () => {
   const handleSubmit = async (values: values) => {
     try {
       const {
-        data: { user, token },
+        data: { user },
       } = await ApiService.patch(routes.users.api.current, values);
 
-      signIn(user, token);
+      signIn(user);
     } catch (e) {
       toast.error(e.message || 'Une erreur est survenue');
 
-      // TODO setFieldError with formik and yup schema
+      // TODO setFieldError with formik and class-validator schema
     }
   };
 

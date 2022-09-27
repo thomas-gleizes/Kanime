@@ -26,9 +26,8 @@ const RegisterPage: Page = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const { user, token } = await authenticationApi.register(values);
-
-      signIn(user, token);
+      const { user } = await authenticationApi.register(values);
+      signIn(user);
 
       await router.push(routes.users.page(user.slug));
     } catch (e) {}
