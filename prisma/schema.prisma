@@ -178,7 +178,7 @@ model Country {
   name     String  @db.VarChar(80)
   nicename String  @db.VarChar(80)
 
-  users    User[]
+  users User[]
 
   @@map("countries")
 }
@@ -209,7 +209,7 @@ model EventLog {
 model AnimeImport {
   id               Int       @id @default(autoincrement())
   anime_id         Int?      @unique
-  kitsuId         Int
+  kitsuId          Int
   slug             String
   canonical_title  String
   titles           String?   @db.LongText
