@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function usePaginations(max: number, initial?: number) {
+export function usePagination(max: number, initial?: number) {
   const [value, setValue] = useState(initial || 1);
 
   useEffect(() => setValue(Math.min(value, max)), [max]);

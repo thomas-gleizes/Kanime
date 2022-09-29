@@ -6,7 +6,7 @@ function getHeight(): number {
   else return 0;
 }
 
-export default function useScrollHeight(): number {
+export function useScrollHeight(): number {
   const [height, setHeight] = useState<number>(getHeight());
 
   useEffect(() => {

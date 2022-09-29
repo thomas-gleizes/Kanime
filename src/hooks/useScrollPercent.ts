@@ -11,7 +11,7 @@ function getPercent(): number {
   } else return 0;
 }
 
-export default function useScrollPercent(): number {
+export function useScrollPercent(): number {
   const [percent, setPercent] = useState<number>(getPercent());
 
   useEffect(() => {

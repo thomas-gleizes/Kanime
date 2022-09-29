@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLayoutContext } from 'context/layout.context';
 
-export default function useHideHeader() {
+export function useHideHeader() {
   const { header } = useLayoutContext();
 
   useEffect(() => {

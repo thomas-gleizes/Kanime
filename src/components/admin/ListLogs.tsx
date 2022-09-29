@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { FaEye } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import { useQuery } from '@tanstack/react-query';
@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { logsApi } from 'api';
-import usePaginations from '../../hooks/usePaginations';
+import { usePagination } from 'hooks';
 import Pagination from 'components/layouts/Pagination';
 
 const LIMIT = 40;
@@ -22,7 +22,7 @@ const LIMIT = 40;
 const fetchLogs = (page: number) => logsApi.showAll({ limit: LIMIT, skip: page * LIMIT });
 
 const ListLogs: Component = () => {
-  const { value, actions } = usePaginations(200, 8);
+  const { value, actions } = usePagination(200, 8);
 
   const { isLoading, data, isFetching, isPreviousData } = useQuery(
     ['projects', value],

@@ -7,7 +7,7 @@ type useDialogResult = <Props, Result>(
   props: Props
 ) => Promise<Result>;
 
-export default function useDialog(options?: DialogOptions): useDialogResult {
+export function useDialog(options?: DialogOptions): useDialogResult {
   const { addDialog } = useDialogContext();
 
   return (component, props) =>

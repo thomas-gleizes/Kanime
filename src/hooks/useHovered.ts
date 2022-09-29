@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-export default function useHovered<T extends HTMLElement>(
+export function useHovered<T extends HTMLElement>(
   initialValue: boolean = false
 ): [React.RefObject<T>, boolean] {
   const ref = useRef<T>();
