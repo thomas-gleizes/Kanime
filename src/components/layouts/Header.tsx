@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid';
+import { useClickAway } from 'react-use';
 import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import Link from 'next/link';
@@ -63,13 +64,7 @@ const Header: Component = () => {
     else setHeaderTransparent(false);
   }, [activeTransparent, scrollHeight, headerHovered]);
 
-  // useEffect(() => {
-  //   const listener = (event) => {
-  //     console.log('Event', event.target);
-  //   };
-  //
-  //   document.body.addEventListener('click', listener);
-  // }, []);
+  useClickAway(headerRef, () => setExtend(false));
 
   if (header.hiddenHeader) return null;
 
@@ -88,7 +83,7 @@ const Header: Component = () => {
               headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
             )}
           >
-            <div className="flex items-center justify-between h-[95%] my-auto max-w-[1500px] w-full mx-auto">
+            <div className="flex items-center justify-between h-[95%] my-auto max-w-[1200px] w-full mx-auto">
               <div className="flex items-center space-x-8">
                 <div className="w-fit">
                   <Link href={routes.home}>

@@ -4,12 +4,12 @@ import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { logsMapper } from 'mappers';
 import { logModel } from 'models';
-import { AuthAdminGuard } from 'decorators';
+import { AdminGuard } from 'decorators';
 import { QueryParamsDto } from 'dto';
 
 class LogsHandler extends ApiHandler {
   @Get()
-  @AuthAdminGuard()
+  @AdminGuard()
   async show(@Query(ValidationPipe) params: QueryParamsDto): Promise<LogsResponse> {
     const logs = await logModel.show(params);
 

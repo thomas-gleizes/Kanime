@@ -1,111 +1,113 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import * as Yup from 'yup';
-import { Form, Formik } from 'formik';
+import { useForm } from 'react-hook-form';
+import { classValidatorResolver } from '@hookform/resolvers/class-validator';
+import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
 import type { Page } from 'next/app';
+import { ssrHandler } from 'services/handler.service';
 import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
-import { registerSchema } from 'resources/validations';
 import { routes } from 'resources/routes';
-import { Field } from 'components/common/formik';
+import { RegisterDto } from 'dto';
 import Button from 'components/common/Button';
 
-type registerPayload = Yup.TypeOf<typeof registerSchema>;
+export const getServerSideProps = ssrHandler<{}>(async (context) => {
+  if (context.req.session.user)
+    return {
+      redirect: {
+        permanent: false,
+        destination: routes.users.page(context.req.session.user.slug),
+      },
+    };
 
-const initialValues: registerPayload = {
+  return { props: {} };
+});
+
+const defaultValues: RegisterDto = {
   email: '',
   username: '',
   password: '',
   confirmPassword: '',
 };
 
+const resolver = classValidatorResolver(RegisterDto);
+
 const RegisterPage: Page = () => {
   const { signIn } = useUserContext();
   const router = useRouter();
 
-  const handleSubmit = async (values) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterDto>({ defaultValues, resolver });
+
+  const onSubmit = async (values) => {
     try {
       const { user } = await authenticationApi.register(values);
       signIn(user);
-
       await router.push(routes.users.page(user.slug));
     } catch (e) {}
   };
 
   return (
-    <>
-      <div className="flex justify-center items-center h-[80vh] bg-gray-50">
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={registerSchema}
-        >
-          <Form className="max-w-md w-full bg-white border rounded shadow-lg p-6">
-            <div className="mb-4">
-              <p className="text-gray-600">Inscription</p>
-              <h2 className="text-xl font-bold">
-                Rejoignez {process.env.NEXT_PUBLIC_APP_NAME}
-              </h2>
-            </div>
-            <div>
-              <div>
-                <Field
+    <div className="flex justify-center items-center h-[80vh] bg-gray-50">
+      <div className="max-w-md w-full bg-white border rounded shadow-lg p-6">
+        <div className="mb-4">
+          <p className="text-gray-600">Inscription</p>
+          <h2 className="text-xl font-bold">
+            Rejoignez{' '}
+            <span className="font-gang-of-three">{process.env.NEXT_PUBLIC_APP_NAME}</span>
+          </h2>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-2">
+              <FormControl isInvalid={!!errors.email}>
+                <FormLabel>Email</FormLabel>
+                <Input
                   type="email"
-                  name="email"
-                  label="Email"
-                  placeholder="exemple@kanime.fr"
-                  required
+                  placeholder="example@email.com"
+                  {...register('email')}
                 />
-              </div>
-              <div>
-                <Field
-                  type="text"
-                  name="username"
-                  label="Nom d'utilisateur"
-                  placeholder="john_doe"
-                />
-              </div>
-              <div>
-                <Field
+                {errors.email && (
+                  <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isInvalid={!!errors.username}>
+                <FormLabel>Nom d'utilisateur</FormLabel>
+                <Input placeholder="Kalat" {...register('username')} />
+                {errors.username && (
+                  <FormErrorMessage>{errors.username.message}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isInvalid={!!errors.password}>
+                <FormLabel>Mot de passe</FormLabel>
+                <Input type="password" placeholder="*****" {...register('password')} />
+                {errors.password && (
+                  <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+                )}
+              </FormControl>
+              <FormControl isInvalid={!!errors.confirmPassword}>
+                <FormLabel>Confirmez vote mot de passe</FormLabel>
+                <Input
                   type="password"
-                  name="password"
-                  label="Mot de passe"
-                  placeholder="password"
-                  required
+                  placeholder="*****"
+                  {...register('confirmPassword')}
                 />
-              </div>
-              <div>
-                <Field
-                  type="password"
-                  name="confirmPassword"
-                  label="Confirmez votre mot de passe"
-                  placeholder="password"
-                  required
-                />
-              </div>
+                {errors.confirmPassword && (
+                  <FormErrorMessage>{errors.confirmPassword.message}</FormErrorMessage>
+                )}
+              </FormControl>
             </div>
             <div>
-              <Button type="submit">Connexion</Button>
+              <Button type="submit">Inscription</Button>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex flex-row items-center">
-                <input
-                  type="checkbox"
-                  className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="comments"
-                  className="ml-2 text-sm font-normal text-gray-600"
-                >
-                  Se souvenir de moi
-                </label>
-              </div>
-            </div>
-          </Form>
-        </Formik>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -7,7 +7,7 @@ import { entriesMapper } from 'mappers';
 import { errorMessage } from 'resources/constants';
 import { PrismaEntryStatus } from 'resources/prisma';
 import ApiHandler from 'class/ApiHandler';
-import { GetSession } from 'decorators/getSession';
+import { GetSession } from 'decorators/getSession.decorator';
 import { QueryEntryListDto } from 'dto';
 
 class AnimesEntriesHandler extends ApiHandler {

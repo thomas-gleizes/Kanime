@@ -1,3 +1,3 @@
-export * from './authGuard';
-export * from './authAdminGuard';
-export * from './getSession';
+export * from './authGuard.decorator';
+export * from './adminGuard.decorator';
+export * from './getSession.decorator';

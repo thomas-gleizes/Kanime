@@ -7,12 +7,12 @@ import classnames from 'classnames';
 import { toast } from 'react-toastify';
 import { FaSearch } from 'react-icons/fa';
 import { BiLoaderCircle } from 'react-icons/bi';
-import ReactStars from 'react-stars';
 
 import { animesApi } from 'api';
 import { useKeyPress } from 'hooks';
 import { routes } from 'resources/routes';
 import timeout from 'utils/timeout';
+import StarsRating from 'components/common/StarsRating';
 
 interface Props {
   transparent: boolean;
@@ -136,10 +136,8 @@ const SearchBar: Component<Props> = ({ transparent }) => {
                                   <span>{anime.season_year}</span>
                                   <span>
                                     {anime.rating.average && (
-                                      <ReactStars
-                                        count={Math.round((84.4 / 100) * 5 * 10) / 10}
-                                        size={16}
-                                        color1={'#e1be00'}
+                                      <StarsRating
+                                        rating={Math.round(anime.rating.average / 20)}
                                       />
                                     )}
                                   </span>
