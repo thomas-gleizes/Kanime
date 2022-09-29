@@ -46,7 +46,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
   const initialValues: resetPasswordPayload = {
     newPassword: 'azerty',
     confirmPassword: 'azerty',
-    token: '',
+    token: token,
   };
 
   const handleSubmit = async (values: resetPasswordPayload) => {
@@ -64,7 +64,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
     <DefaultLayout>
       <div className="flex justify-center items-center h-[80vh] bg-gray-50">
         <Formik
-          initialValues={{ ...initialValues, token }}
+          initialValues={initialValues}
           onSubmit={handleSubmit}
           validationSchema={resetPasswordSchema}
         >

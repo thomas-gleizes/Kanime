@@ -12,8 +12,16 @@ class AnimesHandler extends ApiHandler {
     @Query(ValidationPipe) params: QueryParamsDto
   ): Promise<AnimesListResponse> {
     const animes = await animeModel.all(params);
+    const total = await animeModel.countTotal();
 
-    return { success: true, animes: animesMapper.many(animes) };
+    return {
+      success: true,
+      meta: {
+        total,
+        count: animes.length,
+      },
+      records: animesMapper.many(animes),
+    };
   }
 }
 

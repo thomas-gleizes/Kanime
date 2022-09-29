@@ -4,14 +4,14 @@
 
 html,
 body {
-    padding: 0;
-    margin: 0;
-    font-family: Asap, sans-serif;
+  padding: 0;
+  margin: 0;
+  font-family: Asap, sans-serif;
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 input,
@@ -19,8 +19,6 @@ button,
 select,
 option,
 textarea {
-    outline: unset !important;
-    width: inherit;
+  outline: unset !important;
+  width: inherit;
 }
-
-

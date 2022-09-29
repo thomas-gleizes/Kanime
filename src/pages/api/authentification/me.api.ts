@@ -6,7 +6,7 @@ import { userModel } from 'models';
 import ApiHandler from 'class/ApiHandler';
 import { GetSession, AuthGuard } from 'decorators';
 
-class RefreshHandler extends ApiHandler {
+class AuthProfilHandler extends ApiHandler {
   @Get()
   @AuthGuard()
   async refresh(@GetSession() session): Promise<RefreshUserResponse> {
@@ -16,4 +16,4 @@ class RefreshHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(RefreshHandler);
+export default apiHandler(AuthProfilHandler);

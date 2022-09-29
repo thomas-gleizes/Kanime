@@ -5,7 +5,6 @@ import { animesMapper } from 'mappers';
 import Title from 'components/layouts/Title';
 import PopularAnimes from 'components/landing/PopularAnimes';
 import HighRatingAnimes from 'components/landing/HighRatingAnimes';
-import { useEffect } from 'react';
 
 interface Props {
   time: number;
@@ -29,13 +28,11 @@ export const getStaticProps: StaticProps<Props> = async () => {
         rated: animesMapper.many(ratedAnimes),
       },
     },
-    revalidate: 60,
+    revalidate: 60 * 5,
   };
 };
 
 const HomePage: Page<Props> = ({ time, animes }) => {
-  useEffect(() => console.log('Animes', animes), [animes]);
-
   return (
     <>
       <Title>Accueil</Title>
@@ -55,7 +52,7 @@ const HomePage: Page<Props> = ({ time, animes }) => {
 
           <div className="flex flex-col space-y-3 bg-red-500 h-40 w-full">
             <HighRatingAnimes animes={animes.rated} />
-            <HighRatingAnimes animes={animes.popular} />
+            <PopularAnimes animes={animes.popular} />
           </div>
         </div>
       </div>

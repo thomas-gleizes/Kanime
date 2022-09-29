@@ -10,3 +10,11 @@ interface ErrorPage {
 declare interface ApiResponse {
   success: true;
 }
+
+declare interface ApiResponseList<T> extends ApiResponse {
+  meta: {
+    total: number;
+    count: number;
+  };
+  records: T;
+}

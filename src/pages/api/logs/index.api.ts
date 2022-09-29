@@ -12,8 +12,16 @@ class LogsHandler extends ApiHandler {
   @AdminGuard()
   async show(@Query(ValidationPipe) params: QueryParamsDto): Promise<LogsResponse> {
     const logs = await logModel.show(params);
+    const total = await logModel.countTotal();
 
-    return { success: true, logs: logsMapper.many(logs) };
+    return {
+      success: true,
+      meta: {
+        total,
+        count: logs.length,
+      },
+      records: logsMapper.many(logs),
+    };
   }
 }
 

@@ -1,65 +1,64 @@
 /* font: Gang of Three */
 @font-face {
-    font-family: 'Gang of Three';
-    src: url('/fonts/go3v2.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 300;
+  font-family: 'Gang of Three';
+  src: url('/fonts/go3v2.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300;
 }
-
 
 /* font: Asap */
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-Bold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: bold;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-Bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: bold;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-BoldItalic.ttf') format('truetype');
-    font-style: italic;
-    font-weight: bold;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-BoldItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: bold;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-Italic.ttf') format('truetype');
-    font-style: italic;
-    font-weight: normal;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-Italic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: normal;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-Medium.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 500;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-Medium.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 500;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-MediumItalic.ttf') format('truetype');
-    font-style: italic;
-    font-weight: 500;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-MediumItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 500;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-Regular.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: normal;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-SemiBold.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 600;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-SemiBold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 600;
 }
 
 @font-face {
-    font-family: 'Asap';
-    src: url('/fonts/asap/Asap-SemiBoldItalic.ttf') format('truetype');
-    font-style: italic;
-    font-weight: 600;
+  font-family: 'Asap';
+  src: url('/fonts/asap/Asap-SemiBoldItalic.ttf') format('truetype');
+  font-style: italic;
+  font-weight: 600;
 }

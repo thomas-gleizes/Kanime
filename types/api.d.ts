@@ -55,9 +55,7 @@ interface CreateFollowResponse extends ApiResponse {
 
 /** animes */
 
-interface AnimesListResponse extends ApiResponse {
-  animes: Animes;
-}
+interface AnimesListResponse extends ApiResponseList<Animes> {}
 
 interface AnimesSearchResponse extends ApiResponse {
   animes: Animes;
@@ -126,6 +124,4 @@ interface CountriesResponse extends ApiResponse {
 }
 
 /** logs */
-interface LogsResponse extends ApiResponse {
-  logs: Logs;
-}
+interface LogsResponse extends ApiResponseList<Logs> {}

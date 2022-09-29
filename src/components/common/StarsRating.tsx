@@ -9,6 +9,7 @@ const StarsRating: Component<Props> = ({ rating }) => {
     <div className="flex items-center -space-x-0.5">
       {Array.from({ length: 5 }).map((_, index) => (
         <svg
+          key={index}
           aria-hidden="true"
           className={classnames(
             'w-5 h-5',

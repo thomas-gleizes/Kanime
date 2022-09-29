@@ -8,9 +8,7 @@ interface Props {
 const Title: Component<Props> = ({ children }) => {
   return (
     <Head>
-      <title>
-        {children} | {process.env.NEXT_PUBLIC_APP_NAME}
-      </title>
+      <title>{children}</title>
     </Head>
   );
 };

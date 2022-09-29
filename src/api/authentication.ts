@@ -16,8 +16,8 @@ class AuthenticationApi extends Api {
     return this.post<RegisterResponse>('/register', payload);
   }
 
-  public refresh() {
-    return this.get<RefreshUserResponse>('/refresh');
+  public me() {
+    return this.get<RefreshUserResponse>('/me');
   }
 
   public signOut() {

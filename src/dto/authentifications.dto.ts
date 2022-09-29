@@ -34,32 +34,35 @@ export class RegisterDto {
 }
 
 export class SignInDto {
-  @IsEmail()
-  @IsNotEmpty()
+  @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
+  @IsNotEmpty({ message: "L'adresse email est requise" })
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'Le mot de passe doit être une chaîne de caractères' })
+  @IsNotEmpty({ message: 'Le mot de passe est requis' })
   password: string;
 
   @Type(() => Boolean)
-  @IsBoolean()
+  @IsBoolean({ message: 'Le champ remember doit être un booléen' })
   rememberMe: boolean;
 }
 
 export class ForgotPasswordDto {
-  @IsEmail()
-  @IsNotEmpty()
+  @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
+  @IsNotEmpty({ message: "L'adresse email est requise" })
   email: string;
 }
 
 export class ResetPasswordDto {
-  @IsString()
-  @IsNotEmpty()
-  @MinLength(5)
+  @IsString({ message: 'Le mot de passe doit être une chaîne de caractères' })
+  @IsNotEmpty({ message: 'Le mot de passe est requis' })
+  @MinLength(5, { message: 'Le mot de passe doit contenir au moins 5 caractères' })
+  @MaxLength(255, {
+    message: "Le nom d'utilisateur doit contenir au plus 255 caractères",
+  })
   newPassword: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsString({ message: 'Le token doit être une chaîne de caractères' })
+  @IsNotEmpty({ message: 'Le token est requis' })
   token: string;
 }

@@ -33,6 +33,10 @@ abstract class Model<Delegate> {
   //   });
   // }
 
+  public countTotal = (): Promise<number> =>
+    // @ts-ignore
+    this.model.count();
+
   protected getKeyParams(params?: modelParams): { take?: number; skip?: number } {
     return { skip: +params?.skip || 0, take: +params?.limit || 20 };
   }

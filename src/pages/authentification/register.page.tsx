@@ -76,7 +76,7 @@ const RegisterPage: Page = () => {
                 )}
               </FormControl>
               <FormControl isInvalid={!!errors.username}>
-                <FormLabel>Nom d'utilisateur</FormLabel>
+                <FormLabel>Nom d&apos;utilisateur</FormLabel>
                 <Input placeholder="Kalat" {...register('username')} />
                 {errors.username && (
                   <FormErrorMessage>{errors.username.message}</FormErrorMessage>
