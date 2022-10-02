@@ -22,22 +22,21 @@ const LIMIT = 40;
 const fetchLogs = (page: number) => logsApi.showAll({ limit: LIMIT, skip: page * LIMIT });
 
 const ListLogs: Component = () => {
-  const { value, actions } = usePagination(200, 8);
+  const { value, actions } = usePagination(Infinity, 1);
 
-  const { isLoading, data, isFetching, isPreviousData } = useQuery(
-    ['logs', value],
-    ({ queryKey: [, page] }) => fetchLogs(page as number),
-    { keepPreviousData: true }
-  );
-
-  useEffect(() => console.log('Data', data), [data]);
-  useEffect(() => console.log('Value', value), [value]);
+  const { data, isFetching } = useQuery(['logs', value], () => fetchLogs(value), {
+    keepPreviousData: true,
+  });
 
   const logs = useMemo(() => data?.records || [], [data]);
 
   return (
     <div>
-      <Pagination value={value} actions={actions} max={20} />
+      <Pagination
+        value={value}
+        actions={actions}
+        max={Math.floor(data?.meta.total / LIMIT) + 1}
+      />
       <div className="border rounded-md shadow-lg">
         <TableContainer>
           <Table size="xs">
@@ -53,34 +52,60 @@ const ListLogs: Component = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {logs.map((log, index) => (
-                <Tr key={index}>
-                  <Td className="px-2">
-                    {dayjs(log.createAt).format('DD/MM/YYYY à HH:mm:s')}
-                  </Td>
-                  <Td className="px-2">{log.method}</Td>
-                  <Td className="px-2">{log.path}</Td>
-                  <Td className="px-2">{log.ip}</Td>
-                  <Td className="px-2">{log.user && log.user.username}</Td>
-                  <Td className="px-2">
-                    <IconButton
-                      bgSize="xs"
-                      color="teal"
-                      variant="outline"
-                      aria-label=""
-                      icon={<FaEye />}
-                    />
-                  </Td>
-                  <Td className="px-2 text-center">
-                    <IconButton
-                      color="teal"
-                      variant="outline"
-                      aria-label=""
-                      icon={<FaEye />}
-                    />
-                  </Td>
-                </Tr>
-              ))}
+              {!isFetching
+                ? logs.map((log, index) => (
+                    <Tr key={index}>
+                      <Td className="px-2">
+                        {dayjs(log.createAt).format('DD/MM/YYYY à HH:mm:s')}
+                      </Td>
+                      <Td className="px-2">{log.method}</Td>
+                      <Td className="px-2">{log.path}</Td>
+                      <Td className="px-2">{log.ip}</Td>
+                      <Td className="px-2">{log.user?.username}</Td>
+                      <Td className="px-2">
+                        <IconButton
+                          bgSize="xs"
+                          color="teal"
+                          variant="outline"
+                          aria-label=""
+                          icon={<FaEye />}
+                        />
+                      </Td>
+                      <Td className="px-2 text-center">
+                        <IconButton
+                          color="teal"
+                          variant="outline"
+                          aria-label=""
+                          icon={<FaEye />}
+                        />
+                      </Td>
+                    </Tr>
+                  ))
+                : Array.from({ length: 8 }, (_, index) => (
+                    <Tr key={index}>
+                      <Td className="p-2">
+                        <div className="h-5 w-11/12 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-1/3 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-1/2 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-2/3 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-1/2 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-10 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                      <Td className="p-2">
+                        <div className="h-5 w-10 bg-gray-200 rounded-lg animate-pulse" />
+                      </Td>
+                    </Tr>
+                  ))}
             </Tbody>
           </Table>
         </TableContainer>
