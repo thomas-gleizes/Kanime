@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { FaEye } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import { useQuery } from '@tanstack/react-query';
 import {
   IconButton,
   Table,
@@ -25,8 +25,8 @@ const ListLogs: Component = () => {
   const { value, actions } = usePagination(200, 8);
 
   const { isLoading, data, isFetching, isPreviousData } = useQuery(
-    ['projects', value],
-    () => fetchLogs(value),
+    ['logs', value],
+    ({ queryKey: [, page] }) => fetchLogs(page as number),
     { keepPreviousData: true }
   );
 
