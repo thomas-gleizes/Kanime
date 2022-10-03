@@ -7,7 +7,7 @@ import type {
 import type { ParsedUrlQuery } from 'querystring';
 import { createHandler } from 'next-api-decorators';
 
-import { SsrError } from 'errors';
+import { SsrException } from '../exceptions';
 import { ssrLogger } from 'middlewares/logger.middleware';
 import { withSessionApi, withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
@@ -31,7 +31,7 @@ export function ssrHandler<
 
       return await handler(context);
     } catch (error) {
-      if (error instanceof SsrError) {
+      if (error instanceof SsrException) {
         trace('SsrError', error.stack);
 
         return {

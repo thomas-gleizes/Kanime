@@ -5,7 +5,7 @@ import type { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { entryModel, userFollowModel, userModel } from 'models';
 import { entriesMapper, usersMapper } from 'mappers';
-import { SsrError } from 'errors';
+import { SsrException } from '../../../exceptions';
 import { errorMessage } from 'resources/constants';
 import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks';
 import UserLayout from 'components/layouts/pages/UserLayout';
@@ -26,7 +26,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
     const { user: sessionUser } = req.session;
 
     const user = await userModel.findBySlug(slug as string);
-    if (!user) throw new SsrError(404, errorMessage.USER_NOT_FOUND);
+    if (!user) throw new SsrException(404, errorMessage.USER_NOT_FOUND);
 
     const visibility: Visibility[] = ['public'];
     if (sessionUser)

@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { FaEye } from 'react-icons/fa';
 import dayjs from 'dayjs';
-import { useQuery } from '@tanstack/react-query';
 import {
   IconButton,
   Table,
@@ -24,7 +24,7 @@ const fetchLogs = (page: number) => logsApi.showAll({ limit: LIMIT, skip: page *
 const ListLogs: Component = () => {
   const { value, actions } = usePagination(Infinity, 1);
 
-  const { data, isFetching } = useQuery(['projects', value], () => fetchLogs(value), {
+  const { data, isFetching } = useQuery(['logs', value], () => fetchLogs(value), {
     keepPreviousData: true,
   });
 

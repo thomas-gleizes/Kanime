@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
 import Title from 'components/layouts/Title';
+import Head from 'next/head';
 
 const ContextsProvider: Component<ContextsProviderProps> = ({ children }) => {
   const [queryClient] = useState(() => new QueryClient());
@@ -29,7 +30,7 @@ const ContextsProvider: Component<ContextsProviderProps> = ({ children }) => {
             <DialogContextProvider>
               {children}
               <ToastContainer
-                position="top-right"
+                position='top-right'
                 autoClose={5000}
                 hideProgressBar
                 newestOnTop={false}
@@ -54,7 +55,10 @@ const App = ({ Component, pageProps }: AppProps) => {
 
   return (
     <ContextsProvider>
-      <Title>Accueil</Title>
+      <Head>
+        <meta name='robots' content='noindex' />
+        <title>Accueil | {process.env.NEXT_PUBLIC_APP_NAME}</title>
+      </Head>
       <Header />
       <Layout {...pageProps}>
         <Component {...pageProps} />

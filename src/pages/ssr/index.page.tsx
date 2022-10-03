@@ -1,7 +1,7 @@
 import Error from 'next/error';
 
 import { Page } from 'next/app';
-import { SsrError } from 'errors';
+import { SsrException } from '../../exceptions';
 import { ssrHandler } from 'services/handler.service';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
@@ -11,7 +11,7 @@ type Props = { message: string } & {
 
 export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
   if (context.query.hasOwnProperty('error'))
-    throw new SsrError(400, 'ssr handler errors');
+    throw new SsrException(400, 'ssr handler exceptions');
 
   const name = context.req.session?.user?.username || 'anonymous';
 

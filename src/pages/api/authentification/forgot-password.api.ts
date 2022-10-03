@@ -1,8 +1,6 @@
 import {
   Body,
   Patch,
-  NotFoundException,
-  BadRequestException,
   ValidationPipe,
 } from 'next-api-decorators';
 
@@ -11,6 +9,8 @@ import { userModel } from 'models';
 import Security from 'services/security.service';
 import { DAY } from 'resources/constants';
 import { ForgotPasswordDto } from 'dto';
+import { BadRequestException, NotFoundException } from 'exceptions/http';
+
 
 class ForgotPasswordHandler {
   @Patch()

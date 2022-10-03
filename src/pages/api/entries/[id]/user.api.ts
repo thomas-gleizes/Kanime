@@ -1,4 +1,4 @@
-import { Get, NotFoundException, Param, ParseNumberPipe } from 'next-api-decorators';
+import { Get, Param, ParseNumberPipe } from 'next-api-decorators';
 import { Visibility } from '@prisma/client';
 
 import ApiHandler from 'class/ApiHandler';
@@ -6,6 +6,7 @@ import { apiHandler } from 'services/handler.service';
 import { entryModel, userFollowModel } from 'models';
 import { entriesMapper } from 'mappers';
 import { GetSession } from 'decorators';
+import { NotFoundException } from 'exceptions/http';
 
 class EntryUserHandler extends ApiHandler {
   @Get()

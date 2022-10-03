@@ -4,8 +4,7 @@ import {
   Body,
   Query,
   HttpCode,
-  ValidationPipe,
-  NotFoundException,
+  ValidationPipe
 } from 'next-api-decorators';
 import { EntryStatus } from '@prisma/client';
 
@@ -17,6 +16,7 @@ import { animeModel, entryModel } from 'models';
 import { animesMapper, entriesMapper } from 'mappers';
 import { AuthGuard, GetSession } from 'decorators';
 import { CreateEntryDto, QueryParamsDto } from 'dto';
+import { NotFoundException } from 'exceptions/http';
 
 class EntriesHandler extends ApiHandler {
   @Get()

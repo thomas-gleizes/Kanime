@@ -14,7 +14,7 @@ declare module 'next/app' {
 
   declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
     layout?: Component<{ children: ReactNode } & P>;
-    // errors?: Component<P>;
+    // exceptions?: Component<P>;
   };
 
   declare type ApiHandler<T> = NextApiHandler<T>;

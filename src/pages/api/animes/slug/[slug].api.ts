@@ -1,10 +1,11 @@
-import { Get, Query, NotFoundException } from 'next-api-decorators';
+import { Get, Query } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
-import { errorMessage } from 'resources/constants';
 import { animesMapper } from 'mappers';
 import { animeModel } from 'models';
+import { errorMessage } from 'resources/constants';
+import { NotFoundException } from 'exceptions/http';
 
 class AnimesSlugHandler extends ApiHandler {
   @Get()

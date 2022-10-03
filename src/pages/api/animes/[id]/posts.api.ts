@@ -1,10 +1,8 @@
 import {
-  BadRequestException,
   Body,
   Delete,
   Get,
   HttpCode,
-  NotFoundException,
   ParseNumberPipe,
   Post,
   Query,
@@ -19,6 +17,8 @@ import HttpStatus from 'resources/HttpStatus';
 import { errorMessage } from 'resources/constants';
 import { AnimePostDto, QueryParamsDto } from 'dto';
 import { GetSession, AuthGuard } from 'decorators';
+import { NotFoundException, BadRequestException } from 'exceptions/http';
+
 
 class AnimePostHandler extends ApiHandler {
   @Get()

@@ -1,9 +1,10 @@
-import ApiHandler from 'class/ApiHandler';
 import { Get, Query, ValidationPipe } from 'next-api-decorators';
-import { QueryParamsDto } from 'dto/global.dto';
-import { sagaModel } from 'models';
+
+import ApiHandler from 'class/ApiHandler';
 import { apiHandler } from 'services/handler.service';
+import { sagaModel } from 'models';
 import { sagasMapper } from 'mappers';
+import { QueryParamsDto } from 'dto';
 
 class SagasHandler extends ApiHandler {
   @Get()

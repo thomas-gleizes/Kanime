@@ -4,9 +4,7 @@ import {
   HttpCode,
   ParseNumberPipe,
   Post,
-  Query,
-  BadRequestException,
-  NotFoundException,
+  Query
 } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
@@ -15,8 +13,9 @@ import { errorMessage } from 'resources/constants';
 import HttpStatus from 'resources/HttpStatus';
 import { userFollowModel, userModel } from 'models';
 import { usersMapper } from 'mappers';
-import { ApiError } from 'errors';
 import { GetSession, AuthGuard } from 'decorators';
+import { NotFoundException, BadRequestException } from 'exceptions/http';
+
 
 class UserFollowHandler extends ApiHandler {
   @Get()
@@ -67,7 +66,7 @@ class UserFollowHandler extends ApiHandler {
 
       return { success: true };
     } catch (e) {
-      throw new ApiError(HttpStatus.BAD_REQUEST, errorMessage.UNFOLLOW);
+      throw new BadRequestException(errorMessage.UNFOLLOW);
     }
   }
 }
