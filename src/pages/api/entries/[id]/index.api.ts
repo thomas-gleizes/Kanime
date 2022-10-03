@@ -6,8 +6,7 @@ import {
   Query,
   HttpCode,
   ParseNumberPipe,
-  ValidationPipe,
-  NotFoundException,
+  ValidationPipe
 } from 'next-api-decorators';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { EntryStatus, Visibility } from '@prisma/client';
@@ -19,6 +18,7 @@ import { entriesMapper } from 'mappers';
 import HttpStatus from 'resources/HttpStatus';
 import { GetSession, AuthGuard } from 'decorators';
 import { UpdateEntryDto } from 'dto';
+import { NotFoundException } from 'exceptions/http';
 
 class EntryHandler extends ApiHandler {
   @Get()
@@ -98,4 +98,5 @@ class EntryHandler extends ApiHandler {
     }
   }
 }
+
 export default apiHandler(EntryHandler);

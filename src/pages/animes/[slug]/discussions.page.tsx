@@ -5,7 +5,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animeModel, postModel } from 'models';
 import { animesMapper, postsMapper } from 'mappers';
-import { SsrError } from 'errors';
+import { SsrException } from '../../../exceptions';
 import { errorMessage } from 'resources/constants';
 import random from 'utils/random';
 import { Field } from 'components/common/formik';
@@ -21,7 +21,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
     const { slug } = params;
 
     const anime = await animeModel.findBySlug(slug);
-    if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
 
     const posts = await postModel.findByAnimes(anime.id);
 

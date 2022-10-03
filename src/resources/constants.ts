@@ -23,7 +23,7 @@ export const loggerReplaceKey = {
 
 export const errorMessage = {
   ACCESS_DENIED: 'Access denied',
-  INTERNAL_ERROR: 'Internal errors',
+  INTERNAL_ERROR: 'Internal exceptions',
   METHOD_NOT_ALLOWED: 'Method not allowed',
   NOT_FOUND: 'resources not found [404-00]',
   USER_NOT_FOUND: 'user not found [404-01]',

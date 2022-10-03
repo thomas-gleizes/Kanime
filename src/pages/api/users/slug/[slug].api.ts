@@ -1,10 +1,12 @@
-import { Get, Query, NotFoundException } from 'next-api-decorators';
+import { Get, Query } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { userModel } from 'models';
 import { errorMessage } from 'resources/constants';
 import { usersMapper } from 'mappers';
+import { NotFoundException } from 'exceptions/http';
+
 
 class UserSlugHandler extends ApiHandler {
   @Get()

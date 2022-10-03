@@ -5,7 +5,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animeModel, categoryModel } from 'models';
 import { animesMapper, categoriesMapper } from 'mappers';
-import { SsrError } from 'errors';
+import { SsrException } from '../../../exceptions';
 import { errorMessage } from 'resources/constants';
 import { routes } from 'resources/routes';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
@@ -19,7 +19,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
     const { slug } = params;
 
     const anime = await animeModel.findBySlug(slug);
-    if (!anime) throw new SsrError(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
 
     const categories = await categoryModel.findByAnimeId(anime.id);
 

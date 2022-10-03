@@ -20,7 +20,7 @@
     "paths": {
       "api": ["api"],
       "class/*": ["class/*"],
-      "errors": ["errors"],
+      "exceptions": ["exceptions"],
       "components/*": ["components/*"],
       "context/*": ["context/*"],
       "hooks": ["hooks"],

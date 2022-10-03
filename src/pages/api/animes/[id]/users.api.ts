@@ -1,9 +1,8 @@
 import {
   Get,
-  NotFoundException,
   ParseNumberPipe,
   Query,
-  ValidationPipe,
+  ValidationPipe
 } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
@@ -12,6 +11,8 @@ import { errorMessage } from 'resources/constants';
 import { animeModel, userModel } from 'models';
 import { usersMapper } from 'mappers';
 import { QueryParamsDto } from 'dto';
+import { NotFoundException } from 'exceptions/http';
+
 
 class AnimesUserHandler extends ApiHandler {
   @Get()

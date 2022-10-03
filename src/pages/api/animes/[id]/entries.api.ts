@@ -1,4 +1,4 @@
-import { Get, Query, ParseNumberPipe, NotFoundException } from 'next-api-decorators';
+import { Get, Query, ParseNumberPipe } from 'next-api-decorators';
 import { Visibility } from '@prisma/client';
 
 import { apiHandler } from 'services/handler.service';
@@ -9,6 +9,7 @@ import { PrismaEntryStatus } from 'resources/prisma';
 import ApiHandler from 'class/ApiHandler';
 import { GetSession } from 'decorators/getSession.decorator';
 import { QueryEntryListDto } from 'dto';
+import { NotFoundException } from 'exceptions/http';
 
 class AnimesEntriesHandler extends ApiHandler {
   @Get()

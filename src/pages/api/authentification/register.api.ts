@@ -4,11 +4,11 @@ import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
 import HttpStatus from 'resources/HttpStatus';
 import ApiHandler from 'class/ApiHandler';
-import { ApiError } from 'errors';
 import { userModel } from 'models';
 import { usersMapper } from 'mappers';
 import { GetSession } from 'decorators';
 import { RegisterDto } from 'dto';
+import { BadRequestException } from 'exceptions/http';
 
 class RegisterHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
@@ -24,14 +24,14 @@ class RegisterHandler extends ApiHandler {
     if (users.length) {
       let key = 'email';
       if (users[0].username === body.username) key = 'username';
-      throw new ApiError(HttpStatus.CONFLICT, `${key} already exist`);
+      throw new BadRequestException(`${key} already exist`);
     }
 
     const user = usersMapper.one(
       await userModel.create({
         username: body.username,
         email: body.email,
-        password: Security.sha512(body.password + body.username),
+        password: Security.sha512(body.password + body.username)
       })
     );
 

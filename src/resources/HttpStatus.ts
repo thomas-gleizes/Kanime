@@ -269,7 +269,7 @@ enum HttpStatus {
   MISDIRECTED_REQUEST = 421,
 
   /**
-   * The request was well-formed but was unable to be followed due to semantic errors.
+   * The request was well-formed but was unable to be followed due to semantic exceptions.
    */
   UNPROCESSABLE_ENTITY = 422,
 

@@ -4,7 +4,7 @@ import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { sagasMapper } from 'mappers';
 import { sagaModel } from 'models';
-import { QueryParamsDto } from 'dto/global.dto';
+import { QueryParamsDto } from 'dto';
 
 class SagaSearchHandler extends ApiHandler {
   @Get()
