@@ -57,7 +57,7 @@ const App = ({ Component, pageProps }: AppProps) => {
     <ContextsProvider>
       <Head>
         <meta name='robots' content='noindex' />
-        <title>Accueil | K'Anime</title>
+        <title>Accueil | {process.env.NEXT_PUBLIC_APP_NAME}</title>
       </Head>
       <Header />
       <Layout {...pageProps}>

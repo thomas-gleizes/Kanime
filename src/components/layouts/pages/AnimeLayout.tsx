@@ -120,7 +120,7 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
         // @ts-ignore
         (response) => setEntry(response.entry)
       );
-    else router.push(routes.authentification.signIn);
+    else void router.push(routes.authentification.signIn);
   };
 
   if (error) return <Error statusCode={error.statusCode} title={error.message} />;
