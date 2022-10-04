@@ -31,7 +31,7 @@ class RegisterHandler extends ApiHandler {
       await userModel.create({
         username: body.username,
         email: body.email,
-        password: Security.sha512(body.password + body.username)
+        password: Security.sha512(body.password + body.username),
       })
     );
 

@@ -1,4 +1,4 @@
-import { Patch, Body,  ValidationPipe } from 'next-api-decorators';
+import { Patch, Body, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import { userModel } from 'models';
@@ -6,7 +6,6 @@ import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
 import { ResetPasswordDto } from 'dto';
 import { NotFoundException } from 'exceptions/http';
-
 
 class ResetPasswordHandler extends ApiHandler {
   @Patch()

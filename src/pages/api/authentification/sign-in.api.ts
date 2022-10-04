@@ -10,7 +10,6 @@ import { GetSession } from 'decorators';
 import { SignInDto } from 'dto';
 import { BadRequestException } from 'exceptions/http';
 
-
 class SignInInHandler extends ApiHandler {
   @Post('/')
   async get(

@@ -9,7 +9,6 @@ import { entriesMapper } from 'mappers';
 import { GetSession } from 'decorators';
 import { QueryEntryListDto } from 'dto';
 
-
 class UserEntriesHandler extends ApiHandler {
   @Get()
   async get(

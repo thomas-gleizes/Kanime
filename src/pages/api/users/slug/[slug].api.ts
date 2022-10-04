@@ -7,7 +7,6 @@ import { errorMessage } from 'resources/constants';
 import { usersMapper } from 'mappers';
 import { NotFoundException } from 'exceptions/http';
 
-
 class UserSlugHandler extends ApiHandler {
   @Get()
   async get(@Query('slug') slug: string): Promise<ShowUserResponse> {

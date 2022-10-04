@@ -6,7 +6,7 @@ import {
   Query,
   HttpCode,
   ParseNumberPipe,
-  ValidationPipe
+  ValidationPipe,
 } from 'next-api-decorators';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { EntryStatus, Visibility } from '@prisma/client';

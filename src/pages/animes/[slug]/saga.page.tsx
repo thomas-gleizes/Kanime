@@ -4,7 +4,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animeModel, sagaModel } from 'models';
 import { animesMapper, sagasMapper } from 'mappers';
-import { SsrException } from '../../../exceptions';
+import { SsrException } from 'exceptions';
 import { errorMessage } from 'resources/constants';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 
@@ -18,7 +18,8 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
 
     const anime = await animeModel.findBySlug(slug);
 
-    if (!anime || !anime.saga_id) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime || !anime.saga_id)
+      throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
 
     const saga = await sagaModel.findById(anime.saga_id);
 

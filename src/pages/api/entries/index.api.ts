@@ -1,11 +1,4 @@
-import {
-  Get,
-  Post,
-  Body,
-  Query,
-  HttpCode,
-  ValidationPipe
-} from 'next-api-decorators';
+import { Get, Post, Body, Query, HttpCode, ValidationPipe } from 'next-api-decorators';
 import { EntryStatus } from '@prisma/client';
 
 import { apiHandler } from 'services/handler.service';

@@ -4,7 +4,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animeModel } from 'models';
 import { animesMapper } from 'mappers';
-import { SsrException } from '../../../exceptions';
+import { SsrException } from 'exceptions';
 import { errorMessage } from 'resources/constants';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
 

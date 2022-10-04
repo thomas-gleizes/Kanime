@@ -7,7 +7,7 @@ import type {
 import type { ParsedUrlQuery } from 'querystring';
 import { createHandler } from 'next-api-decorators';
 
-import { SsrException } from '../exceptions';
+import { SsrException } from 'exceptions';
 import { ssrLogger } from 'middlewares/logger.middleware';
 import { withSessionApi, withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';

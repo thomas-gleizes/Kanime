@@ -1,11 +1,4 @@
-import {
-  Delete,
-  Get,
-  HttpCode,
-  ParseNumberPipe,
-  Post,
-  Query
-} from 'next-api-decorators';
+import { Delete, Get, HttpCode, ParseNumberPipe, Post, Query } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
@@ -15,7 +8,6 @@ import { userFollowModel, userModel } from 'models';
 import { usersMapper } from 'mappers';
 import { GetSession, AuthGuard } from 'decorators';
 import { NotFoundException, BadRequestException } from 'exceptions/http';
-
 
 class UserFollowHandler extends ApiHandler {
   @Get()

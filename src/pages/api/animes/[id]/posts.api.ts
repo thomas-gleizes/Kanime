@@ -19,7 +19,6 @@ import { AnimePostDto, QueryParamsDto } from 'dto';
 import { GetSession, AuthGuard } from 'decorators';
 import { NotFoundException, BadRequestException } from 'exceptions/http';
 
-
 class AnimePostHandler extends ApiHandler {
   @Get()
   async show(

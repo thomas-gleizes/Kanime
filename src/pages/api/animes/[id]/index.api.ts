@@ -7,7 +7,6 @@ import { animesMapper } from 'mappers';
 import { animeModel } from 'models';
 import { NotFoundException } from 'exceptions/http';
 
-
 class AnimeHandler extends ApiHandler {
   @Get()
   async show(@Query('id', ParseNumberPipe) id: number): Promise<ShowAnimeResponse> {

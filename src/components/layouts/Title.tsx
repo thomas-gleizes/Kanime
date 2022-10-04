@@ -6,7 +6,6 @@ interface Props {
 }
 
 const Title: Component<Props> = ({ children }) => {
-
   const title = `${children} | ${process.env.NEXT_PUBLIC_APP_NAME}`;
 
   return (

@@ -7,7 +7,6 @@ import { userModel } from 'models';
 import { errorMessage } from 'resources/constants';
 import { NotFoundException } from 'exceptions/http';
 
-
 class UserHandler extends ApiHandler {
   @Get()
   async get(@Query('id', ParseNumberPipe) id: number): Promise<ShowUserResponse> {

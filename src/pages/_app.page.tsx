@@ -16,17 +16,16 @@ import 'simplebar/dist/simplebar.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
-import Title from 'components/layouts/Title';
 import Head from 'next/head';
 
-const ContextsProvider: Component<ContextsProviderProps> = ({ children }) => {
+const ContextsProvider: Component<ContextsProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
         <LayoutContextProvider>
-          <UserContextProvider>
+          <UserContextProvider initialUser={initialState.user}>
             <DialogContextProvider>
               {children}
               <ToastContainer
@@ -47,14 +46,16 @@ const ContextsProvider: Component<ContextsProviderProps> = ({ children }) => {
   );
 };
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps, session }: AppProps) => {
+  console.log('session app', session?.user.username);
+
   const Layout = useMemo<Component>(
     () => Component.layout || DefaultLayout,
     [Component.layout]
   );
 
   return (
-    <ContextsProvider>
+    <ContextsProvider initialState={{ user: session?.user }}>
       <Head>
         <meta name='robots' content='noindex' />
         <title>Accueil | {process.env.NEXT_PUBLIC_APP_NAME}</title>

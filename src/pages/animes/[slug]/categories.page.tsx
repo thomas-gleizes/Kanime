@@ -5,7 +5,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animeModel, categoryModel } from 'models';
 import { animesMapper, categoriesMapper } from 'mappers';
-import { SsrException } from '../../../exceptions';
+import { SsrException } from 'exceptions';
 import { errorMessage } from 'resources/constants';
 import { routes } from 'resources/routes';
 import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';

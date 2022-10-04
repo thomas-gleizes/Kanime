@@ -1,9 +1,4 @@
-import {
-  Get,
-  Query,
-  ParseNumberPipe,
-  ValidationPipe,
-} from 'next-api-decorators';
+import { Get, Query, ParseNumberPipe, ValidationPipe } from 'next-api-decorators';
 
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';

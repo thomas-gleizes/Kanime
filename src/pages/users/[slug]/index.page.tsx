@@ -5,7 +5,7 @@ import type { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { entryModel, userFollowModel, userModel } from 'models';
 import { entriesMapper, usersMapper } from 'mappers';
-import { SsrException } from '../../../exceptions';
+import { SsrException } from 'exceptions';
 import { errorMessage } from 'resources/constants';
 import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks';
 import UserLayout from 'components/layouts/pages/UserLayout';

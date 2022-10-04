@@ -12,7 +12,7 @@ export class SsrException extends Exception {
   public parse(): { statusCode: number; message: string } {
     return {
       statusCode: this._statusCode,
-      message: this.message
+      message: this.message,
     };
   }
 
@@ -20,4 +20,3 @@ export class SsrException extends Exception {
     return this._statusCode;
   }
 }
-

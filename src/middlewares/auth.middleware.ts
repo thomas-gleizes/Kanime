@@ -1,7 +1,7 @@
 import { ApiRequest, ApiResponse } from 'next/app';
 import Security from 'services/security.service';
 import { errorMessage } from 'resources/constants';
-import { UnauthorizedException } from 'next-api-decorators';
+import { UnauthorizedException } from 'exceptions/http';
 
 // TODO: refactor this
 export const authMiddleware = async (req: ApiRequest, res: ApiResponse<any>, next) => {

@@ -2,7 +2,7 @@ import { Page } from 'next/app';
 import { ssrHandler } from 'services/handler.service';
 import { animesMapper } from 'mappers';
 import { animeModel } from 'models';
-import { SsrException } from '../../exceptions';
+import { SsrException } from 'exceptions';
 import AnimeCard from 'components/common/anime/AnimeCard';
 
 interface Props {
