@@ -209,7 +209,7 @@ model EventLog {
 model AnimeImport {
   id               Int       @id @default(autoincrement())
   anime_id         Int?      @unique
-  kitsuId          Int
+  kitsu_id         Int
   slug             String
   canonical_title  String
   titles           String?   @db.LongText

@@ -105,7 +105,7 @@ CREATE OR REPLACE TABLE `entries` (
     `anime_id` INTEGER NOT NULL,
     `user_id` INTEGER NOT NULL,
     `status` ENUM('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
-    `rating` FLOAT NULL,
+    `rating` DOUBLE NULL,
     `progress` SMALLINT NOT NULL DEFAULT 0,
     `favorite` BOOLEAN NOT NULL DEFAULT FALSE,
     `started_at` DATE NULL,
@@ -118,6 +118,9 @@ CREATE OR REPLACE TABLE `entries` (
     PRIMARY KEY (`id`),
     UNIQUE KEY (`anime_id`, `user_id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE UNIQUE INDEX `entries_anime_id_user_id_key` ON `entries` (`anime_id`, `user_id`);
+DROP INDEX `anime_id` ON `entries`;
 
 -- CreateTable
 CREATE TABLE `reactions` (

@@ -25,29 +25,34 @@ async function main() {
       avatar_path: defaultUsersMedia.avatar,
       background_path: defaultUsersMedia.background,
       city: 'Montpellier',
-      gender: 'Male',
-    },
+      gender: 'Male'
+    }
   });
 
-  for (let i = 0; i < 30000; i++) {
-    const username: string = `User ${i}`;
-    const email: string = `user.${i}@kanime.dev`;
+  for (let i = 0; i < 100; i++) {
+    await prisma.user.createMany({
+      data: Array.from({ length: 40 }, (_, n) => {
+        const value = n * i;
 
-    await prisma.user.create({
-      data: {
-        username: username,
-        email: email,
-        slug: username.toLowerCase().replaceAll(' ', '-'),
-        real_email: removeDot(email),
-        email_verified: Math.random() > 0.4,
-        password: Security.sha512(password + username),
-        avatar_path: defaultUsersMedia.avatar,
-        background_path: defaultUsersMedia.background,
-        bio: faker.lorem.sentence(),
-        birthday: faker.date.past(),
-        gender: 'Male',
-        city: faker.address.city(),
-      },
+        const username: string = `User ${value}`;
+        const email: string = `user.${value}@kanime.dev`;
+
+        return {
+          username: username,
+          email: email,
+          slug: username.toLowerCase().replaceAll(' ', '-'),
+          real_email: removeDot(email),
+          email_verified: Math.random() > 0.4,
+          password: Security.sha512(password + username),
+          avatar_path: defaultUsersMedia.avatar,
+          background_path: defaultUsersMedia.background,
+          bio: faker.lorem.sentence(),
+          birthday: faker.date.past(),
+          gender: Math.random() > 0.5 ? 'Male' : 'Female',
+          city: faker.address.city()
+        };
+      }),
+      skipDuplicates: true
     });
   }
 }
@@ -57,6 +62,4 @@ main()
     console.error(e);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .finally(prisma.$disconnect);

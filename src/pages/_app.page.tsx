@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { ChakraProvider } from '@chakra-ui/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ChakraProvider } from '@chakra-ui/react';
 import 'reflect-metadata';
 
 import { AppProps } from 'next/app';
@@ -16,7 +17,6 @@ import 'simplebar/dist/simplebar.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
-import Head from 'next/head';
 
 const ContextsProvider: Component<ContextsProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(() => new QueryClient());
