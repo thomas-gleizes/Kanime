@@ -47,8 +47,6 @@ const ContextsProvider: Component<ContextsProviderProps> = ({ children, initialS
 };
 
 const App = ({ Component, pageProps, session }: AppProps) => {
-  console.log('session app', session?.user.username);
-
   const Layout = useMemo<Component>(
     () => Component.layout || DefaultLayout,
     [Component.layout]
