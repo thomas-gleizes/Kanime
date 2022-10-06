@@ -23,4 +23,6 @@ class ConnexionService extends PrismaClient {
   }
 }
 
-export default ConnexionService.create();
+export default process.env.NODE_ENV !== 'test'
+  ? ConnexionService.create()
+  : new PrismaClient();
