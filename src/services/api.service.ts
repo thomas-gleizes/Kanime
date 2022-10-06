@@ -12,7 +12,7 @@ declare module 'axios' {
 }
 
 ApiService.interceptors.response.use(
-  (response: AxiosResponse): ApiResponse => response.data,
+  (response: AxiosResponse) => response.data,
   (error: AxiosError) => {
     if (error.isAxiosError) {
       if (error.response.status === 401) {
