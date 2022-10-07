@@ -10,7 +10,7 @@ class CategoriesMapper extends Mapper<PrismaCategory, Category> {
       slug: resource.slug,
       name: resource.name,
       description: resource.description,
-      totalMediaCount: resource.total_media_count,
+      totalMediaCount: resource.totalMediaCount,
     };
   }
 }

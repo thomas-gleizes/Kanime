@@ -28,36 +28,36 @@ class PostModel extends Model<PrismaPostsDelegate> {
     userId: number
   ): Promise<PrismaPost> =>
     this.model.findFirst({
-      where: { anime_id: animeId, user_id: userId },
+      where: { animeId, userId },
     });
 
   public findByAnimes = (animeId: number, params?: modelParams): Promise<PrismaPosts> =>
     this.model.findMany({
       where: {
-        AND: [{ anime_id: animeId }, { parent_id: null }],
+        AND: [{ animeId }, { parentId: null }],
       },
       include: { user: true, replies: { include: { replies: true } } },
       ...this.getKeyParams(params),
     });
 
   public findByUser = (userId: number): Promise<PrismaPosts> =>
-    this.model.findMany({ where: { user_id: userId }, include: { anime: true } });
+    this.model.findMany({ where: { userId }, include: { anime: true } });
 
   public findReplies = (id: number): Promise<PrismaPosts> =>
-    this.model.findMany({ where: { parent_id: id }, include: { user: true } });
+    this.model.findMany({ where: { parentId: id }, include: { user: true } });
 
   public create = (data: createData): Promise<PrismaPost> =>
     this.model.create({
       data: {
-        anime_id: data.animeId,
-        user_id: data.userId,
+        animeId: data.animeId,
+        userId: data.userId,
         content: data.content,
-        parent_id: data.parentId,
+        parentId: data.parentId,
       },
     });
 
   public deleteParent = (id: number): Promise<any> =>
-    this.model.updateMany({ where: { parent_id: id }, data: { parent_id: null } });
+    this.model.updateMany({ where: { parentId: id }, data: { parentId: null } });
 
   public delete = (id: number): Promise<PrismaPost> =>
     this.model.delete({ where: { id } });

@@ -8,7 +8,7 @@ import { usersMapper } from 'mappers';
 import { errorMessage } from 'resources/constants';
 import { GetSession } from 'decorators';
 import { SignInDto } from 'dto';
-import { BadRequestException } from 'exceptions/http';
+import { UnauthorizedException } from 'exceptions/http';
 
 class SignInInHandler extends ApiHandler {
   @Post('/')
@@ -21,7 +21,7 @@ class SignInInHandler extends ApiHandler {
     const user = await userModel.findByEmail(body.email);
 
     if (!user || !Security.compare(body.password + user.username, user.password))
-      throw new BadRequestException(errorMessage.AUTH_LOGIN);
+      throw new UnauthorizedException(errorMessage.AUTH_LOGIN);
 
     const mappedUser = usersMapper.one(user);
 

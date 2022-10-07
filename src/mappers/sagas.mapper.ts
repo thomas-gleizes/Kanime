@@ -8,11 +8,11 @@ class SagasMapper extends Mapper<PrismaSaga, Saga> {
     const saga: Saga = {
       id: resource.id,
       slug: resource.slug,
-      canonicalTitle: resource.canonical_title,
+      canonicalTitle: resource.canonicalTitle,
       titles: jsonParser<Titles>(resource.titles),
       description: resource.description,
-      created_at: resource.created_at.toISOString(),
-      updated_at: resource.updated_at.toISOString(),
+      created_at: resource.createdAt.toISOString(),
+      updated_at: resource.updatedAt.toISOString(),
     };
 
     if (resource.animes) saga.animes = animesMapper.many(resource.animes);

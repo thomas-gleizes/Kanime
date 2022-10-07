@@ -6,12 +6,12 @@ class LogsMapper extends Mapper<PrismaPost, Post> {
   one(resource: PrismaPost): Post {
     const post: Post = {
       id: resource.id,
-      animeId: resource.anime_id,
-      userId: resource.user_id,
+      animeId: resource.animeId,
+      userId: resource.userId,
       content: resource.content,
-      idParent: resource.parent_id,
-      createdAt: resource.created_at.toISOString(),
-      updateAt: resource.updated_at.toISOString(),
+      idParent: resource.parentId,
+      createdAt: resource.createdAt.toISOString(),
+      updateAt: resource.updatedAt.toISOString(),
     };
 
     if (resource.anime) post.anime = animesMapper.one(resource.anime);

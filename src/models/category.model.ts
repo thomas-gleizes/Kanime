@@ -15,7 +15,7 @@ class CategoryModel extends Model<PrismaCategoryDelegate> {
   public findByAnimeId = (id: number, params?: modelParams): Promise<PrismaCategories> =>
     this.model.findMany({
       where: {
-        animes: { some: { anime_id: +id } },
+        animes: { some: { animeId: +id } },
       },
       ...this.getKeyParams(params),
     });

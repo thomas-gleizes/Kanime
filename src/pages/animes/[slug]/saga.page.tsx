@@ -18,10 +18,10 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
 
     const anime = await animeModel.findBySlug(slug);
 
-    if (!anime || !anime.saga_id)
+    if (!anime || !anime.sagaId)
       throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
 
-    const saga = await sagaModel.findById(anime.saga_id);
+    const saga = await sagaModel.findById(anime.sagaId);
 
     return {
       props: {

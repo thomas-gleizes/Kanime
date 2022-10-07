@@ -63,7 +63,7 @@ class AnimePostHandler extends ApiHandler {
 
     if (!post) throw new NotFoundException('Post not found');
 
-    if (post.user_id !== session.user.id)
+    if (post.userId !== session.user.id)
       throw new BadRequestException('You are not allowed to delete this post');
 
     await Promise.all([postModel.deleteParent(post.id), postModel.delete(post.id)]);

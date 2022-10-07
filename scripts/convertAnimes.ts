@@ -12,7 +12,7 @@ function getSeason(date: Date): AnimeSeason {
 async function run() {
   const prisma = new PrismaClient();
 
-  const animes = await prisma.animeImport.findMany({ where: { anime_id: null } });
+  const animes = await prisma.animeImport.findMany({ where: { animeId: null } });
 
   for (const anime of animes) {
     console.log(anime.id, anime.slug);
@@ -20,25 +20,25 @@ async function run() {
     await prisma.anime
       .create({
         data: {
-          kitsu_id: anime.kitsu_id,
+          kitsuId: anime.kitsuId,
           slug: anime.slug,
-          canonical_title: anime.canonical_title,
+          canonicalTitle: anime.canonicalTitle,
           titles: anime.titles,
           synopsis: anime.synopsis,
           description: anime.synopsis,
-          season: getSeason(new Date(anime.date_begin)),
-          season_year: `${new Date(anime.date_begin).getFullYear()}`,
-          date_begin: anime.date_begin,
-          date_end: anime.date_end,
-          rating_average: null,
-          rating_rank: null,
-          popularity_count: null,
-          popularity_rank: null,
+          season: getSeason(new Date(anime.dateBegin)),
+          seasonYear: `${new Date(anime.dateBegin).getFullYear()}`,
+          dateBegin: anime.dateBegin,
+          dateEnd: anime.dateEnd,
+          ratingAverage: null,
+          ratingRank: null,
+          popularityCount: null,
+          popularityRank: null,
           type: anime.type as AnimeType,
           poster: anime.poster,
           cover: anime.cover,
-          episode_count: anime.episode_count,
-          episode_length: anime.episode_length,
+          episodeCount: anime.episodeCount,
+          episodeLength: anime.episodeLength,
           status: anime.status as AnimeStatus,
         },
       })
@@ -46,7 +46,7 @@ async function run() {
         await prisma.animeImport.update({
           where: { id: anime.id },
           data: {
-            anime_id: newAnime.id,
+            animeId: newAnime.id,
           },
         });
       });

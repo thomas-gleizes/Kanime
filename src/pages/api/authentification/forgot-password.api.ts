@@ -15,8 +15,8 @@ class ForgotPasswordHandler {
     if (!user) throw new NotFoundException('email user not found');
 
     if (
-      user.last_ask_reset_password &&
-      user.last_ask_reset_password.getTime() + DAY > Date.now()
+      user.lastAskResetPassword &&
+      user.lastAskResetPassword.getTime() + DAY > Date.now()
     )
       throw new BadRequestException(
         'you can ask to change your password only one time each 24 hours'

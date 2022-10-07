@@ -33,9 +33,9 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.findUnique({
       where: {
-        anime_id_user_id: {
-          user_id: userId,
-          anime_id: animeId,
+        animeId_userId: {
+          userId,
+          animeId,
         },
       },
     });
@@ -43,14 +43,14 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public create = (userId: number, data: CreateEntryDto) =>
     this.model.create({
       data: {
-        anime_id: data.animeId,
-        user_id: userId,
+        animeId: data.animeId,
+        userId: userId,
         status: data.status,
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        started_at: new Date(data.startedAt),
-        finish_at: new Date(data.finishAt),
+        startedAt: new Date(data.startedAt),
+        finishAt: new Date(data.finishAt),
         visibility: data.visibility,
       },
     });
@@ -63,8 +63,8 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        started_at: new Date(data.startedAt),
-        finish_at: new Date(data.finishAt),
+        startedAt: new Date(data.startedAt),
+        finishAt: new Date(data.finishAt),
         visibility: data.visibility,
       },
     });
@@ -77,9 +77,9 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public get = (userId: number, animeId: number): Promise<PrismaEntry> =>
     this.model.findUnique({
       where: {
-        anime_id_user_id: {
-          anime_id: animeId,
-          user_id: userId,
+        animeId_userId: {
+          animeId,
+          userId,
         },
       },
     });
@@ -98,11 +98,11 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   ): Promise<PrismaEntry[]> => {
     return this.model.findMany({
       where: {
-        user_id: userId,
+        userId,
         visibility: { in: visibility },
         status: status || undefined,
       },
-      orderBy: [{ [orderBy.field]: orderBy.order }, { updated_at: 'desc' }],
+      orderBy: [{ [orderBy.field]: orderBy.order }, { updatedAt: 'desc' }],
       ...this.parseOptions(options),
     });
   };
@@ -121,11 +121,11 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   ): Promise<PrismaEntry[]> =>
     this.model.findMany({
       where: {
-        anime_id: animeId,
+        animeId,
         visibility: { in: visibility },
         status: status || undefined,
       },
-      orderBy: [{ [orderBy.field]: orderBy.order }, { updated_at: 'desc' }],
+      orderBy: [{ [orderBy.field]: orderBy.order }, { updatedAt: 'desc' }],
       ...this.parseOptions(options),
     });
 }

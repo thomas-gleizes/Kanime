@@ -35,7 +35,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
   public findByUser = (userId: number, params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
       where: {
-        entries: { some: { user_id: userId } },
+        entries: { some: { userId } },
       },
       ...this.getKeyParams(params),
     });
@@ -44,7 +44,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
     this.model.findMany({
       where: {
         OR: [
-          { canonical_title: { contains: query } },
+          { canonicalTitle: { contains: query } },
           { slug: { contains: query } },
           { titles: { contains: query } },
         ],
@@ -55,18 +55,18 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
   public findPopular = (params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
       where: {
-        NOT: [{ popularity_rank: null }],
+        NOT: [{ popularityRank: null }],
       },
       orderBy: {
-        popularity_rank: 'asc',
+        popularityRank: 'asc',
       },
       ...this.getKeyParams(params),
     });
 
   public findHighRated = (params?: modelParams): Promise<PrismaAnimes> =>
     this.model.findMany({
-      where: { NOT: { rating_rank: null } },
-      orderBy: { rating_rank: 'asc' },
+      where: { NOT: { ratingRank: null } },
+      orderBy: { ratingRank: 'asc' },
       ...this.getKeyParams(params),
     });
 }

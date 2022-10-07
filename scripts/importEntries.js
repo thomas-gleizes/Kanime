@@ -38,14 +38,14 @@ function getStatus(status) {
 
       await prisma.entry.create({
         data: {
-          user_id: 1,
-          anime_id: +anime.id,
+          userId: 1,
+          animeId: +anime.id,
           status: getStatus(entry.attributes.status),
           note: entry.attributes.notes,
           rating: +entry.attributes.ratingTwenty / 2,
           progress: +entry.attributes.progress,
-          started_at: entry.attributes.startedAt,
-          finish_at: entry.attributes.finishedAt,
+          startedAt: entry.attributes.startedAt,
+          finishAt: entry.attributes.finishedAt,
         },
       });
 

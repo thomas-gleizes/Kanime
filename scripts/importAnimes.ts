@@ -23,7 +23,7 @@ async function run() {
       console.log(anime.id, anime.attributes.slug);
 
       const finded = await prisma.animeImport.findFirst({
-        where: { kitsu_id: +anime.id },
+        where: { kitsuId: +anime.id },
       });
 
       if (finded) {
@@ -49,23 +49,23 @@ async function run() {
 
         await prisma.animeImport.create({
           data: {
-            kitsu_id: +anime.id,
+            kitsuId: +anime.id,
             slug: anime.attributes.slug,
-            canonical_title: anime.attributes.canonicalTitle,
+            canonicalTitle: anime.attributes.canonicalTitle,
             titles: JSON.stringify(anime.attributes.titles),
             synopsis: anime.attributes.synopsis,
             description: anime.attributes.description,
-            date_begin: new Date(anime.attributes.startDate),
-            date_end: new Date(anime.attributes.endDate),
-            rating_average: +anime.attributes.averageRating,
-            rating_rank: +anime.attributes.ratingRank,
-            popularity_count: +anime.attributes.userCount,
-            popularity_rank: +anime.attributes.popularityRank,
+            dateBegin: new Date(anime.attributes.startDate),
+            dateEnd: new Date(anime.attributes.endDate),
+            ratingAverage: +anime.attributes.averageRating,
+            ratingRank: +anime.attributes.ratingRank,
+            popularityCount: +anime.attributes.userCount,
+            popularityRank: +anime.attributes.popularityRank,
             type: anime.attributes.showType,
             poster: JSON.stringify(poster),
             cover: JSON.stringify(cover),
-            episode_count: anime.attributes.episodeCount,
-            episode_length: anime.attributes.episodeLength,
+            episodeCount: anime.attributes.episodeCount,
+            episodeLength: anime.attributes.episodeLength,
             status: anime.attributes.status,
           },
         });

@@ -10,17 +10,17 @@ class FollowModel extends Model<PrismaFollowDelegate> {
   public create = (followerId: number, followId: number): Promise<PrismaFollow> =>
     this.model.create({
       data: {
-        follower_id: followerId,
-        follow_id: followId,
+        followerId,
+        followId,
       },
     });
 
   public delete = (followerId: number, followId: number): Promise<PrismaFollow> =>
     this.model.delete({
       where: {
-        follower_id_follow_id: {
-          follower_id: followerId,
-          follow_id: followId,
+        followerId_followId: {
+          followerId,
+          followId,
         },
       },
     });
@@ -29,9 +29,9 @@ class FollowModel extends Model<PrismaFollowDelegate> {
     this.model
       .findUnique({
         where: {
-          follower_id_follow_id: {
-            follower_id: followerId,
-            follow_id: followId,
+          followerId_followId: {
+            followerId,
+            followId,
           },
         },
       })

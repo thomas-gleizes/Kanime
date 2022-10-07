@@ -24,7 +24,7 @@ class LogModel extends Model<PrismaLogDelegate> {
     });
 
   public showUserLog = (userId: number, params: modelParams): Promise<PrismaLogs> =>
-    this.model.findMany({ where: { user_id: userId }, ...this.getKeyParams(params) });
+    this.model.findMany({ where: { userId }, ...this.getKeyParams(params) });
 
   public create = (data: crateData): Promise<PrismaLog> =>
     this.model.create({
@@ -34,7 +34,7 @@ class LogModel extends Model<PrismaLogDelegate> {
         ip: data.ip,
         body: data.body ? JSON.stringify(data.body) : null,
         params: data.params ? JSON.stringify(data.params) : null,
-        user_id: data.userId || null,
+        userId: data.userId || null,
       },
     });
 }

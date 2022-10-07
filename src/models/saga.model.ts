@@ -20,7 +20,7 @@ class SagaModel extends Model<PrismaSagaDelegate> {
     this.model.findMany({
       where: {
         OR: [
-          { canonical_title: { contains: query } },
+          { canonicalTitle: { contains: query } },
           { slug: { contains: query } },
           { titles: { contains: query } },
         ],

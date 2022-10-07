@@ -5,14 +5,14 @@ import axios from 'axios';
 async function run() {
   const prisma = new PrismaClient();
 
-  const { import_id: length } = await prisma.sagaImport.findFirst({
+  const { importId: length } = await prisma.sagaImport.findFirst({
     orderBy: { id: 'desc' },
     take: 1,
   });
   const animes = await prisma.animeImport.findMany({ skip: length });
 
   for (const anime of animes) {
-    const exist = await prisma.sagaImport.findFirst({ where: { import_id: anime.id } });
+    const exist = await prisma.sagaImport.findFirst({ where: { importId: anime.id } });
 
     if (exist) {
       console.log('Skip', anime.id, anime.slug);
@@ -20,7 +20,7 @@ async function run() {
     }
 
     const response = await axios.get(
-      `https://kitsu.io/api/edge/anime/${anime.kitsu_id}?include=mediaRelationships.destination`
+      `https://kitsu.io/api/edge/anime/${anime.kitsuId}?include=mediaRelationships.destination`
     );
 
     if (response.data.included) {
@@ -44,7 +44,7 @@ async function run() {
 
         await prisma.sagaImport.create({
           data: {
-            import_id: anime.id,
+            importId: anime.id,
             details: JSON.stringify(data),
             treat: false,
           },

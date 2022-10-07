@@ -43,10 +43,10 @@ class UserModel extends Model<PrismaUserDelegate> {
         username: data.username,
         slug: data.username.toLowerCase().replaceAll(' ', '-'),
         email: data.email,
-        real_email: emailHelpers.removeDot(data.email),
+        realEmail: emailHelpers.removeDot(data.email),
         password: data.password,
-        avatar_path: defaultUsersMedia.avatar,
-        background_path: defaultUsersMedia.background,
+        avatarPath: defaultUsersMedia.avatar,
+        backgroundPath: defaultUsersMedia.background,
       },
     });
 
@@ -54,13 +54,13 @@ class UserModel extends Model<PrismaUserDelegate> {
     this.model.update({
       where: { id },
       data: {
-        country_id: data.country_id,
+        countryId: data.country_id,
         city: data.city,
         bio: data.bio,
         gender: data.gender,
         birthday: data.birthday,
-        avatar_path: data.avatarPath || defaultUsersMedia.avatar,
-        background_path: data.backgroundPath || defaultUsersMedia.background,
+        avatarPath: data.avatarPath || defaultUsersMedia.avatar,
+        backgroundPath: data.backgroundPath || defaultUsersMedia.background,
       },
     });
 
@@ -71,15 +71,15 @@ class UserModel extends Model<PrismaUserDelegate> {
     this.model.update({
       where: { id },
       data: {
-        reset_password_token: token,
-        last_ask_reset_password: new Date(),
+        resetPasswordToken: token,
+        lastAskResetPassword: new Date(),
       },
     });
 
   public checkResetPasswordToken = (token: string): Promise<PrismaUser> =>
     this.model.findFirst({
       where: {
-        reset_password_token: token,
+        resetPasswordToken: token,
       },
     });
 
@@ -88,15 +88,15 @@ class UserModel extends Model<PrismaUserDelegate> {
       where: { id },
       data: {
         password: newPassword,
-        reset_password_token: null,
-        last_reset_password: new Date(),
+        resetPasswordToken: null,
+        lastAskResetPassword: new Date(),
       },
     });
 
   public findByEmail = (email: string): Promise<PrismaUser> =>
     this.model.findFirst({
       where: {
-        OR: [{ real_email: emailHelpers.removeDot(email) }, { email: email }],
+        OR: [{ realEmail: emailHelpers.removeDot(email) }, { email: email }],
       },
     });
 
@@ -106,14 +106,14 @@ class UserModel extends Model<PrismaUserDelegate> {
   ): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
-        OR: [{ real_email: emailHelpers.removeDot(email) }, { username }],
+        OR: [{ realEmail: emailHelpers.removeDot(email) }, { username }],
       },
     });
 
   public findFollows = (id: number, params?: modelParams): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
-        followers: { some: { follower_id: +id } },
+        followers: { some: { followerId: +id } },
       },
       ...this.getKeyParams(params),
     });
@@ -121,7 +121,7 @@ class UserModel extends Model<PrismaUserDelegate> {
   public findFollowers = (id: number, params?: modelParams): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
-        follows: { some: { follow_id: +id } },
+        follows: { some: { followId: +id } },
       },
       ...this.getKeyParams(params),
     });
@@ -129,7 +129,7 @@ class UserModel extends Model<PrismaUserDelegate> {
   public findByAnime = (animeId: number, params?: modelParams): Promise<PrismaUsers> =>
     this.model.findMany({
       where: {
-        animes: { some: { anime_id: animeId } },
+        animes: { some: { animeId } },
       },
       ...this.getKeyParams(params),
     });

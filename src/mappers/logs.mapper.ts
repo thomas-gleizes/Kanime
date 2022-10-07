@@ -12,7 +12,7 @@ class LogsMapper extends Mapper<PrismaLog, Log> {
       ip: '0.0.0.0',
       body: JsonParser(resource.body),
       params: JsonParser(resource.params),
-      createAt: resource.created_at.toISOString(),
+      createAt: resource.createdAt.toISOString(),
     };
 
     if (resource.user) log.user = usersMapper.one(resource.user);

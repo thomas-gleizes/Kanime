@@ -16,7 +16,7 @@ function exceptionHandler(error: unknown, req: NextApiRequest, res: NextApiRespo
     return res.status(500).json(error);
   }
 
-  console.trace('PRODUCTION ERROR', error);
+  trace('PRODUCTION ERROR', error);
   return res.status(500).json({ message: 'Internal Server Error' });
 }
 

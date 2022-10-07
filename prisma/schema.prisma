@@ -8,49 +8,49 @@ datasource db {
 }
 
 model Anime {
-  id               Int          @id @default(autoincrement())
-  kitsu_id         Int?         @unique
-  slug             String       @unique
-  canonical_title  String
-  titles           String?      @db.LongText
-  synopsis         String?      @db.Text
-  description      String?      @db.Text
-  season           AnimeSeason?
-  season_year      String?      @db.VarChar(4)
-  date_begin       DateTime?    @db.Date
-  date_end         DateTime?    @db.Date
-  rating_average   Float?       @db.Float
-  rating_rank      Int?         @db.UnsignedInt
-  popularity_count Int?         @db.UnsignedInt
-  popularity_rank  Int?         @db.UnsignedInt
-  type             AnimeType?
-  poster           String?      @db.LongText
-  cover            String?      @db.LongText
-  episode_count    Int?         @db.UnsignedInt
-  episode_length   Int?         @db.UnsignedInt
-  status           AnimeStatus  @default(unreleased)
-  saga_id          Int?
-  created_at       DateTime     @default(now()) @db.Timestamp(0)
-  updated_at       DateTime     @default(now()) @db.Timestamp(0)
+  id              Int          @id @default(autoincrement())
+  kitsuId         Int?         @unique @map("kitsu_id")
+  slug            String       @unique
+  canonicalTitle  String       @map("canonical_title")
+  titles          String?      @db.LongText
+  synopsis        String?      @db.Text
+  description     String?      @db.Text
+  season          AnimeSeason?
+  seasonYear      String?      @map("season_year") @db.VarChar(4)
+  dateBegin       DateTime?    @map("date_begin") @db.Date
+  dateEnd         DateTime?    @map("date_end") @db.Date
+  ratingAverage   Float?       @map("rating_average") @db.Float
+  ratingRank      Int?         @map("rating_rank") @db.UnsignedInt
+  popularityCount Int?         @map("popularity_count") @db.UnsignedInt
+  popularityRank  Int?         @map("popularity_rank") @db.UnsignedInt
+  type            AnimeType?
+  poster          String?      @db.LongText
+  cover           String?      @db.LongText
+  episodeCount    Int?         @map("episode_count") @db.UnsignedInt
+  episodeLength   Int?         @map("episode_length") @db.UnsignedInt
+  status          AnimeStatus  @default(unreleased)
+  sagaId          Int?         @map("saga_id") @db.UnsignedInt
+  createdAt       DateTime     @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt       DateTime     @default(now()) @map("updated_at") @db.Timestamp(0)
 
   entries    Entry[]
   posts      Post[]
-  saga       Saga?           @relation(fields: [saga_id], references: [id])
+  saga       Saga?           @relation(fields: [sagaId], references: [id])
   categories AnimeCategory[]
   import     AnimeImport?
 
-  @@index([canonical_title], map: "animes_canonical_title_index")
+  @@index([canonicalTitle], map: "animes_canonical_title_index")
   @@map("animes")
 }
 
 model Saga {
-  id              Int      @id @default(autoincrement())
-  slug            String   @unique
-  canonical_title String
-  titles          String?  @db.LongText
-  description     String?  @db.Text
-  created_at      DateTime @default(now()) @db.Timestamp(0)
-  updated_at      DateTime @default(now()) @db.Timestamp(0)
+  id             Int      @id @default(autoincrement())
+  slug           String   @unique
+  canonicalTitle String   @map("canonical_title")
+  titles         String?  @db.LongText
+  description    String?  @db.Text
+  createdAt      DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt      DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
   animes Anime[]
 
@@ -58,13 +58,13 @@ model Saga {
 }
 
 model Category {
-  id                Int      @id @default(autoincrement())
-  name              String
-  slug              String   @unique
-  description       String?  @db.Text
-  total_media_count Int      @default(0) @db.SmallInt
-  created_at        DateTime @default(now()) @db.Timestamp(0)
-  updated_at        DateTime @default(now()) @db.Timestamp(0)
+  id              Int      @id @default(autoincrement())
+  name            String
+  slug            String   @unique
+  description     String?  @db.Text
+  totalMediaCount Int      @default(0) @map("total_media_count") @db.SmallInt
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt       DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
   animes AnimeCategory[]
 
@@ -72,72 +72,72 @@ model Category {
 }
 
 model AnimeCategory {
-  anime_id    Int
-  category_id Int
-  created_at  DateTime @default(now()) @db.Timestamp(0)
-  updated_at  DateTime @default(now()) @db.Timestamp(0)
+  animeId    Int      @map("anime_id")
+  categoryId Int      @map("category_id")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  animes   Anime    @relation(fields: [anime_id], references: [id])
-  category Category @relation(fields: [category_id], references: [id])
+  animes   Anime    @relation(fields: [animeId], references: [id])
+  category Category @relation(fields: [categoryId], references: [id])
 
-  @@id([anime_id, category_id])
+  @@id([animeId, categoryId])
   @@map("animes_categories")
 }
 
 model User {
-  id                      Int        @id @default(autoincrement())
-  username                String     @unique
-  slug                    String     @unique
-  email                   String     @unique
-  password                String
-  avatar_path             String?
-  background_path         String?
-  bio                     String?    @db.Text
-  birthday                DateTime?  @db.Date
-  gender                  Gender     @default(Secret)
-  city                    String?
-  country_id              Int?
-  real_email              String     @unique
-  email_verified          Boolean    @default(false)
-  reset_password_token    String?    @db.VarChar(255)
-  last_ask_reset_password DateTime?
-  last_reset_password     DateTime   @default(now())
-  follow_count            Int        @default(0) @db.UnsignedSmallInt
-  follower_count          Int        @default(0) @db.UnsignedSmallInt
-  visibility              Visibility @default(public)
-  is_admin                Boolean    @default(false)
-  created_at              DateTime   @default(now()) @db.Timestamp(0)
-  updated_at              DateTime   @default(now()) @db.Timestamp(0)
+  id                   Int        @id @default(autoincrement())
+  username             String     @unique
+  slug                 String     @unique
+  email                String     @unique
+  password             String
+  avatarPath           String?    @map("avatar_path") @db.VarChar(255)
+  backgroundPath       String?    @map("background_path") @db.VarChar(255)
+  bio                  String?    @db.Text
+  birthday             DateTime?  @db.Date
+  gender               Gender     @default(Secret)
+  city                 String?
+  countryId            Int?       @map("country_id") @db.UnsignedInt
+  realEmail            String     @unique @map("real_email")
+  emailVerified        Boolean    @default(false) @map("email_verified")
+  resetPasswordToken   String?    @map("reset_password_token") @db.VarChar(255)
+  lastAskResetPassword DateTime?  @map("last_ask_reset_password")
+  lastResetPassword    DateTime   @default(now()) @map("last_reset_password")
+  followCount          Int        @default(0) @map("follow_count") @db.UnsignedSmallInt
+  followerCount        Int        @default(0) @map("follower_count") @db.UnsignedSmallInt
+  visibility           Visibility @default(public)
+  isAdmin              Boolean    @default(false) @map("is_admin")
+  createdAt            DateTime   @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt            DateTime   @default(now()) @map("updated_at") @db.Timestamp(0)
 
   animes    Entry[]
   posts     Post[]
   follows   UserFollow[] @relation("follows")
   followers UserFollow[] @relation("followers")
-  country   Country?     @relation(fields: [country_id], references: [id])
-  Log       Log[]
+  country   Country?     @relation(fields: [countryId], references: [id])
+  log       Log[]
 
   @@map("users")
 }
 
 model Entry {
   id         Int         @id @default(autoincrement())
-  anime_id   Int
-  user_id    Int
+  animeId    Int         @map("anime_id") @db.UnsignedInt
+  userId     Int         @map("user_id") @db.UnsignedInt
   status     EntryStatus @default(Wanted)
   rating     Float?
   progress   Int         @default(0) @db.SmallInt
   favorite   Boolean     @default(false)
-  started_at DateTime?   @db.Date
-  finish_at  DateTime?   @db.Date
+  startedAt  DateTime?   @map("started_at") @db.Date
+  finishAt   DateTime?   @map("finish_at") @db.Date
   note       String?     @db.MediumText
   visibility Visibility  @default(public)
-  created_at DateTime    @default(now()) @db.Timestamp(0)
-  updated_at DateTime    @default(now()) @db.Timestamp(0)
+  createdAt  DateTime    @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt  DateTime    @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  anime Anime @relation(fields: [anime_id], references: [id])
-  user  User  @relation(fields: [user_id], references: [id])
+  anime Anime @relation(fields: [animeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
 
-  @@unique([anime_id, user_id])
+  @@unique([animeId, userId])
   @@map("entries")
 }
 
@@ -145,38 +145,41 @@ model Post {
   id          Int      @id @default(autoincrement())
   content     String   @db.Text
   attachments String?  @db.Text
-  anime_id    Int
-  user_id     Int
-  parent_id   Int?
-  created_at  DateTime @default(now()) @db.Timestamp(0)
-  updated_at  DateTime @default(now()) @db.Timestamp(0)
+  animeId     Int      @map("anime_id") @db.UnsignedInt
+  userId      Int      @map("user_id") @db.UnsignedInt
+  parentId    Int?     @map("parent_id") @db.UnsignedInt
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  anime   Anime  @relation(fields: [anime_id], references: [id])
-  user    User   @relation(fields: [user_id], references: [id])
-  replyTo Post?  @relation("parent", fields: [parent_id], references: [id])
+  anime   Anime  @relation(fields: [animeId], references: [id])
+  user    User   @relation(fields: [userId], references: [id])
+  replyTo Post?  @relation("parent", fields: [parentId], references: [id])
   replies Post[] @relation("parent")
 
   @@map("posts")
 }
 
 model UserFollow {
-  follower_id Int
-  follow_id   Int
-  created_at  DateTime @default(now()) @db.Timestamp(0)
+  followerId Int      @map("follower_id")
+  followId   Int      @map("follow_id")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  follower User @relation("follows", fields: [follower_id], references: [id])
-  follow   User @relation("followers", fields: [follow_id], references: [id])
+  follower User @relation("follows", fields: [followerId], references: [id])
+  follow   User @relation("followers", fields: [followId], references: [id])
 
-  @@id([follower_id, follow_id])
+  @@id([followerId, followId])
   @@map("users_follows")
 }
 
 model Country {
-  id       Int     @id @default(autoincrement())
-  iso      String  @db.Char(2)
-  iso3     String? @db.VarChar(3)
-  name     String  @db.VarChar(80)
-  nicename String  @db.VarChar(80)
+  id        Int      @id @default(autoincrement())
+  iso       String   @db.Char(2)
+  iso3      String?  @db.VarChar(3)
+  name      String   @db.VarChar(80)
+  nicename  String   @db.VarChar(80)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
   users User[]
 
@@ -184,65 +187,69 @@ model Country {
 }
 
 model Log {
-  id         Int      @id @default(autoincrement())
-  path       String
-  method     Method
-  user_id    Int?
-  ip         String   @db.VarChar(64)
-  params     String?  @db.Text
-  body       String?  @db.Text
-  created_at DateTime @default(now()) @db.Timestamp(0)
+  id        Int      @id @default(autoincrement())
+  path      String
+  method    Method
+  userId    Int?     @map("user_id") @db.UnsignedInt
+  ip        String   @db.VarChar(64)
+  params    String?  @db.Text
+  body      String?  @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  user User? @relation(fields: [user_id], references: [id])
+  user User? @relation(fields: [userId], references: [id])
 
   @@map("logs")
 }
 
 model EventLog {
-  id         Int      @id @default(autoincrement())
-  name       String   @db.VarChar(64)
-  created_at DateTime @default(now()) @db.Timestamp(0)
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(64)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
   @@map("event_logs")
 }
 
 model AnimeImport {
-  id               Int       @id @default(autoincrement())
-  anime_id         Int?      @unique
-  kitsu_id         Int
-  slug             String
-  canonical_title  String
-  titles           String?   @db.LongText
-  synopsis         String?   @db.Text
-  description      String?   @db.Text
-  date_begin       DateTime? @db.Date
-  date_end         DateTime? @db.Date
-  rating_average   Float?
-  rating_rank      Int?      @db.UnsignedInt
-  popularity_count Float?
-  popularity_rank  Int?      @db.UnsignedInt
-  type             String?
-  poster           String?   @db.LongText
-  cover            String?   @db.LongText
-  episode_count    Int?      @db.UnsignedInt
-  episode_length   Int?      @db.UnsignedInt
-  status           String?
-  import_at        DateTime  @default(now()) @db.Timestamp(0)
+  id              Int       @id @default(autoincrement())
+  animeId         Int?      @unique @map("anime_id") @db.UnsignedInt
+  kitsuId         Int       @unique @map("kitsu_id") @db.UnsignedInt
+  slug            String
+  canonicalTitle  String    @map("canonical_title") @db.VarChar(255)
+  titles          String?   @db.LongText
+  synopsis        String?   @db.Text
+  description     String?   @db.Text
+  dateBegin       DateTime? @map("date_begin") @db.Date
+  dateEnd         DateTime? @map("date_end") @db.Date
+  ratingAverage   Float?    @map("rating_average")
+  ratingRank      Int?      @map("rating_rank") @db.UnsignedInt
+  popularityCount Float?    @map("popularity_count")
+  popularityRank  Int?      @map("popularity_rank") @db.UnsignedInt
+  type            String?
+  poster          String?   @db.LongText
+  cover           String?   @db.LongText
+  episodeCount    Int?      @map("episode_count") @db.UnsignedInt
+  episodeLength   Int?      @map("episode_length") @db.UnsignedInt
+  status          String?
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt       DateTime  @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  anime       Anime?      @relation(fields: [anime_id], references: [id])
-  saga_import SagaImport?
+  anime      Anime?      @relation(fields: [animeId], references: [id])
+  sagaImport SagaImport?
 
   @@map("import_animes")
 }
 
 model SagaImport {
   id        Int      @id @default(autoincrement())
-  import_id Int      @unique
+  importId  Int      @unique @map("import_id") @db.UnsignedInt
   details   String   @db.LongText
   treat     Boolean
-  import_at DateTime @default(now()) @db.Timestamp(0)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
-  import AnimeImport @relation(fields: [import_id], references: [id])
+  import AnimeImport @relation(fields: [importId], references: [id])
 
   @@map("import_sagas")
 }

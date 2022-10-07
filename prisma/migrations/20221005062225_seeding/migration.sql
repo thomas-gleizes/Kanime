@@ -1,5 +1,3 @@
--- This is an empty migration.
-
 CREATE OR REPLACE PROCEDURE generate_entries(IN i INT)
 BEGIN
     DECLARE n INT default 1;

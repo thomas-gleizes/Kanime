@@ -9,24 +9,24 @@ async function run() {
 
   for (const imp of imports) {
     const details = JSON.parse(imp.details);
-    const anime = await prisma.anime.findUnique({ where: { id: imp.import_id } });
+    const anime = await prisma.anime.findUnique({ where: { id: imp.importId } });
     const ids: number[] = details.map((d) => +d.kitsu_id);
 
     const animes = await prisma.anime.findMany({
-      where: { kitsu_id: { in: ids } },
+      where: { kitsuId: { in: ids } },
     });
 
-    const sagaAlreadyExist = animes.some((anime) => anime.saga_id);
+    const sagaAlreadyExist = animes.some((anime) => anime.sagaId);
 
-    console.log(anime.kitsu_id, anime.slug, sagaAlreadyExist);
+    console.log(anime.kitsuId, anime.slug, sagaAlreadyExist);
 
     if (sagaAlreadyExist) {
-      const sagaId = animes.find((a) => a.saga_id)?.saga_id;
+      const sagaId = animes.find((a) => a.sagaId)?.sagaId;
       if (sagaId) {
         for (const anime of animes) {
           await prisma.anime.update({
             where: { id: anime.id },
-            data: { saga_id: sagaId },
+            data: { sagaId: sagaId },
           });
         }
       }
@@ -34,7 +34,7 @@ async function run() {
       const saga = await prisma.saga.create({
         data: {
           slug: anime.slug,
-          canonical_title: anime.canonical_title,
+          canonicalTitle: anime.canonicalTitle,
           titles: anime.titles,
           description: anime.description,
         },
@@ -42,13 +42,13 @@ async function run() {
 
       await prisma.anime.update({
         where: { id: anime.id },
-        data: { saga_id: saga.id },
+        data: { sagaId: saga.id },
       });
 
       for (const anime of animes) {
         await prisma.anime.update({
           where: { id: anime.id },
-          data: { saga_id: saga.id },
+          data: { sagaId: saga.id },
         });
       }
     }
