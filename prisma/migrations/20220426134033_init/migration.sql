@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `animes` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `kitsu_id` INTEGER NULL,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+    `kitsu_id` INTEGER UNSIGNED NULL,
     `slug` VARCHAR(191) NOT NULL,
     `canonical_title` VARCHAR(191) NOT NULL,
     `titles` LONGTEXT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `animes` (
 
 -- CreateTable
 CREATE TABLE `sagas` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `slug` VARCHAR(191) NOT NULL,
     `canonical_title` VARCHAR(191) NOT NULL,
     `titles` LONGTEXT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE `sagas` (
 
 -- CreateTable
 CREATE TABLE `categories` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
     `slug` VARCHAR(191) NOT NULL,
     `description` TEXT NULL,
@@ -61,8 +61,8 @@ CREATE TABLE `categories` (
 
 -- CreateTable
 CREATE TABLE `animes_categories` (
-    `anime_id` INTEGER NOT NULL,
-    `category_id` INTEGER NOT NULL,
+    `anime_id` INTEGER UNSIGNED NOT NULL,
+    `category_id` INTEGER UNSIGNED NOT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
@@ -71,7 +71,7 @@ CREATE TABLE `animes_categories` (
 
 -- CreateTable
 CREATE TABLE `users` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `username` VARCHAR(191) NOT NULL,
     `slug` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NOT NULL,
@@ -88,8 +88,8 @@ CREATE TABLE `users` (
     `reset_password_token` VARCHAR(255) NULL,
     `last_ask_reset_password` DATETIME(3) NULL,
     `last_reset_password` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `follow_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
-    `follower_count` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+    `follow_count` INTEGER UNSIGNED NOT NULL DEFAULT 0,
+    `follower_count` INTEGER UNSIGNED NOT NULL DEFAULT 0,
     `visibility` ENUM('private', 'public', 'limited') NOT NULL DEFAULT 'public',
     `is_admin` BOOLEAN NOT NULL DEFAULT false,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
@@ -104,12 +104,12 @@ CREATE TABLE `users` (
 
 -- CreateTable
 CREATE TABLE `entries` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `anime_id` INTEGER UNSIGNED NOT NULL,
     `user_id` INTEGER UNSIGNED NOT NULL,
     `status` ENUM('Wanted', 'Watching', 'Completed', 'OnHold', 'Dropped') NOT NULL DEFAULT 'Wanted',
     `rating` DOUBLE NULL,
-    `progress` SMALLINT NOT NULL DEFAULT 0,
+    `progress` SMALLINT UNSIGNED NOT NULL DEFAULT 0,
     `favorite` BOOLEAN NOT NULL DEFAULT false,
     `started_at` DATE NULL,
     `finish_at` DATE NULL,
@@ -124,7 +124,7 @@ CREATE TABLE `entries` (
 
 -- CreateTable
 CREATE TABLE `posts` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `content` TEXT NOT NULL,
     `attachments` TEXT NULL,
     `anime_id` INTEGER UNSIGNED NOT NULL,
@@ -138,8 +138,8 @@ CREATE TABLE `posts` (
 
 -- CreateTable
 CREATE TABLE `users_follows` (
-    `follower_id` INTEGER NOT NULL,
-    `follow_id` INTEGER NOT NULL,
+    `follower_id` INTEGER UNSIGNED NOT NULL,
+    `follow_id` INTEGER UNSIGNED NOT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
 
@@ -148,7 +148,7 @@ CREATE TABLE `users_follows` (
 
 -- CreateTable
 CREATE TABLE `countries` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `iso` CHAR(2) NOT NULL,
     `iso3` VARCHAR(3) NULL,
     `name` VARCHAR(80) NOT NULL,
@@ -161,7 +161,7 @@ CREATE TABLE `countries` (
 
 -- CreateTable
 CREATE TABLE `logs` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `path` VARCHAR(191) NOT NULL,
     `method` ENUM('GET', 'POST', 'PUT', 'PATCH', 'DELETE') NOT NULL,
     `user_id` INTEGER UNSIGNED NULL,
@@ -176,7 +176,7 @@ CREATE TABLE `logs` (
 
 -- CreateTable
 CREATE TABLE `event_logs` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(64) NOT NULL,
     `created_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     `updated_at` TIMESTAMP(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
@@ -186,7 +186,7 @@ CREATE TABLE `event_logs` (
 
 -- CreateTable
 CREATE TABLE `import_animes` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `anime_id` INTEGER UNSIGNED NULL,
     `kitsu_id` INTEGER UNSIGNED NOT NULL,
     `slug` VARCHAR(191) NOT NULL,
@@ -216,7 +216,7 @@ CREATE TABLE `import_animes` (
 
 -- CreateTable
 CREATE TABLE `import_sagas` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
     `import_id` INTEGER UNSIGNED NOT NULL,
     `details` LONGTEXT NOT NULL,
     `treat` BOOLEAN NOT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE `import_sagas` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-#ALTER TABLE `animes` ADD CONSTRAINT `animes_saga_id_fkey` FOREIGN KEY (`saga_id`) REFERENCES `sagas`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `animes` ADD CONSTRAINT `animes_saga_id_fkey` FOREIGN KEY (`saga_id`) REFERENCES `sagas`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `animes_categories` ADD CONSTRAINT `animes_categories_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -237,22 +237,22 @@ ALTER TABLE `animes_categories` ADD CONSTRAINT `animes_categories_anime_id_fkey`
 ALTER TABLE `animes_categories` ADD CONSTRAINT `animes_categories_category_id_fkey` FOREIGN KEY (`category_id`) REFERENCES `categories`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `users` ADD CONSTRAINT `users_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `countries`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `users` ADD CONSTRAINT `users_country_id_fkey` FOREIGN KEY (`country_id`) REFERENCES `countries`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `entries` ADD CONSTRAINT `entries_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `entries` ADD CONSTRAINT `entries_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `entries` ADD CONSTRAINT `entries_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `entries` ADD CONSTRAINT `entries_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `posts` ADD CONSTRAINT `posts_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `posts` ADD CONSTRAINT `posts_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `posts` ADD CONSTRAINT `posts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `posts` ADD CONSTRAINT `posts_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `posts` ADD CONSTRAINT `posts_parent_id_fkey` FOREIGN KEY (`parent_id`) REFERENCES `posts`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `posts` ADD CONSTRAINT `posts_parent_id_fkey` FOREIGN KEY (`parent_id`) REFERENCES `posts`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `users_follows` ADD CONSTRAINT `users_follows_follower_id_fkey` FOREIGN KEY (`follower_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -261,10 +261,10 @@ ALTER TABLE `users_follows` ADD CONSTRAINT `users_follows_follower_id_fkey` FORE
 ALTER TABLE `users_follows` ADD CONSTRAINT `users_follows_follow_id_fkey` FOREIGN KEY (`follow_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `logs` ADD CONSTRAINT `logs_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `logs` ADD CONSTRAINT `logs_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `import_animes` ADD CONSTRAINT `import_animes_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE `import_animes` ADD CONSTRAINT `import_animes_anime_id_fkey` FOREIGN KEY (`anime_id`) REFERENCES `animes`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
-#ALTER TABLE `import_sagas` ADD CONSTRAINT `import_sagas_import_id_fkey` FOREIGN KEY (`import_id`) REFERENCES `import_animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `import_sagas` ADD CONSTRAINT `import_sagas_import_id_fkey` FOREIGN KEY (`import_id`) REFERENCES `import_animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

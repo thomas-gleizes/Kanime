@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Anime {
-  id              Int          @id @default(autoincrement())
-  kitsuId         Int?         @unique @map("kitsu_id")
+  id              Int          @id @default(autoincrement()) @db.UnsignedInt
+  kitsuId         Int?         @unique @map("kitsu_id") @db.UnsignedInt
   slug            String       @unique
   canonicalTitle  String       @map("canonical_title")
   titles          String?      @db.LongText
@@ -44,7 +44,7 @@ model Anime {
 }
 
 model Saga {
-  id             Int      @id @default(autoincrement())
+  id             Int      @id @default(autoincrement()) @db.UnsignedInt
   slug           String   @unique
   canonicalTitle String   @map("canonical_title")
   titles         String?  @db.LongText
@@ -58,7 +58,7 @@ model Saga {
 }
 
 model Category {
-  id              Int      @id @default(autoincrement())
+  id              Int      @id @default(autoincrement()) @db.UnsignedInt
   name            String
   slug            String   @unique
   description     String?  @db.Text
@@ -72,8 +72,8 @@ model Category {
 }
 
 model AnimeCategory {
-  animeId    Int      @map("anime_id")
-  categoryId Int      @map("category_id")
+  animeId    Int      @map("anime_id") @db.UnsignedInt
+  categoryId Int      @map("category_id") @db.UnsignedInt
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
@@ -85,7 +85,7 @@ model AnimeCategory {
 }
 
 model User {
-  id                   Int        @id @default(autoincrement())
+  id                   Int        @id @default(autoincrement()) @db.UnsignedInt
   username             String     @unique
   slug                 String     @unique
   email                String     @unique
@@ -102,8 +102,8 @@ model User {
   resetPasswordToken   String?    @map("reset_password_token") @db.VarChar(255)
   lastAskResetPassword DateTime?  @map("last_ask_reset_password")
   lastResetPassword    DateTime   @default(now()) @map("last_reset_password")
-  followCount          Int        @default(0) @map("follow_count") @db.UnsignedSmallInt
-  followerCount        Int        @default(0) @map("follower_count") @db.UnsignedSmallInt
+  followCount          Int        @default(0) @map("follow_count") @db.UnsignedInt
+  followerCount        Int        @default(0) @map("follower_count") @db.UnsignedInt
   visibility           Visibility @default(public)
   isAdmin              Boolean    @default(false) @map("is_admin")
   createdAt            DateTime   @default(now()) @map("created_at") @db.Timestamp(0)
@@ -120,12 +120,12 @@ model User {
 }
 
 model Entry {
-  id         Int         @id @default(autoincrement())
+  id         Int         @id @default(autoincrement()) @db.UnsignedInt
   animeId    Int         @map("anime_id") @db.UnsignedInt
   userId     Int         @map("user_id") @db.UnsignedInt
   status     EntryStatus @default(Wanted)
   rating     Float?
-  progress   Int         @default(0) @db.SmallInt
+  progress   Int         @default(0) @db.UnsignedSmallInt
   favorite   Boolean     @default(false)
   startedAt  DateTime?   @map("started_at") @db.Date
   finishAt   DateTime?   @map("finish_at") @db.Date
@@ -142,7 +142,7 @@ model Entry {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement()) @db.UnsignedInt
   content     String   @db.Text
   attachments String?  @db.Text
   animeId     Int      @map("anime_id") @db.UnsignedInt
@@ -160,8 +160,8 @@ model Post {
 }
 
 model UserFollow {
-  followerId Int      @map("follower_id")
-  followId   Int      @map("follow_id")
+  followerId Int      @map("follower_id") @db.UnsignedInt
+  followId   Int      @map("follow_id") @db.UnsignedInt
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt  DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
 
@@ -173,7 +173,7 @@ model UserFollow {
 }
 
 model Country {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
   iso       String   @db.Char(2)
   iso3      String?  @db.VarChar(3)
   name      String   @db.VarChar(80)
@@ -187,7 +187,7 @@ model Country {
 }
 
 model Log {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
   path      String
   method    Method
   userId    Int?     @map("user_id") @db.UnsignedInt
@@ -203,7 +203,7 @@ model Log {
 }
 
 model EventLog {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
   name      String   @db.VarChar(64)
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamp(0)
@@ -212,7 +212,7 @@ model EventLog {
 }
 
 model AnimeImport {
-  id              Int       @id @default(autoincrement())
+  id              Int       @id @default(autoincrement()) @db.UnsignedInt
   animeId         Int?      @unique @map("anime_id") @db.UnsignedInt
   kitsuId         Int       @unique @map("kitsu_id") @db.UnsignedInt
   slug            String
@@ -242,7 +242,7 @@ model AnimeImport {
 }
 
 model SagaImport {
-  id        Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
   importId  Int      @unique @map("import_id") @db.UnsignedInt
   details   String   @db.LongText
   treat     Boolean
