@@ -6,15 +6,14 @@ declare type ReactNode = React.ReactNode | string;
 
 declare type OptionalPromise<T> = T | Promise<T>;
 
-declare type ErrorProps = {
-  error: ErrorPage;
-};
+declare type Nullable<T> = T | null;
+declare type Undefinedable<T> = T | undefined;
 
 interface ContextsProviderProps {
   children: React.ReactNode;
   initialState: {
-    user: User
-  }
+    user: User;
+  };
 }
 
 declare type Id = string | number;
@@ -113,7 +112,7 @@ declare type DialogOptions = {
 
 declare type Dialog = {
   uid: string;
-  Component: Component;
+  component: Component;
   props: any;
   resolve: (r: any) => void;
   options?: DialogOptions;

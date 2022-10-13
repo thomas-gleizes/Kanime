@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEventHandler } from 'react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
 
 // @ts-ignore TODO remove
@@ -11,7 +11,7 @@ interface Props extends React.InputHTMLAttributes<any> {
 }
 
 const InputNumber: Component<Props> = ({ value, onChange, min, max, step, ...props }) => {
-  const handleKey = ({ keyCode }) => {
+  const handleKey: KeyboardEventHandler<HTMLInputElement> = ({ keyCode }) => {
     if (keyCode === 40) handleMinus();
     else if (keyCode === 38) handlePlus();
   };

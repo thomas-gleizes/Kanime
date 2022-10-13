@@ -22,7 +22,7 @@ const AnimeSide: Component<Props> = ({ anime }) => {
             <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
           )}
           <Item label="Type" content={anime.type} />
-          <Item label="Episodes" content={anime.episode.count?.toString()} />
+          <Item label="Episodes" content={anime.episode.count?.toString() || 'Inconnu'} />
           {
             <Item
               label="Durée"

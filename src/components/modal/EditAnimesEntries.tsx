@@ -35,6 +35,8 @@ import { editEntrySchema } from 'resources/validations';
 import { CreateEntryDto } from 'dto';
 import { useUserContext } from 'context/user.context';
 import { Select } from 'components/common/inputs';
+import { AxiosError } from 'axios';
+import { ApiException } from '../../exceptions/ApiException';
 
 type SubmitResult = {
   action: 'submit';
@@ -70,17 +72,14 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
   anime,
   entry,
 }) => {
-  const { user } = useUserContext();
-
   const initialValues = useMemo<CreateEntryDto>(
     () => ({
       animeId: anime.id,
-      userId: user.id,
       status: entry?.status || EntryStatus.Wanted,
       progress: entry?.progress || 0,
-      visibility: entry?.visibility || 'public',
-      rating: entry?.rating || null,
-      note: entry?.note || null,
+      visibility: entry?.visibility || Visibility.public,
+      rating: entry?.rating,
+      note: entry?.note,
       startedAt: entry?.startedAt
         ? dayjs(entry.startedAt).format('YYYY-MM-DD')
         : undefined,
@@ -99,9 +98,9 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
       // @ts-ignore
       close({ action: 'submit', values: { ...response.entry, anime } });
     } catch (err) {
-      console.log('Er', err);
-
-      toast.error(err.message || 'Une erreur est survenue');
+      if (err instanceof AxiosError)
+        toast.error(err.response?.data?.message || err.message);
+      else toast.error('Une erreur est survenue');
     }
   };
 
@@ -113,7 +112,8 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 
       return close({ action: 'delete' });
     } catch (err) {
-      toast.error(err.message || 'Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
     }
   };
 

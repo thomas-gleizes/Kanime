@@ -1,4 +1,4 @@
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { animesMapper } from 'mappers';
 import { animeModel } from 'models';

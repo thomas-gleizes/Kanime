@@ -10,7 +10,9 @@ async function run() {
   for (const imp of imports) {
     const details = JSON.parse(imp.details);
     const anime = await prisma.anime.findUnique({ where: { id: imp.importId } });
-    const ids: number[] = details.map((d) => +d.kitsu_id);
+    if (!anime) continue;
+
+    const ids: number[] = details.map((d: any) => +d.kitsu_id);
 
     const animes = await prisma.anime.findMany({
       where: { kitsuId: { in: ids } },

@@ -1,4 +1,4 @@
-import type { Page, StaticProps } from 'next/app';
+import type { Page, StaticProps } from 'app/next';
 
 import { animeModel } from 'models';
 import { animesMapper } from 'mappers';

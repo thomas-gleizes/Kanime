@@ -1,6 +1,8 @@
 import { PrismaClient, AnimeSeason, AnimeStatus, AnimeType } from '@prisma/client';
 
-function getSeason(date: Date): AnimeSeason {
+function getSeason(date: Date | null): AnimeSeason | null {
+  if (!date) return null;
+
   const month = date.getMonth();
 
   if (month < 3) return 'Winter';
@@ -17,6 +19,8 @@ async function run() {
   for (const anime of animes) {
     console.log(anime.id, anime.slug);
 
+    const year = getSeason(anime.dateBegin);
+
     await prisma.anime
       .create({
         data: {
@@ -26,8 +30,8 @@ async function run() {
           titles: anime.titles,
           synopsis: anime.synopsis,
           description: anime.synopsis,
-          season: getSeason(new Date(anime.dateBegin)),
-          seasonYear: `${new Date(anime.dateBegin).getFullYear()}`,
+          season: getSeason(anime.dateBegin),
+          seasonYear: anime.dateBegin ? `${anime.dateBegin.getFullYear()}` : null,
           dateBegin: anime.dateBegin,
           dateEnd: anime.dateEnd,
           ratingAverage: null,

@@ -1,4 +1,4 @@
-import { PrismaPost } from 'prisma/app';
+import { PrismaPost } from 'app/prisma';
 import Mapper from 'class/Mapper';
 import { animesMapper, usersMapper } from 'mappers';
 

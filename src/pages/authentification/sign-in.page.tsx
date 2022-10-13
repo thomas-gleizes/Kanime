@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { authenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
 import { useUserContext } from 'context/user.context';
@@ -14,6 +14,7 @@ import { routes } from 'resources/routes';
 import { SignInDto } from 'dto';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import Button from 'components/common/Button';
+import { ApiException } from '../../exceptions/ApiException';
 
 export const getServerSideProps = ssrHandler(async (context) => {
   if (context.req.session.user)
@@ -55,7 +56,8 @@ const SignInPage: Page = () => {
       signIn(response.user);
       await router.push(routes.users.page(response.user.slug));
     } catch (err) {
-      toast.error(err.message || 'Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
     }
   };
 
@@ -99,7 +101,6 @@ const SignInPage: Page = () => {
                 <div className="flex flex-row items-center">
                   <input
                     type="checkbox"
-                    name="rememberMe"
                     className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                     {...register('rememberMe')}
                   />

@@ -1,5 +1,6 @@
 import { Body, Post, ValidationPipe } from 'next-api-decorators';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
@@ -14,7 +15,7 @@ class SignInInHandler extends ApiHandler {
   @Post('/')
   async get(
     @Body(ValidationPipe) body: SignInDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<SignInResponse> {
     if (session) await session.destroy();
 

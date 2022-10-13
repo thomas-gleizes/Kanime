@@ -1,5 +1,9 @@
+import { Exception } from 'exceptions';
+
 export const getDomainName = (email: string): string => {
-  return email.split('@')[1];
+  if (isValid(email)) return email.split('@')[1] as string;
+
+  throw new Exception('Invalid email');
 };
 
 export const isValid = (email: string): boolean => {
@@ -14,6 +18,8 @@ export const isValid = (email: string): boolean => {
 };
 
 export const removeDot = (email: string): string => {
-  const [body, domain] = email.split('@');
+  if (!isValid(email)) throw new Exception('Invalid email');
+
+  const [body, domain] = email.split('@') as [string, string];
   return `${body.toLowerCase().replaceAll(/\./g, '')}@${domain}`;
 };

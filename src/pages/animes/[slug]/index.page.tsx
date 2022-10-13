@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { useToggle } from 'hooks';
 import { animeModel } from 'models';
@@ -8,17 +8,17 @@ import { animesMapper } from 'mappers';
 import { SsrException } from 'exceptions';
 import { errorMessage } from 'resources/constants';
 import AnimeSide from 'components/common/anime/AnimeSide';
-import AnimeLayout, { AnimeLayoutProps } from 'components/layouts/pages/AnimeLayout';
+import AnimeLayout from 'components/layouts/pages/AnimeLayout';
 
-interface Props extends AnimeLayoutProps {}
+interface Props {
+  anime: Anime;
+}
 
 const DESCRIPTION_LENGTH = 400;
 
 export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
-    const { slug } = params;
-
-    const anime = await animeModel.findBySlug(slug as string);
+    const anime = await animeModel.findBySlug(params?.slug as string);
 
     if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
 

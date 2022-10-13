@@ -1,4 +1,4 @@
-import { PrismaLogDelegate, PrismaLog, PrismaLogs } from 'prisma/app';
+import { PrismaLogDelegate, PrismaLog, PrismaLogs } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
@@ -6,7 +6,7 @@ type crateData = {
   path: string;
   method: Method;
   ip: string;
-  body: any;
+  body: Nullable<any>;
   params: any;
   userId?: number;
 };
@@ -16,7 +16,7 @@ class LogModel extends Model<PrismaLogDelegate> {
     super(connexion, 'log');
   }
 
-  public show = (params: modelParams): Promise<PrismaLogs> =>
+  public show = (params: modelParams) =>
     this.model.findMany({
       orderBy: [{ id: 'desc' }],
       include: { user: true },

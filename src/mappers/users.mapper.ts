@@ -1,4 +1,4 @@
-import { PrismaUser } from 'prisma/app';
+import { PrismaUser } from 'app/prisma';
 import Mapper from 'class/Mapper';
 import { entriesMapper, postsMapper } from 'mappers';
 

@@ -1,6 +1,7 @@
 import { Get, Query, ParseNumberPipe } from 'next-api-decorators';
 import { Visibility } from '@prisma/client';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import { animeModel, entryModel, userFollowModel } from 'models';
 import { entriesMapper } from 'mappers';
@@ -16,7 +17,7 @@ class AnimesEntriesHandler extends ApiHandler {
   async showEntries(
     @Query('id', ParseNumberPipe) id: number,
     @Query() query: QueryEntryListDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<ShowAnimeEntriesResponse> {
     const isExist = await animeModel.isExist(id);
 

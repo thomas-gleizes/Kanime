@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { Spinner } from '@chakra-ui/react';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { animesApi } from 'api';
 import { animesMapper } from 'mappers';
 import { animeModel } from 'models';
@@ -10,14 +10,13 @@ import { ssrHandler } from 'services/handler.service';
 import { useDelayBoolean, useScrollPercent } from 'hooks';
 import Title from 'components/layouts/Title';
 import AnimeCard from 'components/common/anime/AnimeCard';
+import { getQueryListParams } from 'utils/getQueryListParams';
 
 interface Props extends AnimesListResponse {}
 
 export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: string }>(
   async ({ query }) => {
-    const { offset, limit } = query;
-
-    const animes = await animeModel.all({ limit: +limit || 40, skip: +offset || 0 });
+    const animes = await animeModel.all(getQueryListParams(query));
     const total = await animeModel.countTotal();
 
     return {
@@ -60,7 +59,10 @@ const ExploreAnimes: Page<Props> = (props) => {
     }
   }, [active, percent]);
 
-  const animes = useMemo(() => data.pages.map((page) => page.records).flat(), [data]);
+  const animes = useMemo(
+    () => (data ? data.pages.map((page) => page.records).flat() : []),
+    [data]
+  );
 
   return (
     <div className="py-10">

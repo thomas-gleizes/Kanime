@@ -16,6 +16,7 @@ abstract class Model<Delegate> {
     this._client = client;
     this._modelName = model;
 
+    // @ts-ignore
     this.model = client[model];
   }
 
@@ -38,7 +39,7 @@ abstract class Model<Delegate> {
     this.model.count();
 
   protected getKeyParams(params?: modelParams): { take?: number; skip?: number } {
-    return { skip: +params?.skip || 0, take: +params?.limit || 20 };
+    return { skip: params?.skip || 0, take: params?.limit || 20 };
   }
 
   protected parseOptions<IncludeOptions = any>(
@@ -46,7 +47,7 @@ abstract class Model<Delegate> {
   ): Result {
     const result: Result = {};
 
-    if (options.include && Object.keys(options.include).length) {
+    if (options?.include && Object.keys(options.include).length) {
       result.include = {};
 
       for (const key of Object.keys(options.include)) {
@@ -54,8 +55,8 @@ abstract class Model<Delegate> {
       }
     }
 
-    if (options.limit) result.take = +options.limit;
-    if (options.skip) result.skip = +options.skip;
+    if (options?.limit) result.take = +options.limit;
+    if (options?.skip) result.skip = +options.skip;
 
     return result;
   }

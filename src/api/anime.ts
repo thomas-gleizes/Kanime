@@ -12,7 +12,7 @@ class AnimesApi extends Api {
     return this.get<AnimesListResponse>('/', { params });
   }
 
-  public search(query, params?: modelParams) {
+  public search(query: string, params?: modelParams) {
     return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } });
   }
 }

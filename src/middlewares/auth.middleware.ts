@@ -1,10 +1,16 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { NextFunction } from 'next-api-decorators';
+
+import { ApiRequest, ApiResponse } from 'app/next';
 import Security from 'services/security.service';
 import { errorMessage } from 'resources/constants';
 import { UnauthorizedException } from 'exceptions/http';
 
 // TODO: refactor this
-export const authMiddleware = async (req: ApiRequest, res: ApiResponse<any>, next) => {
+export const authMiddleware = async (
+  req: ApiRequest,
+  res: ApiResponse<any>,
+  next: NextFunction
+) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const tokenPayload = Security.getTokenPayload(token);
@@ -20,7 +26,11 @@ export const authMiddleware = async (req: ApiRequest, res: ApiResponse<any>, nex
   next();
 };
 
-export const authAdminMiddleware = async (req, res, next) => {
+export const authAdminMiddleware = async (
+  req: ApiRequest,
+  res: ApiResponse,
+  next: NextFunction
+) => {
   try {
     const token = req.headers.authorization?.replace('Bearer ', '') || req.session.token;
     const tokenPayload = Security.getTokenPayload(token);

@@ -22,7 +22,7 @@ const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
 );
 
 const DropDownExplore: Component = () => {
-  const button = useRef<HTMLButtonElement>();
+  const button = useRef<HTMLButtonElement | null>(null);
 
   return (
     <div>
@@ -53,7 +53,7 @@ const Header: Component = () => {
     header,
   } = useLayoutContext();
 
-  const avatarRef = useRef<HTMLImageElement>();
+  const avatarRef = useRef<HTMLImageElement | null>(null);
 
   const [extend, setExtend] = useState<boolean>(false);
   const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent);

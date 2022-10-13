@@ -9,6 +9,7 @@ import {
   ValidationPipe,
 } from 'next-api-decorators';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { animeModel, postModel } from 'models';
@@ -40,7 +41,7 @@ class AnimePostHandler extends ApiHandler {
   async create(
     @Query('id', ParseNumberPipe) id: number,
     @Body(ValidationPipe) body: AnimePostDto,
-    @GetSession() session
+    @GetSession() session: Session
   ) {
     if (!(await animeModel.isExist(id)))
       throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
@@ -58,7 +59,10 @@ class AnimePostHandler extends ApiHandler {
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deletePost(@Query('id', ParseNumberPipe) id: number, @GetSession() session) {
+  async deletePost(
+    @Query('id', ParseNumberPipe) id: number,
+    @GetSession() session: Session
+  ) {
     const post = await postModel.findByAnimeIdAndUserId(id, session.user.id);
 
     if (!post) throw new NotFoundException('Post not found');

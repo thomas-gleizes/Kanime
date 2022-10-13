@@ -90,9 +90,9 @@ const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
           <div className="h-2/3 overflow-hidden bg-transparent">
             <p className="relative bottom-0 text-gray-300 text-light text-sm text-justify line-clamp-10 overflow-hidden">
               {synopsis}
-              {synopsis?.length > 500 && (
+              {synopsis && synopsis.length > 500 ? (
                 <div className="absolute bottom-0 left-0 w-full h-1/4 bg-gradient-to-b from-transparent to-primary-dark" />
-              )}
+              ) : null}
             </p>
           </div>
         </div>

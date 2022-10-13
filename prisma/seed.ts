@@ -1,9 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import { defaultUsersMedia } from '../src/resources/constants';
 import Security from '../src/services/security.service';
-import { removeDot } from '../src/utils/emailHelpers';
 
 const prisma = new PrismaClient();
 
@@ -18,15 +17,15 @@ async function main() {
       username: 'Kalat',
       slug: 'kalat',
       email: 'kalat@kanime.fr',
-      real_email: 'kalat@kanime.fr',
-      email_verified: true,
+      realEmail: 'kalat@kanime.fr',
+      emailVerified: true,
       password: Security.sha512(password + 'Kalat'),
-      is_admin: true,
-      avatar_path: defaultUsersMedia.avatar,
-      background_path: defaultUsersMedia.background,
+      isAdmin: true,
+      avatarPath: defaultUsersMedia.avatar,
+      backgroundPath: defaultUsersMedia.background,
       city: 'Montpellier',
-      gender: 'Male'
-    }
+      gender: 'Male',
+    },
   });
 
   for (let i = 0; i < 100; i++) {
@@ -41,18 +40,18 @@ async function main() {
           username: username,
           email: email,
           slug: username.toLowerCase().replaceAll(' ', '-'),
-          real_email: removeDot(email),
-          email_verified: Math.random() > 0.4,
+          realEmail: email,
+          emailVerified: Math.random() > 0.4,
           password: Security.sha512(password + username),
-          avatar_path: defaultUsersMedia.avatar,
-          background_path: defaultUsersMedia.background,
+          avatarPath: defaultUsersMedia.avatar,
+          backgroundPath: defaultUsersMedia.background,
           bio: faker.lorem.sentence(),
           birthday: faker.date.past(),
           gender: Math.random() > 0.5 ? 'Male' : 'Female',
-          city: faker.address.city()
+          city: faker.address.city(),
         };
       }),
-      skipDuplicates: true
+      skipDuplicates: true,
     });
   }
 }

@@ -1,4 +1,4 @@
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 
 const FeedbackPage: Page = () => {
   return (

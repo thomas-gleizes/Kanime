@@ -1,6 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import LocalStorageService from 'services/localStorage.service';
 import { toast } from 'react-toastify';
+import HttpStatus from 'resources/HttpStatus';
+import { ApiException } from '../exceptions/ApiException';
 
 const ApiService = axios.create({
   baseURL: `/api/`,
@@ -13,16 +15,20 @@ declare module 'axios' {
 
 ApiService.interceptors.response.use(
   (response: AxiosResponse) => response.data,
-  (error: AxiosError) => {
-    if (error.isAxiosError) {
-      if (error.response.status === 401) {
+  (error: AxiosError<any, { message: string; errors: string[] }>) => {
+    if (error.isAxiosError && error.response) {
+      if (error.response.status === HttpStatus.UNAUTHORIZED) {
         toast.warning('Veuillez vous reconnecter');
         LocalStorageService.clearUser();
 
         setTimeout(() => window.postMessage({ content: 'unconnected' }), 100);
-      } else {
-        throw error;
-      }
+      } else if (error.response.data) {
+        throw new ApiException(
+          error.response.data.message,
+          error.response.status,
+          error.response.data.errors
+        );
+      } else throw new Error("Une erreur s'est produite");
     } else throw error;
   }
 );

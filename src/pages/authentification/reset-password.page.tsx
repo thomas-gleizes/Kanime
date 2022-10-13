@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import { Form, Formik } from 'formik';
 import { toast } from 'react-toastify';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { authenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
 import { resetPasswordSchema } from 'resources/validations';
+import { ApiException } from '../../exceptions/ApiException';
 import { userModel } from 'models';
 import { routes } from 'resources/routes';
 import { Field } from 'components/common/formik';
@@ -56,7 +57,8 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
       toast.success('Votre mot de passe a bien été changé');
       await router.push(routes.authentification.signIn);
     } catch (err) {
-      toast.error(err.error);
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
     }
   };
 

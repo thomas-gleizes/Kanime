@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 
-import { PrismaEntryInclude, PrismaEntryStatus } from 'prisma/app';
+import { PrismaEntryInclude, PrismaEntryStatus } from 'app/prisma';
 import Api from 'class/Api';
 import { ApiService } from 'services/api.service';
 

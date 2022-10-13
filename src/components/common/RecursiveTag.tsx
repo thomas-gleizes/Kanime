@@ -9,7 +9,7 @@ interface Props {
 }
 
 const RecursiveTag: Component<Props> = ({ children, n, tags }) => {
-  const Tag = tags[random(0, tags.length - 1)];
+  const Tag = tags[random(0, tags.length - 1)] as React.ElementType;
 
   if (n === 0) return <Tag id={domUuid()}>{children}</Tag>;
   return (

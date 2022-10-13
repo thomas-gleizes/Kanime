@@ -3,14 +3,16 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import { toast } from 'react-toastify';
 
-import type { Page } from 'next/app';
+import type { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { routes } from 'resources/routes';
 import { RegisterDto } from 'dto';
 import Button from 'components/common/Button';
+import { ApiException } from '../../exceptions/ApiException';
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)
@@ -43,12 +45,15 @@ const RegisterPage: Page = () => {
     formState: { errors },
   } = useForm<RegisterDto>({ defaultValues, resolver });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: RegisterDto) => {
     try {
       const { user } = await authenticationApi.register(values);
       signIn(user);
       await router.push(routes.users.page(user.slug));
-    } catch (e) {}
+    } catch (err) {
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
+    }
   };
 
   return (

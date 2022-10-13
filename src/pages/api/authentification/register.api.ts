@@ -1,5 +1,6 @@
 import { Post, Body, HttpCode, ValidationPipe } from 'next-api-decorators';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import Security from 'services/security.service';
 import HttpStatus from 'resources/HttpStatus';
@@ -15,15 +16,15 @@ class RegisterHandler extends ApiHandler {
   @Post()
   async register(
     @Body(ValidationPipe) body: RegisterDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<RegisterResponse> {
     if (session) await session.destroy();
 
-    const users = await userModel.findByEmailOrUsername(body.email, body.username);
+    const [foundUser] = await userModel.findByEmailOrUsername(body.email, body.username);
 
-    if (users.length) {
+    if (foundUser) {
       let key = 'email';
-      if (users[0].username === body.username) key = 'username';
+      if (foundUser.username === body.username) key = 'username';
       throw new BadRequestException(`${key} already exist`);
     }
 

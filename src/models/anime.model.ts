@@ -1,4 +1,4 @@
-import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'prisma/app';
+import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
@@ -7,12 +7,12 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
     super(connexion, 'anime');
   }
 
-  public findById = (id: number): Promise<PrismaAnime> =>
+  public findById = (id: number) =>
     this.model.findUnique({
       where: { id },
     });
 
-  public findByIds = (ids: number[]): Promise<PrismaAnimes> =>
+  public findByIds = (ids: number[]) =>
     this.model.findMany({
       where: { id: { in: ids } },
     });
@@ -24,15 +24,15 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       })
       .then((res) => res !== null);
 
-  public findBySlug = (slug: string): Promise<PrismaAnime> =>
+  public findBySlug = (slug: string) =>
     this.model.findUnique({
       where: { slug },
     });
 
-  public all = (params?: modelParams): Promise<PrismaAnimes> =>
+  public all = (params?: modelParams) =>
     this.model.findMany({ ...this.getKeyParams(params) });
 
-  public findByUser = (userId: number, params?: modelParams): Promise<PrismaAnimes> =>
+  public findByUser = (userId: number, params?: modelParams) =>
     this.model.findMany({
       where: {
         entries: { some: { userId } },
@@ -40,7 +40,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public search = (query: string, params?: modelParams): Promise<PrismaAnimes> =>
+  public search = (query: string, params?: modelParams) =>
     this.model.findMany({
       where: {
         OR: [
@@ -52,7 +52,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public findPopular = (params?: modelParams): Promise<PrismaAnimes> =>
+  public findPopular = (params?: modelParams) =>
     this.model.findMany({
       where: {
         NOT: [{ popularityRank: null }],
@@ -63,7 +63,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public findHighRated = (params?: modelParams): Promise<PrismaAnimes> =>
+  public findHighRated = (params?: modelParams) =>
     this.model.findMany({
       where: { NOT: { ratingRank: null } },
       orderBy: { ratingRank: 'asc' },

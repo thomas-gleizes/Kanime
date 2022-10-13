@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
-import Error from 'next/error';
 
 import { useLayoutContext } from 'context/layout.context';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
+import { LayoutProps } from 'app/types';
 
-export type UserLayoutProps = {
+interface Props {
   user: User;
   entries: Entries;
   isCurrent: boolean;
-  error?: ErrorPage;
-};
-
-interface Props extends UserLayoutProps {
-  children: ReactNode;
 }
 
-const UserLayout: Component<Props> = ({ children, user, ...props }) => {
+interface UserLayoutProps extends LayoutProps<Props> {}
+
+const UserLayout: Component<UserLayoutProps> = ({ children, pageProps }) => {
   const {
     activeTransparentState: [, setHeaderTransparent],
   } = useLayoutContext();
@@ -27,11 +24,10 @@ const UserLayout: Component<Props> = ({ children, user, ...props }) => {
     return () => setHeaderTransparent(false);
   }, [setHeaderTransparent]);
 
-  if ('error' in props)
-    return <Error statusCode={props.error.statusCode} title={props.error.message} />;
+  const { user, entries, isCurrent } = pageProps;
 
   return (
-    <DefaultLayout>
+    <DefaultLayout pageProps={undefined}>
       <div className="w-full">
         <div
           className="relative bg-center -top-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"

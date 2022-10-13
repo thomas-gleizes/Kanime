@@ -1,4 +1,4 @@
-import { PrismaFollow, PrismaFollowDelegate } from 'prisma/app';
+import { PrismaFollow, PrismaFollowDelegate } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 

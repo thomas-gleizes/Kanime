@@ -1,4 +1,4 @@
-import { PrismaAnime } from 'prisma/app';
+import { PrismaAnime } from 'app/prisma';
 import Mapper from 'class/Mapper';
 import jsonParser from 'utils/jsonParser';
 import { categoriesMapper, entriesMapper, postsMapper, sagasMapper } from 'mappers';
@@ -10,7 +10,7 @@ class AnimesMapper extends Mapper<PrismaAnime, Anime> {
       kitsuId: resource.kitsuId,
       slug: resource.slug,
       canonicalTitle: resource.canonicalTitle,
-      titles: jsonParser<Titles>(resource.titles),
+      titles: resource.titles ? jsonParser<Titles>(resource.titles) : null,
       season: resource.season,
       season_year: resource.seasonYear,
       status: resource.status,
@@ -30,8 +30,8 @@ class AnimesMapper extends Mapper<PrismaAnime, Anime> {
       },
       dateBegin: resource.dateBegin && resource.dateBegin.toISOString(),
       dateEnd: resource.dateEnd && resource.dateEnd.toISOString(),
-      cover: jsonParser<Images>(resource.cover),
-      poster: jsonParser<Images>(resource.poster),
+      cover: resource.cover ? jsonParser<Images>(resource.cover) : null,
+      poster: resource.poster ? jsonParser<Images>(resource.poster) : null,
       synopsis: resource.synopsis,
       description: resource.description,
     };

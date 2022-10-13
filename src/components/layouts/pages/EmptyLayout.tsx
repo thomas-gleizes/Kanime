@@ -1,11 +1,16 @@
 import React from 'react';
 
-interface Props {
-  children: ReactNode;
-}
+import { LayoutProps } from 'app/types';
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
 
-const EmptyLayout: Component<Props> = ({ children }) => {
-  return <main>{children}</main>;
+interface Props extends LayoutProps {}
+
+const EmptyLayout: Component<Props> = ({ children, exception }) => {
+  return (
+    <ErrorBoundary exception={exception}>
+      <main>{children}</main>
+    </ErrorBoundary>
+  );
 };
 
 export default EmptyLayout;

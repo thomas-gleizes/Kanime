@@ -13,7 +13,7 @@ export const dialogTypes = {
   custom: 'custom',
 } as const;
 
-export const loggerReplaceKey = {
+export const loggerReplaceKey: { [key: string]: string } = {
   password: '********',
   newPassword: '********',
   confirmPassword: '********',

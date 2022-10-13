@@ -1,4 +1,4 @@
-import { PrismaPost, PrismaPostsDelegate, PrismaPosts } from 'prisma/app';
+import { PrismaPost, PrismaPostsDelegate, PrismaPosts } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 

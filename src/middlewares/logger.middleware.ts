@@ -1,4 +1,6 @@
-import { ApiRequest, ApiResponse, ServerSidePropsContext } from 'next/app';
+import { NextFunction } from 'next-api-decorators';
+
+import { ApiRequest, ApiResponse, ServerSidePropsContext } from 'app/next';
 import {
   apiLogger as apiLoggerService,
   ssrLogger as ssrLoggerService,
@@ -6,7 +8,7 @@ import {
 import ip from 'utils/ip';
 import trace from 'utils/trace';
 
-export function apiLogger(req: ApiRequest, res: ApiResponse, next): void {
+export function apiLogger(req: ApiRequest, res: ApiResponse, next: NextFunction): void {
   apiLoggerService(req);
   trace(`(${ip(req)}) ${req.method} ${req.url}`);
 

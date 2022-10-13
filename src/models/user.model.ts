@@ -1,24 +1,9 @@
-import { PrismaUserDelegate, PrismaGender, PrismaUser, PrismaUsers } from 'prisma/app';
+import { PrismaUserDelegate, PrismaUser, PrismaUsers } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import { defaultUsersMedia } from 'resources/constants';
 import Model from 'class/Model';
 import * as emailHelpers from 'utils/emailHelpers';
-
-type createData = {
-  username: string;
-  email: string;
-  password: string;
-};
-
-type updateData = {
-  country_id?: number | null;
-  city?: string | null;
-  birthday?: Date | null;
-  gender?: PrismaGender;
-  bio?: string | null;
-  avatarPath?: string | null;
-  backgroundPath?: string | null;
-};
+import { UpdateUserDto } from 'dto/user.dto';
 
 class UserModel extends Model<PrismaUserDelegate> {
   public constructor(connexion: ConnexionType) {
@@ -28,16 +13,14 @@ class UserModel extends Model<PrismaUserDelegate> {
   public findAll = (params?: modelParams) =>
     this.model.findMany({ ...this.getKeyParams(params) });
 
-  public findById = (id: number): Promise<PrismaUser> =>
-    this.model.findUnique({ where: { id: +id } });
+  public findById = (id: number) => this.model.findUnique({ where: { id: +id } });
 
-  public findByUsername = (username: string): Promise<PrismaUser> =>
+  public findByUsername = (username: string) =>
     this.model.findUnique({ where: { username } });
 
-  public findBySlug = (slug: string): Promise<PrismaUser> =>
-    this.model.findUnique({ where: { slug } });
+  public findBySlug = (slug: string) => this.model.findUnique({ where: { slug } });
 
-  public create = (data: createData): Promise<PrismaUser> =>
+  public create = (data: any): Promise<PrismaUser> =>
     this.model.create({
       data: {
         username: data.username,
@@ -50,17 +33,16 @@ class UserModel extends Model<PrismaUserDelegate> {
       },
     });
 
-  public update = (id: number, data: updateData): Promise<PrismaUser> =>
+  public update = (id: number, data: UpdateUserDto): Promise<PrismaUser> =>
     this.model.update({
       where: { id },
       data: {
-        countryId: data.country_id,
         city: data.city,
         bio: data.bio,
         gender: data.gender,
         birthday: data.birthday,
-        avatarPath: data.avatarPath || defaultUsersMedia.avatar,
-        backgroundPath: data.backgroundPath || defaultUsersMedia.background,
+        avatarPath: data.avatar || defaultUsersMedia.avatar,
+        backgroundPath: data.background || defaultUsersMedia.background,
       },
     });
 
@@ -76,7 +58,7 @@ class UserModel extends Model<PrismaUserDelegate> {
       },
     });
 
-  public checkResetPasswordToken = (token: string): Promise<PrismaUser> =>
+  public checkResetPasswordToken = (token: string) =>
     this.model.findFirst({
       where: {
         resetPasswordToken: token,
@@ -93,24 +75,21 @@ class UserModel extends Model<PrismaUserDelegate> {
       },
     });
 
-  public findByEmail = (email: string): Promise<PrismaUser> =>
+  public findByEmail = (email: string) =>
     this.model.findFirst({
       where: {
         OR: [{ realEmail: emailHelpers.removeDot(email) }, { email: email }],
       },
     });
 
-  public findByEmailOrUsername = (
-    email: string,
-    username: string
-  ): Promise<PrismaUsers> =>
+  public findByEmailOrUsername = (email: string, username: string) =>
     this.model.findMany({
       where: {
         OR: [{ realEmail: emailHelpers.removeDot(email) }, { username }],
       },
     });
 
-  public findFollows = (id: number, params?: modelParams): Promise<PrismaUsers> =>
+  public findFollows = (id: number, params?: modelParams) =>
     this.model.findMany({
       where: {
         followers: { some: { followerId: +id } },

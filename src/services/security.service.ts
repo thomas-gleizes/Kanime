@@ -2,8 +2,8 @@ import crypto from 'node:crypto';
 import jwt from 'jsonwebtoken';
 
 class Security {
-  private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN;
-  private static readonly SECRET_SEED: string = process.env.SECRET_SEED;
+  private static readonly SECRET_TOKEN: string = process.env.SECRET_TOKEN as string;
+  private static readonly SECRET_SEED: string = process.env.SECRET_SEED as string;
 
   private static shuffle(input: string): string {
     let output = '';
@@ -49,7 +49,7 @@ class Security {
     });
   }
 
-  static verifyToken(token): boolean {
+  static verifyToken(token: string): boolean {
     try {
       return !!jwt.verify(token, this.SECRET_TOKEN);
     } catch (e) {
@@ -57,7 +57,7 @@ class Security {
     }
   }
 
-  static getTokenPayload(token): any {
+  static getTokenPayload(token: string): any {
     return jwt.verify(token, this.SECRET_TOKEN);
   }
 }

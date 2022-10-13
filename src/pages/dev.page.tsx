@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 
 import { useDialog } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';

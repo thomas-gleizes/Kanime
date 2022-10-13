@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios';
 
 abstract class Api {
   private readonly _instance: AxiosInstance;
@@ -39,7 +39,7 @@ abstract class Api {
 
   protected delete<R extends ApiResponse = ApiResponse, P = undefined>(
     path: string,
-    params: P
+    params: AxiosRequestConfig<P>
   ): Promise<R> {
     return this._instance.delete<R, R, P>(`${this._path}${path}`, params);
   }

@@ -1,6 +1,12 @@
-import { ApiRequest, ApiResponse } from 'next/app';
+import { NextFunction } from 'next-api-decorators';
 
-export default function queryParser(req: ApiRequest, res: ApiResponse, next): void {
+import { ApiRequest, ApiResponse } from 'app/next';
+
+export default function queryParser(
+  req: ApiRequest,
+  res: ApiResponse,
+  next: NextFunction
+): void {
   for (const [key, value] of Object.entries(req.query)) {
     if (key.match(/\[\]$/)) {
       req.query[key.replace(/\[\]$/, '')] = value;

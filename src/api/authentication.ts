@@ -2,17 +2,18 @@ import { AxiosInstance } from 'axios';
 
 import Api from 'class/Api';
 import { ApiService } from 'services/api.service';
+import { RegisterDto, SignInDto } from 'dto/authentifications.dto';
 
 class AuthenticationApi extends Api {
   constructor(apiService: AxiosInstance) {
     super(apiService, '/authentification');
   }
 
-  public signIn(payload: any) {
+  public signIn(payload: SignInDto) {
     return this.post<SignInResponse>('/sign-in', payload);
   }
 
-  public register(payload: any) {
+  public register(payload: RegisterDto) {
     return this.post<RegisterResponse>('/register', payload);
   }
 

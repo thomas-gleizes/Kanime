@@ -3,7 +3,7 @@ import {
   PrismaEntryDelegate,
   PrismaEntryInclude,
   PrismaEntryStatus,
-} from 'prisma/app';
+} from 'app/prisma';
 import { Visibility } from 'app/model';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
@@ -19,7 +19,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       ...this.getKeyParams(params),
     });
 
-  public find = (id: number): Promise<PrismaEntry> =>
+  public find = (id: number) =>
     this.model.findUnique({
       where: { id },
     });
@@ -30,7 +30,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public findWithUser = (id: number) =>
     this.model.findUnique({ where: { id }, include: { user: true } });
 
-  public unique = (userId: number, animeId: number): Promise<PrismaEntry> =>
+  public unique = (userId: number, animeId: number) =>
     this.model.findUnique({
       where: {
         animeId_userId: {
@@ -49,8 +49,8 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        startedAt: new Date(data.startedAt),
-        finishAt: new Date(data.finishAt),
+        startedAt: data.startedAt ? new Date(data.startedAt) : null,
+        finishAt: data.finishAt ? new Date(data.finishAt) : null,
         visibility: data.visibility,
       },
     });
@@ -63,8 +63,8 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         rating: data.rating,
         progress: data.progress,
         note: data.note,
-        startedAt: new Date(data.startedAt),
-        finishAt: new Date(data.finishAt),
+        startedAt: data.startedAt ? new Date(data.startedAt) : null,
+        finishAt: data.finishAt ? new Date(data.finishAt) : null,
         visibility: data.visibility,
       },
     });
@@ -74,7 +74,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       where: { id },
     });
 
-  public get = (userId: number, animeId: number): Promise<PrismaEntry> =>
+  public get = (userId: number, animeId: number) =>
     this.model.findUnique({
       where: {
         animeId_userId: {
@@ -95,7 +95,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         }
       | undefined,
     options?: ModelOptions<PrismaEntryInclude>
-  ): Promise<PrismaEntry[]> => {
+  ) => {
     return this.model.findMany({
       where: {
         userId,

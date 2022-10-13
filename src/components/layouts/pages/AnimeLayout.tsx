@@ -10,11 +10,13 @@ import {
   PlayIcon,
 } from '@heroicons/react/solid';
 
+import { LayoutProps } from 'app/types';
 import { ApiService } from 'services/api.service';
 import { useLayoutContext } from 'context/layout.context';
 import { useUserContext } from 'context/user.context';
 import { useDialog } from 'hooks';
 import { routes } from 'resources/routes';
+import { POSTER_RAPPORT } from 'resources/constants';
 import Title from 'components/layouts/Title';
 import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu';
 import KitsuButton from 'components/common/KitsuButton';
@@ -23,13 +25,15 @@ import EditAnimesEntries, {
   Result as EditAnimesEntriesResult,
 } from 'components/modal/EditAnimesEntries';
 import Img from 'components/common/Img';
-import { POSTER_RAPPORT } from 'resources/constants';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
 
-export interface AnimeLayoutProps {
+interface Props {
   anime: Anime;
-  error?: ErrorPage;
+  children: ReactNode;
 }
+
+interface AnimeLayoutProps extends LayoutProps<Props> {}
 
 type tab = { label: string; path: string };
 
@@ -42,29 +46,18 @@ const TABS: Array<tab> = [
   { label: 'Personnages', path: '/characters' },
 ];
 
-const NavLink: Component<{ href: string; children: string }> = ({ href, children }) => {
-  const router = useRouter();
-  const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href]);
-
+const AnimeLayout: Component<AnimeLayoutProps> = ({ children, exception, pageProps }) => {
+  // TODO: custom with cool error page for anime not found
   return (
-    <Link href={href}>
-      <a
-        className={classnames(
-          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
-          { 'bg-white text-gray-300': !active, 'bg-gray-50 text-gray-700': active }
-        )}
-      >
-        {children}
-      </a>
-    </Link>
+    <ErrorBoundary exception={exception}>
+      <DefaultLayout pageProps={undefined}>
+        <AnimeLayoutContent anime={pageProps.anime}>{children}</AnimeLayoutContent>
+      </DefaultLayout>
+    </ErrorBoundary>
   );
 };
 
-const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
-  children,
-  anime,
-  error,
-}) => {
+const AnimeLayoutContent: Component<Props> = ({ anime, children }) => {
   const { isLogin } = useUserContext();
   const {
     activeTransparentState: [, setHeaderTransparent],
@@ -123,10 +116,8 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
     else void router.push(routes.authentification.signIn);
   };
 
-  if (error) return <Error statusCode={error.statusCode} title={error.message} />;
-
   return (
-    <DefaultLayout>
+    <>
       <Title>{anime.canonicalTitle}</Title>
       <div className="relative -top-header">
         <div className="flex flex-col justify-between">
@@ -219,7 +210,25 @@ const AnimeLayout: Component<AnimeLayoutProps & { children: ReactNode }> = ({
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </>
+  );
+};
+
+const NavLink: Component<{ href: string; children: string }> = ({ href, children }) => {
+  const router = useRouter();
+  const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href]);
+
+  return (
+    <Link href={href}>
+      <a
+        className={classnames(
+          'block px-4 py-2 font-medium text-md transition duration-500 hover:bg-gray-200 hover:text-black',
+          { 'bg-white text-gray-300': !active, 'bg-gray-50 text-gray-700': active }
+        )}
+      >
+        {children}
+      </a>
+    </Link>
   );
 };
 

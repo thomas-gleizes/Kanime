@@ -1,13 +1,16 @@
 import { getIronSession, IronSessionOptions } from 'iron-session';
 import { withIronSessionApiRoute, withIronSessionSsr } from 'iron-session/next';
-import { ApiHandler } from 'next/app';
 import {
   GetServerSideProps,
   GetServerSidePropsContext,
   GetServerSidePropsResult,
+  NextApiRequest,
+  NextApiResponse,
   PreviewData,
 } from 'next';
 import { ParsedUrlQuery } from 'querystring';
+
+import { ApiHandler } from 'app/next';
 
 const sessionOptions: IronSessionOptions = {
   password: process.env.SECRET_TOKEN as string,
@@ -30,10 +33,12 @@ export function withSessionSsr<
     context: GetServerSidePropsContext<Q, D>
   ) => Promise<GetServerSidePropsResult<P>>
 ): GetServerSideProps<P, Q, D> {
+  // @ts-ignore
   return withIronSessionSsr(handler, sessionOptions);
 }
 
-export const getSession = (req, res) => getIronSession(req, res, sessionOptions);
+export const getSession = (req: NextApiRequest, res: NextApiResponse) =>
+  getIronSession(req, res, sessionOptions);
 
 // This is where we specify the typings of req.session.*
 declare module 'iron-session' {

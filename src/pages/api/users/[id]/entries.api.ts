@@ -1,7 +1,8 @@
 import { Get, ParseNumberPipe, Query, ValidationPipe } from 'next-api-decorators';
 import { Visibility } from '@prisma/client';
 
-import { PrismaEntryStatus } from 'prisma/app';
+import type { PrismaEntryStatus } from 'app/prisma';
+import type { Session } from 'app/session';
 import ApiHandler from 'class/ApiHandler';
 import { apiHandler } from 'services/handler.service';
 import { entryModel, userFollowModel } from 'models';
@@ -14,7 +15,7 @@ class UserEntriesHandler extends ApiHandler {
   async get(
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) query: QueryEntryListDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<ShowUserEntriesResponse> {
     const visibility: Visibility[] = ['public'];
     if (session?.user)

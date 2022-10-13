@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 export type ConnexionType = PrismaClient;
 
 class ConnexionService extends PrismaClient {
-  private static _instance;
+  private static _instance: ConnexionService;
 
   private constructor() {
     super({

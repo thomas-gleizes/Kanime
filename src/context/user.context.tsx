@@ -6,7 +6,7 @@ import LocalStorageService from 'services/localStorage.service';
 
 export declare type UserContext = {
   isLogin: boolean;
-  user: User;
+  user: Nullable<User>;
   signIn: (user: User) => void;
   signOut: () => void;
 };
@@ -22,7 +22,9 @@ const UserContext = createContext<UserContext>({} as any);
 export const useUserContext = useContextFactory<UserContext>(UserContext);
 
 const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
-  const [user, setUser] = useState<User>(initialUser || LocalStorageService.getUser());
+  const [user, setUser] = useState<Nullable<User>>(
+    initialUser || LocalStorageService.getUser()
+  );
   const [isLogin, setIsLogin] = useState<boolean>(!!user);
 
   const signIn = useCallback((user: User): void => {

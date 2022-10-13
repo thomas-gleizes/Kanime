@@ -1,4 +1,14 @@
-declare module 'next/app' {
+declare module 'app/types' {
+  import { SsrException } from 'exceptions';
+
+  interface LayoutProps<Props = undefined> {
+    exception?: SsrException;
+    children: ReactNode;
+    pageProps?: Props;
+  }
+}
+
+declare module 'app/next' {
   import type {
     GetServerSideProps,
     GetServerSidePropsContext,
@@ -10,11 +20,13 @@ declare module 'next/app' {
     NextApiResponse,
     NextPage,
   } from 'next';
-  import type { SessionData } from 'sessions/app';
+  import { LayoutProps } from 'app/types';
 
-  declare type Page<P = {}, IP = P> = NextPage<P, IP> & {
-    layout?: Component<{ children: ReactNode } & P>;
-    // exceptions?: Component<P>;
+  declare type Page<Props = {}, Layout extends LayoutProps = LayoutProps> = NextPage<
+    Props,
+    Props
+  > & {
+    layout?: Component<Layout<Props>>;
   };
 
   declare type ApiHandler<T> = NextApiHandler<T>;
@@ -37,7 +49,7 @@ declare module 'next/app' {
   declare type AppProps = {
     pageProps: any;
     Component: Page;
-    session: any
+    session: any;
   };
 
   declare type initialState = {
@@ -51,7 +63,7 @@ declare module 'next/app' {
   ) => ServerSideProps<P, Q>;
 }
 
-declare module 'prisma/app' {
+declare module 'app/prisma' {
   import type {
     Anime,
     AnimeSeason,
@@ -114,7 +126,7 @@ declare module 'prisma/app' {
 
   declare type PrismaLog = Log & PrismaLogRelation;
   declare type PrismaLogs = PrismaLog[];
-  declare type PrismaLogRelation = { user?: PrismaUser };
+  declare type PrismaLogRelation = { user?: Nullable<PrismaUser> };
   declare type PrismaLogInclude = Prisma.LogInclude;
   declare type PrismaLogDelegate = Prisma.LogDelegate<unknown>;
 
@@ -150,13 +162,8 @@ declare module 'prisma/app' {
   declare type PrismaMethod = Method;
 }
 
-declare module 'sessions/app' {
+declare module 'app/session' {
   import { IronSession } from 'iron-session';
 
-  declare type SessionData = {
-    user: User;
-    token: string;
-  };
-
-  declare type Session = IronSession & SessionData;
+  declare type Session = IronSession;
 }

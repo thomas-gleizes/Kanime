@@ -7,7 +7,7 @@ import type {
 import type { ParsedUrlQuery } from 'querystring';
 import { createHandler } from 'next-api-decorators';
 
-import { SsrException } from 'exceptions';
+import { Exception, SsrException } from 'exceptions';
 import { ssrLogger } from 'middlewares/logger.middleware';
 import { withSessionApi, withSessionSsr } from 'services/session.service';
 import { errorMessage } from 'resources/constants';
@@ -39,25 +39,29 @@ export function ssrHandler<
             error: error.parse(),
           },
         };
-      } else if (process.env.NODE_ENV !== 'production') {
+      }
+
+      if (
+        process.env.NODE_ENV !== 'production' &&
+        (error instanceof Error || error instanceof Exception)
+      ) {
         return {
           props: {
             error: {
-              statusCode: 500,
-              message: error.message || errorMessage.INTERNAL_ERROR,
-            },
-          },
-        };
-      } else {
-        return {
-          props: {
-            error: {
-              statusCode: 500,
-              message: errorMessage.INTERNAL_ERROR,
+              message: error.message,
             },
           },
         };
       }
+
+      return {
+        props: {
+          error: {
+            statusCode: 500,
+            message: errorMessage.INTERNAL_ERROR,
+          },
+        },
+      };
     }
   });
 }

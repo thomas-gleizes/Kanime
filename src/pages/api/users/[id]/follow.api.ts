@@ -1,5 +1,6 @@
 import { Delete, Get, HttpCode, ParseNumberPipe, Post, Query } from 'next-api-decorators';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
@@ -28,7 +29,7 @@ class UserFollowHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   async follow(
     @Query('id', ParseNumberPipe) id: number,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<CreateFollowResponse> {
     const user = await userModel.findById(id);
 

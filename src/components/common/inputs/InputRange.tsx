@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
 
 type minmax = { min: number; max: number };
 
@@ -13,16 +13,16 @@ const InputRange: Component<Props> = ({ min, max, step, onChange }) => {
   const [minValue, setMinValue] = useState<number>(min);
   const [maxValue, setMaxValue] = useState<number>(max);
 
-  const handleMin = ({ target: { value } }) => {
-    if (value < min) setMinValue(min);
-    else if (value > max) setMinValue(max);
-    else setMinValue(Math.min(value, maxValue));
+  const handleMin = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    if (+target.value < min) setMinValue(min);
+    else if (+target.value > max) setMinValue(max);
+    else setMinValue(Math.min(+target.value, maxValue));
   };
 
-  const handleMax = ({ target: { value } }) => {
-    if (+value < min) setMaxValue(min);
-    else if (+value > max) setMaxValue(max);
-    else setMaxValue(Math.max(+value, minValue));
+  const handleMax = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    if (+target.value < min) setMaxValue(min);
+    else if (+target.value > max) setMaxValue(max);
+    else setMaxValue(Math.max(+target.value, minValue));
   };
 
   const thumb: minmax = useMemo(

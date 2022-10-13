@@ -1,5 +1,5 @@
 class Base64 {
-  public static encodeInputFile(file) {
+  public static encodeInputFile(file: Blob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);

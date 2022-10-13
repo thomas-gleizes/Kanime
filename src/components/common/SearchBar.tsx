@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Transition } from '@headlessui/react';
@@ -40,21 +40,20 @@ const SearchBar: Component<Props> = ({ transparent }) => {
   }, [arrowUp]);
 
   useEffect(() => {
-    if (enterPress && open) {
+    if (enterPress && open)
       router.push(`/animes/${animes[iSelected].slug}`).then(() => setOpen(false));
-    }
   }, [enterPress]);
 
-  const handleChangeQuery = ({ target: { value } }) => {
-    setQuery(value);
+  const handleChangeQuery = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    setQuery(target.value);
     setOpen(true);
     setISelected(0);
 
-    if (value.length > 3) {
+    if (target.value.length > 3) {
       setLoading(true);
 
       const animesPromises = animesApi
-        .search(value, { limit: 50, skip: 0 })
+        .search(target.value, { limit: 50, skip: 0 })
         .then((response) => setAnimes(response.animes))
         .catch((e) => toast.error(e.error || 'Une erreur est survenue'));
 

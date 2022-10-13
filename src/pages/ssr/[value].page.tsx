@@ -1,34 +1,25 @@
-import Error from 'next/error';
-
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { SsrException } from 'exceptions';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
-type Props = { message: string } & {
-  error?: ErrorPage;
-};
+type Props = { name: string };
 
 export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
   if (context.query.hasOwnProperty('error'))
     throw new SsrException(400, 'This is an exceptions');
 
-  const name = context.query.value;
-
   return {
     props: {
-      message: `Hello, ${name}`,
+      name: `${context.query.value}`,
     },
   };
 });
 
-const Page: Page<Props> = ({ message, ...props }) => {
-  if (props.hasOwnProperty('error'))
-    return <Error statusCode={props.error.statusCode} title={props.error.message} />;
-
+const Page: Page<Props> = ({ name }) => {
   return (
     <div>
-      <h1 className="text-xl text-center">{message}</h1>
+      <h1 className="text-xl text-center"> Hello {name}</h1>
     </div>
   );
 };

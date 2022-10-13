@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FaEye } from 'react-icons/fa';
 import dayjs from 'dayjs';
@@ -30,13 +30,14 @@ const ListLogs: Component = () => {
 
   const logs = useMemo(() => data?.records || [], [data]);
 
+  const max = useMemo(
+    () => (data?.meta ? Math.ceil(data.meta.count / LIMIT) : 1),
+    [data]
+  );
+
   return (
     <div>
-      <Pagination
-        value={value}
-        actions={actions}
-        max={Math.floor(data?.meta.total / LIMIT) + 1}
-      />
+      <Pagination value={value} actions={actions} max={max} />
       <div className="border rounded-md shadow-lg">
         <TableContainer>
           <Table size="xs">

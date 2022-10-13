@@ -10,8 +10,8 @@ type useDialogResult = <Props, Result>(
 export function useDialog(options?: DialogOptions): useDialogResult {
   const { addDialog } = useDialogContext();
 
-  return (component, props) =>
+  return (component: Component<any>, props: any) =>
     new Promise((resolve) =>
-      addDialog({ uid: uuid(), props, Component: component, resolve, options })
+      addDialog({ uid: uuid(), props, component, resolve, options })
     );
 }

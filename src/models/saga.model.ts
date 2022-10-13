@@ -1,4 +1,4 @@
-import { PrismaSagaDelegate, PrismaSaga, PrismaSagas } from 'prisma/app';
+import { PrismaSagaDelegate } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
@@ -7,16 +7,15 @@ class SagaModel extends Model<PrismaSagaDelegate> {
     super(connexion, 'saga');
   }
 
-  public all = (params: modelParams): Promise<PrismaSagas> =>
-    this.model.findMany({ orderBy: [{ id: 'asc' }] });
+  public all = (params: modelParams) => this.model.findMany({ orderBy: [{ id: 'asc' }] });
 
-  public findById = (id: number): Promise<PrismaSaga> =>
+  public findById = (id: number) =>
     this.model.findUnique({ where: { id }, include: { animes: true } });
 
-  public findBySlug = (slug: string): Promise<PrismaSaga> =>
+  public findBySlug = (slug: string) =>
     this.model.findUnique({ where: { slug }, include: { animes: true } });
 
-  public search = (query: string, params: modelParams): Promise<PrismaSagas> =>
+  public search = (query: string, params: modelParams) =>
     this.model.findMany({
       where: {
         OR: [

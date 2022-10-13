@@ -27,7 +27,6 @@ const Field: Component<FieldProps> = ({ name, label, required, className, ...pro
         </label>
       )}
       <Input
-        name={name}
         invalid={meta.touched && !!meta.error}
         valid={meta.touched && !meta.error}
         {...field}

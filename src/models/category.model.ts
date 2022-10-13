@@ -1,4 +1,4 @@
-import { PrismaCategoryDelegate, PrismaCategories, PrismaCategory } from 'prisma/app';
+import { PrismaCategoryDelegate } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
 import Model from 'class/Model';
 
@@ -7,12 +7,12 @@ class CategoryModel extends Model<PrismaCategoryDelegate> {
     super(connexion, 'category');
   }
 
-  public findById = (id: number): Promise<PrismaCategory> =>
+  public findById = (id: number) =>
     this.model.findUnique({
-      where: { id: +id },
+      where: { id },
     });
 
-  public findByAnimeId = (id: number, params?: modelParams): Promise<PrismaCategories> =>
+  public findByAnimeId = (id: number, params?: modelParams) =>
     this.model.findMany({
       where: {
         animes: { some: { animeId: +id } },

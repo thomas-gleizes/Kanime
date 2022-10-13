@@ -13,14 +13,14 @@ export class RegisterDto {
   @IsNotEmpty({ message: "Le nom d'utilisateur est requis" })
   @MinLength(3, { message: "Le nom d'utilisateur doit contenir au moins 3 caractères" })
   @MaxLength(32, { message: "Le nom d'utilisateur doit contenir au plus 32 caractères" })
-  username: string;
+  username!: string;
 
   @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
   @MaxLength(255, {
     message: "Le nom d'utilisateur doit contenir au plus 255 caractères",
   })
-  email: string;
+  email!: string;
 
   @IsString({ message: 'Le mot de passe doit être une chaîne de caractères' })
   @IsNotEmpty({ message: 'Le mot de passe est requis' })
@@ -28,29 +28,29 @@ export class RegisterDto {
   @MaxLength(255, {
     message: "Le nom d'utilisateur doit contenir au plus 255 caractères",
   })
-  password: string;
+  password!: string;
 
-  confirmPassword: string;
+  confirmPassword!: string;
 }
 
 export class SignInDto {
   @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
-  email: string;
+  email!: string;
 
   @IsString({ message: 'Le mot de passe doit être une chaîne de caractères' })
   @IsNotEmpty({ message: 'Le mot de passe est requis' })
-  password: string;
+  password!: string;
 
   @Type(() => Boolean)
   @IsBoolean({ message: 'Le champ remember doit être un booléen' })
-  rememberMe: boolean;
+  rememberMe!: boolean;
 }
 
 export class ForgotPasswordDto {
   @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
-  email: string;
+  email!: string;
 }
 
 export class ResetPasswordDto {
@@ -60,9 +60,9 @@ export class ResetPasswordDto {
   @MaxLength(255, {
     message: "Le nom d'utilisateur doit contenir au plus 255 caractères",
   })
-  newPassword: string;
+  newPassword!: string;
 
   @IsString({ message: 'Le token doit être une chaîne de caractères' })
   @IsNotEmpty({ message: 'Le token est requis' })
-  token: string;
+  token!: string;
 }

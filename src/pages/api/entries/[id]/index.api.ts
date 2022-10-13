@@ -11,6 +11,7 @@ import {
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 import { EntryStatus, Visibility } from '@prisma/client';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { entryModel, userFollowModel } from 'models';
@@ -24,9 +25,9 @@ class EntryHandler extends ApiHandler {
   @Get()
   async show(
     @Query('id', ParseNumberPipe) id: number,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<ShowEntryResponse> {
-    const entry = await entryModel.find(id).then((entry) => entriesMapper.one(entry));
+    const entry = await entryModel.find(id);
 
     if (!entry) throw new NotFoundException('Entry not found');
     if (entry.visibility !== Visibility.public) {
@@ -36,11 +37,11 @@ class EntryHandler extends ApiHandler {
         const isFriends = await userFollowModel.isFriends(session.user.id, id);
 
         if (!isFriends) throw new NotFoundException('Entry not found');
-      } else if (entry.userId !== session.id)
+      } else if (entry.userId !== session.user.id)
         throw new NotFoundException('Entry not found');
     }
 
-    return { success: true, entry };
+    return { success: true, entry: entriesMapper.one(entry) };
   }
 
   @Patch()
@@ -48,18 +49,16 @@ class EntryHandler extends ApiHandler {
   async update(
     @Query('id', ParseNumberPipe) id: number,
     @Body(ValidationPipe) body: UpdateEntryDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<UpdateEntryResponse> {
-    const entry = await entryModel
-      .findWithAnime(id)
-      .then((entry) => entriesMapper.one(entry));
+    const entry = await entryModel.findWithAnime(id);
 
-    if (!entry && entry.userId === session.user.id)
+    if (!entry || (entry && entry.userId === session.user.id))
       throw new NotFoundException('entry not found');
 
-    if (body.status === EntryStatus.Completed && entry.anime.episode.count)
-      body.progress = entry.anime.episode.count;
-    else if (body.progress === entry.anime.episode.count)
+    if (body.status === EntryStatus.Completed && entry.anime.episodeCount)
+      body.progress = entry.anime.episodeCount;
+    else if (body.progress === entry.anime.episodeCount)
       body.status = EntryStatus.Completed;
 
     if (!body.startedAt)
@@ -84,7 +83,7 @@ class EntryHandler extends ApiHandler {
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(
     @Query('id', ParseNumberPipe) id: number,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<ApiResponse> {
     try {
       await entryModel.delete(id);

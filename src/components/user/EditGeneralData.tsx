@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import { Gender } from '@prisma/client';
 import { Form, Formik, FormikProps } from 'formik';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
@@ -9,22 +8,15 @@ import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
-
-declare type values = {
-  city: string;
-  birthday: Date | string;
-  bio: string;
-  avatar: UserMediaHandling | string;
-  background: UserMediaHandling | string;
-  gender: Gender;
-};
+import { ApiException } from '../../exceptions/ApiException';
+import { UpdateUserDto } from 'dto/user.dto';
 
 const fetchCountries = () => commonApi.showCountries().then((data) => data.countries);
 
 const EditUserModal: React.FunctionComponent = () => {
   const { user, signIn } = useUserContext();
 
-  const formRef = useRef<FormikProps<values>>();
+  const formRef = useRef<Nullable<FormikProps<UpdateUserDto>>>(null);
   const avatarRef = useRef<HTMLInputElement>();
   const backgroundRef = useRef<HTMLInputElement>();
 
@@ -32,24 +24,22 @@ const EditUserModal: React.FunctionComponent = () => {
 
   if (!user) return null;
 
-  const initialValues: values = {
-    city: user.city,
-    birthday: user.birthday,
-    bio: user.bio,
+  const initialValues: UpdateUserDto = {
     avatar: user.avatarPath,
     background: user.backgroundPath,
     gender: user.gender,
   };
 
-  const handleSubmit = async (values: values) => {
+  const handleSubmit = async (values: UpdateUserDto) => {
     try {
       const {
         data: { user },
       } = await ApiService.patch(routes.users.api.current, values);
 
       signIn(user);
-    } catch (e) {
-      toast.error(e.message || 'Une erreur est survenue');
+    } catch (err) {
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
 
       // TODO setFieldError with formik and class-validator schema
     }
@@ -67,7 +57,7 @@ const EditUserModal: React.FunctionComponent = () => {
           <Form>
             <div className="relative h-300">
               <div
-                onClick={() => backgroundRef.current.click()}
+                onClick={() => backgroundRef.current?.click()}
                 className="absolute w-full h-full rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
                 style={{
                   background: `url('${displayBackgroundUrl(values.background)}')`,
@@ -75,7 +65,7 @@ const EditUserModal: React.FunctionComponent = () => {
               />
               <File innerRef={backgroundRef} name="background" />
               <div
-                onClick={() => avatarRef.current.click()}
+                onClick={() => avatarRef.current?.click()}
                 className="absolute w-[260px] h-[260px] top-[20px] rounded-full right-10 bg-no-repeat bg-center"
                 style={{ background: `url(${displayBackgroundUrl(values.avatar)})` }}
               />

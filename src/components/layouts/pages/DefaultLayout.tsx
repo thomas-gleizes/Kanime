@@ -1,19 +1,16 @@
 import React from 'react';
 
-interface Props extends React.HTMLAttributes<HTMLElement> {
-  children: ReactNode;
-}
+import { LayoutProps } from 'app/types';
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
 
-const DefaultLayout: Component<Props> = ({ children }) => {
+interface Props extends LayoutProps {}
+
+const DefaultLayout: Component<Props> = ({ children, exception }) => {
   return (
-    <>
+    <ErrorBoundary exception={exception}>
       <main className="dark:bg-gray-800"> {children}</main>
-    </>
+    </ErrorBoundary>
   );
-};
-
-DefaultLayout.defaultProps = {
-  className: 'mt-header',
 };
 
 export default DefaultLayout;

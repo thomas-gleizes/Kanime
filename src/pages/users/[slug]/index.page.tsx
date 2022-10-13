@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { EntryStatus, Visibility } from '@prisma/client';
 
-import type { Page } from 'next/app';
+import type { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { entryModel, userFollowModel, userModel } from 'models';
 import { entriesMapper, usersMapper } from 'mappers';
@@ -121,11 +121,10 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
     }
   }, [percent]);
 
-  const counter = useMemo<{ [key: string]: number }>(() => {
-    const result = {};
+  const counter = useMemo(() => {
+    const result: { [key: string]: number } = {};
 
     for (const status of Object.values(EntryStatus)) result[status] = 0;
-
     for (const entry of entries) result[entry.status]++;
 
     return result;
@@ -138,9 +137,10 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
       .filter((entry) => status === 'All' || entry.status === status)
       .filter(
         (entry) =>
-          entry.anime.canonicalTitle.toLowerCase().includes(searchQuery) ||
-          entry.anime.titles.en?.toLowerCase()?.includes(searchQuery) ||
-          entry.anime.titles.en_jp?.toLowerCase()?.includes(searchQuery)
+          entry.anime &&
+          (entry.anime.canonicalTitle.toLowerCase().includes(searchQuery) ||
+            entry.anime.titles?.en?.toLowerCase()?.includes(searchQuery) ||
+            entry.anime.titles?.en_jp?.toLowerCase()?.includes(searchQuery))
       );
   }, [status, query, entries]);
 
@@ -160,35 +160,35 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
             <StatusButton
               active={status === EntryStatus.Completed}
               libelle="Terminée"
-              counter={counter[EntryStatus.Completed]}
+              counter={counter[EntryStatus.Completed] || 0}
               onClick={() => setStatus(EntryStatus.Completed)}
               color="green"
             />
             <StatusButton
               active={status === EntryStatus.Watching}
               libelle="En cours de visionnage"
-              counter={counter[EntryStatus.Watching]}
+              counter={counter[EntryStatus.Watching] || 0}
               onClick={() => setStatus(EntryStatus.Watching)}
               color="blue"
             />
             <StatusButton
               active={status === EntryStatus.Wanted}
               libelle="Planifier"
-              counter={counter[EntryStatus.Wanted]}
+              counter={counter[EntryStatus.Wanted] || 0}
               onClick={() => setStatus(EntryStatus.Wanted)}
               color="violet"
             />
             <StatusButton
               active={status === EntryStatus.OnHold}
               libelle="En pause"
-              counter={counter[EntryStatus.OnHold]}
+              counter={counter[EntryStatus.OnHold] || 0}
               onClick={() => setStatus(EntryStatus.OnHold)}
               color="yellow"
             />
             <StatusButton
               active={status === EntryStatus.Dropped}
               libelle="Abandonnée"
-              counter={counter[EntryStatus.Dropped]}
+              counter={counter[EntryStatus.Dropped] || 0}
               onClick={() => setStatus(EntryStatus.Dropped)}
               color="red"
             />

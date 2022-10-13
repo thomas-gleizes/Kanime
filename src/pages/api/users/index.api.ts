@@ -1,6 +1,7 @@
 import * as fs from 'fs';
 import { Body, Get, Patch, Query, ValidationPipe } from 'next-api-decorators';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
@@ -24,7 +25,7 @@ class UsersHandler extends ApiHandler {
   @AuthGuard()
   async update(
     @Body(ValidationPipe) body: UpdateUserDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<UpdateUserResponse> {
     const path = `/media/users/${session.user.id.toString().split('').join('/')}`;
     const fullPath = `${publicPath}${path}`;

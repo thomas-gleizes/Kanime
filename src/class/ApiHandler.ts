@@ -8,7 +8,13 @@ import trace from 'utils/trace';
 function exceptionHandler(error: unknown, req: NextApiRequest, res: NextApiResponse) {
   if (error instanceof HttpException) {
     trace('HttpException', error.statusCode, error.message);
-    return res.status(error.statusCode).json(error);
+
+    console.log('Error', error);
+
+    return res.status(error.statusCode).json({
+      message: error.message,
+      errors: error.errors,
+    });
   }
 
   if (process.env.NODE_ENV !== 'production') {

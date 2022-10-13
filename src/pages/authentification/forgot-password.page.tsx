@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { Page } from 'next/app';
+import { Page } from 'app/next';
 import { authenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
 import { routes } from 'resources/routes';
 import { Input } from 'components/common/inputs';
 import Button from 'components/common/Button';
+import { ApiException } from '../../exceptions/ApiException';
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)
@@ -28,7 +29,8 @@ const ForgotPasswordPage: Page = () => {
       await authenticationApi.forgotPassword(email);
       toast.success('Demande de nouveau mot de passe effectué');
     } catch (err) {
-      toast.error(err);
+      if (err instanceof ApiException) toast.error(err.message);
+      else toast.error('Une erreur est survenue');
     }
   };
 

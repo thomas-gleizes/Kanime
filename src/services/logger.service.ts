@@ -6,38 +6,37 @@ import ip from 'utils/ip';
 
 function replaceKey(data: any) {
   const keys = Object.keys({ ...data });
-  const result = {};
+  const result: { [key: string]: string } = {};
 
-  for (const key of keys) {
-    if (key in loggerReplaceKey) {
-      result[key] = loggerReplaceKey[key];
-    }
-  }
+  for (const key of keys)
+    if (key in loggerReplaceKey) result[key] = loggerReplaceKey[key] as string;
 
   return { ...data, ...result };
 }
 
 export function apiLogger(req: NextApiRequest): any {
-  const userId = req.session?.user?.id || null;
+  const userId = req.session?.user?.id;
 
-  const [path, params] = req.url.split('?');
+  if (req.url) {
+    const [path, params] = req.url.split('?') as [string, string];
 
-  return logModel
-    .create({
-      path: path,
-      method: req.method as Method,
-      ip: ip(req),
-      body: replaceKey(req.body),
-      params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
-      userId: userId,
-    })
-    .catch((err) => console.log('ERROR LOGGER : ', err));
+    return logModel
+      .create({
+        path: path,
+        method: req.method as Method,
+        ip: ip(req),
+        body: replaceKey(req.body),
+        params: replaceKey(Object.fromEntries(new URLSearchParams(params))),
+        userId: userId,
+      })
+      .catch((err) => console.log('ERROR LOGGER : ', err));
+  }
 }
 
 export async function ssrLogger(context: GetServerSidePropsContext) {
-  const userId = context.req?.session?.user?.id || null;
+  const userId = context.req?.session?.user?.id;
 
-  const [path, params] = context.resolvedUrl.split('?');
+  const [path, params] = context.resolvedUrl.split('?') as [string, string];
 
   await logModel.create({
     path: path,

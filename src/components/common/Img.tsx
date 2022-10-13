@@ -2,6 +2,7 @@ import { IconButton } from '@chakra-ui/react';
 import { FaTimes } from 'react-icons/fa';
 
 import { useToggle } from 'hooks';
+import { useMemo } from 'react';
 
 interface Props {
   src: string;
@@ -15,11 +16,16 @@ interface Props {
 const Img: Component<Props> = ({ src, width, height, alt, className, fullScreen }) => {
   const [isFullScreen, toggleFullScreen] = useToggle(false);
 
+  const handleClick = useMemo(
+    () => (fullScreen ? toggleFullScreen : undefined),
+    [fullScreen, toggleFullScreen]
+  );
+
   return (
     <>
       <img
         src={src}
-        onClick={fullScreen && toggleFullScreen}
+        onClick={handleClick}
         width={width}
         height={height}
         alt={alt}

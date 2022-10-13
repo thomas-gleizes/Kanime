@@ -1,9 +1,9 @@
 import isBrowser from 'utils/isBrowser';
 
 class LocalStorageService {
-  private static readonly USER: string = 'KANIME_USER';
-  private static readonly TOKEN: string = 'KANIME_TOKEN';
-  private static readonly THEME: string = 'KANIME_THEME';
+  private static readonly USER_KEY: string = 'KANIME_USER';
+  private static readonly TOKEN_KEY: string = 'KANIME_TOKEN';
+  private static readonly THEME_KEY: string = 'KANIME_THEME';
 
   private static isBrowser(): boolean {
     return isBrowser();
@@ -11,35 +11,40 @@ class LocalStorageService {
 
   static saveUser(user: User): void {
     if (this.isBrowser())
-      localStorage.setItem(LocalStorageService.USER, JSON.stringify(user));
+      localStorage.setItem(LocalStorageService.USER_KEY, JSON.stringify(user));
   }
 
   static saveToken(token: string): void {
-    if (this.isBrowser()) localStorage.setItem(LocalStorageService.TOKEN, token);
+    if (this.isBrowser()) localStorage.setItem(LocalStorageService.TOKEN_KEY, token);
   }
 
-  static getUser(): User {
-    if (this.isBrowser())
-      return JSON.parse(localStorage.getItem(LocalStorageService.USER));
-    else return null;
+  static getUser(): Nullable<User> {
+    if (this.isBrowser()) {
+      const str = localStorage.getItem(LocalStorageService.USER_KEY);
+      if (str) return JSON.parse(str) as User;
+    }
+
+    return null;
   }
 
-  static getToken(): string {
-    if (this.isBrowser()) return localStorage.getItem(LocalStorageService.TOKEN);
+  static getToken(): Nullable<string> {
+    if (this.isBrowser()) {
+      return localStorage.getItem(LocalStorageService.TOKEN_KEY);
+    }
     return null;
   }
 
   static clearUser(): void {
     if (this.isBrowser()) {
-      localStorage.removeItem(LocalStorageService.USER);
-      localStorage.removeItem(LocalStorageService.TOKEN);
+      localStorage.removeItem(LocalStorageService.USER_KEY);
+      localStorage.removeItem(LocalStorageService.TOKEN_KEY);
     }
   }
 
   static getTheme(): TailwindTheme {
     if (this.isBrowser()) {
       const theme = localStorage.getItem(
-        LocalStorageService.THEME
+        LocalStorageService.THEME_KEY
       ) as TailwindTheme | null;
 
       return theme || 'light';
@@ -49,7 +54,7 @@ class LocalStorageService {
   }
 
   static setTheme(theme: TailwindTheme) {
-    if (this.isBrowser()) localStorage.setItem(LocalStorageService.THEME, theme);
+    if (this.isBrowser()) localStorage.setItem(LocalStorageService.THEME_KEY, theme);
   }
 }
 

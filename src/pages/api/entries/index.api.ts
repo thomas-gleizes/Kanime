@@ -1,6 +1,7 @@
 import { Get, Post, Body, Query, HttpCode, ValidationPipe } from 'next-api-decorators';
 import { EntryStatus } from '@prisma/client';
 
+import type { Session } from 'app/session';
 import { apiHandler } from 'services/handler.service';
 import ApiHandler from 'class/ApiHandler';
 import { errorMessage } from 'resources/constants';
@@ -26,17 +27,15 @@ class EntriesHandler extends ApiHandler {
   @HttpCode(HttpStatus.CREATED)
   async create(
     @Body(ValidationPipe) body: CreateEntryDto,
-    @GetSession() session
+    @GetSession() session: Session
   ): Promise<CreateEntryResponse> {
-    const anime = await animeModel
-      .findById(body.animeId)
-      .then((anime) => animesMapper.one(anime));
+    const anime = await animeModel.findById(body.animeId);
 
     if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
 
-    if (body.status === EntryStatus.Completed && anime.episode.count)
-      body.progress = anime.episode.count;
-    else if (body.progress === anime.episode.count) body.status = EntryStatus.Completed;
+    if (body.status === EntryStatus.Completed && anime.episodeCount)
+      body.progress = anime.episodeCount;
+    else if (body.progress === anime.episodeCount) body.status = EntryStatus.Completed;
 
     if (
       !body.startedAt &&

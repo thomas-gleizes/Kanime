@@ -17,51 +17,51 @@ import { QueryParamsDto } from 'dto/global.dto';
 export class QueryEntryListDto extends QueryParamsDto {
   @IsString()
   @IsOptional()
-  orderBy: string;
+  orderBy: string | undefined;
 
   @IsString()
   @IsOptional()
-  status: string;
+  status: string | undefined;
 }
 
 export class UpdateEntryDto {
-  @IsEnum(EntryStatus)
+  @IsEnum(EntryStatus, { message: 'Le statut doit être un statut valide' })
   @IsOptional()
-  status: EntryStatus;
+  status: EntryStatus | undefined;
 
-  @IsInt()
+  @IsInt({ message: "Le nombre d'episodes vues doit être un entier" })
   @Type(() => Number)
   @IsOptional()
-  @Min(0)
-  progress: number;
+  @Min(0, { message: "Le nombre d'episodes vues doit être supérieur ou égal à 0" })
+  progress: number | undefined;
 
-  @IsNumber()
+  @IsNumber({}, { message: 'La note doit être un nombre' })
   @Type(() => Number)
   @IsOptional()
-  @Max(10)
-  @Min(0)
-  rating: number;
+  @Max(10, { message: 'La note doit être inférieur ou égal à 10' })
+  @Min(0, { message: 'La note doit être supérieur ou égal à 0' })
+  rating: number | undefined;
 
-  @IsString()
+  @IsString({ message: 'Le commentaire doit être une chaîne de caractères' })
   @IsOptional()
-  @MaxLength(500)
-  note: string;
+  @MaxLength(500, { message: 'Le commentaire doit contenir au plus 500 caractères' })
+  note: string | undefined;
 
-  @IsDateString()
+  @IsDateString({ message: 'La date doit être une date valide' })
   @IsOptional()
-  startedAt: Date | string;
+  startedAt: Date | undefined | string;
 
-  @IsDateString()
+  @IsDateString({ message: 'La date doit être une date valide' })
   @IsOptional()
-  finishAt: Date | string;
+  finishAt: Date | undefined | string;
 
-  @IsEnum(Visibility)
+  @IsEnum(Visibility, { message: 'La visibilité doit être une visibilité valide' })
   @IsOptional()
-  visibility: Visibility;
+  visibility: Visibility | undefined;
 }
 
 export class CreateEntryDto extends UpdateEntryDto {
   @Type(() => Number)
-  @IsInt()
-  animeId: number;
+  @IsInt({ message: "L'id de l'anime doit être un entier" })
+  animeId!: number;
 }

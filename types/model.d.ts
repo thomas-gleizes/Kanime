@@ -22,13 +22,13 @@ type Titles = {
 };
 
 type Rating = {
-  average: number;
-  rank: number;
+  average: Nullable<number>;
+  rank: Nullable<number>;
 };
 
 type Popularity = {
-  count: number;
-  rank: number;
+  count: Nullable<number>;
+  rank: Nullable<number>;
 };
 
 type Episode = {
@@ -49,24 +49,24 @@ interface UserMediaHandling {
 
 declare type Anime = {
   id: number;
-  kitsuId: number;
+  kitsuId: Nullable<number>;
   slug: string;
   canonicalTitle: string;
-  titles: Titles;
-  synopsis?: string;
-  description?: string;
-  season: 'Winter' | 'Springs' | 'Summer' | 'Fall' | string;
-  season_year: string;
+  titles: Nullable<Titles>;
+  synopsis: Nullable<string>;
+  description: Nullable<string>;
+  season: Nullable<'Winter' | 'Springs' | 'Summer' | 'Fall'>;
+  season_year: Nullable<string>;
   rating: Rating;
   popularity: Popularity;
-  dateBegin: any;
-  dateEnd: any;
-  poster: Images;
-  cover: Images;
+  dateBegin: Nullable<string>;
+  dateEnd: Nullable<string>;
+  poster: Nullable<Images>;
+  cover: Nullable<Images>;
   episode: Episode;
-  type: 'TV' | 'Movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music' | string;
-  status: 'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming';
-  sagaId?: number;
+  type: Nullable<'TV' | 'movie' | 'OAV' | 'ONA' | 'OVA' | 'special' | 'music'>;
+  status: Nullable<'finished' | 'current' | 'unreleased' | 'tba' | 'upcoming'>;
+  sagaId: Nullable<number>;
 } & { saga?: Saga; categories?: Categories; posts?: Posts; entries?: Entries };
 
 type Animes = Array<Anime>;
@@ -76,11 +76,11 @@ declare type Entry = {
   animeId: number;
   userId: number;
   status: EntryStatus;
-  rating: number;
-  progress: number;
-  startedAt: Date | string;
-  finishAt: Date | string;
-  note: string;
+  rating: Nullable<number>;
+  progress: Nullable<number>;
+  startedAt: Nullable<Date | string>;
+  finishAt: Nullable<Date | string>;
+  note: Nullable<string>;
   visibility: Visibility;
   createAt: Date | string;
   updateAt: Date | string;
@@ -93,7 +93,7 @@ declare type Post = {
   animeId: number;
   userId: number;
   content: string;
-  idParent: number;
+  idParent: Nullable<number>;
   createdAt: string;
   updateAt: string;
 } & {
@@ -110,12 +110,12 @@ declare type User = {
   slug: string;
   email: string;
   gender: 'Male' | 'Female' | 'Secret';
-  bio?: string;
-  birthday?: string;
-  city?: string;
+  bio: Nullable<string>;
+  birthday: Nullable<string>;
+  city: Nullable<string>;
   isAdmin: boolean;
-  avatarPath: string;
-  backgroundPath: string;
+  avatarPath: Nullable<string>;
+  backgroundPath: Nullable<string>;
   followCount: number;
   followerCount: number;
   createdAt: string;
@@ -141,8 +141,8 @@ declare type Saga = {
   id: number;
   slug: string;
   canonicalTitle: string;
-  titles?: Titles;
-  description?: string;
+  titles: Nullable<Titles>;
+  description: Nullable<string>;
   created_at: Date | string;
   updated_at: Date | string;
 } & { animes?: Animes };
@@ -153,7 +153,7 @@ declare type Category = {
   id: number;
   slug: string;
   name: string;
-  description?: string;
+  description: Nullable<string>;
   totalMediaCount: number;
 };
 

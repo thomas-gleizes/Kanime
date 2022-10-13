@@ -9,7 +9,7 @@ interface FieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
 }
 
 const TextArea: Component<FieldProps> = ({ name, label, required, ...rest }) => {
-  const input = useRef<HTMLTextAreaElement>();
+  const input = useRef<HTMLTextAreaElement | null>(null);
 
   const [field, meta] = useField(name);
 
@@ -19,8 +19,10 @@ const TextArea: Component<FieldProps> = ({ name, label, required, ...rest }) => 
   );
 
   const handleClick = (): void => {
-    input.current.select();
-    input.current.focus();
+    if (input.current) {
+      input.current.select();
+      input.current.focus();
+    }
   };
 
   return (
