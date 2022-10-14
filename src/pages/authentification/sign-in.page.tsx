@@ -9,7 +9,7 @@ import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/reac
 import { Page } from 'app/next';
 import { authenticationApi } from 'api';
 import { ssrHandler } from 'services/handler.service';
-import { useUserContext } from 'context/user.context';
+import { useUserContext } from 'context/auth.context';
 import { routes } from 'resources/routes';
 import { SignInDto } from 'dto';
 import { ApiException } from 'exceptions';

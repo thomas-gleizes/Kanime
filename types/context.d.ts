@@ -1,16 +1,50 @@
-interface UserBaseContext {
+// general
+
+interface ContextProviderProps {
+  children: ReactNode;
+}
+
+// auth context
+
+interface UserBaseContextValues {
   signIn: (user: User) => void;
   signOut: () => void;
 }
 
-interface UserUnauthenticatedContext extends UserBaseContext {
+interface UserUnauthenticatedContextValues extends UserBaseContextValues {
   isLogin: false;
   user: null;
 }
 
-interface UserAuthenticatedContext extends UserBaseContext {
+interface UserAuthenticatedContextValues extends UserBaseContextValues {
   isLogin: true;
   user: User;
 }
 
-declare type UserContext = UserUnauthenticatedContext | UserAuthenticatedContext;
+declare type UserContextValues =
+  | UserUnauthenticatedContextValues
+  | UserAuthenticatedContextValues;
+
+// dialog context
+
+interface DialogContextValues {
+  dialogs: Dialog[];
+  addDialog: (dialog: Dialog) => void;
+  closeDialog: Function;
+}
+
+// layout context
+
+interface LayoutContextValues {
+  activeTransparentState: State<boolean>;
+  scrollPercent: number;
+  scrollHeight: number;
+  theme: TailwindTheme;
+  toggleTheme: () => void;
+  header: {
+    hiddenHeader: boolean;
+    hideHeader: () => void;
+    showHeader: () => void;
+  };
+  isInactive: boolean;
+}

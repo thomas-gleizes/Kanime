@@ -5,7 +5,7 @@ import { Transition } from '@headlessui/react';
 import classnames from 'classnames';
 import Link from 'next/link';
 
-import { useUserContext } from 'context/user.context';
+import { useUserContext } from 'context/auth.context';
 import { useLayoutContext } from 'context/layout.context';
 import { routes } from 'resources/routes';
 import { useHovered } from 'hooks';

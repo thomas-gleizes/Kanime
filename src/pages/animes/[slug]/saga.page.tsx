@@ -71,7 +71,9 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
         </div>
       ) : (
         <div>
-          <h2 className="text-center text-lg">L'animée n'est pas dans une saga</h2>
+          <h2 className="text-center text-lg">
+            L&apos;animée n&apos;est pas dans une saga
+          </h2>
         </div>
       )}
     </div>

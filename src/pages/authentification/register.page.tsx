@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import type { Page } from 'app/next';
 import { ssrHandler } from 'services/handler.service';
 import { authenticationApi } from 'api';
-import { useUserContext } from 'context/user.context';
+import { useUserContext } from 'context/auth.context';
 import { routes } from 'resources/routes';
 import { RegisterDto } from 'dto';
 import { ApiException } from 'exceptions';

@@ -4,30 +4,12 @@ import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
 import LocalStorageService from 'services/localStorage.service';
 
-export declare type LayoutContext = {
-  activeTransparentState: State<boolean>;
-  scrollPercent: number;
-  scrollHeight: number;
-  theme: TailwindTheme;
-  toggleTheme: () => void;
-  header: {
-    hiddenHeader: boolean;
-    hideHeader: () => void;
-    showHeader: () => void;
-  };
-  isInactive: boolean;
-};
-
-interface Props {
-  children: ReactNode;
-}
-
-const LayoutContext = createContext<LayoutContext>({} as any);
+const LayoutContext = createContext<LayoutContextValues>({} as any);
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-export const useLayoutContext = useContextFactory<LayoutContext>(LayoutContext);
+export const useLayoutContext = useContextFactory<LayoutContextValues>(LayoutContext);
 
-const LayoutContextProvider: Component<Props> = ({ children }) => {
+const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) => {
   const activeTransparentState = useState<boolean>(false);
   const [hiddenHeader, setHiddenHeader] = useState<boolean>(false);
   const [theme, setTheme] = useState<TailwindTheme>(LocalStorageService.getTheme());

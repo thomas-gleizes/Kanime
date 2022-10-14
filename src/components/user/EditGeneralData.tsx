@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { commonApi } from 'api';
 import { ApiService } from 'services/api.service';
-import { useUserContext } from 'context/user.context';
+import { useUserContext } from 'context/auth.context';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
 import { ApiException } from 'exceptions';

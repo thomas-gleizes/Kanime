@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -12,14 +12,14 @@ import 'styles/fonts.css';
 import 'styles/globals.css';
 
 import { AppProps } from 'app/next';
-import { Exception, SsrException } from 'exceptions';
+import { LayoutProps } from 'app/types';
+import { SsrException } from 'exceptions';
 import LayoutContextProvider from 'context/layout.context';
-import UserContextProvider from 'context/user.context';
+import AuthContextProvider from 'context/auth.context';
 import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import DialogContextProvider from 'context/dialog.context';
 import Header from 'components/layouts/Header';
 import Footer from 'components/layouts/Footer';
-import { LayoutProps } from 'app/types';
 
 const ContextsProvider: Component<ContextsProviderProps> = ({
   children,
@@ -31,7 +31,7 @@ const ContextsProvider: Component<ContextsProviderProps> = ({
     <QueryClientProvider client={queryClient}>
       <ChakraProvider>
         <LayoutContextProvider>
-          <UserContextProvider initialUser={initialState.user}>
+          <AuthContextProvider initialUser={initialState.user}>
             <DialogContextProvider>
               {children}
               <ToastContainer
@@ -45,7 +45,7 @@ const ContextsProvider: Component<ContextsProviderProps> = ({
                 pauseOnHover
               />
             </DialogContextProvider>
-          </UserContextProvider>
+          </AuthContextProvider>
         </LayoutContextProvider>
       </ChakraProvider>
     </QueryClientProvider>

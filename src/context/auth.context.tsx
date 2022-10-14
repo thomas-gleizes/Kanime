@@ -4,17 +4,16 @@ import { authenticationApi } from 'api';
 import { useContextFactory } from 'hooks';
 import LocalStorageService from 'services/localStorage.service';
 
-interface Props {
-  children: ReactNode;
+interface Props extends ContextProviderProps {
   initialUser: User;
 }
 
-const UserContext = createContext<UserContext>({} as any);
+const AuthContext = createContext<UserContextValues>({} as any);
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-export const useUserContext = useContextFactory<UserContext>(UserContext);
+export const useUserContext = useContextFactory<UserContextValues>(AuthContext);
 
-const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
+const AuthContextProvider: Component<Props> = ({ children, initialUser }) => {
   const [user, setUser] = useState<Nullable<User>>(
     initialUser || LocalStorageService.getUser()
   );
@@ -36,7 +35,9 @@ const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
     LocalStorageService.clearUser();
   }, []);
 
-  const value = useMemo<UserAuthenticatedContext | UserUnauthenticatedContext>(() => {
+  const value = useMemo<
+    UserAuthenticatedContextValues | UserUnauthenticatedContextValues
+  >(() => {
     const actions = { signOut, signIn };
 
     if (isLogin)
@@ -53,7 +54,7 @@ const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
       };
   }, [isLogin, user, signOut, signIn]);
 
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export default UserContextProvider;
+export default AuthContextProvider;
