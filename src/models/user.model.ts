@@ -1,6 +1,6 @@
 import { PrismaUserDelegate, PrismaUser, PrismaUsers } from 'app/prisma';
 import connexion, { ConnexionType } from 'services/connexion.service';
-import { defaultUsersMedia } from 'resources/constants';
+import { DEFAULT_USER_MEDIA } from 'resources/constants';
 import Model from 'class/Model';
 import * as emailHelpers from 'utils/emailHelpers';
 import { UpdateUserDto } from 'dto/user.dto';
@@ -28,8 +28,8 @@ class UserModel extends Model<PrismaUserDelegate> {
         email: data.email,
         realEmail: emailHelpers.removeDot(data.email),
         password: data.password,
-        avatarPath: defaultUsersMedia.avatar,
-        backgroundPath: defaultUsersMedia.background,
+        avatarPath: DEFAULT_USER_MEDIA.avatar,
+        backgroundPath: DEFAULT_USER_MEDIA.background,
       },
     });
 
@@ -41,8 +41,8 @@ class UserModel extends Model<PrismaUserDelegate> {
         bio: data.bio,
         gender: data.gender,
         birthday: data.birthday,
-        avatarPath: data.avatar || defaultUsersMedia.avatar,
-        backgroundPath: data.background || defaultUsersMedia.background,
+        avatarPath: data.avatar || DEFAULT_USER_MEDIA.avatar,
+        backgroundPath: data.background || DEFAULT_USER_MEDIA.background,
       },
     });
 

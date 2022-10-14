@@ -2,9 +2,9 @@ declare module 'app/types' {
   import { SsrException } from 'exceptions';
 
   interface LayoutProps<Props = undefined> {
-    exception?: SsrException;
+    exception?: Undefinedable<SsrException>;
     children: ReactNode;
-    pageProps?: Props;
+    pageProps: Props;
   }
 }
 

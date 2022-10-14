@@ -6,7 +6,7 @@ const DEFAULT_TIMEOUT = 300;
 
 const DialogContainer: Component<Dialog> = ({
   uid,
-  Component,
+  component: Component,
   props,
   resolve,
   options,

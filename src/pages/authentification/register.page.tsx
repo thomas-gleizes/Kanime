@@ -11,8 +11,8 @@ import { authenticationApi } from 'api';
 import { useUserContext } from 'context/user.context';
 import { routes } from 'resources/routes';
 import { RegisterDto } from 'dto';
+import { ApiException } from 'exceptions';
 import Button from 'components/common/Button';
-import { ApiException } from '../../exceptions/ApiException';
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)

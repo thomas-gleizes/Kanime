@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { faker } from '@faker-js/faker';
 
-import { defaultUsersMedia } from '../src/resources/constants';
+import { DEFAULT_USER_MEDIA } from '../src/resources/constants';
 import Security from '../src/services/security.service';
 
 const prisma = new PrismaClient();
@@ -21,8 +21,8 @@ async function main() {
       emailVerified: true,
       password: Security.sha512(password + 'Kalat'),
       isAdmin: true,
-      avatarPath: defaultUsersMedia.avatar,
-      backgroundPath: defaultUsersMedia.background,
+      avatarPath: DEFAULT_USER_MEDIA.avatar,
+      backgroundPath: DEFAULT_USER_MEDIA.background,
       city: 'Montpellier',
       gender: 'Male',
     },
@@ -43,8 +43,8 @@ async function main() {
           realEmail: email,
           emailVerified: Math.random() > 0.4,
           password: Security.sha512(password + username),
-          avatarPath: defaultUsersMedia.avatar,
-          backgroundPath: defaultUsersMedia.background,
+          avatarPath: DEFAULT_USER_MEDIA.avatar,
+          backgroundPath: DEFAULT_USER_MEDIA.background,
           bio: faker.lorem.sentence(),
           birthday: faker.date.past(),
           gender: Math.random() > 0.5 ? 'Male' : 'Female',

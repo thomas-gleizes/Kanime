@@ -45,7 +45,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
           {entry.anime && (
             <img
               className="h-auto"
-              src={entry.anime.poster.small as string}
+              src={entry.anime.poster?.small as string}
               alt={entry.anime.canonicalTitle}
             />
           )}
@@ -81,7 +81,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
           ) : null}
         </div>
         <div className="h-0.5 bg-primary-dark">
-          {entry.anime && (
+          {entry.anime?.episode && entry.progress ? (
             <div
               className="bg-primary-light h-full"
               style={{
@@ -90,7 +90,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
                 }%`,
               }}
             />
-          )}
+          ) : null}
         </div>
         <div className="h-7 bg-primary">
           <div className="flex justify-between items-center mx-2 h-full text-white text-sm">

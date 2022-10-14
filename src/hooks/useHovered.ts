@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 
 export function useHovered<T extends HTMLElement>(
   initialValue: boolean = false
-): [React.MutableRefObject<T | undefined>, boolean] {
-  const ref = useRef<T>();
+): [React.MutableRefObject<T | null>, boolean] {
+  const ref = useRef<T | null>(null);
 
   const [isHover, setIsHover] = useState<boolean>(initialValue);
 

@@ -8,6 +8,7 @@ declare type OptionalPromise<T> = T | Promise<T>;
 
 declare type Nullable<T> = T | null;
 declare type Undefinedable<T> = T | undefined;
+declare type Optional<T> = Undefinedable<Nullable<T>>;
 
 interface ContextsProviderProps {
   children: React.ReactNode;

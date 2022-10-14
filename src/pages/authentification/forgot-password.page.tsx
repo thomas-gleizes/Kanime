@@ -7,7 +7,7 @@ import { ssrHandler } from 'services/handler.service';
 import { routes } from 'resources/routes';
 import { Input } from 'components/common/inputs';
 import Button from 'components/common/Button';
-import { ApiException } from '../../exceptions/ApiException';
+import { ApiException } from 'exceptions';
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)

@@ -10,23 +10,17 @@ interface Props {
   color?: TailwindcssColors;
 }
 
-type OptionsComponent = Component<{
+type OptionsProps = {
   value: string;
   children: string;
   color?: TailwindcssColors;
-}>;
+};
 
 const DEFAULT_COLOR: TailwindcssColors = 'blue';
 
 const ColorContext = createContext<TailwindcssColors>(DEFAULT_COLOR);
 
-const Select: Component<Props> & { Option?: OptionsComponent } = ({
-  value,
-  onChange,
-  children,
-  color,
-  placeholder,
-}) => {
+const Select: Component<Props> = ({ value, onChange, children, color, placeholder }) => {
   const currentValue = useMemo(() => {
     const current: { children: string; value: any } | null = children.find(
       (child) => child.props.value === value
@@ -66,7 +60,7 @@ const Select: Component<Props> & { Option?: OptionsComponent } = ({
   );
 };
 
-const Option: OptionsComponent = ({ value, children, color }) => {
+const Option: Component<OptionsProps> = ({ value, children, color }) => {
   const contextColor = useContext(ColorContext);
 
   return (
@@ -100,6 +94,8 @@ const Option: OptionsComponent = ({ value, children, color }) => {
   );
 };
 
-Select.Option = Option;
+const SelectWithOption: Component<Props> & { Option?: Component<OptionsProps> } = Select;
 
-export default Select;
+SelectWithOption.Option = Option;
+
+export default SelectWithOption;

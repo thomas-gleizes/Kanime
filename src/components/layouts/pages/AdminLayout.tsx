@@ -7,7 +7,7 @@ interface AdminLayoutProps extends LayoutProps {}
 const AdminLayout: Component<AdminLayoutProps> = ({ children, exception }) => {
   return (
     <ErrorBoundary exception={exception}>
-      <DefaultLayout pageProps={undefined}>
+      <DefaultLayout>
         <div className="absolute left-0 top-0 pt-header w-[200px] h-full">
           <div className="w-full bg-stone-200 shadow border-r border h-full"></div>
         </div>

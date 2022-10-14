@@ -40,8 +40,8 @@ const SearchBar: Component<Props> = ({ transparent }) => {
   }, [arrowUp]);
 
   useEffect(() => {
-    if (enterPress && open)
-      router.push(`/animes/${animes[iSelected].slug}`).then(() => setOpen(false));
+    if (enterPress && open && animes[iSelected])
+      router.push(`/animes/${animes[iSelected]?.slug}`).then(() => setOpen(false));
   }, [enterPress]);
 
   const handleChangeQuery = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -143,7 +143,10 @@ const SearchBar: Component<Props> = ({ transparent }) => {
                                 </div>
                               </div>
                               <div className="w-[14%]">
-                                <img src={anime.poster.tiny} className="w-full rounded" />
+                                <img
+                                  src={anime.poster?.tiny}
+                                  className="w-full rounded"
+                                />
                               </div>
                             </div>
                           </div>

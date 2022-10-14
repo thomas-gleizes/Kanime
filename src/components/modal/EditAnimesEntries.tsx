@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, FieldAttributes, Form, Formik, FormikProps } from 'formik';
 import deepEqual from 'deep-equal';
 import { EntryStatus, Visibility } from '@prisma/client';
 import { FaSave, FaStar, FaTimes, FaTrash } from 'react-icons/fa';
@@ -33,10 +33,8 @@ import { ApiService } from 'services/api.service';
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
 import { editEntrySchema } from 'resources/validations';
 import { CreateEntryDto } from 'dto';
-import { useUserContext } from 'context/user.context';
+import { ApiException } from 'exceptions';
 import { Select } from 'components/common/inputs';
-import { AxiosError } from 'axios';
-import { ApiException } from '../../exceptions/ApiException';
 
 type SubmitResult = {
   action: 'submit';
@@ -98,8 +96,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
       // @ts-ignore
       close({ action: 'submit', values: { ...response.entry, anime } });
     } catch (err) {
-      if (err instanceof AxiosError)
-        toast.error(err.response?.data?.message || err.message);
+      if (err instanceof ApiException) toast.error(err.message);
       else toast.error('Une erreur est survenue');
     }
   };
@@ -162,11 +159,13 @@ const FormContent: Component<
   handleClose,
 }) => {
   const sliderColor = useMemo<string>(() => {
-    if (values) return 'yellow';
-    else if (values.rating >= 7.5) return 'yellow';
+    if (!values.rating) return 'yellow';
+    else if (values.rating >= 7.5) return 'green';
     else if (values.rating >= 5) return 'orange';
     else return 'red';
   }, [values.rating]);
+
+  const Option = Select.Option;
 
   const isChanged = useMemo<boolean>(
     () => !deepEqual(initialValues, values),
@@ -198,9 +197,9 @@ const FormContent: Component<
                 color="blue"
               >
                 {status.map((option, index) => (
-                  <Select.Option color="blue" key={index} value={option.value}>
+                  <Option key={index} color="blue" value={option.value}>
                     {option.label}
-                  </Select.Option>
+                  </Option>
                 ))}
               </Select>
             </FormControl>
@@ -212,15 +211,15 @@ const FormContent: Component<
                 color="blue"
               >
                 {visibilities.map((option, index) => (
-                  <Select.Option color="blue" key={index} value={option.value}>
+                  <Option color="blue" key={index} value={option.value}>
                     {option.label}
-                  </Select.Option>
+                  </Option>
                 ))}
               </Select>
             </FormControl>
           </div>
           <Field name="progress">
-            {({ field, meta }) => (
+            {({ field, meta }: FieldAttributes<any>) => (
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel htmlFor="progress">Progression</FormLabel>
                 <InputGroup>
@@ -243,12 +242,12 @@ const FormContent: Component<
             <Slider
               aria-label="slider-ex-4"
               onChange={(value) => setFieldValue('rating', value)}
-              value={values.rating}
+              value={values.rating || 0}
               step={0.1}
               max={10}
             >
               <SliderMark
-                value={values.rating}
+                value={values.rating || 0}
                 textAlign="center"
                 bg="white"
                 color={`${sliderColor}.400`}
@@ -267,7 +266,7 @@ const FormContent: Component<
             </Slider>
           </FormControl>
           <Field name="note">
-            {({ field, meta }) => (
+            {({ field, meta }: FieldAttributes<any>) => (
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel>Commentaire</FormLabel>
                 <Textarea
@@ -281,7 +280,7 @@ const FormContent: Component<
             )}
           </Field>
           <Field name="startedAt">
-            {({ field, meta }) => (
+            {({ field, meta }: FieldAttributes<any>) => (
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel>Commencé le</FormLabel>
                 <Input
@@ -295,7 +294,7 @@ const FormContent: Component<
             )}
           </Field>
           <Field name="finishAt">
-            {({ field, meta }) => (
+            {({ field, meta }: FieldAttributes<any>) => (
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel>Fini le</FormLabel>
                 <Input

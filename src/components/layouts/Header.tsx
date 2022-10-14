@@ -11,6 +11,7 @@ import { routes } from 'resources/routes';
 import { useHovered } from 'hooks';
 import DropDownByRef from 'components/layouts/DropDownByRef';
 import SearchBar from 'components/common/SearchBar';
+import { DEFAULT_USER_MEDIA } from 'resources/constants';
 
 const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
@@ -134,7 +135,7 @@ const Header: Component = () => {
                       <div className="cursor-pointer" ref={avatarRef}>
                         <img
                           className="rounded-full h-[28px]"
-                          src={user.avatarPath}
+                          src={user.avatarPath || DEFAULT_USER_MEDIA.avatar}
                           alt="avatar"
                         />
                       </div>

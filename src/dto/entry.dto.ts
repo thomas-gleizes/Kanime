@@ -27,33 +27,33 @@ export class QueryEntryListDto extends QueryParamsDto {
 export class UpdateEntryDto {
   @IsEnum(EntryStatus, { message: 'Le statut doit être un statut valide' })
   @IsOptional()
-  status: EntryStatus | undefined;
+  status: Optional<EntryStatus>;
 
   @IsInt({ message: "Le nombre d'episodes vues doit être un entier" })
   @Type(() => Number)
   @IsOptional()
   @Min(0, { message: "Le nombre d'episodes vues doit être supérieur ou égal à 0" })
-  progress: number | undefined;
+  progress: Optional<number>;
 
   @IsNumber({}, { message: 'La note doit être un nombre' })
   @Type(() => Number)
   @IsOptional()
   @Max(10, { message: 'La note doit être inférieur ou égal à 10' })
   @Min(0, { message: 'La note doit être supérieur ou égal à 0' })
-  rating: number | undefined;
+  rating: Optional<number>;
 
   @IsString({ message: 'Le commentaire doit être une chaîne de caractères' })
   @IsOptional()
   @MaxLength(500, { message: 'Le commentaire doit contenir au plus 500 caractères' })
-  note: string | undefined;
+  note: Optional<string>;
 
   @IsDateString({ message: 'La date doit être une date valide' })
   @IsOptional()
-  startedAt: Date | undefined | string;
+  startedAt: Optional<Date | string>;
 
   @IsDateString({ message: 'La date doit être une date valide' })
   @IsOptional()
-  finishAt: Date | undefined | string;
+  finishAt: Optional<Date | string>;
 
   @IsEnum(Visibility, { message: 'La visibilité doit être une visibilité valide' })
   @IsOptional()

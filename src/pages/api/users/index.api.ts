@@ -7,7 +7,7 @@ import ApiHandler from 'class/ApiHandler';
 import Security from 'services/security.service';
 import { usersMapper } from 'mappers';
 import { userModel } from 'models';
-import { defaultUsersMedia, publicPath } from 'resources/constants';
+import { DEFAULT_USER_MEDIA, publicPath } from 'resources/constants';
 import { GetSession, AuthGuard } from 'decorators';
 import { QueryParamsDto, UpdateUserDto } from 'dto';
 
@@ -34,7 +34,7 @@ class UsersHandler extends ApiHandler {
 
     // TODO refactor this
     if (!(typeof body.avatar === 'string')) {
-      if (session.user.avatarPath !== defaultUsersMedia.avatar)
+      if (session.user.avatarPath !== DEFAULT_USER_MEDIA.avatar)
         await fs.promises.unlink(publicPath + session.user.avatarPath);
 
       const avatarPath = `${path}/avatar.${body.avatar.type.split('/')[1]}`;
@@ -49,7 +49,7 @@ class UsersHandler extends ApiHandler {
     }
 
     if (!(typeof body.background === 'string')) {
-      if (session.user.backgroundPath !== defaultUsersMedia.background)
+      if (session.user.backgroundPath !== DEFAULT_USER_MEDIA.background)
         await fs.promises.unlink(publicPath + session.user.backgroundPath);
 
       const backgroundPath = `${path}/background.${body.background.type.split('/')[1]}`;

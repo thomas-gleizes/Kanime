@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import LocalStorageService from 'services/localStorage.service';
 import { toast } from 'react-toastify';
 import HttpStatus from 'resources/HttpStatus';
-import { ApiException } from '../exceptions/ApiException';
+import { ApiException } from 'exceptions';
 
 const ApiService = axios.create({
   baseURL: `/api/`,

@@ -1,7 +1,7 @@
 import { Gender } from '@prisma/client';
 import { userModel } from '../../../src/models';
 import Security from '../../../src/services/security.service';
-import { defaultUsersMedia } from '../../../src/resources/constants';
+import { DEFAULT_USER_MEDIA } from '../../../src/resources/constants';
 
 describe('users model', () => {
   let userId: number = null;
@@ -33,8 +33,8 @@ describe('users model', () => {
     expect(user.is_admin).toBeFalsy();
     expect(user.follow_count).toBe(0);
     expect(user.follower_count).toBe(0);
-    expect(user.avatar_path).toBe(defaultUsersMedia.avatar);
-    expect(user.background_path).toBe(defaultUsersMedia.background);
+    expect(user.avatar_path).toBe(DEFAULT_USER_MEDIA.avatar);
+    expect(user.background_path).toBe(DEFAULT_USER_MEDIA.background);
     expect(user.gender).toBe('Secret');
   });
 

@@ -2,7 +2,7 @@ import { Get, Query, ValidationPipe } from 'next-api-decorators';
 
 import ApiHandler from 'class/ApiHandler';
 import { apiHandler } from 'services/handler.service';
-import { NotFoundException } from '../../exceptions/http';
+import { NotFoundException } from 'exceptions/http';
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 class Test {

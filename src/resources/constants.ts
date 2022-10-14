@@ -1,4 +1,4 @@
-export const defaultUsersMedia = {
+export const DEFAULT_USER_MEDIA = {
   background: '/media/default/users/background.png',
   avatar: '/media/default/users/avatar.png',
 };

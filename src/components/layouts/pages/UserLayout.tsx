@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 
-import { useLayoutContext } from 'context/layout.context';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 import { LayoutProps } from 'app/types';
+import { useLayoutContext } from 'context/layout.context';
+import { DEFAULT_USER_MEDIA } from 'resources/constants';
+import DefaultLayout from 'components/layouts/pages/DefaultLayout';
 
 interface Props {
   user: User;
@@ -27,7 +28,7 @@ const UserLayout: Component<UserLayoutProps> = ({ children, pageProps }) => {
   const { user, entries, isCurrent } = pageProps;
 
   return (
-    <DefaultLayout pageProps={undefined}>
+    <DefaultLayout>
       <div className="w-full">
         <div
           className="relative bg-center -top-header h-400 bg-no-repeat bg-cover bg-clip-padding bg-primary"
@@ -36,7 +37,7 @@ const UserLayout: Component<UserLayoutProps> = ({ children, pageProps }) => {
           <div className="absolute bottom-[10%] left-[10%] flex select-none">
             <Image
               className="rounded-full border-2 border-white"
-              src={user.avatarPath}
+              src={user.avatarPath || DEFAULT_USER_MEDIA.avatar}
               width={100}
               height={100}
               alt="big avatar"

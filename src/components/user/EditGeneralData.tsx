@@ -8,12 +8,12 @@ import { ApiService } from 'services/api.service';
 import { useUserContext } from 'context/user.context';
 import { routes } from 'resources/routes';
 import { File } from 'components/common/formik';
-import { ApiException } from '../../exceptions/ApiException';
+import { ApiException } from 'exceptions';
 import { UpdateUserDto } from 'dto/user.dto';
 
 const fetchCountries = () => commonApi.showCountries().then((data) => data.countries);
 
-const EditUserModal: React.FunctionComponent = () => {
+const EditGeneralData: Component = () => {
   const { user, signIn } = useUserContext();
 
   const formRef = useRef<Nullable<FormikProps<UpdateUserDto>>>(null);
@@ -78,4 +78,4 @@ const EditUserModal: React.FunctionComponent = () => {
   );
 };
 
-export default EditUserModal;
+export default EditGeneralData;

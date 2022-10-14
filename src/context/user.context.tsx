@@ -1,15 +1,8 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react';
 
 import { authenticationApi } from 'api';
 import { useContextFactory } from 'hooks';
 import LocalStorageService from 'services/localStorage.service';
-
-export declare type UserContext = {
-  isLogin: boolean;
-  user: Nullable<User>;
-  signIn: (user: User) => void;
-  signOut: () => void;
-};
 
 interface Props {
   children: ReactNode;
@@ -43,11 +36,24 @@ const UserContextProvider: Component<Props> = ({ children, initialUser }) => {
     LocalStorageService.clearUser();
   }, []);
 
-  return (
-    <UserContext.Provider value={{ user, isLogin, signIn, signOut }}>
-      {children}
-    </UserContext.Provider>
-  );
+  const value = useMemo<UserAuthenticatedContext | UserUnauthenticatedContext>(() => {
+    const actions = { signOut, signIn };
+
+    if (isLogin)
+      return {
+        isLogin: true,
+        user: user as User,
+        ...actions,
+      };
+    else
+      return {
+        isLogin: false,
+        user: null,
+        ...actions,
+      };
+  }, [isLogin, user, signOut, signIn]);
+
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
 export default UserContextProvider;
