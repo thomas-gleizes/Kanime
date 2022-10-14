@@ -13,9 +13,21 @@ declare module 'axios' {
   interface AxiosResponse extends ApiResponse {}
 }
 
+ApiService.interceptors.request.use((config) => {
+  window.postMessage('api-call-started', '*');
+
+  return config;
+});
+
 ApiService.interceptors.response.use(
-  (response: AxiosResponse) => response.data,
+  (response: AxiosResponse) => {
+    window.postMessage('api-call-finished', '*');
+
+    return response.data;
+  },
   (error: AxiosError<any, { message: string; errors: string[] }>) => {
+    window.postMessage('api-call-finished', '*');
+
     if (error.isAxiosError && error.response) {
       if (error.response.status === HttpStatus.UNAUTHORIZED) {
         toast.warning('Veuillez vous reconnecter');

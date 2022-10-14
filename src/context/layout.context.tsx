@@ -3,6 +3,7 @@ import React, { createContext, useCallback, useEffect, useState } from 'react';
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
 import { MINUTE, SECOND } from 'resources/constants';
 import LocalStorageService from 'services/localStorage.service';
+import isBrowser from 'utils/isBrowser';
 
 const LayoutContext = createContext<LayoutContextValues>({} as any);
 
@@ -16,6 +17,8 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
 
   const [lastEventTime, setLastEventTime] = useState<number>(Date.now());
   const [isInactive, setIsInactive] = useState<boolean>(false);
+  const [apiLoading, setApiLoading] = useState<boolean>(false);
+  const [apiLoadingPercent, setApiLoadingPercent] = useState<number>(0);
 
   const scrollPercent = useScrollPercent();
   const scrollHeight = useScrollHeight();
@@ -68,6 +71,27 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
         document.documentElement.classList.add('dark');
     else document.documentElement.classList.remove('dark');
   }, [theme]);
+
+  useEffect(() => {
+    const listener = (event: MessageEvent) => {
+      const message = event.data;
+      console.log('Message', message);
+
+      if (message === 'api-call-started') !apiLoading && setApiLoading(true);
+      else if (message === 'api-call-finished') apiLoading && setApiLoading(false);
+    };
+
+    if (isBrowser()) {
+      window.addEventListener('message', listener);
+
+      return () => window.removeEventListener('message', listener);
+    }
+  }, [apiLoading]);
+
+  useEffect(() => {
+    if (isBrowser()) {
+    }
+  }, [apiLoading]);
 
   return (
     <LayoutContext.Provider
