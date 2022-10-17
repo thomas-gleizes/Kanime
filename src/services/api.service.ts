@@ -1,8 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import LocalStorageService from 'services/localStorage.service';
 import { toast } from 'react-toastify';
+
+import LocalStorageService from 'services/localStorage.service';
 import HttpStatus from 'resources/HttpStatus';
+import { WINDOW_MESSAGE } from 'resources/constants';
 import { ApiException } from 'exceptions';
+
+let currentRequests: number = 0;
 
 const ApiService = axios.create({
   baseURL: `/api/`,
@@ -14,7 +18,9 @@ declare module 'axios' {
 }
 
 ApiService.interceptors.request.use((config) => {
-  window.postMessage('api-call-started', '*');
+  if (!currentRequests) window.postMessage(WINDOW_MESSAGE.GLOBAL_LOADING.START);
+
+  currentRequests++;
 
   return config;
 });
@@ -23,10 +29,14 @@ ApiService.interceptors.response.use(
   (response: AxiosResponse) => {
     window.postMessage('api-call-finished', '*');
 
+    currentRequests--;
+    if (currentRequests === 0) window.postMessage(WINDOW_MESSAGE.GLOBAL_LOADING.STOP);
+
     return response.data;
   },
   (error: AxiosError<any, { message: string; errors: string[] }>) => {
-    window.postMessage('api-call-finished', '*');
+    currentRequests--;
+    if (currentRequests === 0) window.postMessage(WINDOW_MESSAGE.GLOBAL_LOADING.STOP);
 
     if (error.isAxiosError && error.response) {
       if (error.response.status === HttpStatus.UNAUTHORIZED) {

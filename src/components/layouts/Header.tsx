@@ -52,6 +52,7 @@ const Header: Component = () => {
     scrollHeight,
     activeTransparentState: [activeTransparent],
     header,
+    globalLoadingPercent,
   } = useLayoutContext();
 
   const avatarRef = useRef<HTMLImageElement | null>(null);
@@ -66,6 +67,11 @@ const Header: Component = () => {
   }, [activeTransparent, scrollHeight, headerHovered]);
 
   useClickAway(headerRef, () => setExtend(false));
+
+  useEffect(
+    () => console.log('TEST', 100 - globalLoadingPercent),
+    [globalLoadingPercent]
+  );
 
   if (header.hiddenHeader) return null;
 
@@ -84,7 +90,7 @@ const Header: Component = () => {
               headerTransparent ? 'bg-opacity-30 bg-black' : 'bg-primary'
             )}
           >
-            <div className="flex items-center justify-between h-[95%] my-auto max-w-[1200px] w-full mx-auto">
+            <div className="flex items-center justify-between h-[95%] space-x-5 my-auto max-w-[1200px] w-full mx-auto">
               <div className="flex items-center space-x-8">
                 <div className="w-fit">
                   <Link href={routes.home}>
@@ -282,6 +288,12 @@ const Header: Component = () => {
               </div>
             </Transition>
           </div>
+        </div>
+        <div className="w-full h-[3px] absolute bottom-0 bg-gradient-to-r from-amber-600 to-red-500">
+          <div
+            style={{ width: `${100 - globalLoadingPercent}%` }}
+            className="h-full bg-primary absolute right-0"
+          ></div>
         </div>
       </div>
     </header>

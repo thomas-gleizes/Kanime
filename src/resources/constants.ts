@@ -79,3 +79,15 @@ export const HOUR = MINUTE * 60;
 export const DAY = HOUR * 24;
 
 export const POSTER_RAPPORT = 1.4205;
+
+export const WINDOW_MESSAGE = {
+  GLOBAL_LOADING: {
+    START: 'global-loading-start',
+    STOP: 'global-loading-stop',
+  },
+};
+
+export const THEME = {
+  LIGHT: 'light',
+  DARK: 'dark',
+};

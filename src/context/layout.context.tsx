@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useEffect, useState } from 'react';
 
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks';
-import { MINUTE, SECOND } from 'resources/constants';
+import { MINUTE, SECOND, THEME, WINDOW_MESSAGE } from 'resources/constants';
 import LocalStorageService from 'services/localStorage.service';
 import isBrowser from 'utils/isBrowser';
 
@@ -66,19 +66,20 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
   }, [lastEventTime]);
 
   useEffect(() => {
-    if (theme === 'dark')
-      !document.documentElement.classList.contains('dark') &&
-        document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
+    if (theme === THEME.DARK)
+      !document.documentElement.classList.contains(THEME.DARK) &&
+        document.documentElement.classList.add(THEME.DARK);
+    else document.documentElement.classList.remove(THEME.DARK);
   }, [theme]);
 
   useEffect(() => {
     const listener = (event: MessageEvent) => {
       const message = event.data;
-      console.log('Message', message);
 
-      if (message === 'api-call-started') !apiLoading && setApiLoading(true);
-      else if (message === 'api-call-finished') apiLoading && setApiLoading(false);
+      if (message === WINDOW_MESSAGE.GLOBAL_LOADING.START)
+        !apiLoading && setApiLoading(true);
+      else if (message === WINDOW_MESSAGE.GLOBAL_LOADING.STOP)
+        apiLoading && setApiLoading(false);
     };
 
     if (isBrowser()) {
@@ -88,9 +89,28 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
     }
   }, [apiLoading]);
 
+  useEffect(() => console.log('ApiLoading', apiLoading), [apiLoading]);
+
   useEffect(() => {
-    if (isBrowser()) {
+    let interval;
+
+    if (apiLoading) {
+      interval = setInterval(
+        () =>
+          setApiLoadingPercent((prevState) => {
+            if (prevState < 50) return prevState + 1;
+            if (prevState < 80) return prevState + 0.5;
+
+            return prevState;
+          }),
+        50
+      );
+    } else {
+      setApiLoadingPercent(100);
+      interval = setTimeout(() => setApiLoadingPercent(0), 1000);
     }
+
+    return () => clearInterval(interval);
   }, [apiLoading]);
 
   return (
@@ -103,6 +123,7 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
         toggleTheme,
         header: { hiddenHeader, hideHeader, showHeader },
         isInactive,
+        globalLoadingPercent: apiLoadingPercent,
       }}
     >
       {children}

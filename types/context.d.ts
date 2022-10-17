@@ -47,4 +47,5 @@ interface LayoutContextValues {
     showHeader: () => void;
   };
   isInactive: boolean;
+  globalLoadingPercent: number;
 }

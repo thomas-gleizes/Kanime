@@ -11,6 +11,10 @@ class UsersApi extends Api {
   public showCountries() {
     return this.get<CountriesResponse>(`/countries`);
   }
+
+  public sleep(time: number) {
+    return this.get<ApiResponse>('/sleep', { params: { time } });
+  }
 }
 
 export default new UsersApi(ApiService);

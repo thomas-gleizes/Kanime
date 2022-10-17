@@ -6,7 +6,8 @@ import ApiHandler from 'class/ApiHandler';
 class SleepHandler extends ApiHandler {
   @Get()
   async sleep(@Query('time') time: number) {
-    await new Promise((resolve) => setTimeout(resolve, time || 2000));
+    if (process.env.NODE_ENV !== 'production')
+      await new Promise((resolve) => setTimeout(resolve, time || 2000));
 
     return { success: true };
   }
