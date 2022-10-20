@@ -40,6 +40,7 @@ yarn-error.log*
 # IDE
 .idea
 .vscode
+.fleet
 
 # users media
 /public/media/users/*

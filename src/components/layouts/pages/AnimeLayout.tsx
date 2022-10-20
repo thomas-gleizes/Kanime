@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Error from 'next/error';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import classnames from 'classnames';
