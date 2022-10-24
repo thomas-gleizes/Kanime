@@ -9,7 +9,7 @@ import {
   PlayIcon,
 } from '@heroicons/react/solid';
 
-import { LayoutProps } from 'app/types';
+import { LayoutContentComponent, LayoutProps } from 'app/types';
 import { ApiService } from 'services/api.service';
 import { useLayoutContext } from 'context/layout.context';
 import { useUserContext } from 'context/auth.context';
@@ -29,7 +29,6 @@ import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
 
 interface Props {
   anime: Anime;
-  children: ReactNode;
 }
 
 interface AnimeLayoutProps extends LayoutProps<Props> {}
@@ -49,16 +48,12 @@ const AnimeLayout: Component<AnimeLayoutProps> = ({ children, exception, pagePro
   // TODO: custom with cool error page for anime not found
   return (
     <ErrorBoundary exception={exception}>
-      <DefaultLayout>
-        <AnimeLayoutContent anime={pageProps?.anime as Anime}>
-          {children}
-        </AnimeLayoutContent>
-      </DefaultLayout>
+        <AnimeLayoutContent anime={pageProps.anime}>{children}</AnimeLayoutContent>
     </ErrorBoundary>
   );
 };
 
-const AnimeLayoutContent: Component<Props> = ({ anime, children }) => {
+const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) => {
   const { isLogin } = useUserContext();
   const {
     activeTransparentState: [, setHeaderTransparent],
@@ -118,7 +113,7 @@ const AnimeLayoutContent: Component<Props> = ({ anime, children }) => {
   };
 
   return (
-    <>
+    <DefaultLayout>
       <Title>{anime.canonicalTitle}</Title>
       <div className="relative -top-header">
         <div className="flex flex-col justify-between">
@@ -211,7 +206,7 @@ const AnimeLayoutContent: Component<Props> = ({ anime, children }) => {
           </div>
         </div>
       </div>
-    </>
+    </DefaultLayout>
   );
 };
 

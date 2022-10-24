@@ -1,8 +1,8 @@
+import { useMemo } from 'react';
 import { IconButton } from '@chakra-ui/react';
 import { FaTimes } from 'react-icons/fa';
 
 import { useToggle } from 'hooks';
-import { useMemo } from 'react';
 
 interface Props {
   src: string;

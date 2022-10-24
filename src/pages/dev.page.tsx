@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { Page } from 'app/next';
 
 import { commonApi } from 'api';
+import { useLayoutContext } from 'context/layout.context';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 import Button from 'components/common/Button';
-import { useLayoutContext } from 'context/layout.context';
 
 const DevPage: Page = () => {
   const { globalLoadingPercent } = useLayoutContext();

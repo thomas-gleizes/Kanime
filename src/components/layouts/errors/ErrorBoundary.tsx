@@ -1,6 +1,7 @@
-import { SsrException } from 'exceptions';
 import Error from 'next/error';
 import React from 'react';
+
+import { SsrException } from 'exceptions';
 
 interface Props {
   exception?: SsrException;

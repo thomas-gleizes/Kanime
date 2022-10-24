@@ -1,11 +1,15 @@
 declare module 'app/types' {
   import { SsrException } from 'exceptions';
 
-  interface LayoutProps<Props = undefined> {
+  declare type LayoutProps<Props = undefined> = {
     exception?: Undefinedable<SsrException>;
     children: ReactNode;
     pageProps: Props;
-  }
+  };
+
+  declare type LayoutContentComponent<Props = undefined> = Component<
+    Props & { children: ReactNode }
+  >;
 }
 
 declare module 'app/next' {
