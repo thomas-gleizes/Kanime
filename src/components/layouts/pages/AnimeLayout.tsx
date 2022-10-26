@@ -48,7 +48,7 @@ const AnimeLayout: Component<AnimeLayoutProps> = ({ children, exception, pagePro
   // TODO: custom with cool error page for anime not found
   return (
     <ErrorBoundary exception={exception}>
-        <AnimeLayoutContent anime={pageProps.anime}>{children}</AnimeLayoutContent>
+      <AnimeLayoutContent anime={pageProps.anime}>{children}</AnimeLayoutContent>
     </ErrorBoundary>
   );
 };

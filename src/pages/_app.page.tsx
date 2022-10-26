@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ChakraProvider } from '@chakra-ui/react';
+import App, { AppContext } from 'next/app';
 import 'reflect-metadata';
 
 import 'simplebar/dist/simplebar.min.css';
@@ -52,7 +53,7 @@ const ContextsProvider: Component<ContextsProviderProps> = ({
   );
 };
 
-const App = ({ Component, pageProps, session }: AppProps) => {
+const MyApp = ({ Component, pageProps, session }: AppProps) => {
   const Layout = useMemo<Component<LayoutProps>>(
     () => Component.layout || DefaultLayout,
     [Component.layout]
@@ -86,4 +87,12 @@ const App = ({ Component, pageProps, session }: AppProps) => {
   );
 };
 
-export default App;
+MyApp.getInitialProps = async (appContext: AppContext) => {
+  const appProps = await App.getInitialProps(appContext);
+
+  console.log('AppProps', appProps);
+
+  return appProps;
+};
+
+export default MyApp;

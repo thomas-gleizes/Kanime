@@ -1,29 +1,30 @@
-import Error from 'next/error';
-
 import { Page } from 'app/next';
 import { SsrException } from 'exceptions';
 import { ssrHandler } from 'services/handler.service';
+import { useHideHeader } from 'hooks';
 import EmptyLayout from 'components/layouts/pages/EmptyLayout';
 
-type Props = { message: string } & {
-  error?: ErrorPage;
-};
+interface Props {
+  message: string;
+}
 
-export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
-  if (context.query.hasOwnProperty('error'))
-    throw new SsrException(400, 'ssr handler exceptions');
+export const getServerSideProps = ssrHandler<Props, { error?: string }>(
+  async (context) => {
+    if (context.query.hasOwnProperty('error'))
+      throw new SsrException(400, 'ssr handler exceptions');
 
-  const name = context.req.session?.user?.username || 'anonymous';
+    const name = context.req.session?.user?.username || 'anonymous';
 
-  return {
-    props: {
-      message: `Hello, ${name}`,
-    },
-  };
-});
+    return {
+      props: {
+        message: `Hello, ${name}`,
+      },
+    };
+  }
+);
 
-const Page: Page<Props> = ({ message, error }) => {
-  if (error) return <Error statusCode={error.statusCode} title={error.message} />;
+const Page: Page<Props> = ({ message }) => {
+  useHideHeader();
 
   return (
     <div>

@@ -4,8 +4,8 @@ import { logModel } from 'models';
 import { loggerReplaceKey } from 'resources/constants';
 import ip from 'utils/ip';
 
-function replaceKey(data: any) {
-  const keys = Object.keys({ ...data });
+function replaceKey(data: object) {
+  const keys = Object.keys(data);
   const result: { [key: string]: string } = {};
 
   for (const key of keys)
