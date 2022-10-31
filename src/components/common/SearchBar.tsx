@@ -113,44 +113,39 @@ const SearchBar: Component<Props> = ({ transparent }) => {
                   <div onClick={timeout(() => setOpen(false), 10)}>
                     {animes.map((anime, index) => (
                       <Link key={anime.id} href={routes.animes.anime(anime.slug)}>
-                        <a>
-                          <div
-                            id={`anime-search-${anime.id}`}
-                            className={classnames(
-                              'my-0.5 py-1.5 px-3 bg-white hover:bg-gray-200 cursor-pointer',
-                              { 'bg-gray-200': index === iSelected }
-                            )}
-                          >
-                            <div className="flex justify-between space-x-2">
-                              <div className="flex flex-col justify-between w-full">
-                                <div>
-                                  <h6 className="text-slate-900">
-                                    {anime.canonicalTitle}{' '}
-                                    <span className="text-sm font-light text-slate-600">
-                                      ({anime.type})
-                                    </span>
-                                  </h6>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span>{anime.season_year}</span>
-                                  <span>
-                                    {anime.rating.average && (
-                                      <StarsRating
-                                        rating={Math.round(anime.rating.average / 20)}
-                                      />
-                                    )}
+                        <div
+                          id={`anime-search-${anime.id}`}
+                          className={classnames(
+                            'my-0.5 py-1.5 px-3 bg-white hover:bg-gray-200 cursor-pointer',
+                            { 'bg-gray-200': index === iSelected }
+                          )}
+                        >
+                          <div className="flex justify-between space-x-2">
+                            <div className="flex flex-col justify-between w-full">
+                              <div>
+                                <h6 className="text-slate-900">
+                                  {anime.canonicalTitle}{' '}
+                                  <span className="text-sm font-light text-slate-600">
+                                    ({anime.type})
                                   </span>
-                                </div>
+                                </h6>
                               </div>
-                              <div className="w-[14%]">
-                                <img
-                                  src={anime.poster?.tiny}
-                                  className="w-full rounded"
-                                />
+                              <div className="flex justify-between">
+                                <span>{anime.season_year}</span>
+                                <span>
+                                  {anime.rating.average && (
+                                    <StarsRating
+                                      rating={Math.round(anime.rating.average / 20)}
+                                    />
+                                  )}
+                                </span>
                               </div>
                             </div>
+                            <div className="w-[14%]">
+                              <img src={anime.poster?.tiny} className="w-full rounded" />
+                            </div>
                           </div>
-                        </a>
+                        </div>
                       </Link>
                     ))}
                   </div>

@@ -17,8 +17,8 @@ const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
   children
 }) => (
-  <Link href={href}>
-    <a className="block w-full py-1.5 px-2 hover:bg-gray-100">{children}</a>
+  <Link href={href} className="block w-full py-1.5 px-2 hover:bg-gray-100">
+    {children}
   </Link>
 )
 
@@ -90,10 +90,11 @@ const Header: Component = () => {
             <div className="flex items-center justify-between h-[95%] space-x-5 my-auto max-w-[1200px] w-full mx-auto">
               <div className="flex items-center space-x-8">
                 <div className="w-fit">
-                  <Link href={routes.home}>
-                    <a className="cursor-pointer font-gang-of-three text-xl text-white">
-                      {process.env.NEXT_PUBLIC_APP_NAME}
-                    </a>
+                  <Link
+                    href={routes.home}
+                    className="cursor-pointer font-gang-of-three text-xl text-white"
+                  >
+                    {process.env.NEXT_PUBLIC_APP_NAME}
                   </Link>
                 </div>
                 <nav className="flex justify-start space-x-4 w-fit">
@@ -101,19 +102,19 @@ const Header: Component = () => {
                     <DropDownExplore />
                   </div>
                   <span>
-                    <Link href={routes.forum}>
-                      <a className="text-white">Discussion</a>
+                    <Link href={routes.forum} className="text-white">
+                      Discussion
                     </Link>
                   </span>
                   <span>
-                    <Link href={routes.feedback}>
-                      <a className="text-white"> Feedback </a>
+                    <Link href={routes.feedback} className="text-white">
+                      Feedback
                     </Link>
                   </span>
                   {isLogin && user.isAdmin ? (
                     <span className="mx-3">
-                      <Link href={routes.admin}>
-                        <a className="text-white"> Admin </a>
+                      <Link href={routes.admin} className="text-white">
+                        Admin
                       </Link>
                     </span>
                   ) : null}
@@ -126,11 +127,17 @@ const Header: Component = () => {
                 <div>
                   {!isLogin ? (
                     <div className="flex items-center space-x-3 ml-4 justify-around text-white h-full my-auto">
-                      <Link href={routes.authentification.signIn}>
-                        <a className="cursor-pointer">Connexion</a>
+                      <Link
+                        href={routes.authentification.signIn}
+                        className="cursor-pointer"
+                      >
+                        Connexion
                       </Link>
-                      <Link href={routes.authentification.register}>
-                        <a className="cursor-pointer">Inscription</a>
+                      <Link
+                        href={routes.authentification.register}
+                        className="cursor-pointer"
+                      >
+                        Inscription
                       </Link>
                     </div>
                   ) : (
@@ -170,10 +177,11 @@ const Header: Component = () => {
           <div className="block md:hidden h-header">
             <div className="h-full bg-primary py-1 -z-10 flex justify-between">
               <div className="w-2/3  px-5 my-auto">
-                <Link href={routes.home}>
-                  <a className="cursor-pointer font-gang-of-three font-bold text-2xl text-white">
-                    {process.env.NEXT_PUBLIC_APP_NAME}
-                  </a>
+                <Link
+                  href={routes.home}
+                  className="cursor-pointer font-gang-of-three font-bold text-2xl text-white"
+                >
+                  {process.env.NEXT_PUBLIC_APP_NAME}
                 </Link>
               </div>
               <div className="w-1/3 m-auto px-5 flex justify-end">
@@ -201,23 +209,21 @@ const Header: Component = () => {
                       <DropDownExplore />
                     </div>
                     <div>
-                      <Link href={routes.forum}>
-                        <a
-                          className="text-white text-lg font-medium"
-                          onClick={() => setExtend(false)}
-                        >
-                          Discussion
-                        </a>
+                      <Link
+                        href={routes.forum}
+                        className="text-white text-lg font-medium"
+                        onClick={() => setExtend(false)}
+                      >
+                        Discussion
                       </Link>
                     </div>
                     <div>
-                      <Link href={routes.feedback}>
-                        <a
-                          className="text-white text-lg font-medium"
-                          onClick={() => setExtend(false)}
-                        >
-                          Feedback
-                        </a>
+                      <Link
+                        href={routes.feedback}
+                        className="text-white text-lg font-medium"
+                        onClick={() => setExtend(false)}
+                      >
+                        Feedback
                       </Link>
                     </div>
                   </nav>
@@ -225,46 +231,42 @@ const Header: Component = () => {
                     {!isLogin ? (
                       <>
                         <div>
-                          <Link href={routes.authentification.signIn}>
-                            <a
-                              className="text-white text-lg font-medium"
-                              onClick={() => setExtend(false)}
-                            >
-                              Connexion
-                            </a>
+                          <Link
+                            href={routes.authentification.signIn}
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Connexion
                           </Link>
                         </div>
                         <div>
-                          <Link href={routes.authentification.register}>
-                            <a
-                              className="text-white text-lg font-medium"
-                              onClick={() => setExtend(false)}
-                            >
-                              Inscription
-                            </a>
+                          <Link
+                            href={routes.authentification.register}
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Inscription
                           </Link>
                         </div>
                       </>
                     ) : (
                       <>
                         <div>
-                          <Link href={routes.users.page(user.slug)}>
-                            <a
-                              className="text-white text-lg font-medium"
-                              onClick={() => setExtend(false)}
-                            >
-                              Mon profile
-                            </a>
+                          <Link
+                            href={routes.users.page(user.slug)}
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Mon profile
                           </Link>
                         </div>
                         <div>
-                          <Link href={routes.users.settings(user.slug)}>
-                            <a
-                              className="text-white text-lg font-medium"
-                              onClick={() => setExtend(false)}
-                            >
-                              Settings
-                            </a>
+                          <Link
+                            href={routes.users.settings(user.slug)}
+                            className="text-white text-lg font-medium"
+                            onClick={() => setExtend(false)}
+                          >
+                            Paramètres
                           </Link>
                         </div>
                         <div>

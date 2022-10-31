@@ -109,10 +109,11 @@ const SignInPage: Page = () => {
                 </label>
               </div>
               <div>
-                <Link href={routes.authentification.forgotPassword}>
-                  <a className="text-sm text-blue-600 hover:underline">
-                    mot de passe oublié ?
-                  </a>
+                <Link
+                  href={routes.authentification.forgotPassword}
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  mot de passe oublié ?
                 </Link>
               </div>
             </div>
