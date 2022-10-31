@@ -102,7 +102,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
         visibility: { in: visibility },
         status: status || undefined
       },
-      orderBy: [{ [orderBy.field]: orderBy.order }, { updatedAt: 'desc' }],
+      orderBy: [{ [orderBy?.field]: orderBy?.order }, { updatedAt: 'desc' }],
       ...this.parseOptions(options)
     })
   }
