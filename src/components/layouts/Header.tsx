@@ -1,29 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid';
-import { useClickAway } from 'react-use';
-import { Transition } from '@headlessui/react';
-import classnames from 'classnames';
-import Link from 'next/link';
+import React, { useEffect, useRef, useState } from 'react'
+import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid'
+import { useClickAway } from 'react-use'
+import { Transition } from '@headlessui/react'
+import classnames from 'classnames'
+import Link from 'next/link'
 
-import { useUserContext } from 'context/auth.context';
-import { useLayoutContext } from 'context/layout.context';
-import { routes } from 'resources/routes';
-import { useHovered } from 'hooks';
-import DropDownByRef from 'components/layouts/DropDownByRef';
-import SearchBar from 'components/common/SearchBar';
-import { DEFAULT_USER_MEDIA } from 'resources/constants';
+import { useUserContext } from 'context/auth.context'
+import { useLayoutContext } from 'context/layout.context'
+import { routes } from 'resources/routes'
+import { useHovered } from 'hooks'
+import DropDownByRef from 'components/layouts/DropDownByRef'
+import SearchBar from 'components/common/SearchBar'
+import { DEFAULT_USER_MEDIA } from 'resources/constants'
 
 const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
   href,
-  children,
+  children
 }) => (
   <Link href={href}>
     <a className="block w-full py-1.5 px-2 hover:bg-gray-100">{children}</a>
   </Link>
-);
+)
 
 const DropDownExplore: Component = () => {
-  const button = useRef<HTMLButtonElement | null>(null);
+  const button = useRef<HTMLButtonElement | null>(null)
 
   return (
     <div>
@@ -43,37 +43,34 @@ const DropDownExplore: Component = () => {
         </div>
       </DropDownByRef>
     </div>
-  );
-};
+  )
+}
 
 const Header: Component = () => {
-  const { user, isLogin, signOut } = useUserContext();
+  const { user, isLogin, signOut } = useUserContext()
   const {
     scrollHeight,
     activeTransparentState: [activeTransparent],
     header,
-    globalLoadingPercent,
-  } = useLayoutContext();
+    globalLoadingPercent
+  } = useLayoutContext()
 
-  const avatarRef = useRef<HTMLImageElement | null>(null);
+  const avatarRef = useRef<HTMLImageElement | null>(null)
 
-  const [extend, setExtend] = useState<boolean>(false);
-  const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent);
-  const [headerRef, headerHovered] = useHovered();
+  const [extend, setExtend] = useState<boolean>(false)
+  const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent)
+  const [headerRef, headerHovered] = useHovered()
 
   useEffect(() => {
-    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250);
-    else setHeaderTransparent(false);
-  }, [activeTransparent, scrollHeight, headerHovered]);
+    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250)
+    else setHeaderTransparent(false)
+  }, [activeTransparent, scrollHeight, headerHovered])
 
-  useClickAway(headerRef, () => setExtend(false));
+  useClickAway(headerRef, () => setExtend(false))
 
-  useEffect(
-    () => console.log('TEST', 100 - globalLoadingPercent),
-    [globalLoadingPercent]
-  );
+  useEffect(() => console.log('TEST', 100 - globalLoadingPercent), [globalLoadingPercent])
 
-  if (header.hiddenHeader) return null;
+  if (header.hiddenHeader) return null
 
   return (
     <header ref={headerRef} className="h-header">
@@ -274,8 +271,8 @@ const Header: Component = () => {
                           <span
                             className="text-white text-lg font-medium"
                             onClick={() => {
-                              signOut();
-                              setExtend(false);
+                              signOut()
+                              setExtend(false)
                             }}
                           >
                             Déconnexion
@@ -297,7 +294,7 @@ const Header: Component = () => {
         </div>
       </div>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

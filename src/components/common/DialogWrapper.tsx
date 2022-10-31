@@ -1,32 +1,32 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useDialogContext } from 'context/dialog.context';
+import { useDialogContext } from 'context/dialog.context'
 
-const DEFAULT_TIMEOUT = 300;
+const DEFAULT_TIMEOUT = 300
 
 const DialogContainer: Component<Dialog> = ({
   uid,
   component: Component,
   props,
   resolve,
-  options,
+  options
 }) => {
-  const { closeDialog } = useDialogContext();
+  const { closeDialog } = useDialogContext()
 
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(true)
 
   const handleClose = (result: any) => {
-    resolve(result);
-    setIsOpen(false);
+    resolve(result)
+    setIsOpen(false)
 
-    window.setTimeout(() => closeDialog(uid), options?.timeout || DEFAULT_TIMEOUT);
-  };
+    window.setTimeout(() => closeDialog(uid), options?.timeout || DEFAULT_TIMEOUT)
+  }
 
-  return <Component isOpen={isOpen} close={handleClose} {...props} />;
-};
+  return <Component isOpen={isOpen} close={handleClose} {...props} />
+}
 
 const DialogWrapper: Component = () => {
-  const { dialogs } = useDialogContext();
+  const { dialogs } = useDialogContext()
 
   return (
     <>
@@ -34,7 +34,7 @@ const DialogWrapper: Component = () => {
         <DialogContainer key={index} {...dialog} />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default DialogWrapper;
+export default DialogWrapper

@@ -1,56 +1,56 @@
 /** authentification */
 
 interface SignInResponse extends ApiResponse {
-  user: User;
-  token: string;
+  user: User
+  token: string
 }
 
 interface RegisterResponse extends ApiResponse {
-  user: User;
-  token: string;
+  user: User
+  token: string
 }
 
 interface RefreshUserResponse extends ApiResponse {
-  user: User;
+  user: User
 }
 
 /** users */
 
 interface ShowUsersListResponse extends ApiResponse {
-  users: Users;
+  users: Users
 }
 
 interface SearchUserResponse extends ApiResponse {
-  users: Users;
+  users: Users
 }
 
 interface ShowUserResponse extends ApiResponse {
-  user: User;
+  user: User
 }
 
 interface UpdateUserResponse extends ApiResponse {
-  user: User;
-  token: string;
+  user: User
+  token: string
 }
 
 interface ShowUserEntriesResponse extends ApiResponse {
-  entries: Entries;
+  entries: Entries
 }
 
 interface ShowUserAnimesResponse extends ApiResponse {
-  animes: Animes;
+  animes: Animes
 }
 
 interface ShowUserFollowsResponse extends ApiResponse {
-  follows: Users;
+  follows: Users
 }
 
 interface ShowUserFollowersResponse extends ApiResponse {
-  followers: Users;
+  followers: Users
 }
 
 interface CreateFollowResponse extends ApiResponse {
-  follow: any;
+  follow: any
 }
 
 /** animes */
@@ -58,69 +58,69 @@ interface CreateFollowResponse extends ApiResponse {
 interface AnimesListResponse extends ApiResponseList<Animes> {}
 
 interface AnimesSearchResponse extends ApiResponse {
-  animes: Animes;
+  animes: Animes
 }
 
 interface AnimeSlugResponse extends ApiResponse {
-  anime: Anime;
+  anime: Anime
 }
 
 interface AnimeUserResponse extends ApiResponse {
-  users: Users;
+  users: Users
 }
 
 interface ShowAnimeResponse extends ApiResponse {
-  anime: Anime;
+  anime: Anime
 }
 
 interface ShowAnimeCategoriesResponse extends ApiResponse {
-  categories: Categories;
+  categories: Categories
 }
 
 interface ShowAnimeEntriesResponse extends ApiResponse {
-  entries: Entries;
+  entries: Entries
 }
 
 /** entries */
 
 interface ShowEntriesListResponse extends ApiResponse {
-  entries: Entries;
+  entries: Entries
 }
 
 interface CreateEntryResponse extends ApiResponse {
-  entry: Entry;
+  entry: Entry
 }
 
 interface ShowEntryResponse extends ApiResponse {
-  entry: Entry;
+  entry: Entry
 }
 
 interface UpdateEntryResponse extends ApiResponse {
-  entry: Entry;
+  entry: Entry
 }
 
 interface ShowEntryUserResponse extends ApiResponse {
-  user: User;
+  user: User
 }
 
 /** sagas */
 
 interface ShowSagasListResponse extends ApiResponse {
-  sagas: Sagas;
+  sagas: Sagas
 }
 
 interface SearchSagasResponse extends ApiResponse {
-  sagas: Sagas;
+  sagas: Sagas
 }
 
 interface ShowSagaResponse extends ApiResponse {
-  saga: Saga;
+  saga: Saga
 }
 
 /** common */
 
 interface CountriesResponse extends ApiResponse {
-  countries: Countries;
+  countries: Countries
 }
 
 /** logs */

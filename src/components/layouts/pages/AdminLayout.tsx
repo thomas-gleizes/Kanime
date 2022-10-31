@@ -1,6 +1,6 @@
-import { LayoutProps } from 'app/types';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
+import { LayoutProps } from 'app/types'
+import DefaultLayout from 'components/layouts/pages/DefaultLayout'
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary'
 
 interface AdminLayoutProps extends LayoutProps {}
 
@@ -14,7 +14,7 @@ const AdminLayout: Component<AdminLayoutProps> = ({ children, exception }) => {
         <div className="ml-[200px]">{children}</div>
       </DefaultLayout>
     </ErrorBoundary>
-  );
-};
+  )
+}
 
-export default AdminLayout;
+export default AdminLayout

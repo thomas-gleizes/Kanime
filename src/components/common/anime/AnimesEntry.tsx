@@ -1,42 +1,42 @@
-import React from 'react';
-import Link from 'next/link';
-import { FaEye, FaStar } from 'react-icons/fa';
-import { toast } from 'react-toastify';
+import React from 'react'
+import Link from 'next/link'
+import { FaEye, FaStar } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
-import { useDialog, useHovered } from 'hooks';
-import AnimePopup from 'components/common/anime/AnimePopup';
+import { useDialog, useHovered } from 'hooks'
+import AnimePopup from 'components/common/anime/AnimePopup'
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
-  Result as EditAnimesEntriesResult,
-} from 'components/modal/EditAnimesEntries';
+  Result as EditAnimesEntriesResult
+} from 'components/modal/EditAnimesEntries'
 
 interface Props {
-  entry: Entry;
-  editable: boolean;
-  updateList: (action: 'delete' | 'update', entry: Entry) => void;
+  entry: Entry
+  editable: boolean
+  updateList: (action: 'delete' | 'update', entry: Entry) => void
 }
 
 const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
-  const [ref, isHover] = useHovered<HTMLDivElement>();
+  const [ref, isHover] = useHovered<HTMLDivElement>()
 
-  const dialog = useDialog();
+  const dialog = useDialog()
 
   const handleEntry = async () => {
     const result = await dialog<EditAnimesEntriesProps, EditAnimesEntriesResult>(
       EditAnimesEntries,
       { entry, anime: entry.anime as Anime }
-    );
+    )
 
     switch (result.action) {
       case 'submit':
-        updateList('update', result.values);
-        return void toast.success('Entry updated successfully');
+        updateList('update', result.values)
+        return void toast.success('Entry updated successfully')
       case 'delete':
-        updateList('delete', entry);
-        return void toast.success('Entry deleted successfully');
+        updateList('delete', entry)
+        return void toast.success('Entry deleted successfully')
       case 'cancel':
     }
-  };
+  }
 
   return (
     <div className="relative h-auto">
@@ -87,7 +87,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
               style={{
                 width: `${
                   (entry.progress / (entry.anime.episode.count || entry.progress)) * 100
-                }%`,
+                }%`
               }}
             />
           ) : null}
@@ -109,7 +109,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
         <AnimePopup anime={entry.anime} isOpen={isHover} position="right" />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AnimesEntry;
+export default AnimesEntry

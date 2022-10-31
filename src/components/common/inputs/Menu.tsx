@@ -1,11 +1,11 @@
-import React, { useMemo, Fragment } from 'react';
-import { Menu as MenuDropDown, Transition } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/solid';
-import classnames from 'classnames';
+import React, { useMemo, Fragment } from 'react'
+import { Menu as MenuDropDown, Transition } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/solid'
+import classnames from 'classnames'
 
 interface Props {
-  label: string;
-  children: ReactNode;
+  label: string
+  children: ReactNode
 }
 
 const Menu: Component<Props> = ({ label, children }) => {
@@ -34,29 +34,29 @@ const Menu: Component<Props> = ({ label, children }) => {
         </MenuDropDown.Items>
       </Transition>
     </MenuDropDown>
-  );
-};
+  )
+}
 
 export const MenuGroup: Component<{ children: ReactNode }> = ({ children }) => {
-  return <div className="p-1">{children}</div>;
-};
+  return <div className="p-1">{children}</div>
+}
 
 interface MenuItemProps {
-  children: ReactNode;
-  icon?: ReactNode;
-  color?: TailwindcssColors | CustomColors;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  children: ReactNode
+  icon?: ReactNode
+  color?: TailwindcssColors | CustomColors
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
 export const MenuItem: Component<MenuItemProps> = ({
   children,
   icon,
   color,
-  onClick,
+  onClick
 }) => {
   const colorClassName = useMemo<string>(() => {
-    return '';
-  }, []);
+    return ''
+  }, [])
 
   return (
     <MenuDropDown.Item>
@@ -73,7 +73,7 @@ export const MenuItem: Component<MenuItemProps> = ({
         </button>
       )}
     </MenuDropDown.Item>
-  );
-};
+  )
+}
 
-export default Menu;
+export default Menu

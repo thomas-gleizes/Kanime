@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react';
-import { Field, FieldAttributes, Form, Formik, FormikProps } from 'formik';
-import deepEqual from 'deep-equal';
-import { EntryStatus, Visibility } from '@prisma/client';
-import { FaSave, FaStar, FaTimes, FaTrash } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import dayjs from 'dayjs';
+import React, { useMemo } from 'react'
+import { Field, FieldAttributes, Form, Formik, FormikProps } from 'formik'
+import deepEqual from 'deep-equal'
+import { EntryStatus, Visibility } from '@prisma/client'
+import { FaSave, FaStar, FaTimes, FaTrash } from 'react-icons/fa'
+import { toast } from 'react-toastify'
+import dayjs from 'dayjs'
 import {
   Box,
   Button,
@@ -26,49 +26,49 @@ import {
   SliderMark,
   SliderThumb,
   SliderTrack,
-  Textarea,
-} from '@chakra-ui/react';
+  Textarea
+} from '@chakra-ui/react'
 
-import { ApiService } from 'services/api.service';
-import { replaceCamelCaseWithSpace } from 'utils/stringHelpers';
-import { editEntrySchema } from 'resources/validations';
-import { CreateEntryDto } from 'dto';
-import { ApiException } from 'exceptions';
-import { Select } from 'components/common/inputs';
+import { ApiService } from 'services/api.service'
+import { replaceCamelCaseWithSpace } from 'utils/stringHelpers'
+import { editEntrySchema } from 'resources/validations'
+import { CreateEntryDto } from 'dto'
+import { ApiException } from 'exceptions'
+import { Select } from 'components/common/inputs'
 
 type SubmitResult = {
-  action: 'submit';
-  values: Entry;
-};
+  action: 'submit'
+  values: Entry
+}
 
 type DeleteSubmit = {
-  action: 'delete';
-};
+  action: 'delete'
+}
 
-type CancelSubmit = { action: 'cancel' };
+type CancelSubmit = { action: 'cancel' }
 
-export type Result = DeleteSubmit | SubmitResult | CancelSubmit;
+export type Result = DeleteSubmit | SubmitResult | CancelSubmit
 
 export interface Props {
-  anime: Anime;
-  entry?: Entry;
+  anime: Anime
+  entry?: Entry
 }
 
 const status = Object.entries(EntryStatus).map(([key, value]) => ({
   label: replaceCamelCaseWithSpace(key),
-  value: value,
-}));
+  value: value
+}))
 
 const visibilities = Object.entries(Visibility).map(([key, value]) => ({
   label: replaceCamelCaseWithSpace(key),
-  value,
-}));
+  value
+}))
 
 const EditAnimesEntries: DialogComponent<Props, Result> = ({
   isOpen,
   close,
   anime,
-  entry,
+  entry
 }) => {
   const initialValues = useMemo<CreateEntryDto>(
     () => ({
@@ -81,38 +81,38 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
       startedAt: entry?.startedAt
         ? dayjs(entry.startedAt).format('YYYY-MM-DD')
         : undefined,
-      finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : undefined,
+      finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : undefined
     }),
     [entry]
-  );
+  )
 
   const handleSubmit = async (values: CreateEntryDto) => {
     try {
       const response = await ApiService.post<{ entry: Entry }>(
         `/animes/${anime.id}/entries`,
         values
-      );
+      )
 
       // @ts-ignore
-      close({ action: 'submit', values: { ...response.entry, anime } });
+      close({ action: 'submit', values: { ...response.entry, anime } })
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   const handleDelete = async () => {
-    if (!entry) return close({ action: 'cancel' });
+    if (!entry) return close({ action: 'cancel' })
 
     try {
-      await ApiService.delete(`/animes/${entry.animeId}/entries`);
+      await ApiService.delete(`/animes/${entry.animeId}/entries`)
 
-      return close({ action: 'delete' });
+      return close({ action: 'delete' })
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   return (
     <Modal
@@ -140,14 +140,14 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
         )}
       </Formik>
     </Modal>
-  );
-};
+  )
+}
 
 const FormContent: Component<
   FormikProps<CreateEntryDto> & {
-    anime: Anime;
-    handleDelete: () => void;
-    handleClose: () => void;
+    anime: Anime
+    handleDelete: () => void
+    handleClose: () => void
   }
 > = ({
   values,
@@ -156,21 +156,21 @@ const FormContent: Component<
   handleDelete,
   initialValues,
   isSubmitting,
-  handleClose,
+  handleClose
 }) => {
   const sliderColor = useMemo<string>(() => {
-    if (!values.rating) return 'yellow';
-    else if (values.rating >= 7.5) return 'green';
-    else if (values.rating >= 5) return 'orange';
-    else return 'red';
-  }, [values.rating]);
+    if (!values.rating) return 'yellow'
+    else if (values.rating >= 7.5) return 'green'
+    else if (values.rating >= 5) return 'orange'
+    else return 'red'
+  }, [values.rating])
 
-  const Option = Select.Option;
+  const Option = Select.Option
 
   const isChanged = useMemo<boolean>(
     () => !deepEqual(initialValues, values),
     [values, initialValues]
-  );
+  )
 
   return (
     <ModalContent className="px-4">
@@ -335,7 +335,7 @@ const FormContent: Component<
         </div>
       </ModalFooter>
     </ModalContent>
-  );
-};
+  )
+}
 
-export default EditAnimesEntries;
+export default EditAnimesEntries

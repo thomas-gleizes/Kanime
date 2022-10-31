@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
 export function useToggle(initialValue: boolean = false): [boolean, () => void] {
-  const [state, setState] = useState<boolean>(initialValue);
+  const [state, setState] = useState<boolean>(initialValue)
 
-  const toggle = (): void => setState(!state);
+  const toggle = (): void => setState(!state)
 
-  return [state, toggle];
+  return [state, toggle]
 }

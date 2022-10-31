@@ -1,65 +1,65 @@
-import React from 'react';
-import Link from 'next/link';
-import { useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
-import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
+import React from 'react'
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { toast } from 'react-toastify'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react'
 
-import { Page } from 'app/next';
-import { authenticationApi } from 'api';
-import { ssrHandler } from 'services/handler.service';
-import { useUserContext } from 'context/auth.context';
-import { routes } from 'resources/routes';
-import { SignInDto } from 'dto';
-import { ApiException } from 'exceptions';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import Button from 'components/common/Button';
+import { Page } from 'app/next'
+import { authenticationApi } from 'api'
+import { ssrHandler } from 'services/handler.service'
+import { useUserContext } from 'context/auth.context'
+import { routes } from 'resources/routes'
+import { SignInDto } from 'dto'
+import { ApiException } from 'exceptions'
+import DefaultLayout from 'components/layouts/pages/DefaultLayout'
+import Button from 'components/common/Button'
 
 export const getServerSideProps = ssrHandler(async (context) => {
   if (context.req.session.user)
     return {
       redirect: {
         permanent: false,
-        destination: routes.users.page(context.req.session.user.slug),
-      },
-    };
+        destination: routes.users.page(context.req.session.user.slug)
+      }
+    }
 
-  return { props: {} };
-});
+  return { props: {} }
+})
 
-const resolver = classValidatorResolver(SignInDto);
+const resolver = classValidatorResolver(SignInDto)
 
 const defaultValues: SignInDto = {
   email: 'kalat@kanime.fr',
   password: 'azerty',
-  rememberMe: true,
-};
+  rememberMe: true
+}
 
 const SignInPage: Page = () => {
-  const { signIn } = useUserContext();
-  const router = useRouter();
+  const { signIn } = useUserContext()
+  const router = useRouter()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<SignInDto>({
     defaultValues,
-    resolver,
-  });
+    resolver
+  })
 
   const onSubmit = async (data: SignInDto) => {
     try {
-      const response = await authenticationApi.signIn(data);
+      const response = await authenticationApi.signIn(data)
 
-      signIn(response.user);
-      await router.push(routes.users.page(response.user.slug));
+      signIn(response.user)
+      await router.push(routes.users.page(response.user.slug))
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-gray-50 mx-2">
@@ -120,7 +120,7 @@ const SignInPage: Page = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SignInPage;
+export default SignInPage

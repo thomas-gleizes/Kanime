@@ -1,11 +1,11 @@
-import React from 'react';
+import React from 'react'
 
 interface Props {
-  children: ReactNode;
+  children: ReactNode
 }
 
 const Container: Component<Props> = ({ children }) => {
-  return <div className="px-2 py-4">{children}</div>;
-};
+  return <div className="px-2 py-4">{children}</div>
+}
 
-export default Container;
+export default Container

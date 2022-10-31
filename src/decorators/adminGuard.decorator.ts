@@ -1,4 +1,4 @@
-import { createMiddlewareDecorator } from 'next-api-decorators';
-import { authAdminMiddleware } from 'middlewares/auth.middleware';
+import { createMiddlewareDecorator } from 'next-api-decorators'
+import { authAdminMiddleware } from 'middlewares/auth.middleware'
 
-export const AdminGuard = createMiddlewareDecorator(authAdminMiddleware);
+export const AdminGuard = createMiddlewareDecorator(authAdminMiddleware)

@@ -1,34 +1,34 @@
-import { Fragment, useMemo, createContext, useContext } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import { Fragment, useMemo, createContext, useContext } from 'react'
+import { Listbox, Transition } from '@headlessui/react'
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 interface Props {
-  value: any;
-  onChange: (value: any) => void;
-  placeholder?: string;
-  children: JSX.Element[];
-  color?: TailwindcssColors;
+  value: any
+  onChange: (value: any) => void
+  placeholder?: string
+  children: JSX.Element[]
+  color?: TailwindcssColors
 }
 
 type OptionsProps = {
-  value: string;
-  children: string;
-  color?: TailwindcssColors;
-};
+  value: string
+  children: string
+  color?: TailwindcssColors
+}
 
-const DEFAULT_COLOR: TailwindcssColors = 'blue';
+const DEFAULT_COLOR: TailwindcssColors = 'blue'
 
-const ColorContext = createContext<TailwindcssColors>(DEFAULT_COLOR);
+const ColorContext = createContext<TailwindcssColors>(DEFAULT_COLOR)
 
 const Select: Component<Props> = ({ value, onChange, children, color, placeholder }) => {
   const currentValue = useMemo(() => {
     const current: { children: string; value: any } | null = children.find(
       (child) => child.props.value === value
-    )?.props;
+    )?.props
 
-    if (current) return { label: current.children, value: current.value };
-    else return null;
-  }, [children, value]);
+    if (current) return { label: current.children, value: current.value }
+    else return null
+  }, [children, value])
 
   return (
     <ColorContext.Provider value={color || DEFAULT_COLOR}>
@@ -57,11 +57,11 @@ const Select: Component<Props> = ({ value, onChange, children, color, placeholde
         </div>
       </Listbox>
     </ColorContext.Provider>
-  );
-};
+  )
+}
 
 const Option: Component<OptionsProps> = ({ value, children, color }) => {
-  const contextColor = useContext(ColorContext);
+  const contextColor = useContext(ColorContext)
 
   return (
     <Listbox.Option
@@ -91,11 +91,11 @@ const Option: Component<OptionsProps> = ({ value, children, color }) => {
         </>
       )}
     </Listbox.Option>
-  );
-};
+  )
+}
 
-const SelectWithOption: Component<Props> & { Option?: Component<OptionsProps> } = Select;
+const SelectWithOption: Component<Props> & { Option?: Component<OptionsProps> } = Select
 
-SelectWithOption.Option = Option;
+SelectWithOption.Option = Option
 
-export default SelectWithOption;
+export default SelectWithOption

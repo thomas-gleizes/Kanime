@@ -1,14 +1,14 @@
-import { Get, ParseNumberPipe, Query, ValidationPipe } from 'next-api-decorators';
-import { Visibility } from '@prisma/client';
+import { Get, ParseNumberPipe, Query, ValidationPipe } from 'next-api-decorators'
+import { Visibility } from '@prisma/client'
 
-import type { PrismaEntryStatus } from 'app/prisma';
-import type { Session } from 'app/session';
-import ApiHandler from 'class/ApiHandler';
-import { apiHandler } from 'services/handler.service';
-import { entryModel, userFollowModel } from 'models';
-import { entriesMapper } from 'mappers';
-import { GetSession } from 'decorators';
-import { QueryEntryListDto } from 'dto';
+import type { PrismaEntryStatus } from 'app/prisma'
+import type { Session } from 'app/session'
+import ApiHandler from 'class/ApiHandler'
+import { apiHandler } from 'services/handler.service'
+import { entryModel, userFollowModel } from 'models'
+import { entriesMapper } from 'mappers'
+import { GetSession } from 'decorators'
+import { QueryEntryListDto } from 'dto'
 
 class UserEntriesHandler extends ApiHandler {
   @Get()
@@ -17,20 +17,20 @@ class UserEntriesHandler extends ApiHandler {
     @Query(ValidationPipe) query: QueryEntryListDto,
     @GetSession() session: Session
   ): Promise<ShowUserEntriesResponse> {
-    const visibility: Visibility[] = ['public'];
+    const visibility: Visibility[] = ['public']
     if (session?.user)
-      if (session.user.id === id) visibility.push('limited', 'private');
+      if (session.user.id === id) visibility.push('limited', 'private')
       else {
-        const isFriends = await userFollowModel.isFriends(session.user.id, id);
+        const isFriends = await userFollowModel.isFriends(session.user.id, id)
 
-        if (isFriends) visibility.push('limited');
+        if (isFriends) visibility.push('limited')
       }
 
-    let orderBy = undefined;
+    let orderBy = undefined
 
     if (query.orderBy)
       for (const [key, value] of Object.entries(query.orderBy))
-        orderBy = { field: key, order: value };
+        orderBy = { field: key, order: value }
 
     const entries = await entryModel.getByUser(
       id,
@@ -38,10 +38,10 @@ class UserEntriesHandler extends ApiHandler {
       query.status as PrismaEntryStatus,
       orderBy,
       { ...query }
-    );
+    )
 
-    return { success: true, entries: entriesMapper.many(entries) };
+    return { success: true, entries: entriesMapper.many(entries) }
   }
 }
 
-export default apiHandler(UserEntriesHandler);
+export default apiHandler(UserEntriesHandler)

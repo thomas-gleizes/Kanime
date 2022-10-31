@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
 export function useBrowser(): boolean {
-  return useMemo(() => typeof window === 'object', []);
+  return useMemo(() => typeof window === 'object', [])
 }

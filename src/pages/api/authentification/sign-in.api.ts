@@ -1,15 +1,15 @@
-import { Body, Post, ValidationPipe } from 'next-api-decorators';
+import { Body, Post, ValidationPipe } from 'next-api-decorators'
 
-import type { Session } from 'app/session';
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import Security from 'services/security.service';
-import { userModel } from 'models';
-import { usersMapper } from 'mappers';
-import { errorMessage } from 'resources/constants';
-import { GetSession } from 'decorators';
-import { SignInDto } from 'dto';
-import { UnauthorizedException } from 'exceptions/http';
+import type { Session } from 'app/session'
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import Security from 'services/security.service'
+import { userModel } from 'models'
+import { usersMapper } from 'mappers'
+import { errorMessage } from 'resources/constants'
+import { GetSession } from 'decorators'
+import { SignInDto } from 'dto'
+import { UnauthorizedException } from 'exceptions/http'
 
 class SignInInHandler extends ApiHandler {
   @Post('/')
@@ -17,24 +17,24 @@ class SignInInHandler extends ApiHandler {
     @Body(ValidationPipe) body: SignInDto,
     @GetSession() session: Session
   ): Promise<SignInResponse> {
-    if (session) await session.destroy();
+    if (session) await session.destroy()
 
-    const user = await userModel.findByEmail(body.email);
+    const user = await userModel.findByEmail(body.email)
 
     if (!user || !Security.compare(body.password + user.username, user.password))
-      throw new UnauthorizedException(errorMessage.AUTH_LOGIN);
+      throw new UnauthorizedException(errorMessage.AUTH_LOGIN)
 
-    const mappedUser = usersMapper.one(user);
+    const mappedUser = usersMapper.one(user)
 
-    const token = Security.sign(mappedUser, body.rememberMe);
+    const token = Security.sign(mappedUser, body.rememberMe)
 
-    session.user = mappedUser;
-    session.token = token;
+    session.user = mappedUser
+    session.token = token
 
-    await session.save();
+    await session.save()
 
-    return { success: true, user: mappedUser, token };
+    return { success: true, user: mappedUser, token }
   }
 }
 
-export default apiHandler(SignInInHandler);
+export default apiHandler(SignInInHandler)

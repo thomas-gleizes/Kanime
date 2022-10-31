@@ -1,36 +1,36 @@
-import React, { KeyboardEventHandler } from 'react';
-import { MinusIcon, PlusIcon } from '@heroicons/react/solid';
+import React, { KeyboardEventHandler } from 'react'
+import { MinusIcon, PlusIcon } from '@heroicons/react/solid'
 
 // @ts-ignore TODO remove
 interface Props extends React.InputHTMLAttributes<any> {
-  value: number;
-  onChange: (value: number) => void;
-  min?: number;
-  max?: number;
-  step: number;
+  value: number
+  onChange: (value: number) => void
+  min?: number
+  max?: number
+  step: number
 }
 
 const InputNumber: Component<Props> = ({ value, onChange, min, max, step, ...props }) => {
   const handleKey: KeyboardEventHandler<HTMLInputElement> = ({ keyCode }) => {
-    if (keyCode === 40) handleMinus();
-    else if (keyCode === 38) handlePlus();
-  };
+    if (keyCode === 40) handleMinus()
+    else if (keyCode === 38) handlePlus()
+  }
 
   const handleMinus = () => {
-    if ((!min && min !== 0) || min < value) handleChange(value - step);
-  };
+    if ((!min && min !== 0) || min < value) handleChange(value - step)
+  }
 
   const handlePlus = () => {
-    if ((!max && max !== 0) || max > value) handleChange(value + step);
-  };
+    if ((!max && max !== 0) || max > value) handleChange(value + step)
+  }
 
   const handleChange = (value: number) => {
     if (value || value === 0) {
-      if (min !== undefined && value < min) onChange(min);
-      else if (max !== undefined && value > max) onChange(max);
-      else onChange(value);
-    } else if (isNaN(value)) onChange(0);
-  };
+      if (min !== undefined && value < min) onChange(min)
+      else if (max !== undefined && value > max) onChange(max)
+      else onChange(value)
+    } else if (isNaN(value)) onChange(0)
+  }
 
   return (
     <div className="my-5 rounded-lg">
@@ -63,11 +63,11 @@ const InputNumber: Component<Props> = ({ value, onChange, min, max, step, ...pro
         </i>
       </button>
     </div>
-  );
-};
+  )
+}
 
 InputNumber.defaultProps = {
-  step: 1,
-};
+  step: 1
+}
 
-export default InputNumber;
+export default InputNumber

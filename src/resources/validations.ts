@@ -1,4 +1,4 @@
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 
 export const registerSchema = Yup.object({
   username: Yup.string()
@@ -12,8 +12,8 @@ export const registerSchema = Yup.object({
     .required('Veuillez saisir un mot de passe'),
   confirmPassword: Yup.string()
     .required('Veuillez confirmer votre mot de passe')
-    .oneOf([Yup.ref('password')], 'Les mot de passe ne correspondent pas'),
-});
+    .oneOf([Yup.ref('password')], 'Les mot de passe ne correspondent pas')
+})
 
 export const signInSchema = Yup.object({
   email: Yup.string()
@@ -23,14 +23,14 @@ export const signInSchema = Yup.object({
   password: Yup.string()
     .required('Veuillez saisir un mot de passe')
     .min(6, 'Votre mot de passe contiens au moins 6 caractère'),
-  rememberMe: Yup.boolean(),
-});
+  rememberMe: Yup.boolean()
+})
 
 export const forgotPasswordSchema = Yup.object({
   email: Yup.string()
     .email('Veuillez saisir un email valide')
-    .required('Veuillez saisir un email'),
-});
+    .required('Veuillez saisir un email')
+})
 
 export const resetPasswordSchema = Yup.object({
   newPassword: Yup.string()
@@ -39,8 +39,8 @@ export const resetPasswordSchema = Yup.object({
   confirmPassword: Yup.string()
     .required('Veuillez confirmer votre mot de passe')
     .oneOf([Yup.ref('newPassword')], 'Les mot de passe ne correspondent pas'),
-  token: Yup.string().required(),
-});
+  token: Yup.string().required()
+})
 
 export const editEntrySchema = (max: number) =>
   Yup.object({
@@ -55,11 +55,11 @@ export const editEntrySchema = (max: number) =>
       .nullable(),
     note: Yup.string().max(1000, 'Nombre de caractère max atteint: 1000').nullable(),
     startedAt: Yup.string().nullable(),
-    finishAt: Yup.string().nullable(),
-  });
+    finishAt: Yup.string().nullable()
+  })
 
 export const createPostSchema = Yup.object({
   userId: Yup.number().required('missing userId'),
   content: Yup.string().required('Veuillez saisir un message'),
-  parentId: Yup.number(),
-});
+  parentId: Yup.number()
+})

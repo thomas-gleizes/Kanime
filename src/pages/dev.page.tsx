@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-import { Page } from 'app/next';
+import { Page } from 'app/next'
 
-import { commonApi } from 'api';
-import { useLayoutContext } from 'context/layout.context';
-import EmptyLayout from 'components/layouts/pages/EmptyLayout';
-import Button from 'components/common/Button';
+import { commonApi } from 'api'
+import { useLayoutContext } from 'context/layout.context'
+import EmptyLayout from 'components/layouts/pages/EmptyLayout'
+import Button from 'components/common/Button'
 
 const DevPage: Page = () => {
-  const { globalLoadingPercent } = useLayoutContext();
+  const { globalLoadingPercent } = useLayoutContext()
 
-  const [timer, setTimer] = useState<number>(1000);
+  const [timer, setTimer] = useState<number>(1000)
 
   const handleClick = async () => {
-    await commonApi.sleep(timer);
-  };
+    await commonApi.sleep(timer)
+  }
 
   return (
     <div className="p-10">
@@ -38,9 +38,9 @@ const DevPage: Page = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-DevPage.layout = EmptyLayout;
+DevPage.layout = EmptyLayout
 
-export default DevPage;
+export default DevPage

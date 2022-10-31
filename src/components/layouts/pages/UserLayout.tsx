@@ -1,37 +1,37 @@
-import React, { useEffect } from 'react';
-import Image from 'next/image';
+import React, { useEffect } from 'react'
+import Image from 'next/image'
 
-import { LayoutContentComponent, LayoutProps } from 'app/types';
-import { useLayoutContext } from 'context/layout.context';
-import { DEFAULT_USER_MEDIA } from 'resources/constants';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
+import { LayoutContentComponent, LayoutProps } from 'app/types'
+import { useLayoutContext } from 'context/layout.context'
+import { DEFAULT_USER_MEDIA } from 'resources/constants'
+import DefaultLayout from 'components/layouts/pages/DefaultLayout'
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary'
 
 interface Props {
-  user: User;
-  entries: Entries;
-  isCurrent: boolean;
+  user: User
+  entries: Entries
+  isCurrent: boolean
 }
 
 interface UserLayoutProps extends LayoutProps<Props> {}
 
 const UserLayout: Component<UserLayoutProps> = ({ children, exception, pageProps }) => {
   const {
-    activeTransparentState: [, setHeaderTransparent],
-  } = useLayoutContext();
+    activeTransparentState: [, setHeaderTransparent]
+  } = useLayoutContext()
 
   useEffect(() => {
-    setHeaderTransparent(true);
+    setHeaderTransparent(true)
 
-    return () => setHeaderTransparent(false);
-  }, [setHeaderTransparent]);
+    return () => setHeaderTransparent(false)
+  }, [setHeaderTransparent])
 
   return (
     <ErrorBoundary exception={exception}>
       <UserLayoutContent {...pageProps}>{children}</UserLayoutContent>
     </ErrorBoundary>
-  );
-};
+  )
+}
 
 const UserLayoutContent: LayoutContentComponent<Props> = ({ user, children }) => {
   return (
@@ -58,7 +58,7 @@ const UserLayoutContent: LayoutContentComponent<Props> = ({ user, children }) =>
 
       {children}
     </DefaultLayout>
-  );
-};
+  )
+}
 
-export default UserLayout;
+export default UserLayout

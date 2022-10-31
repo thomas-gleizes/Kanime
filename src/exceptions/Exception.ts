@@ -1,9 +1,9 @@
 export class Exception extends Error {
   constructor(message: string) {
-    super(message);
+    super(message)
   }
 
   public getMessage(): string {
-    return this.message;
+    return this.message
   }
 }

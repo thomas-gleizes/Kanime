@@ -1,25 +1,25 @@
-import { PrismaClient, AnimeSeason, AnimeStatus, AnimeType } from '@prisma/client';
+import { PrismaClient, AnimeSeason, AnimeStatus, AnimeType } from '@prisma/client'
 
 function getSeason(date: Date | null): AnimeSeason | null {
-  if (!date) return null;
+  if (!date) return null
 
-  const month = date.getMonth();
+  const month = date.getMonth()
 
-  if (month < 3) return 'Winter';
-  else if (month < 6) return 'Springs';
-  else if (month < 9) return 'Summer';
-  return 'Fall';
+  if (month < 3) return 'Winter'
+  else if (month < 6) return 'Springs'
+  else if (month < 9) return 'Summer'
+  return 'Fall'
 }
 
 async function run() {
-  const prisma = new PrismaClient();
+  const prisma = new PrismaClient()
 
-  const animes = await prisma.animeImport.findMany({ where: { animeId: null } });
+  const animes = await prisma.animeImport.findMany({ where: { animeId: null } })
 
   for (const anime of animes) {
-    console.log(anime.id, anime.slug);
+    console.log(anime.id, anime.slug)
 
-    const year = getSeason(anime.dateBegin);
+    const year = getSeason(anime.dateBegin)
 
     await prisma.anime
       .create({
@@ -43,23 +43,23 @@ async function run() {
           cover: anime.cover,
           episodeCount: anime.episodeCount,
           episodeLength: anime.episodeLength,
-          status: anime.status as AnimeStatus,
-        },
+          status: anime.status as AnimeStatus
+        }
       })
       .then(async (newAnime) => {
         await prisma.animeImport.update({
           where: { id: anime.id },
           data: {
-            animeId: newAnime.id,
-          },
-        });
-      });
+            animeId: newAnime.id
+          }
+        })
+      })
   }
 }
 
 run()
   .then(() => console.log('\x1b[32m', 'Script success', '\x1b[0m'))
   .catch((e) => console.log('Scripts crash :, \n', e))
-  .finally(() => process.exit(0));
+  .finally(() => process.exit(0))
 
-export {};
+export {}

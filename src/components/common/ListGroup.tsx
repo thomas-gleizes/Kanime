@@ -1,12 +1,12 @@
-import React from 'react';
-import { Listbox, Transition } from '@headlessui/react';
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
+import React from 'react'
+import { Listbox, Transition } from '@headlessui/react'
+import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
 
 interface Props {
-  color: TailwindcssColors;
-  value: any;
-  handleChange: (value: any) => void;
-  options: Array<any>;
+  color: TailwindcssColors
+  value: any
+  handleChange: (value: any) => void
+  options: Array<any>
 }
 
 const ListGroup: Component<Props> = ({ color, value, handleChange, options }) => {
@@ -62,7 +62,7 @@ const ListGroup: Component<Props> = ({ color, value, handleChange, options }) =>
         </Transition>
       </div>
     </Listbox>
-  );
-};
+  )
+}
 
-export default ListGroup;
+export default ListGroup

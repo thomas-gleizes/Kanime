@@ -1,6 +1,6 @@
-import { PrismaEntry } from 'app/prisma';
-import Mapper from 'class/Mapper';
-import { animesMapper, usersMapper } from 'mappers';
+import { PrismaEntry } from 'app/prisma'
+import Mapper from 'class/Mapper'
+import { animesMapper, usersMapper } from 'mappers'
 
 class EntriesMapper extends Mapper<PrismaEntry, Entry> {
   one(resource: PrismaEntry): Entry {
@@ -16,14 +16,14 @@ class EntriesMapper extends Mapper<PrismaEntry, Entry> {
       note: resource.note,
       visibility: resource.visibility,
       createAt: resource.createdAt.toISOString(),
-      updateAt: resource.updatedAt.toISOString(),
-    };
+      updateAt: resource.updatedAt.toISOString()
+    }
 
-    if (resource.anime) entry.anime = animesMapper.one(resource.anime);
-    if (resource.user) entry.user = usersMapper.one(resource.user);
+    if (resource.anime) entry.anime = animesMapper.one(resource.anime)
+    if (resource.user) entry.user = usersMapper.one(resource.user)
 
-    return entry;
+    return entry
   }
 }
 
-export default new EntriesMapper();
+export default new EntriesMapper()

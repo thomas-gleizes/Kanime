@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import type { Page } from 'app/next';
-import { routes } from 'resources/routes';
-import EditGeneralData from 'components/user/EditGeneralData';
-import { ssrHandler } from 'services/handler.service';
+import type { Page } from 'app/next'
+import { routes } from 'resources/routes'
+import EditGeneralData from 'components/user/EditGeneralData'
+import { ssrHandler } from 'services/handler.service'
 
 interface Props {}
 
@@ -13,21 +13,21 @@ export const getServerSideProps = ssrHandler<Props, { username: string }>(
       return {
         redirect: {
           permanent: false,
-          destination: `${routes.users}/${query.username}`,
-        },
-      };
+          destination: `${routes.users}/${query.username}`
+        }
+      }
     }
 
-    return { props: {} };
+    return { props: {} }
   }
-);
+)
 
 const SettingsPage: Page<Props> = () => {
   return (
     <div className="p-10">
       <EditGeneralData />
     </div>
-  );
-};
+  )
+}
 
-export default SettingsPage;
+export default SettingsPage

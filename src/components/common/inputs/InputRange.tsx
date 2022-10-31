@@ -1,42 +1,42 @@
-import React, { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import React, { ChangeEvent, useEffect, useMemo, useState } from 'react'
 
-type minmax = { min: number; max: number };
+type minmax = { min: number; max: number }
 
 interface Props {
-  min: number;
-  max: number;
-  step: number;
-  onChange: (values: minmax) => void;
+  min: number
+  max: number
+  step: number
+  onChange: (values: minmax) => void
 }
 
 const InputRange: Component<Props> = ({ min, max, step, onChange }) => {
-  const [minValue, setMinValue] = useState<number>(min);
-  const [maxValue, setMaxValue] = useState<number>(max);
+  const [minValue, setMinValue] = useState<number>(min)
+  const [maxValue, setMaxValue] = useState<number>(max)
 
   const handleMin = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    if (+target.value < min) setMinValue(min);
-    else if (+target.value > max) setMinValue(max);
-    else setMinValue(Math.min(+target.value, maxValue));
-  };
+    if (+target.value < min) setMinValue(min)
+    else if (+target.value > max) setMinValue(max)
+    else setMinValue(Math.min(+target.value, maxValue))
+  }
 
   const handleMax = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    if (+target.value < min) setMaxValue(min);
-    else if (+target.value > max) setMaxValue(max);
-    else setMaxValue(Math.max(+target.value, minValue));
-  };
+    if (+target.value < min) setMaxValue(min)
+    else if (+target.value > max) setMaxValue(max)
+    else setMaxValue(Math.max(+target.value, minValue))
+  }
 
   const thumb: minmax = useMemo(
     () => ({
       min: ((minValue - min) / (max - min)) * 100,
-      max: 100 - ((maxValue - min) / (max - min)) * 100,
+      max: 100 - ((maxValue - min) / (max - min)) * 100
     }),
     [maxValue, minValue, min, max]
-  );
+  )
 
   useEffect(
     () => onChange && onChange({ min: minValue, max: maxValue }),
     [minValue, maxValue] // eslint-disable-line react-hooks/exhaustive-deps
-  );
+  )
 
   return (
     <div className="relative w-full">
@@ -94,13 +94,13 @@ const InputRange: Component<Props> = ({ min, max, step, onChange }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 InputRange.defaultProps = {
   min: 0,
   max: 10,
-  step: 1,
-};
+  step: 1
+}
 
-export default InputRange;
+export default InputRange

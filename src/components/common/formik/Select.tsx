@@ -1,11 +1,11 @@
-import React from 'react';
-import { useField } from 'formik';
+import React from 'react'
+import { useField } from 'formik'
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  name: string;
-  color?: TailwindcssColors;
-  label?: string;
-  required?: boolean;
+  name: string
+  color?: TailwindcssColors
+  label?: string
+  required?: boolean
 }
 
 const Select: Component<SelectProps> = ({
@@ -17,7 +17,7 @@ const Select: Component<SelectProps> = ({
   children,
   ...rest
 }) => {
-  const [field, meta, helpers] = useField(name);
+  const [field, meta, helpers] = useField(name)
 
   return (
     <>
@@ -35,11 +35,11 @@ const Select: Component<SelectProps> = ({
         {children}
       </select>
     </>
-  );
-};
+  )
+}
 
 Select.defaultProps = {
-  color: 'blue',
-};
+  color: 'blue'
+}
 
-export default Select;
+export default Select

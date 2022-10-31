@@ -1,8 +1,8 @@
-import React from 'react';
-import Image from 'next/image';
+import React from 'react'
+import Image from 'next/image'
 
 interface Props {
-  slug: string;
+  slug: string
 }
 
 const KitsuButton: Component<Props> = ({ slug }) => {
@@ -16,7 +16,7 @@ const KitsuButton: Component<Props> = ({ slug }) => {
       <Image src="/icons/kitsu.png" width={25} height={25} alt="kitsu icon" />
       <span className="mx-3 text-white">Voir sur Kitsu</span>
     </a>
-  );
-};
+  )
+}
 
-export default KitsuButton;
+export default KitsuButton

@@ -1,20 +1,20 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios'
 
-import Api from 'class/Api';
-import { ApiService } from 'services/api.service';
+import Api from 'class/Api'
+import { ApiService } from 'services/api.service'
 
 class AnimesApi extends Api {
   constructor(apiService: AxiosInstance) {
-    super(apiService, 'animes');
+    super(apiService, 'animes')
   }
 
   public show(params?: modelParams) {
-    return this.get<AnimesListResponse>('/', { params });
+    return this.get<AnimesListResponse>('/', { params })
   }
 
   public search(query: string, params?: modelParams) {
-    return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } });
+    return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } })
   }
 }
 
-export default new AnimesApi(ApiService);
+export default new AnimesApi(ApiService)

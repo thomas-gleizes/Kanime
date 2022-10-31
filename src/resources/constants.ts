@@ -1,25 +1,25 @@
 export const DEFAULT_USER_MEDIA = {
   background: '/media/default/users/background.png',
-  avatar: '/media/default/users/avatar.png',
-};
+  avatar: '/media/default/users/avatar.png'
+}
 
-export const rootPath = process.cwd();
-export const publicPath = `${rootPath}/public`;
+export const rootPath = process.cwd()
+export const publicPath = `${rootPath}/public`
 
 export const dialogTypes = {
   confirm: 'confirm',
   alert: 'alert',
   prompt: 'prompt',
-  custom: 'custom',
-} as const;
+  custom: 'custom'
+} as const
 
 export const loggerReplaceKey: { [key: string]: string } = {
   password: '********',
   newPassword: '********',
   confirmPassword: '********',
   avatar: 'data:Image/*;base64:*****',
-  background: 'data:Image/*;base64:*****',
-} as const;
+  background: 'data:Image/*;base64:*****'
+} as const
 
 export const errorMessage = {
   ACCESS_DENIED: 'Access denied',
@@ -32,8 +32,8 @@ export const errorMessage = {
   UNFOLLOW: "you can't unfollow this user [400-11]",
   AUTH_LOGIN: 'email/password wrong [400-20]',
   AUTH_REGISTER: '[400-21]',
-  ANIME_USER_STATUS: 'status must be a AnimeStatus [400-30]',
-} as const;
+  ANIME_USER_STATUS: 'status must be a AnimeStatus [400-30]'
+} as const
 
 export const tailwindcssGradiant = {
   50: '50',
@@ -45,8 +45,8 @@ export const tailwindcssGradiant = {
   600: '600',
   700: '700',
   800: '800',
-  900: '900',
-} as const;
+  900: '900'
+} as const
 
 export const tailwindcssColors = {
   slate: 'slate',
@@ -70,24 +70,24 @@ export const tailwindcssColors = {
   purple: 'purple',
   fuchsia: 'fuchsia',
   pink: 'pink',
-  rose: 'rose',
-} as const;
+  rose: 'rose'
+} as const
 
-export const SECOND = 1000;
-export const MINUTE = SECOND * 60;
-export const HOUR = MINUTE * 60;
-export const DAY = HOUR * 24;
+export const SECOND = 1000
+export const MINUTE = SECOND * 60
+export const HOUR = MINUTE * 60
+export const DAY = HOUR * 24
 
-export const POSTER_RAPPORT = 1.4205;
+export const POSTER_RAPPORT = 1.4205
 
 export const WINDOW_MESSAGE = {
   GLOBAL_LOADING: {
     START: 'global-loading-start',
-    STOP: 'global-loading-stop',
-  },
-};
+    STOP: 'global-loading-stop'
+  }
+}
 
 export const THEME = {
   LIGHT: 'light',
-  DARK: 'dark',
-};
+  DARK: 'dark'
+}

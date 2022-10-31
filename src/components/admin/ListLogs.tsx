@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { FaEye } from 'react-icons/fa';
-import dayjs from 'dayjs';
+import React, { useMemo } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { FaEye } from 'react-icons/fa'
+import dayjs from 'dayjs'
 import {
   IconButton,
   Table,
@@ -10,30 +10,27 @@ import {
   Td,
   Th,
   Thead,
-  Tr,
-} from '@chakra-ui/react';
+  Tr
+} from '@chakra-ui/react'
 
-import { logsApi } from 'api';
-import { usePagination } from 'hooks';
-import Pagination from 'components/layouts/Pagination';
+import { logsApi } from 'api'
+import { usePagination } from 'hooks'
+import Pagination from 'components/layouts/Pagination'
 
-const LIMIT = 40;
+const LIMIT = 40
 
-const fetchLogs = (page: number) => logsApi.showAll({ limit: LIMIT, skip: page * LIMIT });
+const fetchLogs = (page: number) => logsApi.showAll({ limit: LIMIT, skip: page * LIMIT })
 
 const ListLogs: Component = () => {
-  const { value, actions } = usePagination(Infinity, 1);
+  const { value, actions } = usePagination(Infinity, 1)
 
   const { data, isFetching } = useQuery(['logs', value], () => fetchLogs(value), {
-    keepPreviousData: true,
-  });
+    keepPreviousData: true
+  })
 
-  const logs = useMemo(() => data?.records || [], [data]);
+  const logs = useMemo(() => data?.records || [], [data])
 
-  const max = useMemo(
-    () => (data?.meta ? Math.ceil(data.meta.count / LIMIT) : 1),
-    [data]
-  );
+  const max = useMemo(() => (data?.meta ? Math.ceil(data.meta.count / LIMIT) : 1), [data])
 
   return (
     <div>
@@ -112,7 +109,7 @@ const ListLogs: Component = () => {
         </TableContainer>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ListLogs;
+export default ListLogs

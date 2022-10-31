@@ -1,60 +1,60 @@
-import React, { createContext, useCallback, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useMemo, useState } from 'react'
 
-import { authenticationApi } from 'api';
-import { useContextFactory } from 'hooks';
-import LocalStorageService from 'services/localStorage.service';
+import { authenticationApi } from 'api'
+import { useContextFactory } from 'hooks'
+import LocalStorageService from 'services/localStorage.service'
 
 interface Props extends ContextProviderProps {
-  initialUser: User;
+  initialUser: User
 }
 
-const AuthContext = createContext<UserContextValues>({} as any);
+const AuthContext = createContext<UserContextValues>({} as any)
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
-export const useUserContext = useContextFactory<UserContextValues>(AuthContext);
+export const useUserContext = useContextFactory<UserContextValues>(AuthContext)
 
 const AuthContextProvider: Component<Props> = ({ children, initialUser }) => {
   const [user, setUser] = useState<Nullable<User>>(
     initialUser || LocalStorageService.getUser()
-  );
-  const [isLogin, setIsLogin] = useState<boolean>(!!user);
+  )
+  const [isLogin, setIsLogin] = useState<boolean>(!!user)
 
   const signIn = useCallback((user: User): void => {
-    setUser(user);
-    setIsLogin(true);
+    setUser(user)
+    setIsLogin(true)
 
-    LocalStorageService.saveUser(user);
-  }, []);
+    LocalStorageService.saveUser(user)
+  }, [])
 
   const signOut = useCallback((fetching: boolean = true): void => {
-    fetching && authenticationApi.signOut();
+    fetching && authenticationApi.signOut()
 
-    setIsLogin(false);
-    setUser(null);
+    setIsLogin(false)
+    setUser(null)
 
-    LocalStorageService.clearUser();
-  }, []);
+    LocalStorageService.clearUser()
+  }, [])
 
   const value = useMemo<
     UserAuthenticatedContextValues | UserUnauthenticatedContextValues
   >(() => {
-    const actions = { signOut, signIn };
+    const actions = { signOut, signIn }
 
     if (isLogin)
       return {
         isLogin: true,
         user: user as User,
-        ...actions,
-      };
+        ...actions
+      }
     else
       return {
         isLogin: false,
         user: null,
-        ...actions,
-      };
-  }, [isLogin, user, signOut, signIn]);
+        ...actions
+      }
+  }, [isLogin, user, signOut, signIn])
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+}
 
-export default AuthContextProvider;
+export default AuthContextProvider

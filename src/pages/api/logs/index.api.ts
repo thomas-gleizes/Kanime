@@ -1,28 +1,28 @@
-import { Get, Query, ValidationPipe } from 'next-api-decorators';
+import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import { logsMapper } from 'mappers';
-import { logModel } from 'models';
-import { AdminGuard } from 'decorators';
-import { QueryParamsDto } from 'dto';
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import { logsMapper } from 'mappers'
+import { logModel } from 'models'
+import { AdminGuard } from 'decorators'
+import { QueryParamsDto } from 'dto'
 
 class LogsHandler extends ApiHandler {
   @Get()
   @AdminGuard()
   async show(@Query(ValidationPipe) params: QueryParamsDto): Promise<LogsResponse> {
-    const logs = await logModel.show(params);
-    const total = await logModel.countTotal();
+    const logs = await logModel.show(params)
+    const total = await logModel.countTotal()
 
     return {
       success: true,
       meta: {
         total,
-        count: logs.length,
+        count: logs.length
       },
-      records: logsMapper.many(logs),
-    };
+      records: logsMapper.many(logs)
+    }
   }
 }
 
-export default apiHandler(LogsHandler);
+export default apiHandler(LogsHandler)

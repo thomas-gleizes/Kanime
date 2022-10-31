@@ -1,7 +1,7 @@
-import { PrismaSaga } from 'app/prisma';
-import Mapper from 'class/Mapper';
-import { animesMapper } from 'mappers';
-import jsonParser from 'utils/jsonParser';
+import { PrismaSaga } from 'app/prisma'
+import Mapper from 'class/Mapper'
+import { animesMapper } from 'mappers'
+import jsonParser from 'utils/jsonParser'
 
 class SagasMapper extends Mapper<PrismaSaga, Saga> {
   one(resource: PrismaSaga): Saga {
@@ -12,13 +12,13 @@ class SagasMapper extends Mapper<PrismaSaga, Saga> {
       titles: resource.titles ? jsonParser<Titles>(resource.titles) : null,
       description: resource.description,
       created_at: resource.createdAt.toISOString(),
-      updated_at: resource.updatedAt.toISOString(),
-    };
+      updated_at: resource.updatedAt.toISOString()
+    }
 
-    if (resource.animes) saga.animes = animesMapper.many(resource.animes);
+    if (resource.animes) saga.animes = animesMapper.many(resource.animes)
 
-    return saga;
+    return saga
   }
 }
 
-export default new SagasMapper();
+export default new SagasMapper()

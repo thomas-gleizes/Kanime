@@ -1,35 +1,34 @@
-import React from 'react';
+import React from 'react'
 
-import { Page } from 'app/next';
-import { ssrHandler } from 'services/handler.service';
-import { animeModel, sagaModel } from 'models';
-import { animesMapper, sagasMapper } from 'mappers';
-import { SsrException } from 'exceptions';
-import { errorMessage } from 'resources/constants';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
+import { Page } from 'app/next'
+import { ssrHandler } from 'services/handler.service'
+import { animeModel, sagaModel } from 'models'
+import { animesMapper, sagasMapper } from 'mappers'
+import { SsrException } from 'exceptions'
+import { errorMessage } from 'resources/constants'
+import AnimeLayout from 'components/layouts/pages/AnimeLayout'
 
 interface Props {
-  anime: Anime;
-  saga: Nullable<Saga>;
+  anime: Anime
+  saga: Nullable<Saga>
 }
 
 export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string);
+    const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime || !anime.sagaId)
-      throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime || !anime.sagaId) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    const saga = await sagaModel.findById(anime.sagaId);
+    const saga = await sagaModel.findById(anime.sagaId)
 
     return {
       props: {
         anime: animesMapper.one(anime),
-        saga: saga ? sagasMapper.one(saga) : null,
-      },
-    };
+        saga: saga ? sagasMapper.one(saga) : null
+      }
+    }
   }
-);
+)
 
 const SagaPage: Page<Props> = ({ saga, anime }) => {
   return (
@@ -77,9 +76,9 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-SagaPage.layout = AnimeLayout;
+SagaPage.layout = AnimeLayout
 
-export default SagaPage;
+export default SagaPage

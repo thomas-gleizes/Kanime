@@ -1,27 +1,27 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import classnames from 'classnames';
-import { Transition } from '@headlessui/react';
-import { HeartIcon, StarIcon } from '@heroicons/react/solid';
+import React, { useEffect, useMemo, useState } from 'react'
+import classnames from 'classnames'
+import { Transition } from '@headlessui/react'
+import { HeartIcon, StarIcon } from '@heroicons/react/solid'
 
 interface Props {
-  anime: Anime;
-  isOpen: boolean;
-  position: 'left' | 'right';
+  anime: Anime
+  isOpen: boolean
+  position: 'left' | 'right'
 }
 
 const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
-  const { synopsis, canonicalTitle, season_year, rating, popularity, type } = anime;
+  const { synopsis, canonicalTitle, season_year, rating, popularity, type } = anime
 
-  const styles = useMemo(() => ({ [position]: '104%' }), [position]);
+  const styles = useMemo(() => ({ [position]: '104%' }), [position])
 
-  const [render, setRender] = useState<boolean>(isOpen);
+  const [render, setRender] = useState<boolean>(isOpen)
 
   useEffect(() => {
-    if (isOpen) setRender(true);
-    else setTimeout(() => setRender(true), 80);
-  }, [isOpen]);
+    if (isOpen) setRender(true)
+    else setTimeout(() => setRender(true), 80)
+  }, [isOpen])
 
-  if (!render) return null;
+  if (!render) return null
 
   return (
     <div
@@ -98,7 +98,7 @@ const AnimePopup: Component<Props> = ({ anime, isOpen, position }) => {
         </div>
       </Transition>
     </div>
-  );
-};
+  )
+}
 
-export default AnimePopup;
+export default AnimePopup

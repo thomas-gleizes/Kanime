@@ -1,66 +1,66 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import * as Yup from 'yup';
-import { Form, Formik } from 'formik';
-import { toast } from 'react-toastify';
+import React from 'react'
+import { useRouter } from 'next/router'
+import * as Yup from 'yup'
+import { Form, Formik } from 'formik'
+import { toast } from 'react-toastify'
 
-import { Page } from 'app/next';
-import { authenticationApi } from 'api';
-import { ssrHandler } from 'services/handler.service';
-import { resetPasswordSchema } from 'resources/validations';
-import { ApiException } from 'exceptions';
-import { userModel } from 'models';
-import { routes } from 'resources/routes';
-import { Field } from 'components/common/formik';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import Button from 'components/common/Button';
+import { Page } from 'app/next'
+import { authenticationApi } from 'api'
+import { ssrHandler } from 'services/handler.service'
+import { resetPasswordSchema } from 'resources/validations'
+import { ApiException } from 'exceptions'
+import { userModel } from 'models'
+import { routes } from 'resources/routes'
+import { Field } from 'components/common/formik'
+import DefaultLayout from 'components/layouts/pages/DefaultLayout'
+import Button from 'components/common/Button'
 
-type resetPasswordPayload = Yup.TypeOf<typeof resetPasswordSchema>;
+type resetPasswordPayload = Yup.TypeOf<typeof resetPasswordSchema>
 
 interface Props {
-  token: string;
+  token: string
 }
 
 export const getServerSideProps = ssrHandler<Props, { token: string }>(
   async (context) => {
-    const { token } = context.query;
+    const { token } = context.query
 
-    const user = await userModel.checkResetPasswordToken(token as string);
+    const user = await userModel.checkResetPasswordToken(token as string)
 
     if (!user) {
       return {
         redirect: {
           permanent: false,
-          destination: routes.authentification.signIn,
-        },
-      };
+          destination: routes.authentification.signIn
+        }
+      }
     } else
       return {
-        props: { token: token as string },
-      };
+        props: { token: token as string }
+      }
   }
-);
+)
 
 const ResetPasswordPage: Page<Props> = ({ token }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   const initialValues: resetPasswordPayload = {
     newPassword: 'azerty',
     confirmPassword: 'azerty',
-    token: token,
-  };
+    token: token
+  }
 
   const handleSubmit = async (values: resetPasswordPayload) => {
     try {
-      await authenticationApi.resetPassword(values);
+      await authenticationApi.resetPassword(values)
 
-      toast.success('Votre mot de passe a bien été changé');
-      await router.push(routes.authentification.signIn);
+      toast.success('Votre mot de passe a bien été changé')
+      await router.push(routes.authentification.signIn)
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-gray-50">
@@ -95,7 +95,7 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
         </Form>
       </Formik>
     </div>
-  );
-};
+  )
+}
 
-export default ResetPasswordPage;
+export default ResetPasswordPage

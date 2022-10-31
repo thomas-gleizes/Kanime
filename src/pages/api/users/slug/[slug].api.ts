@@ -1,21 +1,21 @@
-import { Get, Query } from 'next-api-decorators';
+import { Get, Query } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import { userModel } from 'models';
-import { errorMessage } from 'resources/constants';
-import { usersMapper } from 'mappers';
-import { NotFoundException } from 'exceptions/http';
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import { userModel } from 'models'
+import { errorMessage } from 'resources/constants'
+import { usersMapper } from 'mappers'
+import { NotFoundException } from 'exceptions/http'
 
 class UserSlugHandler extends ApiHandler {
   @Get()
   async get(@Query('slug') slug: string): Promise<ShowUserResponse> {
-    const user = await userModel.findBySlug(slug);
+    const user = await userModel.findBySlug(slug)
 
-    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND);
+    if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND)
 
-    return { success: true, user: usersMapper.one(user) };
+    return { success: true, user: usersMapper.one(user) }
   }
 }
 
-export default apiHandler(UserSlugHandler);
+export default apiHandler(UserSlugHandler)

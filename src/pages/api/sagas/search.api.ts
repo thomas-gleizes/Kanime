@@ -1,10 +1,10 @@
-import { Get, Query, ValidationPipe } from 'next-api-decorators';
+import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import { sagasMapper } from 'mappers';
-import { sagaModel } from 'models';
-import { QueryParamsDto } from 'dto';
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import { sagasMapper } from 'mappers'
+import { sagaModel } from 'models'
+import { QueryParamsDto } from 'dto'
 
 class SagaSearchHandler extends ApiHandler {
   @Get()
@@ -12,10 +12,10 @@ class SagaSearchHandler extends ApiHandler {
     @Query('query') query: string,
     @Query(ValidationPipe) params: QueryParamsDto
   ): Promise<SearchSagasResponse> {
-    const sagas = await sagaModel.search(query, params);
+    const sagas = await sagaModel.search(query, params)
 
-    return { success: true, sagas: sagasMapper.many(sagas) };
+    return { success: true, sagas: sagasMapper.many(sagas) }
   }
 }
 
-export default apiHandler(SagaSearchHandler);
+export default apiHandler(SagaSearchHandler)

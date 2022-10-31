@@ -1,6 +1,6 @@
-import { PrismaPost } from 'app/prisma';
-import Mapper from 'class/Mapper';
-import { animesMapper, usersMapper } from 'mappers';
+import { PrismaPost } from 'app/prisma'
+import Mapper from 'class/Mapper'
+import { animesMapper, usersMapper } from 'mappers'
 
 class LogsMapper extends Mapper<PrismaPost, Post> {
   one(resource: PrismaPost): Post {
@@ -11,16 +11,16 @@ class LogsMapper extends Mapper<PrismaPost, Post> {
       content: resource.content,
       idParent: resource.parentId,
       createdAt: resource.createdAt.toISOString(),
-      updateAt: resource.updatedAt.toISOString(),
-    };
+      updateAt: resource.updatedAt.toISOString()
+    }
 
-    if (resource.anime) post.anime = animesMapper.one(resource.anime);
-    if (resource.replyTo) post.replyTo = this.one(resource.replyTo);
-    if (resource.replies) post.replies = this.many(resource.replies);
-    if (resource.user) post.user = usersMapper.one(resource.user);
+    if (resource.anime) post.anime = animesMapper.one(resource.anime)
+    if (resource.replyTo) post.replyTo = this.one(resource.replyTo)
+    if (resource.replies) post.replies = this.many(resource.replies)
+    if (resource.user) post.user = usersMapper.one(resource.user)
 
-    return post;
+    return post
   }
 }
 
-export default new LogsMapper();
+export default new LogsMapper()

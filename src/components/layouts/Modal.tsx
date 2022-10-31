@@ -1,24 +1,24 @@
-import React from 'react';
+import React from 'react'
 
-import { useBrowser } from 'hooks';
-import { Dialog, Transition } from '@headlessui/react';
+import { useBrowser } from 'hooks'
+import { Dialog, Transition } from '@headlessui/react'
 
 interface Props {
-  isOpen: boolean;
-  toggle: () => void;
-  children: ReactNode;
-  externalToggleDisabled?: boolean;
+  isOpen: boolean
+  toggle: () => void
+  children: ReactNode
+  externalToggleDisabled?: boolean
 }
 
 const Modal: Component<Props> = ({
   isOpen,
   toggle,
   children,
-  externalToggleDisabled,
+  externalToggleDisabled
 }) => {
-  const isBrowser = useBrowser();
+  const isBrowser = useBrowser()
 
-  if (!isBrowser) return null;
+  if (!isBrowser) return null
 
   return (
     <Transition appear show={isOpen} as={React.Fragment}>
@@ -26,7 +26,7 @@ const Modal: Component<Props> = ({
         as="div"
         className="relative z-10"
         onClose={() => {
-          if (isOpen && !externalToggleDisabled) toggle();
+          if (isOpen && !externalToggleDisabled) toggle()
         }}
       >
         <Transition.Child
@@ -60,7 +60,7 @@ const Modal: Component<Props> = ({
         </div>
       </Dialog>
     </Transition>
-  );
-};
+  )
+}
 
-export default Modal;
+export default Modal

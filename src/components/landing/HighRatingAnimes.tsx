@@ -1,7 +1,7 @@
-import AnimeCard from 'components/common/anime/AnimeCard';
+import AnimeCard from 'components/common/anime/AnimeCard'
 
 interface Props {
-  animes: Animes;
+  animes: Animes
 }
 
 const HighRatingAnimes: Component<Props> = ({ animes }) => {
@@ -15,7 +15,7 @@ const HighRatingAnimes: Component<Props> = ({ animes }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default HighRatingAnimes;
+export default HighRatingAnimes

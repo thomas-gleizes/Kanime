@@ -1,39 +1,34 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import classnames from 'classnames';
-import {
-  CheckCircleIcon,
-  EyeIcon,
-  PencilAltIcon,
-  PlayIcon,
-} from '@heroicons/react/solid';
+import React, { useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import classnames from 'classnames'
+import { CheckCircleIcon, EyeIcon, PencilAltIcon, PlayIcon } from '@heroicons/react/solid'
 
-import { LayoutContentComponent, LayoutProps } from 'app/types';
-import { ApiService } from 'services/api.service';
-import { useLayoutContext } from 'context/layout.context';
-import { useUserContext } from 'context/auth.context';
-import { useDialog } from 'hooks';
-import { routes } from 'resources/routes';
-import { POSTER_RAPPORT } from 'resources/constants';
-import Title from 'components/layouts/Title';
-import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu';
-import KitsuButton from 'components/common/KitsuButton';
+import { LayoutContentComponent, LayoutProps } from 'app/types'
+import { ApiService } from 'services/api.service'
+import { useLayoutContext } from 'context/layout.context'
+import { useUserContext } from 'context/auth.context'
+import { useDialog } from 'hooks'
+import { routes } from 'resources/routes'
+import { POSTER_RAPPORT } from 'resources/constants'
+import Title from 'components/layouts/Title'
+import Menu, { MenuGroup, MenuItem } from 'components/common/inputs/Menu'
+import KitsuButton from 'components/common/KitsuButton'
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
-  Result as EditAnimesEntriesResult,
-} from 'components/modal/EditAnimesEntries';
-import Img from 'components/common/Img';
-import DefaultLayout from 'components/layouts/pages/DefaultLayout';
-import ErrorBoundary from 'components/layouts/errors/ErrorBoundary';
+  Result as EditAnimesEntriesResult
+} from 'components/modal/EditAnimesEntries'
+import Img from 'components/common/Img'
+import DefaultLayout from 'components/layouts/pages/DefaultLayout'
+import ErrorBoundary from 'components/layouts/errors/ErrorBoundary'
 
 interface Props {
-  anime: Anime;
+  anime: Anime
 }
 
 interface AnimeLayoutProps extends LayoutProps<Props> {}
 
-type tab = { label: string; path: string };
+type tab = { label: string; path: string }
 
 const TABS: Array<tab> = [
   { label: 'Résumé', path: '' },
@@ -41,8 +36,8 @@ const TABS: Array<tab> = [
   { label: 'Discussions', path: '/discussions' },
   { label: 'Saga', path: '/saga' },
   { label: 'Episodes', path: '/episodes' },
-  { label: 'Personnages', path: '/characters' },
-];
+  { label: 'Personnages', path: '/characters' }
+]
 
 const AnimeLayout: Component<AnimeLayoutProps> = ({ children, exception, pageProps }) => {
   // TODO: custom with cool error page for anime not found
@@ -50,20 +45,20 @@ const AnimeLayout: Component<AnimeLayoutProps> = ({ children, exception, pagePro
     <ErrorBoundary exception={exception}>
       <AnimeLayoutContent anime={pageProps.anime}>{children}</AnimeLayoutContent>
     </ErrorBoundary>
-  );
-};
+  )
+}
 
 const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) => {
-  const { isLogin } = useUserContext();
+  const { isLogin } = useUserContext()
   const {
-    activeTransparentState: [, setHeaderTransparent],
-  } = useLayoutContext();
+    activeTransparentState: [, setHeaderTransparent]
+  } = useLayoutContext()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const dialog = useDialog();
+  const dialog = useDialog()
 
-  const [entry, setEntry] = useState<Entry>();
+  const [entry, setEntry] = useState<Entry>()
 
   useEffect(() => {
     if (isLogin && anime?.id)
@@ -72,45 +67,45 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
           // @ts-ignore
           setEntry(response?.entry)
         )
-        .catch(() => setEntry(undefined));
-  }, [isLogin, anime?.id]);
+        .catch(() => setEntry(undefined))
+  }, [isLogin, anime?.id])
 
   useEffect(() => {
-    setHeaderTransparent(true);
+    setHeaderTransparent(true)
 
-    return () => setHeaderTransparent(false);
-  }, [setHeaderTransparent]);
+    return () => setHeaderTransparent(false)
+  }, [setHeaderTransparent])
 
   const handleModal = async () => {
     if (isLogin) {
       const result = await dialog<EditAnimesEntriesProps, EditAnimesEntriesResult>(
         EditAnimesEntries,
         { anime, entry }
-      );
+      )
 
       if (result?.action === 'submit') {
         const response = await ApiService.post<{ entry: Entry }>(
           `/animes/${anime.id}/entries`,
           result.values
-        );
+        )
 
         // @ts-ignore
-        setEntry(response.entry);
+        setEntry(response.entry)
       } else if (result?.action === 'delete') {
-        await ApiService.delete(`/animes/${anime.id}/entries`);
-        setEntry(undefined);
+        await ApiService.delete(`/animes/${anime.id}/entries`)
+        setEntry(undefined)
       }
     }
-  };
+  }
 
   const handleSetupEntry = (status: EntryStatus) => {
     if (isLogin)
       ApiService.post<{ entry: Entry }>(`/animes/${anime.id}/entries`, { status }).then(
         // @ts-ignore
         (response) => setEntry(response.entry)
-      );
-    else void router.push(routes.authentification.signIn);
-  };
+      )
+    else void router.push(routes.authentification.signIn)
+  }
 
   return (
     <DefaultLayout>
@@ -207,12 +202,12 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
         </div>
       </div>
     </DefaultLayout>
-  );
-};
+  )
+}
 
 const NavLink: Component<{ href: string; children: string }> = ({ href, children }) => {
-  const router = useRouter();
-  const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href]);
+  const router = useRouter()
+  const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href])
 
   return (
     <Link href={href}>
@@ -225,7 +220,7 @@ const NavLink: Component<{ href: string; children: string }> = ({ href, children
         {children}
       </a>
     </Link>
-  );
-};
+  )
+}
 
-export default AnimeLayout;
+export default AnimeLayout

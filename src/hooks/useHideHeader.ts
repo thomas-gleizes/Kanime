@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
-import { useLayoutContext } from 'context/layout.context';
+import { useEffect } from 'react'
+import { useLayoutContext } from 'context/layout.context'
 
 export function useHideHeader() {
-  const { header } = useLayoutContext();
+  const { header } = useLayoutContext()
 
   useEffect(() => {
-    header.hideHeader();
+    header.hideHeader()
 
-    return () => header.showHeader();
-  }, []);
+    return () => header.showHeader()
+  }, [])
 }

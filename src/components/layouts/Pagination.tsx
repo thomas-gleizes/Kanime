@@ -1,9 +1,9 @@
-import classnames from 'classnames';
+import classnames from 'classnames'
 
 interface Props {
-  value: number;
-  max: number;
-  actions: any;
+  value: number
+  max: number
+  actions: any
 }
 
 const Pagination: Component<Props> = ({ value, max, actions }) => {
@@ -118,7 +118,7 @@ const Pagination: Component<Props> = ({ value, max, actions }) => {
         </li>
       </ul>
     </nav>
-  );
-};
+  )
+}
 
-export default Pagination;
+export default Pagination

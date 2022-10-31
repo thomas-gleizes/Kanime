@@ -1,43 +1,43 @@
-import React, { LegacyRef, MutableRefObject, useEffect, useMemo, useState } from 'react';
-import { Transition } from '@headlessui/react';
-import domUuid from 'utils/domUuid';
+import React, { LegacyRef, MutableRefObject, useEffect, useMemo, useState } from 'react'
+import { Transition } from '@headlessui/react'
+import domUuid from 'utils/domUuid'
 
 interface Props {
-  innerRef: MutableRefObject<HTMLElement | null>;
-  children: ReactNode;
+  innerRef: MutableRefObject<HTMLElement | null>
+  children: ReactNode
 }
 
 const DropDownByRef: Component<Props> = ({ innerRef, children }) => {
-  const [open, setOpen] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false)
 
-  const identifier = useMemo<string>(() => `dropdown-${domUuid()}`, []);
-
-  useEffect(() => {
-    if (innerRef.current) {
-      innerRef.current.classList.add(identifier);
-    } else throw new Error('Dropdown by ref must provide a valide ref');
-  }, [innerRef]); // eslint-disable-line react-hooks/exhaustive-deps
+  const identifier = useMemo<string>(() => `dropdown-${domUuid()}`, [])
 
   useEffect(() => {
     if (innerRef.current) {
-      const toggleOpen = () => setOpen(!open);
+      innerRef.current.classList.add(identifier)
+    } else throw new Error('Dropdown by ref must provide a valide ref')
+  }, [innerRef]) // eslint-disable-line react-hooks/exhaustive-deps
 
-      innerRef.current.addEventListener('click', toggleOpen, true);
+  useEffect(() => {
+    if (innerRef.current) {
+      const toggleOpen = () => setOpen(!open)
 
-      return () => innerRef.current?.removeEventListener('click', toggleOpen, true);
-    } else throw new Error('Dropdown by ref must provide a valide ref');
-  }, [innerRef, open]);
+      innerRef.current.addEventListener('click', toggleOpen, true)
+
+      return () => innerRef.current?.removeEventListener('click', toggleOpen, true)
+    } else throw new Error('Dropdown by ref must provide a valide ref')
+  }, [innerRef, open])
 
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
-      const element = event.target as HTMLElement;
-      if (element.classList.contains(identifier)) setOpen(false);
-    };
+      const element = event.target as HTMLElement
+      if (element.classList.contains(identifier)) setOpen(false)
+    }
 
-    document.body.addEventListener('click', handleClick, true);
+    document.body.addEventListener('click', handleClick, true)
 
-    return () => document.body.removeEventListener('click', handleClick, true);
-  }, []);
+    return () => document.body.removeEventListener('click', handleClick, true)
+  }, [])
 
   return (
     <Transition
@@ -51,7 +51,7 @@ const DropDownByRef: Component<Props> = ({ innerRef, children }) => {
     >
       <div className="relative">{children}</div>
     </Transition>
-  );
-};
+  )
+}
 
-export default DropDownByRef;
+export default DropDownByRef

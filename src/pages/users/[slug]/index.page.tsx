@@ -1,40 +1,40 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { EntryStatus, Visibility } from '@prisma/client';
+import React, { useEffect, useMemo, useState } from 'react'
+import { EntryStatus, Visibility } from '@prisma/client'
 
-import type { Page } from 'app/next';
-import { ssrHandler } from 'services/handler.service';
-import { entryModel, userFollowModel, userModel } from 'models';
-import { entriesMapper, usersMapper } from 'mappers';
-import { SsrException } from 'exceptions';
-import { errorMessage } from 'resources/constants';
-import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks';
-import UserLayout from 'components/layouts/pages/UserLayout';
-import Title from 'components/layouts/Title';
-import AnimesEntry from 'components/common/anime/AnimesEntry';
-import classnames from 'classnames';
+import type { Page } from 'app/next'
+import { ssrHandler } from 'services/handler.service'
+import { entryModel, userFollowModel, userModel } from 'models'
+import { entriesMapper, usersMapper } from 'mappers'
+import { SsrException } from 'exceptions'
+import { errorMessage } from 'resources/constants'
+import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks'
+import UserLayout from 'components/layouts/pages/UserLayout'
+import Title from 'components/layouts/Title'
+import AnimesEntry from 'components/common/anime/AnimesEntry'
+import classnames from 'classnames'
 
 interface Props {
-  user: User;
-  entries: Entries;
-  isCurrent: boolean;
-  error?: ErrorPage;
+  user: User
+  entries: Entries
+  isCurrent: boolean
+  error?: ErrorPage
 }
 
 export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ query, req }) => {
-    const { slug } = query;
-    const { user: sessionUser } = req.session;
+    const { slug } = query
+    const { user: sessionUser } = req.session
 
-    const user = await userModel.findBySlug(slug as string);
-    if (!user) throw new SsrException(404, errorMessage.USER_NOT_FOUND);
+    const user = await userModel.findBySlug(slug as string)
+    if (!user) throw new SsrException(404, errorMessage.USER_NOT_FOUND)
 
-    const visibility: Visibility[] = ['public'];
+    const visibility: Visibility[] = ['public']
     if (sessionUser)
-      if (user.id === sessionUser.id) visibility.push('limited', 'private');
+      if (user.id === sessionUser.id) visibility.push('limited', 'private')
       else {
-        const isFriends = await userFollowModel.isFriends(sessionUser.id, user.id);
+        const isFriends = await userFollowModel.isFriends(sessionUser.id, user.id)
 
-        if (isFriends) visibility.push('limited');
+        if (isFriends) visibility.push('limited')
       }
 
     const entries = await entryModel.getByUser(
@@ -44,42 +44,42 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
       { field: 'rating', order: 'desc' },
       {
         include: { anime: true },
-        limit: 1000,
+        limit: 1000
       }
-    );
+    )
 
     return {
       props: {
         isCurrent: user.id === sessionUser?.id,
         user: usersMapper.one(user),
-        entries: entriesMapper.many(entries),
-      },
-    };
+        entries: entriesMapper.many(entries)
+      }
+    }
   }
-);
+)
 
 const StatusButton: Component<{
-  active: boolean;
-  libelle: string;
-  counter: number;
-  color: TailwindcssColors;
-  onClick: () => void;
+  active: boolean
+  libelle: string
+  counter: number
+  color: TailwindcssColors
+  onClick: () => void
 }> = ({ active, libelle, counter, color, onClick }) => {
   const className = useMemo(() => {
     if (active) {
       return {
         text: 'text-white',
         span: 'text-white',
-        wrapper: `bg-${color}-500`,
-      };
+        wrapper: `bg-${color}-500`
+      }
     }
 
     return {
       text: 'text-gray-400 group-hover:text-gray-600 transition duration-100',
       span: 'text-sm text-gray-400 group-hover:text-gray-500 transition duration-100',
-      wrapper: `bg-${color}-100 hover:bg-${color}-200`,
-    };
-  }, [color, active]);
+      wrapper: `bg-${color}-100 hover:bg-${color}-200`
+    }
+  }, [color, active])
 
   return (
     <div
@@ -92,46 +92,46 @@ const StatusButton: Component<{
       <p className={className.text}>{libelle}</p>
       <span className={className.span}>{counter}</span>
     </div>
-  );
-};
+  )
+}
 
 export const UserPage: Page<Props> = ({ user, ...props }) => {
-  const [status, setStatus] = useState<EntryStatus | 'All'>('All');
-  const [limit, setLimit] = useState<number>(20);
-  const [entries, setEntries] = useStateProps(props.entries);
-  const [query, setQuery] = useState<string>('');
+  const [status, setStatus] = useState<EntryStatus | 'All'>('All')
+  const [limit, setLimit] = useState<number>(20)
+  const [entries, setEntries] = useStateProps(props.entries)
+  const [query, setQuery] = useState<string>('')
 
-  const percent = useScrollPercent();
+  const percent = useScrollPercent()
 
   const updateEntriesList = (action: 'delete' | 'update', entry: Entry) => {
-    const index = entries.findIndex((search) => search.animeId === entry.animeId);
+    const index = entries.findIndex((search) => search.animeId === entry.animeId)
 
-    if (action === 'update') entries[index] = entry;
-    else entries.splice(index, 1);
+    if (action === 'update') entries[index] = entry
+    else entries.splice(index, 1)
 
-    setEntries([...entries]);
-  };
+    setEntries([...entries])
+  }
 
-  const [bool, trigger] = useDelayBoolean(200);
+  const [bool, trigger] = useDelayBoolean(200)
 
   useEffect(() => {
     if (!bool && percent > 95) {
-      trigger();
-      setLimit(limit + 20);
+      trigger()
+      setLimit(limit + 20)
     }
-  }, [percent]);
+  }, [percent])
 
   const counter = useMemo(() => {
-    const result: { [key: string]: number } = {};
+    const result: { [key: string]: number } = {}
 
-    for (const status of Object.values(EntryStatus)) result[status] = 0;
-    for (const entry of entries) result[entry.status]++;
+    for (const status of Object.values(EntryStatus)) result[status] = 0
+    for (const entry of entries) result[entry.status]++
 
-    return result;
-  }, [entries]);
+    return result
+  }, [entries])
 
   const filteredEntries = useMemo<Entries>(() => {
-    let searchQuery = query.toLowerCase();
+    let searchQuery = query.toLowerCase()
 
     return entries
       .filter((entry) => status === 'All' || entry.status === status)
@@ -141,8 +141,8 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
           (entry.anime.canonicalTitle.toLowerCase().includes(searchQuery) ||
             entry.anime.titles?.en?.toLowerCase()?.includes(searchQuery) ||
             entry.anime.titles?.en_jp?.toLowerCase()?.includes(searchQuery))
-      );
-  }, [status, query, entries]);
+      )
+  }, [status, query, entries])
 
   return (
     <>
@@ -219,9 +219,9 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-UserPage.layout = UserLayout;
+UserPage.layout = UserLayout
 
-export default UserPage;
+export default UserPage

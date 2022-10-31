@@ -1,29 +1,29 @@
-import React, { useMemo, useRef } from 'react';
-import { useField } from 'formik';
-import classnames from 'classnames';
+import React, { useMemo, useRef } from 'react'
+import { useField } from 'formik'
+import classnames from 'classnames'
 
 interface FieldProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-  label?: string;
-  name: string;
-  required?: boolean;
+  label?: string
+  name: string
+  required?: boolean
 }
 
 const TextArea: Component<FieldProps> = ({ name, label, required, ...rest }) => {
-  const input = useRef<HTMLTextAreaElement | null>(null);
+  const input = useRef<HTMLTextAreaElement | null>(null)
 
-  const [field, meta] = useField(name);
+  const [field, meta] = useField(name)
 
   const error = useMemo<string>(
     () => (meta.touched && !!meta.error ? meta.error : ''),
     [meta.error, meta.touched]
-  );
+  )
 
   const handleClick = (): void => {
     if (input.current) {
-      input.current.select();
-      input.current.focus();
+      input.current.select()
+      input.current.focus()
     }
-  };
+  }
 
   return (
     <div onClick={handleClick} className="w-full relative px-2 my-1.5">
@@ -39,17 +39,17 @@ const TextArea: Component<FieldProps> = ({ name, label, required, ...rest }) => 
       />
       <div
         className={classnames('text-danger text-right px-2 text-xs', {
-          invisible: !error,
+          invisible: !error
         })}
       >
         {error || 'none'}
       </div>
     </div>
-  );
-};
+  )
+}
 
 TextArea.defaultProps = {
-  maxLength: 500,
-};
+  maxLength: 500
+}
 
-export default TextArea;
+export default TextArea

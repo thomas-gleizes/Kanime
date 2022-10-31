@@ -1,67 +1,67 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { Transition } from '@headlessui/react';
-import SimpleBar from 'simplebar-react';
-import classnames from 'classnames';
-import { toast } from 'react-toastify';
-import { FaSearch } from 'react-icons/fa';
-import { BiLoaderCircle } from 'react-icons/bi';
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { Transition } from '@headlessui/react'
+import SimpleBar from 'simplebar-react'
+import classnames from 'classnames'
+import { toast } from 'react-toastify'
+import { FaSearch } from 'react-icons/fa'
+import { BiLoaderCircle } from 'react-icons/bi'
 
-import { animesApi } from 'api';
-import { useKeyPress } from 'hooks';
-import { routes } from 'resources/routes';
-import timeout from 'utils/timeout';
-import StarsRating from 'components/common/StarsRating';
+import { animesApi } from 'api'
+import { useKeyPress } from 'hooks'
+import { routes } from 'resources/routes'
+import timeout from 'utils/timeout'
+import StarsRating from 'components/common/StarsRating'
 
 interface Props {
-  transparent: boolean;
+  transparent: boolean
 }
 
 const SearchBar: Component<Props> = ({ transparent }) => {
-  const [query, setQuery] = useState<string>('');
-  const [open, setOpen] = useState<boolean>(false);
-  const [animes, setAnimes] = useState<Animes>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [iSelected, setISelected] = useState<number>(0);
+  const [query, setQuery] = useState<string>('')
+  const [open, setOpen] = useState<boolean>(false)
+  const [animes, setAnimes] = useState<Animes>([])
+  const [loading, setLoading] = useState<boolean>(false)
+  const [iSelected, setISelected] = useState<number>(0)
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const arrowUp = useKeyPress('ArrowUp');
-  const arrowDown = useKeyPress('ArrowDown');
-  const enterPress = useKeyPress('Enter');
-
-  useEffect(() => {
-    if (arrowDown && iSelected < animes.length) setISelected(iSelected + 1);
-  }, [arrowDown]);
+  const arrowUp = useKeyPress('ArrowUp')
+  const arrowDown = useKeyPress('ArrowDown')
+  const enterPress = useKeyPress('Enter')
 
   useEffect(() => {
-    if (arrowUp && iSelected > 0) setISelected(iSelected - 1);
-  }, [arrowUp]);
+    if (arrowDown && iSelected < animes.length) setISelected(iSelected + 1)
+  }, [arrowDown])
+
+  useEffect(() => {
+    if (arrowUp && iSelected > 0) setISelected(iSelected - 1)
+  }, [arrowUp])
 
   useEffect(() => {
     if (enterPress && open && animes[iSelected])
-      router.push(`/animes/${animes[iSelected]?.slug}`).then(() => setOpen(false));
-  }, [enterPress]);
+      router.push(`/animes/${animes[iSelected]?.slug}`).then(() => setOpen(false))
+  }, [enterPress])
 
   const handleChangeQuery = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    setQuery(target.value);
-    setOpen(true);
-    setISelected(0);
+    setQuery(target.value)
+    setOpen(true)
+    setISelected(0)
 
     if (target.value.length > 3) {
-      setLoading(true);
+      setLoading(true)
 
       const animesPromises = animesApi
         .search(target.value, { limit: 50, skip: 0 })
         .then((response) => setAnimes(response.animes))
-        .catch((e) => toast.error(e.error || 'Une erreur est survenue'));
+        .catch((e) => toast.error(e.error || 'Une erreur est survenue'))
 
-      Promise.all([animesPromises]).finally(() => setLoading(false));
+      Promise.all([animesPromises]).finally(() => setLoading(false))
     } else {
-      setAnimes([]);
+      setAnimes([])
     }
-  };
+  }
 
   return (
     <div
@@ -165,7 +165,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
         </Transition>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SearchBar;
+export default SearchBar

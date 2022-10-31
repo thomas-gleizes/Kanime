@@ -1,7 +1,7 @@
-import classnames from 'classnames';
+import classnames from 'classnames'
 
 interface Props {
-  rating: number;
+  rating: number
 }
 
 const StarsRating: Component<Props> = ({ rating }) => {
@@ -24,7 +24,7 @@ const StarsRating: Component<Props> = ({ rating }) => {
         </svg>
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default StarsRating;
+export default StarsRating

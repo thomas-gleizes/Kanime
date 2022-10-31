@@ -81,7 +81,9 @@
     "printWidth": 90,
     "tabWidth": 2,
     "jsxSingleQuote": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "none"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"

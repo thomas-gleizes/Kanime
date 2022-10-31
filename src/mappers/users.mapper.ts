@@ -1,6 +1,6 @@
-import { PrismaUser } from 'app/prisma';
-import Mapper from 'class/Mapper';
-import { entriesMapper, postsMapper } from 'mappers';
+import { PrismaUser } from 'app/prisma'
+import Mapper from 'class/Mapper'
+import { entriesMapper, postsMapper } from 'mappers'
 
 class UsersMapper extends Mapper<PrismaUser, User> {
   public one(resource: PrismaUser): User {
@@ -19,14 +19,14 @@ class UsersMapper extends Mapper<PrismaUser, User> {
       avatarPath: resource.avatarPath,
       backgroundPath: resource.backgroundPath,
       createdAt: resource.createdAt.toISOString(),
-      updatedAt: resource.updatedAt.toISOString(),
-    };
+      updatedAt: resource.updatedAt.toISOString()
+    }
 
-    if (resource.entries) user.entries = entriesMapper.many(resource.entries);
-    if (resource.posts) user.posts = postsMapper.many(resource.posts);
+    if (resource.entries) user.entries = entriesMapper.many(resource.entries)
+    if (resource.posts) user.posts = postsMapper.many(resource.posts)
 
-    return user;
+    return user
   }
 }
 
-export default new UsersMapper();
+export default new UsersMapper()

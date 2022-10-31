@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 interface Props {
-  anime: Anime;
+  anime: Anime
 }
 
 interface ItemProps {
-  label: string;
-  content: string;
+  label: string
+  content: string
 }
 
 const AnimeSide: Component<Props> = ({ anime }) => {
@@ -35,14 +35,14 @@ const AnimeSide: Component<Props> = ({ anime }) => {
         </ul>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Item: Component<ItemProps> = ({ label, content }) => (
   <li className="text-sm">
     <strong>{label} : </strong>
     <span>{content}</span>
   </li>
-);
+)
 
-export default AnimeSide;
+export default AnimeSide

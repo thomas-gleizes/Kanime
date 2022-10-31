@@ -1,38 +1,38 @@
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
-import { Page } from 'app/next';
-import { authenticationApi } from 'api';
-import { ssrHandler } from 'services/handler.service';
-import { routes } from 'resources/routes';
-import { Input } from 'components/common/inputs';
-import Button from 'components/common/Button';
-import { ApiException } from 'exceptions';
+import { Page } from 'app/next'
+import { authenticationApi } from 'api'
+import { ssrHandler } from 'services/handler.service'
+import { routes } from 'resources/routes'
+import { Input } from 'components/common/inputs'
+import Button from 'components/common/Button'
+import { ApiException } from 'exceptions'
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)
     return {
       redirect: {
         permanent: false,
-        destination: routes.users.page(context.req.session.user.slug),
-      },
-    };
+        destination: routes.users.page(context.req.session.user.slug)
+      }
+    }
 
-  return { props: {} };
-});
+  return { props: {} }
+})
 
 const ForgotPasswordPage: Page = () => {
-  const [email, setEmail] = useState<string>('kalat@kanime.fr');
+  const [email, setEmail] = useState<string>('kalat@kanime.fr')
 
   const handleClick = async () => {
     try {
-      await authenticationApi.forgotPassword(email);
-      toast.success('Demande de nouveau mot de passe effectué');
+      await authenticationApi.forgotPassword(email)
+      toast.success('Demande de nouveau mot de passe effectué')
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-gray-50">
@@ -55,7 +55,7 @@ const ForgotPasswordPage: Page = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ForgotPasswordPage;
+export default ForgotPasswordPage

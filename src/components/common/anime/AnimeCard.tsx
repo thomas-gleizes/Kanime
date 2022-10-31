@@ -1,19 +1,19 @@
-import React from 'react';
-import Link from 'next/link';
+import React from 'react'
+import Link from 'next/link'
 
-import { useHovered } from 'hooks';
-import { routes } from 'resources/routes';
-import AnimePopup from 'components/common/anime/AnimePopup';
+import { useHovered } from 'hooks'
+import { routes } from 'resources/routes'
+import AnimePopup from 'components/common/anime/AnimePopup'
 
 interface Props {
-  anime: Anime;
-  popupPosition: 'none' | 'left' | 'right';
+  anime: Anime
+  popupPosition: 'none' | 'left' | 'right'
 }
 
 const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
-  const { slug, poster, canonicalTitle } = anime;
+  const { slug, poster, canonicalTitle } = anime
 
-  const [ref, isHover] = useHovered<HTMLDivElement>();
+  const [ref, isHover] = useHovered<HTMLDivElement>()
 
   return (
     <div className="relative w-full mx-auto">
@@ -43,7 +43,7 @@ const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
         <AnimePopup anime={anime} isOpen={isHover} position={popupPosition} />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default AnimeCard;
+export default AnimeCard

@@ -1,23 +1,23 @@
-import React, { useMemo } from 'react';
-import { useField } from 'formik';
-import classnames from 'classnames';
+import React, { useMemo } from 'react'
+import { useField } from 'formik'
+import classnames from 'classnames'
 
-import { Input } from 'components/common/inputs';
-import type { InputProps } from 'components/common/inputs/Input';
+import { Input } from 'components/common/inputs'
+import type { InputProps } from 'components/common/inputs/Input'
 
 interface FieldProps extends InputProps {
-  label?: string;
-  name: string;
-  required?: boolean;
+  label?: string
+  name: string
+  required?: boolean
 }
 
 const Field: Component<FieldProps> = ({ name, label, required, className, ...props }) => {
-  const [field, meta] = useField(name);
+  const [field, meta] = useField(name)
 
   const error = useMemo<string>(
     () => (meta.touched && !!meta.error ? meta.error : ''),
     [meta.error, meta.touched]
-  );
+  )
 
   return (
     <div className={className}>
@@ -34,13 +34,13 @@ const Field: Component<FieldProps> = ({ name, label, required, className, ...pro
       />
       <div
         className={classnames('text-danger text-right text-sm', {
-          invisible: !(meta.touched && !!meta.error),
+          invisible: !(meta.touched && !!meta.error)
         })}
       >
         {error || 'none'}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Field;
+export default Field

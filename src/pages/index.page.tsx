@@ -1,36 +1,36 @@
-import type { Page, StaticProps } from 'app/next';
+import type { Page, StaticProps } from 'app/next'
 
-import { animeModel } from 'models';
-import { animesMapper } from 'mappers';
-import Title from 'components/layouts/Title';
-import PopularAnimes from 'components/landing/PopularAnimes';
-import HighRatingAnimes from 'components/landing/HighRatingAnimes';
+import { animeModel } from 'models'
+import { animesMapper } from 'mappers'
+import Title from 'components/layouts/Title'
+import PopularAnimes from 'components/landing/PopularAnimes'
+import HighRatingAnimes from 'components/landing/HighRatingAnimes'
 
 interface Props {
-  time: number;
+  time: number
   animes: {
-    popular: Animes;
-    rated: Animes;
-  };
+    popular: Animes
+    rated: Animes
+  }
 }
 
 export const getStaticProps: StaticProps<Props> = async () => {
   const [popularAnimes, ratedAnimes] = await Promise.all([
     animeModel.findPopular(),
-    animeModel.findHighRated(),
-  ]);
+    animeModel.findHighRated()
+  ])
 
   return {
     props: {
       time: Date.now(),
       animes: {
         popular: animesMapper.many(popularAnimes),
-        rated: animesMapper.many(ratedAnimes),
-      },
+        rated: animesMapper.many(ratedAnimes)
+      }
     },
-    revalidate: 60 * 5,
-  };
-};
+    revalidate: 60 * 5
+  }
+}
 
 const HomePage: Page<Props> = ({ time, animes }) => {
   return (
@@ -57,7 +57,7 @@ const HomePage: Page<Props> = ({ time, animes }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

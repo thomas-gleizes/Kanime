@@ -6,19 +6,19 @@ import {
   ParseNumberPipe,
   Post,
   Query,
-  ValidationPipe,
-} from 'next-api-decorators';
+  ValidationPipe
+} from 'next-api-decorators'
 
-import type { Session } from 'app/session';
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import { animeModel, postModel } from 'models';
-import { postsMapper } from 'mappers';
-import HttpStatus from 'resources/HttpStatus';
-import { errorMessage } from 'resources/constants';
-import { AnimePostDto, QueryParamsDto } from 'dto';
-import { GetSession, AuthGuard } from 'decorators';
-import { NotFoundException, BadRequestException } from 'exceptions/http';
+import type { Session } from 'app/session'
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import { animeModel, postModel } from 'models'
+import { postsMapper } from 'mappers'
+import HttpStatus from 'resources/HttpStatus'
+import { errorMessage } from 'resources/constants'
+import { AnimePostDto, QueryParamsDto } from 'dto'
+import { GetSession, AuthGuard } from 'decorators'
+import { NotFoundException, BadRequestException } from 'exceptions/http'
 
 class AnimePostHandler extends ApiHandler {
   @Get()
@@ -26,13 +26,13 @@ class AnimePostHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @Query(ValidationPipe) params: QueryParamsDto
   ) {
-    const anime = await animeModel.isExist(id);
+    const anime = await animeModel.isExist(id)
 
-    if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
+    if (!anime) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND)
 
-    const posts = await postModel.findByAnimes(id, params);
+    const posts = await postModel.findByAnimes(id, params)
 
-    return { posts: postsMapper.many(posts) };
+    return { posts: postsMapper.many(posts) }
   }
 
   @Post()
@@ -44,16 +44,16 @@ class AnimePostHandler extends ApiHandler {
     @GetSession() session: Session
   ) {
     if (!(await animeModel.isExist(id)))
-      throw new NotFoundException(errorMessage.ANIME_NOT_FOUND);
+      throw new NotFoundException(errorMessage.ANIME_NOT_FOUND)
 
     const post = await postModel.create({
       userId: session.user.id,
       animeId: id,
       content: body.content,
-      parentId: body.parentId,
-    });
+      parentId: body.parentId
+    })
 
-    return { post: postsMapper.one(post) };
+    return { post: postsMapper.one(post) }
   }
 
   @Delete()
@@ -63,15 +63,15 @@ class AnimePostHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @GetSession() session: Session
   ) {
-    const post = await postModel.findByAnimeIdAndUserId(id, session.user.id);
+    const post = await postModel.findByAnimeIdAndUserId(id, session.user.id)
 
-    if (!post) throw new NotFoundException('Post not found');
+    if (!post) throw new NotFoundException('Post not found')
 
     if (post.userId !== session.user.id)
-      throw new BadRequestException('You are not allowed to delete this post');
+      throw new BadRequestException('You are not allowed to delete this post')
 
-    await Promise.all([postModel.deleteParent(post.id), postModel.delete(post.id)]);
+    await Promise.all([postModel.deleteParent(post.id), postModel.delete(post.id)])
   }
 }
 
-export default apiHandler(AnimePostHandler);
+export default apiHandler(AnimePostHandler)

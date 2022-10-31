@@ -1,44 +1,44 @@
-declare type Component<P = {}> = React.FC<P>;
+declare type Component<P = {}> = React.FC<P>
 
-declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>];
+declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>]
 
-declare type ReactNode = React.ReactNode | string;
+declare type ReactNode = React.ReactNode | string
 
-declare type OptionalPromise<T> = T | Promise<T>;
+declare type OptionalPromise<T> = T | Promise<T>
 
-declare type Nullable<T> = T | null;
-declare type Undefinedable<T> = T | undefined;
-declare type Optional<T> = Undefinedable<Nullable<T>>;
+declare type Nullable<T> = T | null
+declare type Undefinedable<T> = T | undefined
+declare type Optional<T> = Undefinedable<Nullable<T>>
 
 interface ContextsProviderProps {
-  children: React.ReactNode;
+  children: React.ReactNode
   initialState: {
-    user: User;
-  };
+    user: User
+  }
 }
 
-declare type Id = string | number;
+declare type Id = string | number
 
 type ErrorPage = {
-  statusCode: number;
-  message: string;
-};
+  statusCode: number
+  message: string
+}
 
 type modelParams = {
-  limit?: number;
-  skip?: number;
-  includes?: string | string[];
-};
+  limit?: number
+  skip?: number
+  includes?: string | string[]
+}
 
-type QueryField = number | string | string[] | undefined;
+type QueryField = number | string | string[] | undefined
 
 type ModelOptions<T> = {
-  include?: T;
-  limit?: QueryField;
-  skip?: QueryField;
-};
+  include?: T
+  limit?: QueryField
+  skip?: QueryField
+}
 
-declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+declare type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 type InputType =
   | 'text'
@@ -65,7 +65,7 @@ type InputType =
   | 'password'
   | 'datetime'
   | 'time'
-  | 'color';
+  | 'color'
 
 declare type TailwindcssGradiant =
   | 50
@@ -77,7 +77,7 @@ declare type TailwindcssGradiant =
   | 600
   | 700
   | 800
-  | 900;
+  | 900
 
 declare type TailwindcssColors =
   | 'slate'
@@ -101,29 +101,29 @@ declare type TailwindcssColors =
   | 'purple'
   | 'fuchsia'
   | 'pink'
-  | 'rose';
+  | 'rose'
 
-declare type TailwindTheme = 'light' | 'dark';
+declare type TailwindTheme = 'light' | 'dark'
 
-declare type CustomColors = 'primary' | 'secondary' | 'tertiary';
+declare type CustomColors = 'primary' | 'secondary' | 'tertiary'
 
 declare type DialogOptions = {
-  timeout?: number;
-};
+  timeout?: number
+}
 
 declare type Dialog = {
-  uid: string;
-  component: Component;
-  props: any;
-  resolve: (r: any) => void;
-  options?: DialogOptions;
-};
+  uid: string
+  component: Component
+  props: any
+  resolve: (r: any) => void
+  options?: DialogOptions
+}
 
 declare type DialogProps<Result = any> = {
-  close: (result: Result) => void;
-  isOpen: boolean;
-};
+  close: (result: Result) => void
+  isOpen: boolean
+}
 
 declare type DialogComponent<Props = {}, Result = undefined> = Component<
   DialogProps<Result> & Props
->;
+>

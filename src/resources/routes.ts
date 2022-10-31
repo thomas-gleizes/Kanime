@@ -15,8 +15,8 @@ export const routes = {
       anime: (id: number) => `/api/animes/${id}`,
       categories: (id: number) => `/api/animes/${id}/categories`,
       entries: (id: number) => `/api/animes/${id}/entries`,
-      users: (id: number) => `/api/animes/${id}/users`,
-    },
+      users: (id: number) => `/api/animes/${id}/users`
+    }
   },
   authentification: {
     signIn: '/authentification/sign-in',
@@ -28,31 +28,31 @@ export const routes = {
       register: '/api/authentification/register',
       logout: '/api/authentification/logout',
       forgotPassword: '/api/authentification/forgot-password',
-      resetPassword: '/api/authentification/reset-password',
-    },
+      resetPassword: '/api/authentification/reset-password'
+    }
   },
   users: {
     page: (username: string) => `/users/${username}`,
     settings: (username: string) => `/users/${username}/settings`,
     api: {
-      current: 'api/users',
-    },
+      current: 'api/users'
+    }
   },
   categories: {
     index: '/categories',
-    slug: (slug: string) => `/categories/${slug}`,
+    slug: (slug: string) => `/categories/${slug}`
   },
   common: {
     countries: {
-      list: 'api/common/countries',
-    },
+      list: 'api/common/countries'
+    }
   },
   logs: {
     api: {
-      list: 'logs',
-    },
+      list: 'logs'
+    }
   },
   feedback: '/feedback',
   forum: '/forum',
-  admin: '/admin',
-};
+  admin: '/admin'
+}

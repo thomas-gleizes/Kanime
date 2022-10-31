@@ -1,54 +1,54 @@
-import React, { useRef } from 'react';
-import { Form, Formik, FormikProps } from 'formik';
-import { toast } from 'react-toastify';
-import { useQuery } from '@tanstack/react-query';
+import React, { useRef } from 'react'
+import { Form, Formik, FormikProps } from 'formik'
+import { toast } from 'react-toastify'
+import { useQuery } from '@tanstack/react-query'
 
-import { commonApi } from 'api';
-import { ApiService } from 'services/api.service';
-import { useUserContext } from 'context/auth.context';
-import { routes } from 'resources/routes';
-import { File } from 'components/common/formik';
-import { ApiException } from 'exceptions';
-import { UpdateUserDto } from 'dto/user.dto';
+import { commonApi } from 'api'
+import { ApiService } from 'services/api.service'
+import { useUserContext } from 'context/auth.context'
+import { routes } from 'resources/routes'
+import { File } from 'components/common/formik'
+import { ApiException } from 'exceptions'
+import { UpdateUserDto } from 'dto/user.dto'
 
-const fetchCountries = () => commonApi.showCountries().then((data) => data.countries);
+const fetchCountries = () => commonApi.showCountries().then((data) => data.countries)
 
 const EditGeneralData: Component = () => {
-  const { user, signIn } = useUserContext();
+  const { user, signIn } = useUserContext()
 
-  const formRef = useRef<Nullable<FormikProps<UpdateUserDto>>>(null);
-  const avatarRef = useRef<HTMLInputElement>();
-  const backgroundRef = useRef<HTMLInputElement>();
+  const formRef = useRef<Nullable<FormikProps<UpdateUserDto>>>(null)
+  const avatarRef = useRef<HTMLInputElement>()
+  const backgroundRef = useRef<HTMLInputElement>()
 
-  const { isLoading, data } = useQuery<Countries>(['countries'], fetchCountries);
+  const { isLoading, data } = useQuery<Countries>(['countries'], fetchCountries)
 
-  if (!user) return null;
+  if (!user) return null
 
   const initialValues: UpdateUserDto = {
     avatar: user.avatarPath,
     background: user.backgroundPath,
-    gender: user.gender,
-  };
+    gender: user.gender
+  }
 
   const handleSubmit = async (values: UpdateUserDto) => {
     try {
       const {
-        data: { user },
-      } = await ApiService.patch(routes.users.api.current, values);
+        data: { user }
+      } = await ApiService.patch(routes.users.api.current, values)
 
-      signIn(user);
+      signIn(user)
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
 
       // TODO setFieldError with formik and class-validator schema
     }
-  };
+  }
 
   const displayBackgroundUrl = (media: UserMediaHandling | string) => {
-    if (typeof media === 'string') return media;
-    else return media.raw;
-  };
+    if (typeof media === 'string') return media
+    else return media.raw
+  }
 
   return (
     <div className="p-10">
@@ -60,7 +60,7 @@ const EditGeneralData: Component = () => {
                 onClick={() => backgroundRef.current?.click()}
                 className="absolute w-full h-full rounded-t-md bg-center bg-no-repeat bg-auto bg-clip-content"
                 style={{
-                  background: `url('${displayBackgroundUrl(values.background)}')`,
+                  background: `url('${displayBackgroundUrl(values.background)}')`
                 }}
               />
               <File innerRef={backgroundRef} name="background" />
@@ -75,7 +75,7 @@ const EditGeneralData: Component = () => {
         )}
       </Formik>
     </div>
-  );
-};
+  )
+}
 
-export default EditGeneralData;
+export default EditGeneralData

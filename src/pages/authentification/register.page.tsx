@@ -1,60 +1,60 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { classValidatorResolver } from '@hookform/resolvers/class-validator';
-import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react';
-import { toast } from 'react-toastify';
+import React from 'react'
+import { useRouter } from 'next/router'
+import { useForm } from 'react-hook-form'
+import { classValidatorResolver } from '@hookform/resolvers/class-validator'
+import { FormControl, FormErrorMessage, FormLabel, Input } from '@chakra-ui/react'
+import { toast } from 'react-toastify'
 
-import type { Page } from 'app/next';
-import { ssrHandler } from 'services/handler.service';
-import { authenticationApi } from 'api';
-import { useUserContext } from 'context/auth.context';
-import { routes } from 'resources/routes';
-import { RegisterDto } from 'dto';
-import { ApiException } from 'exceptions';
-import Button from 'components/common/Button';
+import type { Page } from 'app/next'
+import { ssrHandler } from 'services/handler.service'
+import { authenticationApi } from 'api'
+import { useUserContext } from 'context/auth.context'
+import { routes } from 'resources/routes'
+import { RegisterDto } from 'dto'
+import { ApiException } from 'exceptions'
+import Button from 'components/common/Button'
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)
     return {
       redirect: {
         permanent: false,
-        destination: routes.users.page(context.req.session.user.slug),
-      },
-    };
+        destination: routes.users.page(context.req.session.user.slug)
+      }
+    }
 
-  return { props: {} };
-});
+  return { props: {} }
+})
 
 const defaultValues: RegisterDto = {
   email: '',
   username: '',
   password: '',
-  confirmPassword: '',
-};
+  confirmPassword: ''
+}
 
-const resolver = classValidatorResolver(RegisterDto);
+const resolver = classValidatorResolver(RegisterDto)
 
 const RegisterPage: Page = () => {
-  const { signIn } = useUserContext();
-  const router = useRouter();
+  const { signIn } = useUserContext()
+  const router = useRouter()
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<RegisterDto>({ defaultValues, resolver });
+    formState: { errors }
+  } = useForm<RegisterDto>({ defaultValues, resolver })
 
   const onSubmit = async (values: RegisterDto) => {
     try {
-      const { user } = await authenticationApi.register(values);
-      signIn(user);
-      await router.push(routes.users.page(user.slug));
+      const { user } = await authenticationApi.register(values)
+      signIn(user)
+      await router.push(routes.users.page(user.slug))
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message);
-      else toast.error('Une erreur est survenue');
+      if (err instanceof ApiException) toast.error(err.message)
+      else toast.error('Une erreur est survenue')
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center h-[80vh] bg-gray-50">
@@ -113,7 +113,7 @@ const RegisterPage: Page = () => {
         </form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RegisterPage;
+export default RegisterPage

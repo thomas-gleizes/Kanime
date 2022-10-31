@@ -1,24 +1,24 @@
-import * as fs from 'fs';
-import { Body, Get, Patch, Query, ValidationPipe } from 'next-api-decorators';
+import * as fs from 'fs'
+import { Body, Get, Patch, Query, ValidationPipe } from 'next-api-decorators'
 
-import type { Session } from 'app/session';
-import { apiHandler } from 'services/handler.service';
-import ApiHandler from 'class/ApiHandler';
-import Security from 'services/security.service';
-import { usersMapper } from 'mappers';
-import { userModel } from 'models';
-import { DEFAULT_USER_MEDIA, publicPath } from 'resources/constants';
-import { GetSession, AuthGuard } from 'decorators';
-import { QueryParamsDto, UpdateUserDto } from 'dto';
+import type { Session } from 'app/session'
+import { apiHandler } from 'services/handler.service'
+import ApiHandler from 'class/ApiHandler'
+import Security from 'services/security.service'
+import { usersMapper } from 'mappers'
+import { userModel } from 'models'
+import { DEFAULT_USER_MEDIA, publicPath } from 'resources/constants'
+import { GetSession, AuthGuard } from 'decorators'
+import { QueryParamsDto, UpdateUserDto } from 'dto'
 
 class UsersHandler extends ApiHandler {
   @Get()
   async get(
     @Query(ValidationPipe) params: QueryParamsDto
   ): Promise<ShowUsersListResponse> {
-    const users = await userModel.findAll();
+    const users = await userModel.findAll()
 
-    return { success: true, users: usersMapper.many(users) };
+    return { success: true, users: usersMapper.many(users) }
   }
 
   @Patch()
@@ -27,61 +27,61 @@ class UsersHandler extends ApiHandler {
     @Body(ValidationPipe) body: UpdateUserDto,
     @GetSession() session: Session
   ): Promise<UpdateUserResponse> {
-    const path = `/media/users/${session.user.id.toString().split('').join('/')}`;
-    const fullPath = `${publicPath}${path}`;
+    const path = `/media/users/${session.user.id.toString().split('').join('/')}`
+    const fullPath = `${publicPath}${path}`
 
-    await fs.promises.mkdir(fullPath, { recursive: true });
+    await fs.promises.mkdir(fullPath, { recursive: true })
 
     // TODO refactor this
     if (!(typeof body.avatar === 'string')) {
       if (session.user.avatarPath !== DEFAULT_USER_MEDIA.avatar)
-        await fs.promises.unlink(publicPath + session.user.avatarPath);
+        await fs.promises.unlink(publicPath + session.user.avatarPath)
 
-      const avatarPath = `${path}/avatar.${body.avatar.type.split('/')[1]}`;
+      const avatarPath = `${path}/avatar.${body.avatar.type.split('/')[1]}`
       await fs.promises.writeFile(
         publicPath + avatarPath,
         new Buffer(body.avatar.content, 'base64')
-      );
+      )
 
       // TODO refactor this with edit user form
       // @ts-ignore
-      body.avatarPath = avatarPath;
+      body.avatarPath = avatarPath
     }
 
     if (!(typeof body.background === 'string')) {
       if (session.user.backgroundPath !== DEFAULT_USER_MEDIA.background)
-        await fs.promises.unlink(publicPath + session.user.backgroundPath);
+        await fs.promises.unlink(publicPath + session.user.backgroundPath)
 
-      const backgroundPath = `${path}/background.${body.background.type.split('/')[1]}`;
+      const backgroundPath = `${path}/background.${body.background.type.split('/')[1]}`
       await fs.promises.writeFile(
         publicPath + backgroundPath,
         new Buffer(body.background.content, 'base64')
-      );
+      )
 
       // TODO refactor this with edit user form
       // @ts-ignore
-      body.backgroundPath = backgroundPath;
+      body.backgroundPath = backgroundPath
     }
 
-    const updatedUser = usersMapper.one(await userModel.update(session.user.id, body));
+    const updatedUser = usersMapper.one(await userModel.update(session.user.id, body))
 
-    const token = Security.sign(updatedUser);
+    const token = Security.sign(updatedUser)
 
-    session.user = updatedUser;
-    session.token = token;
+    session.user = updatedUser
+    session.token = token
 
-    await session.save();
+    await session.save()
 
-    return { success: true, user: updatedUser, token: token };
+    return { success: true, user: updatedUser, token: token }
   }
 }
 
-export default apiHandler(UsersHandler);
+export default apiHandler(UsersHandler)
 
 export const config = {
   api: {
     bodyParser: {
-      sizeLimit: '10mb',
-    },
-  },
-};
+      sizeLimit: '10mb'
+    }
+  }
+}

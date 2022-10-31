@@ -1,33 +1,33 @@
-import React from 'react';
+import React from 'react'
 
-import { Page } from 'app/next';
-import { ssrHandler } from 'services/handler.service';
-import { useToggle } from 'hooks';
-import { animeModel } from 'models';
-import { animesMapper } from 'mappers';
-import { SsrException } from 'exceptions';
-import { errorMessage } from 'resources/constants';
-import AnimeSide from 'components/common/anime/AnimeSide';
-import AnimeLayout from 'components/layouts/pages/AnimeLayout';
+import { Page } from 'app/next'
+import { ssrHandler } from 'services/handler.service'
+import { useToggle } from 'hooks'
+import { animeModel } from 'models'
+import { animesMapper } from 'mappers'
+import { SsrException } from 'exceptions'
+import { errorMessage } from 'resources/constants'
+import AnimeSide from 'components/common/anime/AnimeSide'
+import AnimeLayout from 'components/layouts/pages/AnimeLayout'
 
 interface Props {
-  anime: Anime;
+  anime: Anime
 }
 
-const DESCRIPTION_LENGTH = 400;
+const DESCRIPTION_LENGTH = 400
 
 export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string);
+    const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND);
+    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    return { props: { anime: animesMapper.one(anime) } };
+    return { props: { anime: animesMapper.one(anime) } }
   }
-);
+)
 
 const AnimeHome: Page<Props> = ({ anime }) => {
-  const [extendParagraph, toggleParagraph] = useToggle(true);
+  const [extendParagraph, toggleParagraph] = useToggle(true)
 
   return (
     <div className="w-full flex h-screen">
@@ -66,9 +66,9 @@ const AnimeHome: Page<Props> = ({ anime }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-AnimeHome.layout = AnimeLayout;
+AnimeHome.layout = AnimeLayout
 
-export default AnimeHome;
+export default AnimeHome
