@@ -89,8 +89,6 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
     }
   }, [apiLoading])
 
-  useEffect(() => console.log('ApiLoading', apiLoading), [apiLoading])
-
   useEffect(() => {
     let interval
 

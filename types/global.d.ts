@@ -1,11 +1,9 @@
 declare type Component<P = {}> = React.FC<P>
-
 declare type State<S = any> = [S, React.Dispatch<React.SetStateAction<S>>]
-
-declare type ReactNode = React.ReactNode | string
+declare type ReactNode = React.ReactNode
+declare type MutableRefObject<T> = React.MutableRefObject<Nullable<T>>
 
 declare type OptionalPromise<T> = T | Promise<T>
-
 declare type Nullable<T> = T | null
 declare type Undefinedable<T> = T | undefined
 declare type Optional<T> = Undefinedable<Nullable<T>>

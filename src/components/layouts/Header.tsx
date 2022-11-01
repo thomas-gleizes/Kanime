@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useMemo, useRef, useState } from 'react'
 import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid'
-import { useClickAway } from 'react-use'
 import { Transition } from '@headlessui/react'
 import classnames from 'classnames'
 import Link from 'next/link'
@@ -8,7 +7,7 @@ import Link from 'next/link'
 import { useUserContext } from 'context/auth.context'
 import { useLayoutContext } from 'context/layout.context'
 import { routes } from 'resources/routes'
-import { useHovered } from 'hooks'
+import { useFocus, useMouseOvered } from 'hooks'
 import DropDownByRef from 'components/layouts/DropDownByRef'
 import SearchBar from 'components/common/SearchBar'
 import { DEFAULT_USER_MEDIA } from 'resources/constants'
@@ -23,7 +22,7 @@ const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
 )
 
 const DropDownExplore: Component = () => {
-  const button = useRef<HTMLButtonElement | null>(null)
+  const button = useRef<HTMLButtonElement>(null)
 
   return (
     <div>
@@ -55,20 +54,18 @@ const Header: Component = () => {
     globalLoadingPercent
   } = useLayoutContext()
 
-  const avatarRef = useRef<HTMLImageElement | null>(null)
+  const headerRef = useRef(null)
+  const avatarRef = useRef<HTMLImageElement>(null)
 
   const [extend, setExtend] = useState<boolean>(false)
-  const [headerTransparent, setHeaderTransparent] = useState<boolean>(activeTransparent)
-  const [headerRef, headerHovered] = useHovered()
 
-  useEffect(() => {
-    if (activeTransparent && !headerHovered) setHeaderTransparent(scrollHeight < 250)
-    else setHeaderTransparent(false)
-  }, [activeTransparent, scrollHeight, headerHovered])
+  const isMouseOverHeader = useMouseOvered(headerRef)
+  const isFocusedHeader = useFocus(headerRef)
 
-  useClickAway(headerRef, () => setExtend(false))
-
-  useEffect(() => console.log('TEST', 100 - globalLoadingPercent), [globalLoadingPercent])
+  const headerTransparent = useMemo<boolean>(() => {
+    if (activeTransparent && !isMouseOverHeader) return scrollHeight < 250
+    else return false
+  }, [activeTransparent, isMouseOverHeader, isFocusedHeader, scrollHeight])
 
   if (header.hiddenHeader) return null
 
@@ -292,7 +289,7 @@ const Header: Component = () => {
           <div
             style={{ width: `${100 - globalLoadingPercent}%` }}
             className="h-full bg-primary absolute right-0"
-          ></div>
+          />
         </div>
       </div>
     </header>

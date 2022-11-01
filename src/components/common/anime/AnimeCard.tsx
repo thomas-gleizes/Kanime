@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Link from 'next/link'
 
-import { useHovered } from 'hooks'
+import { useMouseOvered } from 'hooks'
 import { routes } from 'resources/routes'
 import AnimePopup from 'components/common/anime/AnimePopup'
 
@@ -13,7 +13,9 @@ interface Props {
 const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
   const { slug, poster, canonicalTitle } = anime
 
-  const [ref, isHover] = useHovered<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
+
+  const isMouseOver = useMouseOvered(ref)
 
   return (
     <div className="relative w-full mx-auto">
@@ -38,7 +40,7 @@ const AnimeCard: Component<Props> = ({ anime, popupPosition }) => {
         </Link>
       </div>
       {popupPosition !== 'none' && (
-        <AnimePopup anime={anime} isOpen={isHover} position={popupPosition} />
+        <AnimePopup anime={anime} isOpen={isMouseOver} position={popupPosition} />
       )}
     </div>
   )

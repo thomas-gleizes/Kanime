@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Link from 'next/link'
 import { FaEye, FaStar } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 
-import { useDialog, useHovered } from 'hooks'
+import { useDialog, useMouseOvered } from 'hooks'
 import AnimePopup from 'components/common/anime/AnimePopup'
 import EditAnimesEntries, {
   Props as EditAnimesEntriesProps,
@@ -17,7 +17,9 @@ interface Props {
 }
 
 const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
-  const [ref, isHover] = useHovered<HTMLDivElement>()
+  const ref = useRef<HTMLDivElement>(null)
+
+  const isMouseOver = useMouseOvered(ref)
 
   const dialog = useDialog()
 
@@ -49,7 +51,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
               alt={entry.anime.canonicalTitle}
             />
           )}
-          {editable && isHover ? (
+          {editable && isMouseOver ? (
             <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-0 hover:bg-opacity-70 transition duration-100">
               <div className="h-1/4 flex flex-col space-y-2 absolute px-3 w-full bottom-0">
                 <div className="w-full">
@@ -106,7 +108,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
         </div>
       </div>
       {entry.anime && (
-        <AnimePopup anime={entry.anime} isOpen={isHover} position="right" />
+        <AnimePopup anime={entry.anime} isOpen={isMouseOver} position="right" />
       )}
     </div>
   )
