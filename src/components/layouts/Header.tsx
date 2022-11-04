@@ -63,14 +63,15 @@ const Header: Component = () => {
   const isFocusedHeader = useFocus(headerRef)
 
   const headerTransparent = useMemo<boolean>(() => {
-    if (activeTransparent && !isMouseOverHeader) return scrollHeight < 250
+    if (activeTransparent && !isMouseOverHeader && !isFocusedHeader)
+      return scrollHeight < 250
     else return false
   }, [activeTransparent, isMouseOverHeader, isFocusedHeader, scrollHeight])
 
   if (header.hiddenHeader) return null
 
   return (
-    <header ref={headerRef} className="h-header">
+    <header ref={headerRef} className="h-header" onFocus={console.log}>
       <div
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'
@@ -285,12 +286,14 @@ const Header: Component = () => {
             </Transition>
           </div>
         </div>
-        <div className="w-full h-[3px] absolute bottom-0 bg-gradient-to-r from-amber-600 to-red-500">
-          <div
-            style={{ width: `${100 - globalLoadingPercent}%` }}
-            className="h-full bg-primary absolute right-0"
-          />
-        </div>
+        {globalLoadingPercent ? (
+          <div className="w-full h-[3px] absolute bottom-0 bg-gradient-to-r from-amber-600 to-red-500">
+            <div
+              style={{ width: `${100 - globalLoadingPercent}%` }}
+              className="h-full bg-primary absolute right-0"
+            />
+          </div>
+        ) : null}
       </div>
     </header>
   )

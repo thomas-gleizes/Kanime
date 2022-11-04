@@ -12,6 +12,7 @@ import { ssrLogger } from 'middlewares/logger.middleware'
 import { withSessionApi, withSessionSsr } from 'services/session.service'
 import { errorMessage } from 'resources/constants'
 import trace from 'utils/trace'
+import httpStatus from 'resources/HttpStatus'
 
 export const apiHandler = (handler: any) => withSessionApi(createHandler(handler))
 
@@ -48,7 +49,9 @@ export function ssrHandler<
         return {
           props: {
             error: {
-              message: error.message
+              name: 'SsrException',
+              message: error.message,
+              statusCode: httpStatus.INTERNAL_SERVER_ERROR
             }
           }
         }
@@ -57,7 +60,8 @@ export function ssrHandler<
       return {
         props: {
           error: {
-            statusCode: 500,
+            name: 'SsrException',
+            statusCode: httpStatus.INTERNAL_SERVER_ERROR,
             message: errorMessage.INTERNAL_ERROR
           }
         }

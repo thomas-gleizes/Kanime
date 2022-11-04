@@ -8,15 +8,15 @@ export function useFocus<T extends HTMLElement>(ref: MutableRefObject<T>): boole
 
   useEffect(() => {
     if (ref.current) {
-      ref.current.addEventListener('focus', handleFocus)
-      ref.current.addEventListener('blur', handleBlur)
+      ref.current.addEventListener('focusin', handleFocus)
+      ref.current.addEventListener('focusout', handleBlur)
 
       return () => {
-        ref.current?.removeEventListener('focus', handleFocus)
-        ref.current?.removeEventListener('blur', handleBlur)
+        ref.current?.removeEventListener('focusin', handleFocus)
+        ref.current?.removeEventListener('focusout', handleBlur)
       }
     }
-  }, [])
+  }, [isFocused])
 
   return isFocused
 }

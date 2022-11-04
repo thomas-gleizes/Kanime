@@ -13,11 +13,11 @@ export class SsrException extends Exception {
     this._name = 'SsrException'
   }
 
-  public parse(): { _statusCode: number; _message: string; _name: string } {
+  public parse(): { statusCode: number; message: string; name: string } {
     return {
-      _statusCode: this._statusCode,
-      _message: this._message,
-      _name: this._name
+      statusCode: this._statusCode,
+      message: this._message,
+      name: this._name
     }
   }
 

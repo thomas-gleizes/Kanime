@@ -17,7 +17,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(
   async ({ params }) => {
     const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime || !anime.sagaId) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
     const saga = await sagaModel.findById(anime.sagaId)
 
@@ -34,7 +34,6 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
   return (
     <div>
       <h1 className="text-xl font-black text-center">Saga</h1>
-
       {saga ? (
         <div className="bg-gray-50 px-5 mt-3">
           <div className="flex flex-col space-y-2">

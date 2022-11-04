@@ -60,10 +60,10 @@ const MyApp = ({ Component, pageProps, session }: AppProps) => {
   )
 
   const ssrException = useMemo<Undefinedable<SsrException>>(() => {
-    if (pageProps.hasOwnProperty('error') && pageProps.error._name === 'SsrException') {
+    if (pageProps.hasOwnProperty('error') && pageProps.error.name === 'SsrException') {
       const exception = new SsrException(
-        pageProps.error._statusCode,
-        pageProps.error._message
+        pageProps.error.statusCode,
+        pageProps.error.message
       )
 
       delete pageProps.errror
