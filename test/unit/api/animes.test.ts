@@ -1,17 +1,17 @@
-import AnimesHandler from '../../../src/pages/api/animes/index.api'
 import { createMocks } from 'node-mocks-http'
 
-describe('test', () => {
-  it('should create private env', () => {
-    const { req, res } = createMocks({
+import { ApiRequest, ApiResponse } from 'app/mock'
+import AnimesHandler from 'pages/api/animes/index.api'
+
+describe('Animes Handler', () => {
+  it('should get some animes', async () => {
+    const { req, res } = createMocks<ApiRequest, ApiResponse>({
       url: '/api/animes',
       method: 'GET'
     })
 
-    // @ts-ignore
-    AnimesHandler(req, res)
-    expect(res._getStatusCode()).toBe(200)
+    await AnimesHandler(req, res)
 
-    console.log(res._getData())
+    expect(res._getStatusCode()).toEqual(200)
   })
 })

@@ -1,35 +1,37 @@
-import { createMocks } from 'node-mocks-http'
-import httpStatus from 'resources/HttpStatus'
+import httpMocks, { createMocks } from 'node-mocks-http'
 
-import testApiRoute from '../../../src/pages/api/test.api'
+import { ApiRequest, ApiResponse } from 'app/mock'
+import testApiRoute from 'pages/api/test.api'
+import httpStatus from 'resources/HttpStatus'
 
 describe('api should work', () => {
   it('should work with GET method', async () => {
-    const { req, res } = createMocks({
-      method: 'GET'
+    const req = httpMocks.createRequest<ApiRequest>({
+      method: 'GET',
+      url: '/api/test'
     })
+    const res = httpMocks.createResponse<ApiResponse>()
 
-    expect(req.method).toBe('GET')
+    expect(req.method).toEqual('GET')
 
-    // @ts-ignore
     await testApiRoute(req, res)
 
-    expect(res._getStatusCode()).toBe(httpStatus.OK)
-    expect(res._getData()).toBe({ name: 'John Doe' })
+    expect(res._getStatusCode()).toEqual(httpStatus.OK)
+    expect(res._getData()).toEqual({ success: true, name: 'John Doe' })
   })
 
   it('should work with POST method', async () => {
-    const { req, res } = createMocks({
+    const { req, res } = createMocks<ApiRequest, ApiResponse>({
       method: 'POST',
+      url: '/api/test',
       body: { name: 'Janne Doe' }
     })
 
-    expect(req.method).toBe('POST')
+    expect(req.method).toEqual('POST')
 
-    // @ts-ignore
     await testApiRoute(req, res)
 
-    expect(res._getStatusCode()).toBe(httpStatus.CREATED)
-    expect(res._getData()).toBe({ name: 'Janne Doe' })
+    expect(res._getStatusCode()).toEqual(httpStatus.CREATED)
+    expect(res._getData()).toEqual({ success: true, name: 'Janne Doe' })
   })
 })

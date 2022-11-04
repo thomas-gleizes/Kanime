@@ -12,7 +12,6 @@ import { ApiException } from 'exceptions'
 import { userModel } from 'models'
 import { routes } from 'resources/routes'
 import { Field } from 'components/common/formik'
-import DefaultLayout from 'components/layouts/pages/DefaultLayout'
 import Button from 'components/common/Button'
 
 type resetPasswordPayload = Yup.TypeOf<typeof resetPasswordSchema>

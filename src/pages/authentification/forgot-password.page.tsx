@@ -5,9 +5,9 @@ import { Page } from 'app/next'
 import { authenticationApi } from 'api'
 import { ssrHandler } from 'services/handler.service'
 import { routes } from 'resources/routes'
+import { ApiException } from 'exceptions'
 import { Input } from 'components/common/inputs'
 import Button from 'components/common/Button'
-import { ApiException } from 'exceptions'
 
 export const getServerSideProps = ssrHandler<{}>(async (context) => {
   if (context.req.session.user)

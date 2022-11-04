@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals'
 
-describe('setup', () => {
+describe('Api animes', () => {
   it('should create private env', () => {
     expect(process.env.NODE_ENV).toBe('test')
 

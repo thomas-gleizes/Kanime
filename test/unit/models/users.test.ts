@@ -1,18 +1,9 @@
 import { Gender } from '@prisma/client'
-import { userModel } from '../../../src/models'
-import Security from '../../../src/services/security.service'
-import { DEFAULT_USER_MEDIA } from '../../../src/resources/constants'
+import { userModel } from 'models'
+import Security from 'services/security.service'
 
 describe('users model', () => {
-  let userId: number = null
-
-  beforeAll(async () => {
-    await userModel.deleteAll()
-  })
-
-  it('should user table is empty', async () => {
-    expect(await userModel.count()).toBe(0)
-  })
+  let userId: number
 
   it('should create user', async () => {
     const password: string = 'password'
@@ -30,12 +21,12 @@ describe('users model', () => {
     userId = user.id
 
     expect(Security.compare(password, user.password)).toBeTruthy()
-    expect(user.is_admin).toBeFalsy()
-    expect(user.follow_count).toBe(0)
-    expect(user.follower_count).toBe(0)
-    expect(user.avatar_path).toBe(DEFAULT_USER_MEDIA.avatar)
-    expect(user.background_path).toBe(DEFAULT_USER_MEDIA.background)
-    expect(user.gender).toBe('Secret')
+    expect(user.isAdmin).toBeFalsy()
+    expect(user.followCount).toEqual(0)
+    expect(user.followerCount).toEqual(0)
+    // expect(user.avatar).toEqual(DEFAULT_USER_MEDIA.avatar)
+    // expect(user.background).toEqual(DEFAULT_USER_MEDIA.background)
+    expect(user.gender).toEqual('Secret')
   })
 
   it('should update user', async () => {
@@ -45,17 +36,17 @@ describe('users model', () => {
     const city: string = 'Montpellier'
 
     const updateUser = await userModel.update(userId, {
-      avatarPath: '',
-      backgroundPath: '',
+      avatar: '',
+      background: '',
       birthday: birthDay,
       city: city,
       bio: bio,
       gender: gender
     })
 
-    expect(updateUser.bio).toBe(bio)
-    expect(updateUser.city).toBe(city)
-    expect(updateUser.gender).toBe(gender)
-    expect(updateUser.birthday.toString()).toBe(birthDay.toString())
+    expect(updateUser.bio).toEqual(bio)
+    expect(updateUser.city).toEqual(city)
+    expect(updateUser.gender).toEqual(gender)
+    expect(updateUser.birthday.toString()).toEqual(birthDay.toString())
   })
 })

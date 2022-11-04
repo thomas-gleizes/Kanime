@@ -13,7 +13,6 @@ import { useUserContext } from 'context/auth.context'
 import { routes } from 'resources/routes'
 import { SignInDto } from 'dto'
 import { ApiException } from 'exceptions'
-import DefaultLayout from 'components/layouts/pages/DefaultLayout'
 import Button from 'components/common/Button'
 
 export const getServerSideProps = ssrHandler(async (context) => {
