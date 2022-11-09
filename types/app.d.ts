@@ -171,11 +171,3 @@ declare module 'app/session' {
 
   declare type Session = IronSession
 }
-
-declare module 'app/mock' {
-  import { NextApiRequest, NextApiResponse } from 'next'
-  import { createRequest, createResponse } from 'node-mocks-http'
-
-  declare type ApiRequest = NextApiRequest & ReturnType<typeof createRequest>
-  declare type ApiResponse = NextApiResponse & ReturnType<typeof createResponse>
-}

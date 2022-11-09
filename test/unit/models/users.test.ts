@@ -2,7 +2,7 @@ import { Gender } from '@prisma/client'
 import { userModel } from 'models'
 import Security from 'services/security.service'
 
-describe('users model', () => {
+describe.skip('users model', () => {
   let userId: number
 
   it('should create user', async () => {
