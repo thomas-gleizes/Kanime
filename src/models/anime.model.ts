@@ -1,4 +1,4 @@
-import { PrismaAnime, PrismaAnimeDelegate, PrismaAnimes } from 'app/prisma'
+import { PrismaAnimeDelegate } from 'app/prisma'
 import connexion, { ConnexionType } from 'services/connexion.service'
 import Model from 'class/Model'
 

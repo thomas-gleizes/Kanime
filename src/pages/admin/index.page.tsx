@@ -3,9 +3,9 @@ import React from 'react'
 import { Page } from 'app/next'
 import { routes } from 'resources/routes'
 import { ssrHandler } from 'services/handler.service'
+import { useUserContext } from 'context/auth.context'
 import ListLogs from 'components/admin/ListLogs'
 import AdminLayout from 'components/layouts/pages/AdminLayout'
-import { useUserContext } from 'context/auth.context'
 
 export const getServerSideProps = ssrHandler(async ({ req }) => {
   const user: User = req.session.user

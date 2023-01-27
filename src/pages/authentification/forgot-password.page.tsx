@@ -29,8 +29,7 @@ const ForgotPasswordPage: Page = () => {
       await authenticationApi.forgotPassword(email)
       toast.success('Demande de nouveau mot de passe effectué')
     } catch (err) {
-      if (err instanceof ApiException) toast.error(err.message)
-      else toast.error('Une erreur est survenue')
+      toast.error('Une erreur est survenue')
     }
   }
 

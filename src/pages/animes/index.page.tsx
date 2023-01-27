@@ -16,8 +16,10 @@ interface Props extends AnimesListResponse {}
 
 export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: string }>(
   async ({ query }) => {
-    const animes = await animeModel.all(getQueryListParams(query))
-    const total = await animeModel.countTotal()
+    const [animes, total] = await Promise.all([
+      animeModel.all(getQueryListParams(query)),
+      animeModel.countTotal()
+    ])
 
     return {
       props: {
@@ -33,17 +35,17 @@ export const getServerSideProps = ssrHandler<Props, { skip?: string; limit?: str
 )
 
 const fetchAnimes = ({ pageParam = 0 }) =>
-  animesApi.show({ limit: 40, skip: pageParam * 40 })
+  animesApi.show({ limit: 40, skip: pageParam * 40 }).then((response) => response.records)
 
 const ExploreAnimes: Page<Props> = (props) => {
-  const { data, isLoading, fetchNextPage } = useInfiniteQuery<AnimesListResponse>(
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery<Animes>(
     ['animes'],
     fetchAnimes,
     {
       getNextPageParam: (_, pages) => pages.length,
       initialData: {
         pageParams: [0],
-        pages: [props]
+        pages: [props.records]
       },
       suspense: true
     }
@@ -59,10 +61,7 @@ const ExploreAnimes: Page<Props> = (props) => {
     }
   }, [active, percent])
 
-  const animes = useMemo(
-    () => (data ? data.pages.map((page) => page.records).flat() : []),
-    [data]
-  )
+  const animes = useMemo(() => (data ? data.pages.flat() : []), [data])
 
   return (
     <div className="py-10">
