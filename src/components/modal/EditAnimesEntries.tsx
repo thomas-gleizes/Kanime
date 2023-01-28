@@ -64,12 +64,7 @@ const visibilities = Object.entries(Visibility).map(([key, value]) => ({
   value
 }))
 
-const EditAnimesEntries: DialogComponent<Props, Result> = ({
-  isOpen,
-  close,
-  anime,
-  entry
-}) => {
+const EditAnimesEntries: DialogComponent<Props, Result> = ({ isOpen, close, anime, entry }) => {
   const initialValues = useMemo<CreateEntryDto>(
     () => ({
       animeId: anime.id,
@@ -78,9 +73,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
       visibility: entry?.visibility || Visibility.public,
       rating: entry?.rating,
       note: entry?.note,
-      startedAt: entry?.startedAt
-        ? dayjs(entry.startedAt).format('YYYY-MM-DD')
-        : undefined,
+      startedAt: entry?.startedAt ? dayjs(entry.startedAt).format('YYYY-MM-DD') : undefined,
       finishAt: entry?.finishAt ? dayjs(entry.finishAt).format('YYYY-MM-DD') : undefined
     }),
     [entry]
@@ -88,10 +81,9 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
 
   const handleSubmit = async (values: CreateEntryDto) => {
     try {
-      const response = await ApiService.post<{ entry: Entry }>(
-        `/animes/${anime.id}/entries`,
-        values
-      )
+      const response = await ApiService.post<{ entry: Entry }>(`/entries`, values)
+
+      console.log('response', response)
 
       // @ts-ignore
       close({ action: 'submit', values: { ...response.entry, anime } })
@@ -105,7 +97,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({
     if (!entry) return close({ action: 'cancel' })
 
     try {
-      await ApiService.delete(`/animes/${entry.animeId}/entries`)
+      await ApiService.delete(`/entries/${entry.id}`)
 
       return close({ action: 'delete' })
     } catch (err) {
@@ -149,15 +141,7 @@ const FormContent: Component<
     handleDelete: () => void
     handleClose: () => void
   }
-> = ({
-  values,
-  setFieldValue,
-  anime,
-  handleDelete,
-  initialValues,
-  isSubmitting,
-  handleClose
-}) => {
+> = ({ values, setFieldValue, anime, handleDelete, initialValues, isSubmitting, handleClose }) => {
   const sliderColor = useMemo<string>(() => {
     if (!values.rating) return 'yellow'
     else if (values.rating >= 7.5) return 'green'
@@ -223,13 +207,7 @@ const FormContent: Component<
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel htmlFor="progress">Progression</FormLabel>
                 <InputGroup>
-                  <Input
-                    {...field}
-                    id="progress"
-                    type="number"
-                    min={0}
-                    max={anime.episode.count}
-                  />
+                  <Input {...field} id="progress" type="number" min={0} max={anime.episode.count} />
                   <InputRightAddon>
                     {anime.episode.count ? `sur ${anime.episode.count} épisodes` : '-'}
                   </InputRightAddon>
@@ -283,12 +261,7 @@ const FormContent: Component<
             {({ field, meta }: FieldAttributes<any>) => (
               <FormControl isInvalid={meta.touched && meta.error}>
                 <FormLabel>Commencé le</FormLabel>
-                <Input
-                  type="date"
-                  min={anime.dateBegin}
-                  max={values.finishAt}
-                  {...field}
-                />
+                <Input type="date" min={anime.dateBegin} max={values.finishAt} {...field} />
                 <FormErrorMessage>{meta.error}</FormErrorMessage>
               </FormControl>
             )}

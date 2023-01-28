@@ -66,29 +66,20 @@ const SignInPage: Page = () => {
         <div className="mb-4">
           <p className="text-gray-600">Connexion</p>
           <h2 className="text-xl font-bold">
-            Rejoignez{' '}
-            <span className="font-gang-of-three">{process.env.NEXT_PUBLIC_APP_NAME}</span>
+            Rejoignez <span className="font-gang-of-three">{process.env.NEXT_PUBLIC_APP_NAME}</span>
           </h2>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col space-y-3">
             <FormControl isInvalid={!!errors.email}>
               <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                placeholder="example@email.com"
-                {...register('email')}
-              />
-              {errors.email && (
-                <FormErrorMessage>{errors.email.message}</FormErrorMessage>
-              )}
+              <Input type="email" placeholder="example@email.com" {...register('email')} />
+              {errors.email && <FormErrorMessage>{errors.email.message}</FormErrorMessage>}
             </FormControl>
             <FormControl isInvalid={!!errors.password}>
               <FormLabel>Mot de passe</FormLabel>
               <Input type="password" placeholder="*****" {...register('password')} />
-              {errors.password && (
-                <FormErrorMessage>{errors.password.message}</FormErrorMessage>
-              )}
+              {errors.password && <FormErrorMessage>{errors.password.message}</FormErrorMessage>}
             </FormControl>
             <div className="mt-3">
               <Button type="submit">Connexion</Button>
@@ -100,10 +91,7 @@ const SignInPage: Page = () => {
                   className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
                   {...register('rememberMe')}
                 />
-                <label
-                  htmlFor="comments"
-                  className="ml-2 text-sm font-normal text-gray-600"
-                >
+                <label htmlFor="comments" className="ml-2 text-sm font-normal text-gray-600">
                   Se souvenir de moi
                 </label>
               </div>

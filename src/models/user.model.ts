@@ -10,13 +10,11 @@ class UserModel extends Model<PrismaUserDelegate> {
     super(connexion, 'user')
   }
 
-  public findAll = (params?: modelParams) =>
-    this.model.findMany({ ...this.getKeyParams(params) })
+  public findAll = (params?: modelParams) => this.model.findMany({ ...this.getKeyParams(params) })
 
   public findById = (id: number) => this.model.findUnique({ where: { id: +id } })
 
-  public findByUsername = (username: string) =>
-    this.model.findUnique({ where: { username } })
+  public findByUsername = (username: string) => this.model.findUnique({ where: { username } })
 
   public findBySlug = (slug: string) => this.model.findUnique({ where: { slug } })
 
@@ -46,10 +44,7 @@ class UserModel extends Model<PrismaUserDelegate> {
       }
     })
 
-  public updateResetPasswordToken = (
-    id: number,
-    token: string | null
-  ): Promise<PrismaUser> =>
+  public updateResetPasswordToken = (id: number, token: string | null): Promise<PrismaUser> =>
     this.model.update({
       where: { id },
       data: {

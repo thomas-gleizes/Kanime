@@ -76,10 +76,8 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
     const listener = (event: MessageEvent) => {
       const message = event.data
 
-      if (message === WINDOW_MESSAGE.GLOBAL_LOADING.START)
-        !apiLoading && setApiLoading(true)
-      else if (message === WINDOW_MESSAGE.GLOBAL_LOADING.STOP)
-        apiLoading && setApiLoading(false)
+      if (message === WINDOW_MESSAGE.GLOBAL_LOADING.START) !apiLoading && setApiLoading(true)
+      else if (message === WINDOW_MESSAGE.GLOBAL_LOADING.STOP) apiLoading && setApiLoading(false)
     }
 
     if (isBrowser()) {

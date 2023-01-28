@@ -14,9 +14,7 @@ import { NotFoundException } from 'exceptions/http'
 
 class EntriesHandler extends ApiHandler {
   @Get()
-  async showAll(
-    @Query(ValidationPipe) params: QueryParamsDto
-  ): Promise<ShowEntriesListResponse> {
+  async showAll(@Query(ValidationPipe) params: QueryParamsDto): Promise<ShowEntriesListResponse> {
     const entries = await entryModel.all(params)
 
     return { success: true, entries: entriesMapper.many(entries) }
@@ -44,8 +42,7 @@ class EntriesHandler extends ApiHandler {
       body.startedAt = new Date()
     }
 
-    if (!body.finishAt && EntryStatus.Completed === body.status)
-      body.finishAt = new Date()
+    if (!body.finishAt && EntryStatus.Completed === body.status) body.finishAt = new Date()
 
     const entry = await entryModel.create(session.user.id, body)
 

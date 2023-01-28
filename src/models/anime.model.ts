@@ -29,8 +29,7 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
       where: { slug }
     })
 
-  public all = (params?: modelParams) =>
-    this.model.findMany({ ...this.getKeyParams(params) })
+  public all = (params?: modelParams) => this.model.findMany({ ...this.getKeyParams(params) })
 
   public findByUser = (userId: number, params?: modelParams) =>
     this.model.findMany({

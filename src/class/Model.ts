@@ -42,9 +42,7 @@ abstract class Model<Delegate> {
     return { skip: params?.skip || 0, take: params?.limit || 20 }
   }
 
-  protected parseOptions<IncludeOptions = any>(
-    options?: ModelOptions<IncludeOptions>
-  ): Result {
+  protected parseOptions<IncludeOptions = any>(options?: ModelOptions<IncludeOptions>): Result {
     const result: Result = {}
 
     if (options?.include && Object.keys(options.include).length) {

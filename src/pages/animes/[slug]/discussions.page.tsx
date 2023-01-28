@@ -17,21 +17,19 @@ interface Props {
   posts: Posts
 }
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string)
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ params }) => {
+  const anime = await animeModel.findBySlug(params?.slug as string)
+  if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    const posts = await postModel.findByAnimes(anime.id)
+  const posts = await postModel.findByAnimes(anime.id)
 
-    return {
-      props: {
-        anime: animesMapper.one(anime),
-        posts: postsMapper.many(posts)
-      }
+  return {
+    props: {
+      anime: animesMapper.one(anime),
+      posts: postsMapper.many(posts)
     }
   }
-)
+})
 
 const DiscussionsPage: Page<Props> = ({ posts }) => {
   const handleSubmit = (values: any) => {

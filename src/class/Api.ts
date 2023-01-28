@@ -16,24 +16,15 @@ abstract class Api {
     return this._instance.get<R, R, P>(`${this._path}${path}`, params)
   }
 
-  protected post<R extends ApiResponse = ApiResponse, D = any>(
-    path: string,
-    data: D
-  ): Promise<R> {
+  protected post<R extends ApiResponse = ApiResponse, D = any>(path: string, data: D): Promise<R> {
     return this._instance.post<R, R, D>(`${this._path}${path}`, data)
   }
 
-  protected patch<R extends ApiResponse = ApiResponse, D = any>(
-    path: string,
-    data: D
-  ): Promise<R> {
+  protected patch<R extends ApiResponse = ApiResponse, D = any>(path: string, data: D): Promise<R> {
     return this._instance.patch<R, R, D>(`${this._path}${path}`, data)
   }
 
-  protected put<R extends ApiResponse = ApiResponse, D = any>(
-    path: string,
-    data: D
-  ): Promise<R> {
+  protected put<R extends ApiResponse = ApiResponse, D = any>(path: string, data: D): Promise<R> {
     return this._instance.put<R, R, D>(`${this._path}${path}`, data)
   }
 

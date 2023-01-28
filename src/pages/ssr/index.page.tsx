@@ -8,20 +8,17 @@ interface Props {
   message: string
 }
 
-export const getServerSideProps = ssrHandler<Props, { error?: string }>(
-  async (context) => {
-    if (context.query.hasOwnProperty('error'))
-      throw new SsrException(400, 'ssr handler exceptions')
+export const getServerSideProps = ssrHandler<Props, { error?: string }>(async (context) => {
+  if (context.query.hasOwnProperty('error')) throw new SsrException(400, 'ssr handler exceptions')
 
-    const name = context.req.session?.user?.username || 'anonymous'
+  const name = context.req.session?.user?.username || 'anonymous'
 
-    return {
-      props: {
-        message: `Hello, ${name}`
-      }
+  return {
+    props: {
+      message: `Hello, ${name}`
     }
   }
-)
+})
 
 const Page: Page<Props> = ({ message }) => {
   useHideHeader()

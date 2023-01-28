@@ -13,9 +13,7 @@ import { QueryParamsDto, UpdateUserDto } from 'dto'
 
 class UsersHandler extends ApiHandler {
   @Get()
-  async get(
-    @Query(ValidationPipe) params: QueryParamsDto
-  ): Promise<ShowUsersListResponse> {
+  async get(@Query(ValidationPipe) params: QueryParamsDto): Promise<ShowUsersListResponse> {
     const users = await userModel.findAll()
 
     return { success: true, users: usersMapper.many(users) }

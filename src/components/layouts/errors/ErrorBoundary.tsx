@@ -9,8 +9,7 @@ interface Props {
 }
 
 const ErrorBoundary: Component<Props> = ({ exception, children }) => {
-  if (exception)
-    return <Error statusCode={exception.statusCode} title={exception.message} />
+  if (exception) return <Error statusCode={exception.statusCode} title={exception.message} />
 
   return <>{children}</>
 }

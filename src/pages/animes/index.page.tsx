@@ -38,18 +38,14 @@ const fetchAnimes = ({ pageParam = 0 }) =>
   animesApi.show({ limit: 40, skip: pageParam * 40 }).then((response) => response.records)
 
 const ExploreAnimes: Page<Props> = (props) => {
-  const { data, isLoading, fetchNextPage } = useInfiniteQuery<Animes>(
-    ['animes'],
-    fetchAnimes,
-    {
-      getNextPageParam: (_, pages) => pages.length,
-      initialData: {
-        pageParams: [0],
-        pages: [props.records]
-      },
-      suspense: true
-    }
-  )
+  const { data, isLoading, fetchNextPage } = useInfiniteQuery<Animes>(['animes'], fetchAnimes, {
+    getNextPageParam: (_, pages) => pages.length,
+    initialData: {
+      pageParams: [0],
+      pages: [props.records]
+    },
+    suspense: true
+  })
 
   const [active, toggle] = useDelayBoolean(5000)
   const percent = useScrollPercent()

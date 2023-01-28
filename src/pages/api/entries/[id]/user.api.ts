@@ -25,8 +25,7 @@ class EntryUserHandler extends ApiHandler {
         const isFriends = await userFollowModel.isFriends(session.user.id, id)
 
         if (!isFriends) throw new NotFoundException('Entry not found')
-      } else if (entry.userId !== session.user.id)
-        throw new NotFoundException('Entry not found')
+      } else if (entry.userId !== session.user.id) throw new NotFoundException('Entry not found')
     }
 
     return { success: true, user: usersMapper.one(entry.user) }

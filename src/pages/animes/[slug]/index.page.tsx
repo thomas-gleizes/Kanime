@@ -16,15 +16,13 @@ interface Props {
 
 const DESCRIPTION_LENGTH = 400
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string)
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ params }) => {
+  const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+  if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    return { props: { anime: animesMapper.one(anime) } }
-  }
-)
+  return { props: { anime: animesMapper.one(anime) } }
+})
 
 const AnimeHome: Page<Props> = ({ anime }) => {
   const [extendParagraph, toggleParagraph] = useToggle(true)
@@ -49,8 +47,7 @@ const AnimeHome: Page<Props> = ({ anime }) => {
             <div>
               <p className="text-ellipsis overflow-hidden text-gray-800 mb-4 prose">
                 {extendParagraph && anime.description?.length > DESCRIPTION_LENGTH
-                  ? anime.description.split('').splice(0, DESCRIPTION_LENGTH).join('') +
-                    ' ...'
+                  ? anime.description.split('').splice(0, DESCRIPTION_LENGTH).join('') + ' ...'
                   : anime?.description}
               </p>
               {anime.description.length > DESCRIPTION_LENGTH && (

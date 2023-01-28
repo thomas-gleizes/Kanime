@@ -43,8 +43,7 @@ class AnimePostHandler extends ApiHandler {
     @Body(ValidationPipe) body: AnimePostDto,
     @GetSession() session: Session
   ) {
-    if (!(await animeModel.isExist(id)))
-      throw new NotFoundException(errorMessage.ANIME_NOT_FOUND)
+    if (!(await animeModel.isExist(id))) throw new NotFoundException(errorMessage.ANIME_NOT_FOUND)
 
     const post = await postModel.create({
       userId: session.user.id,
@@ -59,10 +58,7 @@ class AnimePostHandler extends ApiHandler {
   @Delete()
   @AuthGuard()
   @HttpCode(HttpStatus.NO_CONTENT)
-  async deletePost(
-    @Query('id', ParseNumberPipe) id: number,
-    @GetSession() session: Session
-  ) {
+  async deletePost(@Query('id', ParseNumberPipe) id: number, @GetSession() session: Session) {
     const post = await postModel.findByAnimeIdAndUserId(id, session.user.id)
 
     if (!post) throw new NotFoundException('Post not found')

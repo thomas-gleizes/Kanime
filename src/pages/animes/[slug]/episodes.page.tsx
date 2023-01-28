@@ -12,15 +12,13 @@ interface Props {
   anime: Anime
 }
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string)
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ params }) => {
+  const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+  if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    return { props: { anime: animesMapper.one(anime) } }
-  }
-)
+  return { props: { anime: animesMapper.one(anime) } }
+})
 
 const SagaPage: Page<Props> = (props) => {
   return <h1 className="text-xl font-black text-center">Episodes</h1>

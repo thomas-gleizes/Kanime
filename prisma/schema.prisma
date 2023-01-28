@@ -9,7 +9,7 @@ datasource db {
 
 model Anime {
   id              Int          @id @default(autoincrement()) @db.UnsignedInt
-  kitsuId         Int         @unique @map("kitsu_id") @db.UnsignedInt
+  kitsuId         Int          @unique @map("kitsu_id") @db.UnsignedInt
   slug            String       @unique
   canonicalTitle  String       @map("canonical_title")
   titles          String?      @db.LongText

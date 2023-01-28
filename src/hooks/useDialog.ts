@@ -11,7 +11,5 @@ export function useDialog(options?: DialogOptions): useDialogResult {
   const { addDialog } = useDialogContext()
 
   return (component: Component<any>, props: any) =>
-    new Promise((resolve) =>
-      addDialog({ uid: uuid(), props, component, resolve, options })
-    )
+    new Promise((resolve) => addDialog({ uid: uuid(), props, component, resolve, options }))
 }

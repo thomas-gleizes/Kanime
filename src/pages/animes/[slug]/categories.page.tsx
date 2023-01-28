@@ -15,22 +15,20 @@ interface Props {
   categories: Categories
 }
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string)
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ params }) => {
+  const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+  if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    const categories = await categoryModel.findByAnimeId(anime.id)
+  const categories = await categoryModel.findByAnimeId(anime.id)
 
-    return {
-      props: {
-        anime: animesMapper.one(anime),
-        categories: categoriesMapper.many(categories)
-      }
+  return {
+    props: {
+      anime: animesMapper.one(anime),
+      categories: categoriesMapper.many(categories)
     }
   }
-)
+})
 
 const AnimeCategories: Page<Props> = ({ anime, categories }) => {
   return (

@@ -22,10 +22,7 @@ import DialogContextProvider from 'context/dialog.context'
 import Header from 'components/layouts/Header'
 import Footer from 'components/layouts/Footer'
 
-const ContextsProvider: Component<ContextsProviderProps> = ({
-  children,
-  initialState
-}) => {
+const ContextsProvider: Component<ContextsProviderProps> = ({ children, initialState }) => {
   const [queryClient] = useState(() => new QueryClient())
 
   return (
@@ -61,10 +58,7 @@ const MyApp = ({ Component, pageProps, session }: AppProps) => {
 
   const ssrException = useMemo<Undefinedable<SsrException>>(() => {
     if (pageProps.hasOwnProperty('error') && pageProps.error.name === 'SsrException') {
-      const exception = new SsrException(
-        pageProps.error.statusCode,
-        pageProps.error.message
-      )
+      const exception = new SsrException(pageProps.error.statusCode, pageProps.error.message)
 
       delete pageProps.errror
 

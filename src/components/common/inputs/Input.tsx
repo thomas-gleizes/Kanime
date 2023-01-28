@@ -66,13 +66,7 @@ const Input: Component<InputProps> = ({
   return (
     <Tag
       type={type}
-      className={classnames(
-        classType,
-        classColor,
-        classSize,
-        'appearance-none',
-        className
-      )}
+      className={classnames(classType, classColor, classSize, 'appearance-none', className)}
       disabled={disabled}
       {...rest}
     />

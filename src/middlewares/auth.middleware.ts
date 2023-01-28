@@ -43,8 +43,7 @@ export const authAdminMiddleware = async (
     throw new UnauthorizedException(errorMessage.ACCESS_DENIED)
   }
 
-  if (!req.session.user.isAdmin)
-    throw new UnauthorizedException(errorMessage.ACCESS_DENIED)
+  if (!req.session.user.isAdmin) throw new UnauthorizedException(errorMessage.ACCESS_DENIED)
 
   next()
 }

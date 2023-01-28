@@ -14,9 +14,7 @@ const AuthContext = createContext<UserContextValues>({} as any)
 export const useUserContext = useContextFactory<UserContextValues>(AuthContext)
 
 const AuthContextProvider: Component<Props> = ({ children, initialUser }) => {
-  const [user, setUser] = useState<Nullable<User>>(
-    initialUser || LocalStorageService.getUser()
-  )
+  const [user, setUser] = useState<Nullable<User>>(initialUser || LocalStorageService.getUser())
   const [isLogin, setIsLogin] = useState<boolean>(!!user)
 
   const signIn = useCallback((user: User): void => {
@@ -35,9 +33,7 @@ const AuthContextProvider: Component<Props> = ({ children, initialUser }) => {
     LocalStorageService.clearUser()
   }, [])
 
-  const value = useMemo<
-    UserAuthenticatedContextValues | UserUnauthenticatedContextValues
-  >(() => {
+  const value = useMemo<UserAuthenticatedContextValues | UserUnauthenticatedContextValues>(() => {
     const actions = { signOut, signIn }
 
     if (isLogin)

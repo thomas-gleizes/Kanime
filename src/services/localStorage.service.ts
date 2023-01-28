@@ -10,8 +10,7 @@ class LocalStorageService {
   }
 
   static saveUser(user: User): void {
-    if (this.isBrowser())
-      localStorage.setItem(LocalStorageService.USER_KEY, JSON.stringify(user))
+    if (this.isBrowser()) localStorage.setItem(LocalStorageService.USER_KEY, JSON.stringify(user))
   }
 
   static saveToken(token: string): void {
@@ -43,9 +42,7 @@ class LocalStorageService {
 
   static getTheme(): TailwindTheme {
     if (this.isBrowser()) {
-      const theme = localStorage.getItem(
-        LocalStorageService.THEME_KEY
-      ) as TailwindTheme | null
+      const theme = localStorage.getItem(LocalStorageService.THEME_KEY) as TailwindTheme | null
 
       return theme || 'light'
     }

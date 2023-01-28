@@ -12,9 +12,7 @@ import { NotFoundException, BadRequestException } from 'exceptions/http'
 
 class UserFollowHandler extends ApiHandler {
   @Get()
-  async showFollow(
-    @Query('id', ParseNumberPipe) id: number
-  ): Promise<ShowUserFollowsResponse> {
+  async showFollow(@Query('id', ParseNumberPipe) id: number): Promise<ShowUserFollowsResponse> {
     const user = await userModel.findById(id)
 
     if (!user) throw new NotFoundException(errorMessage.USER_NOT_FOUND)

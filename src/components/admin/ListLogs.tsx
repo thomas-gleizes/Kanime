@@ -2,16 +2,7 @@ import React, { useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { FaEye } from 'react-icons/fa'
 import dayjs from 'dayjs'
-import {
-  IconButton,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr
-} from '@chakra-ui/react'
+import { IconButton, Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react'
 
 import { logsApi } from 'api'
 import { usePagination } from 'hooks'
@@ -53,9 +44,7 @@ const ListLogs: Component = () => {
               {!isFetching
                 ? logs.map((log, index) => (
                     <Tr key={index}>
-                      <Td className="px-2">
-                        {dayjs(log.createAt).format('DD/MM/YYYY à HH:mm:s')}
-                      </Td>
+                      <Td className="px-2">{dayjs(log.createAt).format('DD/MM/YYYY à HH:mm:s')}</Td>
                       <Td className="px-2">{log.method}</Td>
                       <Td className="px-2">{log.path}</Td>
                       <Td className="px-2">{log.ip}</Td>
@@ -70,12 +59,7 @@ const ListLogs: Component = () => {
                         />
                       </Td>
                       <Td className="px-2 text-center">
-                        <IconButton
-                          color="teal"
-                          variant="outline"
-                          aria-label=""
-                          icon={<FaEye />}
-                        />
+                        <IconButton color="teal" variant="outline" aria-label="" icon={<FaEye />} />
                       </Td>
                     </Tr>
                   ))

@@ -1,9 +1,4 @@
-import {
-  PrismaEntry,
-  PrismaEntryDelegate,
-  PrismaEntryInclude,
-  PrismaEntryStatus
-} from 'app/prisma'
+import { PrismaEntry, PrismaEntryDelegate, PrismaEntryInclude, PrismaEntryStatus } from 'app/prisma'
 import { Visibility } from 'app/model'
 import connexion, { ConnexionType } from 'services/connexion.service'
 import Model from 'class/Model'

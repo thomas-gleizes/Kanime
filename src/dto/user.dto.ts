@@ -1,11 +1,4 @@
-import {
-  IsDateString,
-  IsEnum,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MinLength
-} from 'class-validator'
+import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, MinLength } from 'class-validator'
 import { Gender } from '@prisma/client'
 
 import { QueryParamsDto } from 'dto/global.dto'

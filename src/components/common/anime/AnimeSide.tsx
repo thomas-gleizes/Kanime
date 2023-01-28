@@ -18,17 +18,13 @@ const AnimeSide: Component<Props> = ({ anime }) => {
           <Item label="Id" content={anime.id.toString()} />
           {anime.titles?.en && <Item label="Anglais" content={anime.titles.en} />}
           {anime.titles?.en_jp && <Item label="Japonais" content={anime.titles.en_jp} />}
-          {anime.titles?.ja_jp && (
-            <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />
-          )}
+          {anime.titles?.ja_jp && <Item label="Japonais (Romaji)" content={anime.titles.ja_jp} />}
           {anime.type && <Item label="Type" content={anime.type} />}
           <Item label="Episodes" content={anime.episode.count?.toString() || 'Inconnu'} />
           {
             <Item
               label="Durée"
-              content={
-                anime.episode.length ? `${anime.episode.length} minutes` : 'Inconnu'
-              }
+              content={anime.episode.length ? `${anime.episode.length} minutes` : 'Inconnu'}
             />
           }
           {anime.status && <Item label="Status" content={anime.status} />}

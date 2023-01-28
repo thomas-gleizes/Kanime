@@ -12,10 +12,7 @@ import DropDownByRef from 'components/layouts/DropDownByRef'
 import SearchBar from 'components/common/SearchBar'
 import { DEFAULT_USER_MEDIA } from 'resources/constants'
 
-const DropDownItem: Component<{ href: string; children: ReactNode }> = ({
-  href,
-  children
-}) => (
+const DropDownItem: Component<{ href: string; children: ReactNode }> = ({ href, children }) => (
   <Link href={href} className="block w-full py-1.5 px-2 hover:bg-gray-100">
     {children}
   </Link>
@@ -63,8 +60,7 @@ const Header: Component = () => {
   const isFocusedHeader = useFocus(headerRef)
 
   const headerTransparent = useMemo<boolean>(() => {
-    if (activeTransparent && !isMouseOverHeader && !isFocusedHeader)
-      return scrollHeight < 250
+    if (activeTransparent && !isMouseOverHeader && !isFocusedHeader) return scrollHeight < 250
     else return false
   }, [activeTransparent, isMouseOverHeader, isFocusedHeader, scrollHeight])
 
@@ -125,16 +121,10 @@ const Header: Component = () => {
                 <div>
                   {!isLogin ? (
                     <div className="flex items-center space-x-3 ml-4 justify-around text-white h-full my-auto">
-                      <Link
-                        href={routes.authentification.signIn}
-                        className="cursor-pointer"
-                      >
+                      <Link href={routes.authentification.signIn} className="cursor-pointer">
                         Connexion
                       </Link>
-                      <Link
-                        href={routes.authentification.register}
-                        className="cursor-pointer"
-                      >
+                      <Link href={routes.authentification.register} className="cursor-pointer">
                         Inscription
                       </Link>
                     </div>

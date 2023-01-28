@@ -37,8 +37,7 @@ class EntryHandler extends ApiHandler {
         const isFriends = await userFollowModel.isFriends(session.user.id, id)
 
         if (!isFriends) throw new NotFoundException('Entry not found')
-      } else if (entry.userId !== session.user.id)
-        throw new NotFoundException('Entry not found')
+      } else if (entry.userId !== session.user.id) throw new NotFoundException('Entry not found')
     }
 
     return { success: true, entry: entriesMapper.one(entry) }
@@ -58,15 +57,11 @@ class EntryHandler extends ApiHandler {
 
     if (body.status === EntryStatus.Completed && entry.anime.episodeCount)
       body.progress = entry.anime.episodeCount
-    else if (body.progress === entry.anime.episodeCount)
-      body.status = EntryStatus.Completed
+    else if (body.progress === entry.anime.episodeCount) body.status = EntryStatus.Completed
 
     if (!body.startedAt)
       if (entry.startedAt) body.startedAt = entry.startedAt
-      else if (
-        body.status === EntryStatus.Completed ||
-        body.status === EntryStatus.Watching
-      )
+      else if (body.status === EntryStatus.Completed || body.status === EntryStatus.Watching)
         body.startedAt = new Date()
 
     if (!body.finishAt)

@@ -1,11 +1,4 @@
-import {
-  IsBoolean,
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-  MinLength
-} from 'class-validator'
+import { IsBoolean, IsEmail, IsNotEmpty, IsString, MaxLength, MinLength } from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class RegisterDto {

@@ -48,12 +48,7 @@ interface MenuItemProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>
 }
 
-export const MenuItem: Component<MenuItemProps> = ({
-  children,
-  icon,
-  color,
-  onClick
-}) => {
+export const MenuItem: Component<MenuItemProps> = ({ children, icon, color, onClick }) => {
   const colorClassName = useMemo<string>(() => {
     return ''
   }, [])

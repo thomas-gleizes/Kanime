@@ -10,12 +10,7 @@ interface Props {
   externalToggleDisabled?: boolean
 }
 
-const Modal: Component<Props> = ({
-  isOpen,
-  toggle,
-  children,
-  externalToggleDisabled
-}) => {
+const Modal: Component<Props> = ({ isOpen, toggle, children, externalToggleDisabled }) => {
   const isBrowser = useBrowser()
 
   if (!isBrowser) return null

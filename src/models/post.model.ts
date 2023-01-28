@@ -23,10 +23,7 @@ class PostModel extends Model<PrismaPostsDelegate> {
       include: { replyTo: true, replies: true, user: true, anime: true }
     })
 
-  public findByAnimeIdAndUserId = (
-    animeId: number,
-    userId: number
-  ): Promise<PrismaPost> =>
+  public findByAnimeIdAndUserId = (animeId: number, userId: number): Promise<PrismaPost> =>
     this.model.findFirst({
       where: { animeId, userId }
     })
@@ -59,8 +56,7 @@ class PostModel extends Model<PrismaPostsDelegate> {
   public deleteParent = (id: number): Promise<any> =>
     this.model.updateMany({ where: { parentId: id }, data: { parentId: null } })
 
-  public delete = (id: number): Promise<PrismaPost> =>
-    this.model.delete({ where: { id } })
+  public delete = (id: number): Promise<PrismaPost> => this.model.delete({ where: { id } })
 }
 
 export default new PostModel(connexion)

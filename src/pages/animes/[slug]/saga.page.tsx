@@ -13,22 +13,20 @@ interface Props {
   saga: Nullable<Saga>
 }
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ params }) => {
-    const anime = await animeModel.findBySlug(params?.slug as string)
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ params }) => {
+  const anime = await animeModel.findBySlug(params?.slug as string)
 
-    if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
+  if (!anime) throw new SsrException(404, errorMessage.ANIME_NOT_FOUND)
 
-    const saga = await sagaModel.findById(anime.sagaId)
+  const saga = await sagaModel.findById(anime.sagaId)
 
-    return {
-      props: {
-        anime: animesMapper.one(anime),
-        saga: saga ? sagasMapper.one(saga) : null
-      }
+  return {
+    props: {
+      anime: animesMapper.one(anime),
+      saga: saga ? sagasMapper.one(saga) : null
     }
   }
-)
+})
 
 const SagaPage: Page<Props> = ({ saga, anime }) => {
   return (
@@ -41,10 +39,7 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
               saga.animes
                 .filter((a) => a.id !== anime.id)
                 .map((anime, index) => (
-                  <div
-                    key={index}
-                    className="bg-white shadow border rounded-xl px-3 py-2 w-full"
-                  >
+                  <div key={index} className="bg-white shadow border rounded-xl px-3 py-2 w-full">
                     <div className="flex">
                       {anime.poster && (
                         <img
@@ -69,9 +64,7 @@ const SagaPage: Page<Props> = ({ saga, anime }) => {
         </div>
       ) : (
         <div>
-          <h2 className="text-center text-lg">
-            L&apos;animée n&apos;est pas dans une saga
-          </h2>
+          <h2 className="text-center text-lg">L&apos;animée n&apos;est pas dans une saga</h2>
         </div>
       )}
     </div>

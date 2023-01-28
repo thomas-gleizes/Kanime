@@ -8,9 +8,7 @@ import { QueryParamsDto } from 'dto'
 
 class AnimesHandler extends ApiHandler {
   @Get()
-  async showAll(
-    @Query(ValidationPipe) params: QueryParamsDto
-  ): Promise<AnimesListResponse> {
+  async showAll(@Query(ValidationPipe) params: QueryParamsDto): Promise<AnimesListResponse> {
     const animes = await animeModel.all(params)
     const total = await animeModel.countTotal()
 

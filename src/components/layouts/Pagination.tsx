@@ -61,9 +61,7 @@ const Pagination: Component<Props> = ({ value, max, actions }) => {
               aria-current="page"
               className={classnames(
                 'py-2 px-3 leading-tight border border-gray-300 hover:bg-gray-100 hover:text-gray-700',
-                value - 1 + index === value
-                  ? 'text-blue-600 bg-blue-50'
-                  : 'text-gray-500 bg-white'
+                value - 1 + index === value ? 'text-blue-600 bg-blue-50' : 'text-gray-500 bg-white'
               )}
             >
               {value - 1 + index}

@@ -82,13 +82,9 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
         EditAnimesEntries,
         { anime, entry }
       )
+      console.log(result)
 
       if (result?.action === 'submit') {
-        const response = await ApiService.post<{ entry: Entry }>(
-          `/animes/${anime.id}/entries`,
-          result.values
-        )
-
         // @ts-ignore
         setEntry(response.entry)
       } else if (result?.action === 'delete') {
@@ -126,10 +122,7 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
             <nav className="relative bg-white p-0 w-full">
               <div className="flex justify-center divide-x-2 divide-gray-200">
                 {TABS.map((tab, index) => (
-                  <NavLink
-                    key={index}
-                    href={`${routes.animes.list}/${anime.slug}${tab.path}`}
-                  >
+                  <NavLink key={index} href={`${routes.animes.list}/${anime.slug}${tab.path}`}>
                     {tab.label}
                   </NavLink>
                 ))}

@@ -7,8 +7,7 @@ import EmptyLayout from 'components/layouts/pages/EmptyLayout'
 type Props = { name: string }
 
 export const getServerSideProps = ssrHandler<Props, { error?: string }>((context) => {
-  if (context.query.hasOwnProperty('error'))
-    throw new SsrException(400, 'This is an exceptions')
+  if (context.query.hasOwnProperty('error')) throw new SsrException(400, 'This is an exceptions')
 
   return {
     props: {

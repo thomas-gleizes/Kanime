@@ -7,20 +7,18 @@ import { ssrHandler } from 'services/handler.service'
 
 interface Props {}
 
-export const getServerSideProps = ssrHandler<Props, { username: string }>(
-  ({ req, query }) => {
-    if (req.session.user.slug !== query.slug) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: `${routes.users}/${query.username}`
-        }
+export const getServerSideProps = ssrHandler<Props, { username: string }>(({ req, query }) => {
+  if (req.session.user.slug !== query.slug) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: `${routes.users}/${query.username}`
       }
     }
-
-    return { props: {} }
   }
-)
+
+  return { props: {} }
+})
 
 const SettingsPage: Page<Props> = () => {
   return (

@@ -2,11 +2,7 @@ import { NextFunction } from 'next-api-decorators'
 
 import { ApiRequest, ApiResponse } from 'app/next'
 
-export default function queryParser(
-  req: ApiRequest,
-  res: ApiResponse,
-  next: NextFunction
-): void {
+export default function queryParser(req: ApiRequest, res: ApiResponse, next: NextFunction): void {
   for (const [key, value] of Object.entries(req.query)) {
     if (key.match(/\[\]$/)) {
       req.query[key.replace(/\[\]$/, '')] = value

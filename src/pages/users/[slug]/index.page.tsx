@@ -20,43 +20,41 @@ interface Props {
   error?: ErrorPage
 }
 
-export const getServerSideProps = ssrHandler<Props, { slug: string }>(
-  async ({ query, req }) => {
-    const { slug } = query
-    const { user: sessionUser } = req.session
+export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ query, req }) => {
+  const { slug } = query
+  const { user: sessionUser } = req.session
 
-    const user = await userModel.findBySlug(slug as string)
-    if (!user) throw new SsrException(404, errorMessage.USER_NOT_FOUND)
+  const user = await userModel.findBySlug(slug as string)
+  if (!user) throw new SsrException(404, errorMessage.USER_NOT_FOUND)
 
-    const visibility: Visibility[] = ['public']
-    if (sessionUser)
-      if (user.id === sessionUser.id) visibility.push('limited', 'private')
-      else {
-        const isFriends = await userFollowModel.isFriends(sessionUser.id, user.id)
+  const visibility: Visibility[] = ['public']
+  if (sessionUser)
+    if (user.id === sessionUser.id) visibility.push('limited', 'private')
+    else {
+      const isFriends = await userFollowModel.isFriends(sessionUser.id, user.id)
 
-        if (isFriends) visibility.push('limited')
-      }
+      if (isFriends) visibility.push('limited')
+    }
 
-    const entries = await entryModel.getByUser(
-      user.id,
-      visibility,
-      undefined,
-      { field: 'rating', order: 'desc' },
-      {
-        include: { anime: true },
-        limit: 1000
-      }
-    )
+  const entries = await entryModel.getByUser(
+    user.id,
+    visibility,
+    undefined,
+    { field: 'rating', order: 'desc' },
+    {
+      include: { anime: true },
+      limit: 1000
+    }
+  )
 
-    return {
-      props: {
-        isCurrent: user.id === sessionUser?.id,
-        user: usersMapper.one(user),
-        entries: entriesMapper.many(entries)
-      }
+  return {
+    props: {
+      isCurrent: user.id === sessionUser?.id,
+      user: usersMapper.one(user),
+      entries: entriesMapper.many(entries)
     }
   }
-)
+})
 
 const StatusButton: Component<{
   active: boolean

@@ -2,11 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { HttpException } from 'next-api-decorators'
 import trace from 'utils/trace'
 
-export default function exceptionHandler(
-  error: Error,
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default function exceptionHandler(error: Error, req: NextApiRequest, res: NextApiResponse) {
   if (error instanceof HttpException) {
     trace('HttpException', error.statusCode, error.message)
 

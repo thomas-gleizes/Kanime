@@ -21,9 +21,7 @@ export function ssrHandler<
   Q extends ParsedUrlQuery = ParsedUrlQuery,
   D extends PreviewData = PreviewData
 >(
-  handler: (
-    context: GetServerSidePropsContext<Q>
-  ) => OptionalPromise<GetServerSidePropsResult<P>>
+  handler: (context: GetServerSidePropsContext<Q>) => OptionalPromise<GetServerSidePropsResult<P>>
 ): GetServerSideProps<P, Q, D> {
   // @ts-ignore
   return withSessionSsr<P, Q, D>(async (context) => {

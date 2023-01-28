@@ -11,10 +11,7 @@ const StarsRating: Component<Props> = ({ rating }) => {
         <svg
           key={index}
           aria-hidden="true"
-          className={classnames(
-            'w-5 h-5',
-            index < rating ? 'text-yellow-400' : 'text-gray-300'
-          )}
+          className={classnames('w-5 h-5', index < rating ? 'text-yellow-400' : 'text-gray-300')}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"

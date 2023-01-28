@@ -87,9 +87,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
             <div
               className="bg-primary-light h-full"
               style={{
-                width: `${
-                  (entry.progress / (entry.anime.episode.count || entry.progress)) * 100
-                }%`
+                width: `${(entry.progress / (entry.anime.episode.count || entry.progress)) * 100}%`
               }}
             />
           ) : null}
@@ -107,9 +105,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
           </div>
         </div>
       </div>
-      {entry.anime && (
-        <AnimePopup anime={entry.anime} isOpen={isMouseOver} position="right" />
-      )}
+      {entry.anime && <AnimePopup anime={entry.anime} isOpen={isMouseOver} position="right" />}
     </div>
   )
 }

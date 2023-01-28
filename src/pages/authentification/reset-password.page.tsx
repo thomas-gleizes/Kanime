@@ -20,25 +20,23 @@ interface Props {
   token: string
 }
 
-export const getServerSideProps = ssrHandler<Props, { token: string }>(
-  async (context) => {
-    const { token } = context.query
+export const getServerSideProps = ssrHandler<Props, { token: string }>(async (context) => {
+  const { token } = context.query
 
-    const user = await userModel.checkResetPasswordToken(token as string)
+  const user = await userModel.checkResetPasswordToken(token as string)
 
-    if (!user) {
-      return {
-        redirect: {
-          permanent: false,
-          destination: routes.authentification.signIn
-        }
+  if (!user) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: routes.authentification.signIn
       }
-    } else
-      return {
-        props: { token: token as string }
-      }
-  }
-)
+    }
+  } else
+    return {
+      props: { token: token as string }
+    }
+})
 
 const ResetPasswordPage: Page<Props> = ({ token }) => {
   const router = useRouter()
@@ -73,20 +71,10 @@ const ResetPasswordPage: Page<Props> = ({ token }) => {
             <h2 className="text-xl font-bold">Réinitialiser votre mot de passe</h2>
           </div>
           <div>
-            <Field
-              type="password"
-              name="newPassword"
-              label="Nouveau mot de passe"
-              required
-            />
+            <Field type="password" name="newPassword" label="Nouveau mot de passe" required />
           </div>
           <div>
-            <Field
-              type="password"
-              name="confirmPassword"
-              label="Confirmer mot de passe"
-              required
-            />
+            <Field type="password" name="confirmPassword" label="Confirmer mot de passe" required />
           </div>
           <div>
             <Button type="submit">Confirmer</Button>

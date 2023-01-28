@@ -29,9 +29,7 @@ export function withSessionSsr<
   Q extends ParsedUrlQuery = ParsedUrlQuery,
   D extends PreviewData = PreviewData
 >(
-  handler: (
-    context: GetServerSidePropsContext<Q, D>
-  ) => Promise<GetServerSidePropsResult<P>>
+  handler: (context: GetServerSidePropsContext<Q, D>) => Promise<GetServerSidePropsResult<P>>
 ): GetServerSideProps<P, Q, D> {
   // @ts-ignore
   return withIronSessionSsr(handler, sessionOptions)

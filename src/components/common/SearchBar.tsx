@@ -134,9 +134,7 @@ const SearchBar: Component<Props> = ({ transparent }) => {
                                 <span>{anime.season_year}</span>
                                 <span>
                                   {anime.rating.average && (
-                                    <StarsRating
-                                      rating={Math.round(anime.rating.average / 20)}
-                                    />
+                                    <StarsRating rating={Math.round(anime.rating.average / 20)} />
                                   )}
                                 </span>
                               </div>

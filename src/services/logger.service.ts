@@ -8,8 +8,7 @@ function replaceKey(data: object) {
   const keys = Object.keys(data)
   const result: { [key: string]: string } = {}
 
-  for (const key of keys)
-    if (key in loggerReplaceKey) result[key] = loggerReplaceKey[key] as string
+  for (const key of keys) if (key in loggerReplaceKey) result[key] = loggerReplaceKey[key] as string
 
   return { ...data, ...result }
 }
