@@ -5,7 +5,7 @@ import classnames from 'classnames'
 import { CheckCircleIcon, EyeIcon, PencilAltIcon, PlayIcon } from '@heroicons/react/solid'
 
 import { LayoutContentComponent, LayoutProps } from 'app/types'
-import { ApiService } from 'services/api.service'
+import { entriesApi } from 'api'
 import { useLayoutContext } from 'context/layout.context'
 import { useUserContext } from 'context/auth.context'
 import { useDialog } from 'hooks'
@@ -55,18 +55,15 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
   } = useLayoutContext()
 
   const router = useRouter()
-
   const dialog = useDialog()
 
   const [entry, setEntry] = useState<Entry>()
 
   useEffect(() => {
-    if (isLogin && anime?.id)
-      ApiService.get(`/animes/${anime.id}/entries`)
-        .then((response) =>
-          // @ts-ignore
-          setEntry(response?.entry)
-        )
+    if (isLogin && anime.id)
+      entriesApi
+        .getByAnime(anime.id)
+        .then((response) => setEntry(response.entry))
         .catch(() => setEntry(undefined))
   }, [isLogin, anime?.id])
 
@@ -82,25 +79,17 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
         EditAnimesEntries,
         { anime, entry }
       )
-      console.log(result)
 
-      if (result?.action === 'submit') {
-        // @ts-ignore
-        setEntry(response.entry)
-      } else if (result?.action === 'delete') {
-        await ApiService.delete(`/animes/${anime.id}/entries`)
-        setEntry(undefined)
-      }
+      if (result.action === 'submit') setEntry(result.entry)
+      else if (result.action === 'delete') setEntry(undefined)
     }
   }
 
   const handleSetupEntry = (status: EntryStatus) => {
-    if (isLogin)
-      ApiService.post<{ entry: Entry }>(`/animes/${anime.id}/entries`, { status }).then(
-        // @ts-ignore
-        (response) => setEntry(response.entry)
-      )
-    else void router.push(routes.authentification.signIn)
+    if (isLogin) {
+      // @ts-ignore
+      entriesApi.create({ animeId: anime.id, status }).then((response) => setEntry(response.entry))
+    } else void router.push(routes.authentification.signIn)
   }
 
   return (
@@ -200,6 +189,7 @@ const AnimeLayoutContent: LayoutContentComponent<Props> = ({ anime, children }) 
 
 const NavLink: Component<{ href: string; children: string }> = ({ href, children }) => {
   const router = useRouter()
+
   const active = useMemo<boolean>(() => router.asPath === href, [router.asPath, href])
 
   return (

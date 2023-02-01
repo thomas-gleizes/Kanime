@@ -21,7 +21,7 @@ function getStatus(status) {
 ;(async function run() {
   const prisma = new PrismaClient()
 
-  await prisma.entry.deleteMany({ where: { user_id: 1 } })
+  await prisma.entry.deleteMany({ where: { userId: 1 } })
 
   let url =
     'https://kitsu.io/api/edge/library-entries?filter%5Bkind%5D=anime&filter%5Buser_id%5D=195795&include=anime&page%5Blimit%5D=10&page%5Boffset%5D=0'
@@ -33,7 +33,7 @@ function getStatus(status) {
 
     for (const [index, entry] of Object.entries(entries)) {
       const anime = await prisma.anime.findUnique({
-        where: { kitsu_id: +animes[index].id }
+        where: { kitsuId: +animes[index].id }
       })
 
       await prisma.entry.create({

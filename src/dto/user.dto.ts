@@ -16,7 +16,7 @@ export class UpdateUserDto {
   city?: string
 
   @IsOptional()
-  @IsDateString({ message: 'La date doit être une date valide' })
+  @IsDateString({}, { message: 'La date doit être une date valide' })
   birthday?: Date | string
 
   @IsOptional()

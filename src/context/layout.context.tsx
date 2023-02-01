@@ -72,42 +72,42 @@ const LayoutContextProvider: Component<ContextProviderProps> = ({ children }) =>
     else document.documentElement.classList.remove(THEME.DARK)
   }, [theme])
 
-  useEffect(() => {
-    const listener = (event: MessageEvent) => {
-      const message = event.data
-
-      if (message === WINDOW_MESSAGE.GLOBAL_LOADING.START) !apiLoading && setApiLoading(true)
-      else if (message === WINDOW_MESSAGE.GLOBAL_LOADING.STOP) apiLoading && setApiLoading(false)
-    }
-
-    if (isBrowser()) {
-      window.addEventListener('message', listener)
-
-      return () => window.removeEventListener('message', listener)
-    }
-  }, [apiLoading])
-
-  useEffect(() => {
-    let interval
-
-    if (apiLoading) {
-      interval = setInterval(
-        () =>
-          setApiLoadingPercent((prevState) => {
-            if (prevState < 50) return prevState + 1
-            if (prevState < 80) return prevState + 0.5
-
-            return prevState
-          }),
-        50
-      )
-    } else {
-      setApiLoadingPercent(100)
-      interval = setTimeout(() => setApiLoadingPercent(0), 1000)
-    }
-
-    return () => clearInterval(interval)
-  }, [apiLoading])
+  // useEffect(() => {
+  //   const listener = (event: MessageEvent) => {
+  //     const message = event.data
+  //
+  //     if (message === WINDOW_MESSAGE.GLOBAL_LOADING.START) !apiLoading && setApiLoading(true)
+  //     else if (message === WINDOW_MESSAGE.GLOBAL_LOADING.STOP) apiLoading && setApiLoading(false)
+  //   }
+  //
+  //   if (isBrowser()) {
+  //     window.addEventListener('message', listener)
+  //
+  //     return () => window.removeEventListener('message', listener)
+  //   }
+  // }, [apiLoading])
+  //
+  // useEffect(() => {
+  //   let interval
+  //
+  //   if (apiLoading) {
+  //     interval = setInterval(
+  //       () =>
+  //         setApiLoadingPercent((prevState) => {
+  //           if (prevState < 50) return prevState + 1
+  //           if (prevState < 80) return prevState + 0.5
+  //
+  //           return prevState
+  //         }),
+  //       50
+  //     )
+  //   } else {
+  //     setApiLoadingPercent(100)
+  //     interval = setTimeout(() => setApiLoadingPercent(0), 1000)
+  //   }
+  //
+  //   return () => clearInterval(interval)
+  // }, [apiLoading])
 
   return (
     <LayoutContext.Provider

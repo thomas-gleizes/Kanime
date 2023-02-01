@@ -15,6 +15,14 @@ class AnimesApi extends Api {
   public search(query: string, params?: modelParams) {
     return this.get<AnimesSearchResponse>('/search', { params: { query, ...params } })
   }
+
+  public entry(id: number) {
+    return this.get(`/${id}/entry`)
+  }
+
+  public entries(id: number) {
+    return this.get(`/${id}/entries`)
+  }
 }
 
 export default new AnimesApi(ApiService)

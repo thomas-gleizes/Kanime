@@ -14,9 +14,10 @@ class EntryModel extends Model<PrismaEntryDelegate> {
       ...this.getKeyParams(params)
     })
 
-  public find = (id: number) =>
+  public findById = (id: number, include?: { anime?: boolean; user?: boolean }) =>
     this.model.findUnique({
-      where: { id }
+      where: { id },
+      include: { anime: include.anime, user: include.user }
     })
 
   public findWithAnime = (id: number) =>
@@ -25,7 +26,7 @@ class EntryModel extends Model<PrismaEntryDelegate> {
   public findWithUser = (id: number) =>
     this.model.findUnique({ where: { id }, include: { user: true } })
 
-  public unique = (userId: number, animeId: number) =>
+  public findByAnimeAndUser = (userId: number, animeId: number) =>
     this.model.findUnique({
       where: {
         animeId_userId: {

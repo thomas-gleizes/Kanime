@@ -67,7 +67,7 @@ const Header: Component = () => {
   if (header.hiddenHeader) return null
 
   return (
-    <header ref={headerRef} className="h-header" onFocus={console.log}>
+    <header ref={headerRef} className="h-header">
       <div
         className={classnames(
           'z-50 fixed top-0 w-full shadow-lg select-none transition-all duration-500 ease-in-out'

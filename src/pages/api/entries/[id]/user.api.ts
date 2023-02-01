@@ -15,7 +15,7 @@ class EntryUserHandler extends ApiHandler {
     @Param('id', ParseNumberPipe) id: number,
     @GetSession() session: Session
   ): Promise<ShowEntryUserResponse> {
-    const entry = await entryModel.findWithUser(id)
+    const entry = await entryModel.findById(id, { user: true })
 
     if (!entry) throw new NotFoundException('entry not found')
     if (entry.visibility !== Visibility.public) {

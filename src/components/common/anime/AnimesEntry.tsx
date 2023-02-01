@@ -31,7 +31,7 @@ const AnimesEntry: Component<Props> = ({ entry, editable, updateList }) => {
 
     switch (result.action) {
       case 'submit':
-        updateList('update', result.values)
+        updateList('update', result.entry)
         return void toast.success('Entry updated successfully')
       case 'delete':
         updateList('delete', entry)

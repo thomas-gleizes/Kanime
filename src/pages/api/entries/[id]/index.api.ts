@@ -1,11 +1,11 @@
 import {
-  Get,
-  Delete,
-  Patch,
   Body,
-  Query,
+  Delete,
+  Get,
   HttpCode,
   ParseNumberPipe,
+  Patch,
+  Query,
   ValidationPipe
 } from 'next-api-decorators'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
@@ -17,7 +17,7 @@ import ApiHandler from 'class/ApiHandler'
 import { entryModel, userFollowModel } from 'models'
 import { entriesMapper } from 'mappers'
 import HttpStatus from 'resources/HttpStatus'
-import { GetSession, AuthGuard } from 'decorators'
+import { AuthGuard, GetSession } from 'decorators'
 import { UpdateEntryDto } from 'dto'
 import { NotFoundException } from 'exceptions/http'
 
@@ -27,7 +27,7 @@ class EntryHandler extends ApiHandler {
     @Query('id', ParseNumberPipe) id: number,
     @GetSession() session: Session
   ): Promise<ShowEntryResponse> {
-    const entry = await entryModel.find(id)
+    const entry = await entryModel.findById(id)
 
     if (!entry) throw new NotFoundException('Entry not found')
     if (entry.visibility !== Visibility.public) {
@@ -50,9 +50,9 @@ class EntryHandler extends ApiHandler {
     @Body(ValidationPipe) body: UpdateEntryDto,
     @GetSession() session: Session
   ): Promise<UpdateEntryResponse> {
-    const entry = await entryModel.findWithAnime(id)
+    const entry = await entryModel.findById(id, { anime: true })
 
-    if (!entry || (entry && entry.userId === session.user.id))
+    if (!entry || (entry && entry.userId !== session.user.id))
       throw new NotFoundException('entry not found')
 
     if (body.status === EntryStatus.Completed && entry.anime.episodeCount)

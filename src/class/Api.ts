@@ -30,7 +30,7 @@ abstract class Api {
 
   protected delete<R extends ApiResponse = ApiResponse, P = undefined>(
     path: string,
-    params: AxiosRequestConfig<P>
+    params?: AxiosRequestConfig<P>
   ): Promise<R> {
     return this._instance.delete<R, R, P>(`${this._path}${path}`, params)
   }

@@ -11,8 +11,8 @@ import { Exception, SsrException } from 'exceptions'
 import { ssrLogger } from 'middlewares/logger.middleware'
 import { withSessionApi, withSessionSsr } from 'services/session.service'
 import { errorMessage } from 'resources/constants'
-import trace from 'utils/trace'
 import httpStatus from 'resources/HttpStatus'
+import trace from 'utils/trace'
 
 export const apiHandler = (handler: any) => withSessionApi(createHandler(handler))
 

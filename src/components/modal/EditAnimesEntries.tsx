@@ -29,7 +29,7 @@ import {
   Textarea
 } from '@chakra-ui/react'
 
-import { ApiService } from 'services/api.service'
+import { entriesApi } from 'api'
 import { replaceCamelCaseWithSpace } from 'utils/stringHelpers'
 import { editEntrySchema } from 'resources/validations'
 import { CreateEntryDto } from 'dto'
@@ -38,7 +38,7 @@ import { Select } from 'components/common/inputs'
 
 type SubmitResult = {
   action: 'submit'
-  values: Entry
+  entry: Entry
 }
 
 type DeleteSubmit = {
@@ -81,12 +81,13 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({ isOpen, close, anim
 
   const handleSubmit = async (values: CreateEntryDto) => {
     try {
-      const response = await ApiService.post<{ entry: Entry }>(`/entries`, values)
-
-      console.log('response', response)
-
-      // @ts-ignore
-      close({ action: 'submit', values: { ...response.entry, anime } })
+      if (entry) {
+        const response = await entriesApi.update(entry.id, values)
+        close({ action: 'submit', entry: { ...response.entry, anime } })
+      } else {
+        const response = await entriesApi.create(values)
+        close({ action: 'submit', entry: { ...response.entry, anime } })
+      }
     } catch (err) {
       if (err instanceof ApiException) toast.error(err.message)
       else toast.error('Une erreur est survenue')
@@ -97,7 +98,7 @@ const EditAnimesEntries: DialogComponent<Props, Result> = ({ isOpen, close, anim
     if (!entry) return close({ action: 'cancel' })
 
     try {
-      await ApiService.delete(`/entries/${entry.id}`)
+      await entriesApi.remove(entry.id)
 
       return close({ action: 'delete' })
     } catch (err) {

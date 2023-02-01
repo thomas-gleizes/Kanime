@@ -33,6 +33,8 @@ export const getStaticProps: StaticProps<Props> = async () => {
 }
 
 const HomePage: Page<Props> = ({ time, animes }) => {
+  console.log('Animes', animes)
+
   return (
     <>
       <Title>Accueil</Title>

@@ -53,7 +53,7 @@ declare module 'app/next' {
   declare type AppProps = {
     pageProps: any
     Component: Page
-    session: any
+    session?: any
   }
 
   declare type initialState = {
@@ -61,9 +61,7 @@ declare module 'app/next' {
   }
 
   declare type SsrHandlerType<P = {}, Q = any> = (
-    handler: (
-      context: ServerSidePropsContext<Q>
-    ) => OptionalPromise<GetServerSidePropsResult<P>>
+    handler: (context: ServerSidePropsContext<Q>) => OptionalPromise<GetServerSidePropsResult<P>>
   ) => ServerSideProps<P, Q>
 }
 

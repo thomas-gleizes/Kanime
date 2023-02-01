@@ -8,7 +8,7 @@ export class RegisterDto {
   @MaxLength(32, { message: "Le nom d'utilisateur doit contenir au plus 32 caractères" })
   username!: string
 
-  @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
+  @IsEmail({}, { message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
   @MaxLength(255, {
     message: "Le nom d'utilisateur doit contenir au plus 255 caractères"
@@ -27,7 +27,7 @@ export class RegisterDto {
 }
 
 export class SignInDto {
-  @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
+  @IsEmail({}, { message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
   email!: string
 
@@ -41,7 +41,7 @@ export class SignInDto {
 }
 
 export class ForgotPasswordDto {
-  @IsEmail({ message: "L'adresse email doit être une adresse email valide" })
+  @IsEmail({}, { message: "L'adresse email doit être une adresse email valide" })
   @IsNotEmpty({ message: "L'adresse email est requise" })
   email!: string
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { EntryStatus, Visibility } from '@prisma/client'
+import classnames from 'classnames'
 
 import type { Page } from 'app/next'
 import { ssrHandler } from 'services/handler.service'
@@ -11,7 +12,6 @@ import { useDelayBoolean, useScrollPercent, useStateProps } from 'hooks'
 import UserLayout from 'components/layouts/pages/UserLayout'
 import Title from 'components/layouts/Title'
 import AnimesEntry from 'components/common/anime/AnimesEntry'
-import classnames from 'classnames'
 
 interface Props {
   user: User
@@ -42,8 +42,7 @@ export const getServerSideProps = ssrHandler<Props, { slug: string }>(async ({ q
     undefined,
     { field: 'rating', order: 'desc' },
     {
-      include: { anime: true },
-      limit: 1000
+      include: { anime: true }
     }
   )
 
@@ -204,7 +203,7 @@ export const UserPage: Page<Props> = ({ user, ...props }) => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-5 mx-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-x-3 gap-y-5 mx-2 mb-24">
             {filteredEntries.slice(0, limit).map((entry, index) => (
               <AnimesEntry
                 key={index}

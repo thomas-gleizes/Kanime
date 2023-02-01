@@ -47,21 +47,21 @@ export class UpdateEntryDto {
   @MaxLength(500, { message: 'Le commentaire doit contenir au plus 500 caractères' })
   note: Optional<string>
 
-  @IsDateString({ message: 'La date doit être une date valide' })
+  @IsDateString({}, { message: 'La date doit être une date valide' })
   @IsOptional()
   startedAt: Optional<Date | string>
 
-  @IsDateString({ message: 'La date doit être une date valide' })
+  @IsDateString({}, { message: 'La date doit être une date valide' })
   @IsOptional()
   finishAt: Optional<Date | string>
 
   @IsEnum(Visibility, { message: 'La visibilité doit être une visibilité valide' })
   @IsOptional()
-  visibility: Visibility | undefined
+  visibility: Visibility
 }
 
 export class CreateEntryDto extends UpdateEntryDto {
   @Type(() => Number)
   @IsInt({ message: "L'id de l'anime doit être un entier" })
-  animeId!: number
+  animeId: number
 }
