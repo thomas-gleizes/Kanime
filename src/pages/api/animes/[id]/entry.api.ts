@@ -7,7 +7,7 @@ import { AuthGuard } from 'decorators/authGuard.decorator'
 import { GetSession } from 'decorators/getSession.decorator'
 import { entriesMapper } from 'mappers'
 import { NotFoundException } from 'exceptions/http'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 
 class AnimesEntryHandler extends ApiHandler {
   @Get()
@@ -27,4 +27,4 @@ class AnimesEntryHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AnimesEntryHandler)
+export default handleApi(AnimesEntryHandler)

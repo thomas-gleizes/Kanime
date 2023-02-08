@@ -14,7 +14,7 @@ import { errorMessage } from 'resources/constants'
 import httpStatus from 'resources/HttpStatus'
 import trace from 'utils/trace'
 
-export const apiHandler = (handler: any) => withSessionApi(createHandler(handler))
+export const handleApi = (handler: any) => withSessionApi(createHandler(handler))
 
 export function ssrHandler<
   P extends { [key: string]: any } = { [key: string]: any },

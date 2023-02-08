@@ -1,6 +1,6 @@
 import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { logsMapper } from 'mappers'
 import { logModel } from 'models'
@@ -25,4 +25,4 @@ class LogsHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(LogsHandler)
+export default handleApi(LogsHandler)

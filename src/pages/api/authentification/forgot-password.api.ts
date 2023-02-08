@@ -1,6 +1,6 @@
 import { Body, Patch, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { userModel } from 'models'
 import Security from 'services/security.service'
 import { ForgotPasswordDto } from 'dto'
@@ -21,4 +21,4 @@ class ForgotPasswordHandler {
   }
 }
 
-export default apiHandler(ForgotPasswordHandler)
+export default handleApi(ForgotPasswordHandler)

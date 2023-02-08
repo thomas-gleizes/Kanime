@@ -1,7 +1,7 @@
 import { Delete, Get, HttpCode, ParseNumberPipe, Post, Query } from 'next-api-decorators'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { errorMessage } from 'resources/constants'
 import HttpStatus from 'resources/HttpStatus'
@@ -62,4 +62,4 @@ class UserFollowHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(UserFollowHandler)
+export default handleApi(UserFollowHandler)

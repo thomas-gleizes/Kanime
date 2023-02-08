@@ -1,6 +1,6 @@
 import { Get, ParseNumberPipe, Query } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { categoriesMapper } from 'mappers'
 import { categoryModel } from 'models'
@@ -16,4 +16,4 @@ class AnimesCategoriesHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AnimesCategoriesHandler)
+export default handleApi(AnimesCategoriesHandler)

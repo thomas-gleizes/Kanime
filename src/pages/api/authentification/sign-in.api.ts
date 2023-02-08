@@ -1,7 +1,7 @@
 import { Body, Post, ValidationPipe } from 'next-api-decorators'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import Security from 'services/security.service'
 import { userModel } from 'models'
@@ -37,4 +37,4 @@ class SignInInHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(SignInInHandler)
+export default handleApi(SignInInHandler)

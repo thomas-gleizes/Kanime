@@ -1,7 +1,7 @@
 import { Get, HttpCode, Post } from 'next-api-decorators'
 
 import ApiHandler from 'class/ApiHandler'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import httpStatus from 'resources/HttpStatus'
 
 class TestApiHandler extends ApiHandler {
@@ -17,4 +17,4 @@ class TestApiHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(TestApiHandler)
+export default handleApi(TestApiHandler)

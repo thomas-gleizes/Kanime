@@ -1,6 +1,6 @@
 import { Patch, Body, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { userModel } from 'models'
 import ApiHandler from 'class/ApiHandler'
 import Security from 'services/security.service'
@@ -20,4 +20,4 @@ class ResetPasswordHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(ResetPasswordHandler)
+export default handleApi(ResetPasswordHandler)

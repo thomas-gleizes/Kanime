@@ -1,6 +1,6 @@
 import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { sagasMapper } from 'mappers'
 import { sagaModel } from 'models'
@@ -18,4 +18,4 @@ class SagaSearchHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(SagaSearchHandler)
+export default handleApi(SagaSearchHandler)

@@ -3,7 +3,7 @@ import { Visibility } from '@prisma/client'
 
 import type { Session } from 'app/session'
 import ApiHandler from 'class/ApiHandler'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { entryModel, userFollowModel } from 'models'
 import { usersMapper } from 'mappers'
 import { GetSession } from 'decorators'
@@ -17,9 +17,9 @@ class EntryUserHandler extends ApiHandler {
   ): Promise<ShowEntryUserResponse> {
     const entry = await entryModel.findById(id, { user: true })
 
-    if (!entry) throw new NotFoundException('entry not found')
+    if (!entry) throw new NotFoundException('Entry not found')
     if (entry.visibility !== Visibility.public) {
-      if (!session) throw new NotFoundException('entry not found')
+      if (!session) throw new NotFoundException('Entry not found')
 
       if (entry.visibility === Visibility.limited) {
         const isFriends = await userFollowModel.isFriends(session.user.id, id)
@@ -32,4 +32,4 @@ class EntryUserHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(EntryUserHandler)
+export default handleApi(EntryUserHandler)

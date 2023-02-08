@@ -1,6 +1,6 @@
 import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { animeModel } from 'models'
 import { animesMapper } from 'mappers'
@@ -23,4 +23,4 @@ class AnimesHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AnimesHandler)
+export default handleApi(AnimesHandler)

@@ -2,7 +2,7 @@ import { Get, Query, ParseNumberPipe } from 'next-api-decorators'
 import { Visibility } from '@prisma/client'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { animeModel, entryModel, userFollowModel } from 'models'
 import { entriesMapper } from 'mappers'
 import { errorMessage } from 'resources/constants'
@@ -50,4 +50,4 @@ class AnimesEntriesHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AnimesEntriesHandler)
+export default handleApi(AnimesEntriesHandler)

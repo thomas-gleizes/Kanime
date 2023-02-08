@@ -1,7 +1,7 @@
 import { Get, Query, ValidationPipe } from 'next-api-decorators'
 
 import ApiHandler from 'class/ApiHandler'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { NotFoundException } from 'exceptions/http'
 import { IsNotEmpty, IsString, MinLength } from 'class-validator'
 
@@ -53,4 +53,4 @@ class HomeApiHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(HomeApiHandler)
+export default handleApi(HomeApiHandler)

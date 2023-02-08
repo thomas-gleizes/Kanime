@@ -1,7 +1,7 @@
 import { Post, Body, HttpCode, ValidationPipe } from 'next-api-decorators'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import Security from 'services/security.service'
 import HttpStatus from 'resources/HttpStatus'
 import ApiHandler from 'class/ApiHandler'
@@ -46,4 +46,4 @@ class RegisterHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(RegisterHandler)
+export default handleApi(RegisterHandler)

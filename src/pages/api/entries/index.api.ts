@@ -2,7 +2,7 @@ import { Get, Post, Body, Query, HttpCode, ValidationPipe } from 'next-api-decor
 import { EntryStatus } from '@prisma/client'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { errorMessage } from 'resources/constants'
 import HttpStatus from 'resources/HttpStatus'
@@ -50,4 +50,4 @@ class EntriesHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(EntriesHandler)
+export default handleApi(EntriesHandler)

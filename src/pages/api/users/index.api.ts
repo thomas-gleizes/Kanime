@@ -2,7 +2,7 @@ import * as fs from 'fs'
 import { Body, Get, Patch, Query, ValidationPipe } from 'next-api-decorators'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import Security from 'services/security.service'
 import { usersMapper } from 'mappers'
@@ -74,7 +74,7 @@ class UsersHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(UsersHandler)
+export default handleApi(UsersHandler)
 
 export const config = {
   api: {

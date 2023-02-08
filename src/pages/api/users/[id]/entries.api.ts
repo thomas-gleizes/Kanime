@@ -4,7 +4,7 @@ import { Visibility } from '@prisma/client'
 import type { PrismaEntryStatus } from 'app/prisma'
 import type { Session } from 'app/session'
 import ApiHandler from 'class/ApiHandler'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { entryModel, userFollowModel } from 'models'
 import { entriesMapper } from 'mappers'
 import { GetSession } from 'decorators'
@@ -44,4 +44,4 @@ class UserEntriesHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(UserEntriesHandler)
+export default handleApi(UserEntriesHandler)

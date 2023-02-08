@@ -12,7 +12,7 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { EntryStatus, Visibility } from '@prisma/client'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { entryModel, userFollowModel } from 'models'
 import { entriesMapper } from 'mappers'
@@ -93,4 +93,4 @@ class EntryHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(EntryHandler)
+export default handleApi(EntryHandler)

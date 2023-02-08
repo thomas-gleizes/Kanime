@@ -1,6 +1,6 @@
 import { Get, Query } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 
 class SleepHandler extends ApiHandler {
@@ -13,4 +13,4 @@ class SleepHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(SleepHandler)
+export default handleApi(SleepHandler)

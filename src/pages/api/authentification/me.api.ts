@@ -1,7 +1,7 @@
 import { Get } from 'next-api-decorators'
 
 import type { Session } from 'app/session'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { usersMapper } from 'mappers'
 import { userModel } from 'models'
 import ApiHandler from 'class/ApiHandler'
@@ -21,4 +21,4 @@ class AuthProfilHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AuthProfilHandler)
+export default handleApi(AuthProfilHandler)

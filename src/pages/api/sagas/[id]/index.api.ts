@@ -1,5 +1,5 @@
 import { Get, ParseNumberPipe, Query } from 'next-api-decorators'
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import { sagaModel } from 'models'
 import { sagasMapper } from 'mappers'
 import ApiHandler from 'class/ApiHandler'
@@ -16,4 +16,4 @@ class SagaHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(SagaHandler)
+export default handleApi(SagaHandler)

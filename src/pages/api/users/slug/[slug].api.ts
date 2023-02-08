@@ -1,6 +1,6 @@
 import { Get, Query } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { userModel } from 'models'
 import { errorMessage } from 'resources/constants'
@@ -18,4 +18,4 @@ class UserSlugHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(UserSlugHandler)
+export default handleApi(UserSlugHandler)

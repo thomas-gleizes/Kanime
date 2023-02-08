@@ -48,7 +48,7 @@ const ExploreAnimes: Page<Props> = (props) => {
   })
 
   const [active, toggle] = useDelayBoolean(5000)
-  const percent = useScrollPercent()
+  const percent = useScrollPercent({ sensitive: 3 })
 
   useEffect(() => {
     if (!active && percent > 95 && !isLoading) {

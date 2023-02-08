@@ -1,6 +1,6 @@
 import { Get, Query } from 'next-api-decorators'
 
-import { apiHandler } from 'services/handler.service'
+import { handleApi } from 'services/handler.service'
 import ApiHandler from 'class/ApiHandler'
 import { animesMapper } from 'mappers'
 import { animeModel } from 'models'
@@ -18,4 +18,4 @@ class AnimesSlugHandler extends ApiHandler {
   }
 }
 
-export default apiHandler(AnimesSlugHandler)
+export default handleApi(AnimesSlugHandler)
