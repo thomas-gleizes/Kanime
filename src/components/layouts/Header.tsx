@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useRef, useState } from 'react'
 import { ChevronDownIcon, MenuIcon } from '@heroicons/react/solid'
 import { Transition } from '@headlessui/react'

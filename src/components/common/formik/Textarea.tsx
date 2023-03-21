@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, useRef } from 'react'
 import { useField } from 'formik'
 import classnames from 'classnames'

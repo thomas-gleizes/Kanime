@@ -1,5 +1,5 @@
 import { PrismaPost, PrismaPostsDelegate, PrismaPosts } from 'app/prisma'
-import connexion, { ConnexionType } from 'services/connexion.service'
+
 import Model from 'class/Model'
 
 type createData = {
@@ -10,8 +10,8 @@ type createData = {
 }
 
 class PostModel extends Model<PrismaPostsDelegate> {
-  public constructor(connexion: ConnexionType) {
-    super(connexion, 'post')
+  public constructor() {
+    super('post')
   }
 
   public all = (params: modelParams): Promise<PrismaPosts> =>
@@ -59,4 +59,4 @@ class PostModel extends Model<PrismaPostsDelegate> {
   public delete = (id: number): Promise<PrismaPost> => this.model.delete({ where: { id } })
 }
 
-export default new PostModel(connexion)
+export default new PostModel()

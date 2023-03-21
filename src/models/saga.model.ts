@@ -1,10 +1,10 @@
 import { PrismaSagaDelegate } from 'app/prisma'
-import connexion, { ConnexionType } from 'services/connexion.service'
+
 import Model from 'class/Model'
 
 class SagaModel extends Model<PrismaSagaDelegate> {
-  public constructor(connexion: ConnexionType) {
-    super(connexion, 'saga')
+  public constructor() {
+    super('saga')
   }
 
   public all = (params: modelParams) => this.model.findMany({ orderBy: [{ id: 'asc' }] })
@@ -29,4 +29,4 @@ class SagaModel extends Model<PrismaSagaDelegate> {
     })
 }
 
-export default new SagaModel(connexion)
+export default new SagaModel()

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@chakra-ui/next-js': ^2.0.1
   '@chakra-ui/react': ^2.3.2
   '@emotion/react': ^11.10.4
   '@emotion/styled': ^11.10.4
@@ -59,6 +60,7 @@ specifiers:
   yup: ^0.32.11
 
 dependencies:
+  '@chakra-ui/next-js': 2.0.1_vynkb36op7zw7sbyuz74ywk4ve
   '@chakra-ui/react': 2.4.9_7h642ehufk2ayekpx246qipqne
   '@emotion/react': 11.10.5_3stiutgnnbnfnf3uowm5cip22i
   '@emotion/styled': 11.10.5_jrh5enlbqfbnumycmktdqgd6se
@@ -851,6 +853,21 @@ packages:
       react-remove-scroll: 2.5.5_3stiutgnnbnfnf3uowm5cip22i
     transitivePeerDependencies:
       - '@types/react'
+    dev: false
+
+  /@chakra-ui/next-js/2.0.1_vynkb36op7zw7sbyuz74ywk4ve:
+    resolution: {integrity: sha512-LuVLb94chGB4fCszfmkh7ZYv3BsID7w5/Unr3HDe85cN4F+1AMkkhbBaZQiyIoqjCMD5hYj6R31DD4nDu+RI/Q==}
+    peerDependencies:
+      '@chakra-ui/react': '>=2.4.0'
+      '@emotion/react': '>=11'
+      next: '>=13'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/react': 2.4.9_7h642ehufk2ayekpx246qipqne
+      '@emotion/cache': 11.10.5
+      '@emotion/react': 11.10.5_3stiutgnnbnfnf3uowm5cip22i
+      next: 13.1.6_biqbaboplfbrettd7655fr4n2y
+      react: 18.2.0
     dev: false
 
   /@chakra-ui/number-input/2.0.18_ublygk26yvqigtycgan52uuiea:

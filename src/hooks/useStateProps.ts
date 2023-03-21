@@ -1,3 +1,5 @@
+'use client'
+
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 export function useStateProps<T = unknown>(props: T): [T, Dispatch<SetStateAction<T>>] {

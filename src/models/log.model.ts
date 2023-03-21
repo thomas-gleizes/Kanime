@@ -1,5 +1,5 @@
 import { PrismaLogDelegate, PrismaLog, PrismaLogs } from 'app/prisma'
-import connexion, { ConnexionType } from 'services/connexion.service'
+
 import Model from 'class/Model'
 
 type crateData = {
@@ -12,8 +12,8 @@ type crateData = {
 }
 
 class LogModel extends Model<PrismaLogDelegate> {
-  public constructor(connexion: ConnexionType) {
-    super(connexion, 'log')
+  public constructor() {
+    super('log')
   }
 
   public show = (params: modelParams) =>
@@ -39,4 +39,4 @@ class LogModel extends Model<PrismaLogDelegate> {
     })
 }
 
-export default new LogModel(connexion)
+export default new LogModel()

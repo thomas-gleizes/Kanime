@@ -1,6 +1,8 @@
+'use client'
+
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Transition } from '@headlessui/react'
 import SimpleBar from 'simplebar-react'
 import classnames from 'classnames'
@@ -40,8 +42,10 @@ const SearchBar: Component<Props> = ({ transparent }) => {
   }, [arrowUp])
 
   useEffect(() => {
-    if (enterPress && open && animes[iSelected])
-      router.push(`/animes/${animes[iSelected]?.slug}`).then(() => setOpen(false))
+    if (enterPress && open && animes[iSelected]) {
+      setOpen(false)
+      router.push(`/animes/${animes[iSelected]?.slug}`)
+    }
   }, [enterPress])
 
   const handleChangeQuery = ({ target }: ChangeEvent<HTMLInputElement>) => {

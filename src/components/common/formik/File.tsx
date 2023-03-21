@@ -1,3 +1,5 @@
+'use client'
+
 import React, { ChangeEvent } from 'react'
 import { useField } from 'formik'
 import base64 from 'utils/base64'

@@ -11,7 +11,7 @@ declare type Optional<T> = Undefinedable<Nullable<T>>
 interface ContextsProviderProps {
   children: React.ReactNode
   initialState: {
-    user: User
+    user?: User
   }
 }
 
@@ -65,17 +65,7 @@ type InputType =
   | 'time'
   | 'color'
 
-declare type TailwindcssGradiant =
-  | 50
-  | 100
-  | 200
-  | 300
-  | 400
-  | 500
-  | 600
-  | 700
-  | 800
-  | 900
+declare type TailwindcssGradiant = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 
 declare type TailwindcssColors =
   | 'slate'

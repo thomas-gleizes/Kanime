@@ -268,3 +268,6 @@ ALTER TABLE `import_animes` ADD CONSTRAINT `import_animes_anime_id_fkey` FOREIGN
 
 -- AddForeignKey
 ALTER TABLE `import_sagas` ADD CONSTRAINT `import_sagas_import_id_fkey` FOREIGN KEY (`import_id`) REFERENCES `import_animes`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AlterTable
+ALTER TABLE `animes` MODIFY `kitsu_id` INTEGER UNSIGNED NOT NULL;

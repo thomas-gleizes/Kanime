@@ -6,7 +6,7 @@ interface Props {
 
 const HighRatingAnimes: Component<Props> = ({ animes }) => {
   return (
-    <div className="w-full h-56">
+    <div className="h-56 max-w-[90%] mx-auto">
       <div className="flex space-x-3 overflow-x-auto">
         {animes.map((anime) => (
           <div key={anime.id} className="h-48 w-24">

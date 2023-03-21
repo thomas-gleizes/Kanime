@@ -1,12 +1,11 @@
 import { PrismaEntry, PrismaEntryDelegate, PrismaEntryInclude, PrismaEntryStatus } from 'app/prisma'
 import { Visibility } from 'app/model'
-import connexion, { ConnexionType } from 'services/connexion.service'
 import Model from 'class/Model'
 import { CreateEntryDto, UpdateEntryDto } from 'dto/entry.dto'
 
 class EntryModel extends Model<PrismaEntryDelegate> {
-  constructor(connexion: ConnexionType) {
-    super(connexion, 'entry')
+  constructor() {
+    super('entry')
   }
 
   public all = (params?: modelParams) =>
@@ -126,4 +125,4 @@ class EntryModel extends Model<PrismaEntryDelegate> {
     })
 }
 
-export default new EntryModel(connexion)
+export default new EntryModel()

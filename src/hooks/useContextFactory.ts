@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useContext } from 'react'
 
 export function useContextFactory<T = any>(context: React.Context<T>) {

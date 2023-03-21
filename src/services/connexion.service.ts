@@ -1,26 +1,14 @@
 import { PrismaClient } from '@prisma/client'
 
-export type ConnexionType = PrismaClient
+let prisma: PrismaClient
 
-class ConnexionService extends PrismaClient {
-  private static _instance: ConnexionService
-
-  private constructor() {
-    super({
-      datasources: {
-        db: {
-          url: process.env.DATABASE_URL
-        }
-      }
-    })
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient()
+} else {
+  if (!global.prisma) {
+    global.prisma = new PrismaClient()
   }
-
-  public static create() {
-    if (this._instance == null) {
-      this._instance = new ConnexionService()
-    }
-    return this._instance
-  }
+  prisma = global.prisma
 }
 
-export default process.env.NODE_ENV !== 'test' ? ConnexionService.create() : new PrismaClient()
+export default prisma

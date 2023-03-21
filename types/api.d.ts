@@ -103,7 +103,7 @@ interface ShowEntryUserResponse extends ApiResponse {
   user: User
 }
 
-/** sagas */
+/** saga */
 
 interface ShowSagasListResponse extends ApiResponse {
   sagas: Sagas

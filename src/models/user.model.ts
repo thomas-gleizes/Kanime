@@ -1,13 +1,12 @@
 import { PrismaUserDelegate, PrismaUser, PrismaUsers } from 'app/prisma'
-import connexion, { ConnexionType } from 'services/connexion.service'
 import { DEFAULT_USER_MEDIA } from 'resources/constants'
 import Model from 'class/Model'
 import * as emailHelpers from 'utils/emailHelpers'
 import { UpdateUserDto } from 'dto/user.dto'
 
 class UserModel extends Model<PrismaUserDelegate> {
-  public constructor(connexion: ConnexionType) {
-    super(connexion, 'user')
+  public constructor() {
+    super('user')
   }
 
   public findAll = (params?: modelParams) => this.model.findMany({ ...this.getKeyParams(params) })
@@ -126,4 +125,4 @@ class UserModel extends Model<PrismaUserDelegate> {
   }
 }
 
-export default new UserModel(connexion)
+export default new UserModel()

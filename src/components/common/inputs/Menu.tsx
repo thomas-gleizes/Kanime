@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useMemo, Fragment } from 'react'
 import { Menu as MenuDropDown, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'

@@ -1,9 +1,10 @@
+'use client'
+
 import React, { createContext, useCallback, useEffect, useState } from 'react'
 
 import { useContextFactory, useScrollHeight, useScrollPercent } from 'hooks'
-import { MINUTE, SECOND, THEME, WINDOW_MESSAGE } from 'resources/constants'
+import { MINUTE, SECOND, THEME } from 'resources/constants'
 import LocalStorageService from 'services/localStorage.service'
-import isBrowser from 'utils/isBrowser'
 
 const LayoutContext = createContext<LayoutContextValues>({} as any)
 

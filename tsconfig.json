@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -19,26 +23,73 @@
     "emitDecoratorMetadata": true,
     "baseUrl": "./src",
     "paths": {
-      "api": ["api"],
-      "class/*": ["class/*"],
-      "exceptions": ["exceptions"],
-      "components/*": ["components/*"],
-      "context/*": ["context/*"],
-      "hooks": ["hooks"],
-      "mappers": ["mappers"],
-      "middlewares/*": ["middlewares/*"],
-      "models": ["models"],
-      "pages/*": ["pages/*"],
-      "resources/*": ["resources/*"],
-      "services/*": ["services/*"],
-      "styles/*": ["styles/*"],
-      "utils/*": ["utils/*"],
-      "decorators/*": ["decorators/*"],
-      "dto/*": ["dto/*"],
-      "public/*": ["../public"],
-      "types": ["../types"]
-    }
+      "api": [
+        "api"
+      ],
+      "class/*": [
+        "class/*"
+      ],
+      "exceptions": [
+        "exceptions"
+      ],
+      "components/*": [
+        "components/*"
+      ],
+      "context/*": [
+        "context/*"
+      ],
+      "hooks": [
+        "hooks"
+      ],
+      "mappers": [
+        "mappers"
+      ],
+      "middlewares/*": [
+        "middlewares/*"
+      ],
+      "models": [
+        "models"
+      ],
+      "pages/*": [
+        "pages/*"
+      ],
+      "resources/*": [
+        "resources/*"
+      ],
+      "services/*": [
+        "services/*"
+      ],
+      "styles/*": [
+        "styles/*"
+      ],
+      "utils/*": [
+        "utils/*"
+      ],
+      "decorators/*": [
+        "decorators/*"
+      ],
+      "dto/*": [
+        "dto/*"
+      ],
+      "public/*": [
+        "../public"
+      ],
+      "types": [
+        "../types"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["src", "types"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "types",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

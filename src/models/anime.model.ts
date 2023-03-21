@@ -1,10 +1,9 @@
 import { PrismaAnimeDelegate } from 'app/prisma'
-import connexion, { ConnexionType } from 'services/connexion.service'
 import Model from 'class/Model'
 
 class AnimeModel extends Model<PrismaAnimeDelegate> {
-  public constructor(connexion: ConnexionType) {
-    super(connexion, 'anime')
+  public constructor() {
+    super('anime')
   }
 
   public findById = (id: number) =>
@@ -70,4 +69,4 @@ class AnimeModel extends Model<PrismaAnimeDelegate> {
     })
 }
 
-export default new AnimeModel(connexion)
+export default new AnimeModel()

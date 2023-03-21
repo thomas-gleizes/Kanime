@@ -1,4 +1,5 @@
-import { ConnexionType } from 'services/connexion.service'
+import { PrismaClient } from '@prisma/client'
+import prisma from 'services/connexion.service'
 
 type Result = {
   include?: { [key: string]: boolean }
@@ -7,17 +8,17 @@ type Result = {
 }
 
 abstract class Model<Delegate> {
-  private _client: ConnexionType
+  private _client: PrismaClient
   private readonly _modelName: string
 
   protected model: Delegate
 
-  protected constructor(client: ConnexionType, model: string) {
-    this._client = client
+  protected constructor(model: string) {
+    this._client = prisma
     this._modelName = model
 
     // @ts-ignore
-    this.model = client[model]
+    this.model = prisma[model]
   }
 
   // protected addMiddleware(middleware: Middleware) {

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useCallback, useMemo, useState } from 'react'
 
 import { authenticationApi } from 'api'

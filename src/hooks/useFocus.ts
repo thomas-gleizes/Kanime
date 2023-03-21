@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 export function useFocus<T extends HTMLElement>(ref: MutableRefObject<T>): boolean {
