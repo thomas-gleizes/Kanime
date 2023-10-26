@@ -1,7 +1,7 @@
 -- CreateTable
 CREATE TABLE `animes` (
     `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-    `kitsu_id` INTEGER UNSIGNED NULL,
+    `kitsu_id` INTEGER UNSIGNED NOT NULL,
     `slug` VARCHAR(191) NOT NULL,
     `canonical_title` VARCHAR(191) NOT NULL,
     `titles` LONGTEXT NULL,
