@@ -8,8 +8,9 @@ import {
   Query,
   ValidationPipe
 } from 'next-api-decorators'
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime'
 import { EntryStatus, Visibility } from '@prisma/client'
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+
 
 import type { Session } from 'app/session'
 import { handleApi } from 'services/handler.service'
